@@ -1,0 +1,58 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ titleHeader }}{% endblock %}
+
+{% block page %}
+    <h2>{{ pageName }}</h2>
+    {% block moduleButtonTop %}
+    {% endblock %}
+    {% block moduleList %}
+        <div id="modulelist">
+            <div id="modulelist-header"><span class="modulename">Module</span>
+                <span class="moduleversion">Version</span>
+                <span class="modulepublisher">Publisher</span>
+                <span class="modulestatus">Status</span>
+                <span class="clear">&nbsp;</span>
+            </div>
+            {% for module in listModules %}
+                {% set category = module.category |replace({' ': '_'}) |lower %}
+                {% set name = module.name |replace({' ': '_'}) |lower %}
+                <div class="category" id="category_{{ category }}"><h3>{{ module.category }}</h3>
+                    <ul>
+                        <li id="module_{{ name }}">
+                            <div class="moduleheader" onclick="toggleInfoPane('infopane_{{ name }}');">
+                                <span class="modulename"><a href="javascript:void(null);">{{ module.name }}</a></span>
+                                <span class="moduleversion">{{ module.version }}</span>
+                                <span class="modulepublisher">{{ module.publisher }}</span>
+                                <span class="modulestatus">{{ module.status }}</span>
+                                <span class="clear">&nbsp;</span>
+                            </div>
+                            <div class="moduleinfopane" id="infopane_{{ name }}">
+                                <div class="tabberlive">
+                                    <ul class="tabbernav">
+                                        <li class="tabberactive"><a href="javascript:void(null);" title="Action">Action</a></li>
+                                        <li class=""><a href="javascript:void(null);" title="Description">Description</a></li>
+                                    </ul>
+                                    <div class="tabbertab actiontab " title="">
+                                        <input type="radio" checked="CHECKED" id="noaction_{{ name }}" name="moduleaction[{{ name }}]" value="0"> <label for="noaction_{{ name }}">No Action</label> <br></div>
+                                    <div class="tabbertab tabbertabhide" title="">
+                                        <h5>Publisher: {{ module.publisher }}</h5>
+                                        <h5>License: {{ module.license }}</h5>
+                                        <h5>Description for version {{ module.version }}</h5>
+                                        {{ module.description }}
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            {% endfor %}
+        </div>
+    {% endblock %}
+    {% block moduleButtonBottom %}
+    {% endblock %}
+{% endblock %}
+
+{% block javascripts %}
+    <script type="text/javascript" async="" src="//cdn.mxpnl.com/libs/mixpanel-2-latest.min.js"></script>
+{% endblock %}

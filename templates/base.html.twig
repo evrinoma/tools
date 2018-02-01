@@ -1,12 +1,28 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        {% block stylesheets %}{% endblock %}
-    </head>
-    <body>
-        {% block body %}{% endblock %}
-        {% block javascripts %}{% endblock %}
-    </body>
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Wellcome{% endblock %}</title>
+    {% block stylesheets %}
+        {#<link rel="stylesheet" href="{{ asset('css/font-awesome.css') }}">#}
+        {#<link rel="stylesheet" href="{{ asset('/css/styles.css') }}">#}
+    {% endblock %}
+</head>
+<body>
+{% block body %}
+    {% block menubar %}
+        <div id="page">
+            <div id="header">
+                <div class="menubar ui-widget-header ui-corner-all">
+                </div>
+            </div>
+        </div>
+    {% endblock %}
+    {% block page %}
+    {% endblock %}
+{% endblock %}
+{% block javascripts %}
+    <script src="{{ asset('js/tabber-minimized.js') }}"></script>
+{% endblock %}
+</body>
 </html>
