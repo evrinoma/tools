@@ -19,13 +19,14 @@ class ModuleDto
     private $license;
     private $description;
     private $status;
+    private $display;
 //endregion Fields
 
 //region SECTION: Constructor
     /**
      * ModuleDto constructor.
      */
-    public function __construct($category, $name, $version, $publisher, $status, $license, $description)
+    public function __construct($category, $name, $version, $publisher, $status, $license, $description, $display = "index")
     {
         $this->category    = $category;
         $this->name        = $name;
@@ -34,6 +35,7 @@ class ModuleDto
         $this->license     = $license;
         $this->description = $description;
         $this->status      = $status;
+        $this->display     = $display;
     }
 //endregion Constructor
 
@@ -95,6 +97,14 @@ class ModuleDto
     }
 
     /**
+     * @return string
+     */
+    public function getDisplay(): string
+    {
+        return $this->display;
+    }
+
+    /**
      * @param mixed $category
      */
     public function setCategory($category): void
@@ -148,6 +158,14 @@ class ModuleDto
     public function setStatus($status): void
     {
         $this->status = $status;
+    }
+
+    /**
+     * @param string $display
+     */
+    public function setDisplay(string $display): void
+    {
+        $this->display = $display;
     }
 //endregion Getters/Setters
 

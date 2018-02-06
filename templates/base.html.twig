@@ -4,25 +4,26 @@
     <meta charset="UTF-8">
     <title>{% block title %}Wellcome{% endblock %}</title>
     {% block stylesheets %}
-        {#<link rel="stylesheet" href="{{ asset('css/font-awesome.css') }}">#}
-        {#<link rel="stylesheet" href="{{ asset('/css/styles.css') }}">#}
+        <link rel="stylesheet" href="{{ asset('build/style.css') }}">
     {% endblock %}
 </head>
 <body>
 {% block body %}
     {% block menubar %}
-        <div id="page">
-            <div id="header">
-                <div class="menubar ui-widget-header ui-corner-all">
-                </div>
+        <div id="header">
+            <div class="menubar ui-widget-header ui-corner-all">
+                {% include 'menu/show.html.twig' %}
             </div>
         </div>
     {% endblock %}
-    {% block page %}
-    {% endblock %}
+    <div id="page">
+        {% block page %}
+        {% endblock %}
+    </div>
 {% endblock %}
 {% block javascripts %}
-    <script src="{{ asset('js/tabber-minimized.js') }}"></script>
+    <script src="{{ asset("build/manifest.js") }}"></script>
+    <script src="{{ asset("build/vendor.js") }}"></script>
 {% endblock %}
 </body>
 </html>
