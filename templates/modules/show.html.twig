@@ -10,6 +10,7 @@
 {% block page %}
     <h2>{{ pageName }}</h2>
     {% block moduleButtonTop %}
+        {% include 'modules/button.html.twig' %}
     {% endblock %}
     {% block moduleList %}
         <div id="modulelist">
@@ -60,6 +61,7 @@
             {% endif %}
         </div>
     {% endblock %}
-    {% block moduleButtonBm %}
+    {% block moduleButtonBottom %}
+        {% include 'modules/button.html.twig' %}
     {% endblock %}
 {% endblock %}

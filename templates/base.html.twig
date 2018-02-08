@@ -9,15 +9,24 @@
 </head>
 <body>
 {% block body %}
-    {% block menubar %}
-        <div id="header">
-            {% include 'menu/show.html.twig' with menu %}
-        </div>
-    {% endblock %}
-    <div id="page">
-        {% block page %}
+    {% spaceless %}
+        {% block menubar %}
+            <div id="header">
+                {% include 'menu/show.html.twig' with menu %}
+            </div>
         {% endblock %}
-    </div>
+        <div id="page">
+            {% block page %}
+            {% endblock %}
+        </div>
+        <div id="footer">
+            <hr>
+            <div id="footer_content">
+                {% block footer %}
+                {% endblock %}
+            </div>
+        </div>
+    {% endspaceless %}
 {% endblock %}
 {% block javascripts %}
     <script src="{{ asset("build/manifest.js") }}"></script>
