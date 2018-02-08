@@ -1,14 +1,28 @@
 security:
     # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
+    encoders:
+        FOS\UserBundle\Model\UserInterface:
+             algorithm:         sha512
+             encode_as_base64:  true
+             iterations:        100
     providers:
-        in_memory: { memory: ~ }
+        #in_memory: { memory: ~ }
+        fos_userbundle:
+             id: fos_user.user_provider.
+
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
         main:
-            anonymous: ~
+            #anonymous: ~
+            pattern: ^/
+                form_login:
+                    provider: fos_userbundle
+                    csrf_token_generator: security.csrf.token_manager
 
+                logout:       true
+                anonymous:    true
             # activate different ways to authenticate
 
             # http_basic: ~
@@ -22,3 +36,7 @@ security:
     access_control:
         # - { path: ^/admin, roles: ROLE_ADMIN }
         # - { path: ^/profile, roles: ROLE_USER }
+        - { path: ^/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/register, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/admin/, role: ROLE_ADMIN }
