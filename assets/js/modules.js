@@ -1,4 +1,3 @@
-import $ from 'jquery';
 import tabberObj from './tabber-minimized.js';
 
 $(document).ready(function () {

@@ -14,22 +14,30 @@ Encore
     // uncomment to define the assets of the project
     // .addEntry('js/app', './assets/js/app.js')
     // .addStyleEntry('css/app', './assets/css/app.scss')
+    .addEntry('main', './assets/js/main.js')
+  //  .addEntry('menu', './assets/js/menu.js')
     .addEntry('modules', './assets/js/modules.js')
     .addEntry('tabber', './assets/js/tabber-minimized.js')
     .addStyleEntry('style', './assets/css/style.css')
-    
+
     // uncomment if you use Sass/SCSS files
     .enableSassLoader()
 
     // uncomment for legacy applications that require $/jQuery as a global variable
-    // .autoProvidejQuery()
+    // .autoProvidejQuery
+    .autoProvideVariables({
+        $: 'jquery',
+        jQuery: 'jquery',
+        'window.jQuery': 'jquery',
+        "window.$": "jquery",
+    })
     .enableVersioning()
-    .createSharedEntry('vendor', ['jquery'])
+    .createSharedEntry('vendor', ['jquery', 'jquery-ui'])
 
-    //.enableSassLoader()
-    //.enableTypeScriptLoader()
-    //.enableSourceMaps(!Encore.isProduction())
-    ;
+//.enableSassLoader()
+//.enableTypeScriptLoader()
+//.enableSourceMaps(!Encore.isProduction())
+;
 ;
 
 module.exports = Encore.getWebpackConfig();

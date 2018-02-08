@@ -11,9 +11,7 @@
 {% block body %}
     {% block menubar %}
         <div id="header">
-            <div class="menubar ui-widget-header ui-corner-all">
-                {% include 'menu/show.html.twig' %}
-            </div>
+            {% include 'menu/show.html.twig' with menu %}
         </div>
     {% endblock %}
     <div id="page">
@@ -24,6 +22,7 @@
 {% block javascripts %}
     <script src="{{ asset("build/manifest.js") }}"></script>
     <script src="{{ asset("build/vendor.js") }}"></script>
+    <script src="{{ asset("build/main.js") }}"></script>
 {% endblock %}
 </body>
 </html>

@@ -27,7 +27,7 @@ class Core
 //region SECTION: Getters/Setters
     public function getMenuList()
     {
-        return "core";//$this->moduleManager->getListModules();
+        return $this->moduleManager->getListModules();
     }
 //endregion Getters/Setters
 }
