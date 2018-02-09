@@ -19,6 +19,8 @@ Encore
     .addEntry('modules', './assets/js/modules.js')
     .addEntry('tabber', './assets/js/tabber-minimized.js')
     .addStyleEntry('style', './assets/css/style.css')
+    .addStyleEntry('loginMain', './assets/css/login/main.css')
+    .addStyleEntry('loginUtils', './assets/css/login/util.css')
 
     // uncomment if you use Sass/SCSS files
     .enableSassLoader()
