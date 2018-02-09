@@ -9,7 +9,6 @@
 </head>
 <body>
 {% block body %}
-    {% if is_granted('ROLE_USER') %}
         {% spaceless %}
             {% block menubar %}
                 <div id="header">
@@ -28,9 +27,6 @@
                 </div>
             </div>
         {% endspaceless %}
-    {% else %}
-        <a href="{{ path('fos_user_security_login') }}">Login</a>
-    {% endif %}
 {% endblock %}
 {% block javascripts %}
     <script src="{{ asset("build/manifest.js") }}"></script>

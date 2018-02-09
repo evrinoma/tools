@@ -19,7 +19,7 @@ class DisplayController extends AbstractController
 {
 //region SECTION: Public
     /**
-     * @Route("/display/{moduleName}", name="display")
+     * @Route("/display/{moduleName}", name="core_display")
      * @Template("modules/show.html.twig")
      * @param               $moduleName
      * @param Core          $core
