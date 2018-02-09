@@ -25,7 +25,10 @@ security:
                 default_target_path: core_display
             anonymous:    true
             logout:       true
-
+            remember_me:
+                secret:   '%kernel.secret%'
+                lifetime: 604800 # 1 week in seconds
+                path:     /
 
             # activate different ways to authenticate
 
