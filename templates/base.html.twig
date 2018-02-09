@@ -9,24 +9,28 @@
 </head>
 <body>
 {% block body %}
-    {% spaceless %}
-        {% block menubar %}
-            <div id="header">
-                {% include 'menu/show.html.twig' with menu %}
-            </div>
-        {% endblock %}
-        <div id="page">
-            {% block page %}
+    {% if is_granted('ROLE_USER') %}
+        {% spaceless %}
+            {% block menubar %}
+                <div id="header">
+                    {% include 'menu/show.html.twig' with menu %}
+                </div>
             {% endblock %}
-        </div>
-        <div id="footer">
-            <hr>
-            <div id="footer_content">
-                {% block footer %}
+            <div id="page">
+                {% block page %}
                 {% endblock %}
             </div>
-        </div>
-    {% endspaceless %}
+            <div id="footer">
+                <hr>
+                <div id="footer_content">
+                    {% block footer %}
+                    {% endblock %}
+                </div>
+            </div>
+        {% endspaceless %}
+    {% else %}
+        <a href="{{ path('fos_user_security_login') }}">Login</a>
+    {% endif %}
 {% endblock %}
 {% block javascripts %}
     <script src="{{ asset("build/manifest.js") }}"></script>

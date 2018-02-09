@@ -19,7 +19,7 @@ class DisplayController extends AbstractController
 {
 //region SECTION: Public
     /**
-     * @Route("/display/{moduleName}")
+     * @Route("/display/{moduleName}", name="display")
      * @Template("modules/show.html.twig")
      * @param               $moduleName
      * @param Core          $core
@@ -27,7 +27,7 @@ class DisplayController extends AbstractController
      *
      * @return array
      */
-    public function display($moduleName, Core $core, ModuleManager $module)
+    public function display($moduleName = "", Core $core, ModuleManager $module)
     {
         return [
             'titleHeader' => 'Site Administration',
