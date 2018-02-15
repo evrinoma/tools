@@ -3,6 +3,13 @@
 parameters:
     locale: 'en'
     mailer_user: "nikolns@ite-ng.ru"
+    ldap.servers:
+            ite-ng.ru:
+                - { host: "ldap://iteng13.ite-ng.ru", port: "636", search: "OU=MSK,DC=ite-ng,DC=ru"}
+                - { host: "ldap://iteng20.ite-ng.ru", port: "636", search: "OU=MSK,DC=ite-ng,DC=ru"}
+            ur.ite-ng.ru:
+                - { host: "ldap://ur04.ur.ite-ng.ru", port: "636", search: "OU=ekaterinburg,DC=ur,DC=ite-ng,DC=ru"}
+                - { host: "ldap://ur05.ur.ite-ng.ru", port: "636", search: "OU=ekaterinburg,DC=ur,DC=ite-ng,DC=ru"}
 
 services:
     # default configuration for services in *this* file
@@ -29,3 +36,9 @@ services:
     # please note that last definitions always *replace* previous ones
 #    App\Manager\ModuleManager:
 #        public: true
+    Symfony\Component\Security\Http\HttpUtils:
+        autowire: true
+
+    App\Security\Ldap:
+        arguments:
+            $servers: "%ldap.servers%"

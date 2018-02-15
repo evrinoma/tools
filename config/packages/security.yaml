@@ -7,8 +7,10 @@ security:
              iterations:        100
     providers:
         #in_memory: { memory: ~ }
-        fos_userbundle:
-             id: fos_user.user_provider.username
+         core_provider:
+             entity:
+                class: App\Entity\User
+                property: username
 
     firewalls:
         dev:
@@ -18,12 +20,17 @@ security:
             #anonymous: ~
             pattern: ^/
             form_login:
-                provider: fos_userbundle
+                provider: core_provider
                 csrf_token_generator: security.csrf.token_manager
-                check_path: fos_user_security_check
+                #check_path: fos_user_security_check
+                check_path: login_check
                 always_use_default_target_path: true
                 default_target_path: core_display
             anonymous:    true
+            guard:
+                provider: core_provider
+                authenticators:
+                    - App\Security\AuthenticatorGuard
             logout:       true
             remember_me:
                 secret:   '%kernel.secret%'
