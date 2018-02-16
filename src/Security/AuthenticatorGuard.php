@@ -50,6 +50,7 @@ class AuthenticatorGuard extends AbstractGuardAuthenticator
      * @var CsrfTokenManagerInterface
      */
     private $csrfTokenManager;
+
 //endregion Fields
 
 //region SECTION: Constructor
@@ -59,12 +60,12 @@ class AuthenticatorGuard extends AbstractGuardAuthenticator
      * @param TokenStorageInterface     $tokenStorage
      * @param CsrfTokenManagerInterface $csrfTokenManager
      */
-    public function __construct(httpUtils $httpUtils, Ldap $ldap, TokenStorageInterface $tokenStorage, CsrfTokenManagerInterface $csrfTokenManager)
-    {
-        $this->httpUtils        = $httpUtils;
-        $this->ldap             = $ldap;
-        $this->tokenStorage     = $tokenStorage;
-        $this->csrfTokenManager = $csrfTokenManager;
+    public function __construct(httpUtils $httpUtils, Ldap $ldap, TokenStorageInterface $tokenStorage, CsrfTokenManagerInterface $csrfTokenManager)    {
+        $this->httpUtils         = $httpUtils;
+        $this->ldap              = $ldap;
+        $this->tokenStorage      = $tokenStorage;
+        $this->csrfTokenManager  = $csrfTokenManager;
+
     }
 //endregion Constructor
 
@@ -194,7 +195,7 @@ class AuthenticatorGuard extends AbstractGuardAuthenticator
      */
     public function supportsRememberMe()
     {
-        return true;
+        return false;
     }
 //endregion Public
 
