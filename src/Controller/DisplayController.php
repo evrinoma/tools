@@ -14,6 +14,7 @@ use App\Manager\ModuleManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
+use FOS\RestBundle\Controller\Annotations as Rest;
 
 class DisplayController extends AbstractController
 {
@@ -37,5 +38,19 @@ class DisplayController extends AbstractController
         ];
     }
 //endregion Public
+
+//    /**
+//     * @Route("/users", name="users")
+//     */
+    /**
+     * @Rest\Get("/users", name="users")
+     */
+    public function index()
+    {
+        return $this->json([
+            'message' => 'Welcome to your new controller!',
+            'path' => 'src/Controller/DisplayController.php',
+        ]);
+    }
 
 }
