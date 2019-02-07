@@ -5,7 +5,7 @@ parameters:
     mailer_user: "nikolns@ite-ng.ru"
     ldap.servers:
             ite-ng.ru:
-                - { host: "ldap://iteng13.ite-ng.ru", port: "636", search: "OU=MSK,DC=ite-ng,DC=ru"}
+                - { host: "ldap://iteng06.ite-ng.ru", port: "636", search: "OU=MSK,DC=ite-ng,DC=ru"}
                 - { host: "ldap://iteng20.ite-ng.ru", port: "636", search: "OU=MSK,DC=ite-ng,DC=ru"}
             ur.ite-ng.ru:
                 - { host: "ldap://ur04.ur.ite-ng.ru", port: "636", search: "OU=ekaterinburg,DC=ur,DC=ite-ng,DC=ru"}
