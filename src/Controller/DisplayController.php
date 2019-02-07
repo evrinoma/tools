@@ -27,7 +27,7 @@ class DisplayController extends AbstractController
      *
      * @return array
      */
-    public function display($moduleName = "", Core $core, ModuleManager $module)
+    public function display($moduleName = '', Core $core, ModuleManager $module)
     {
         return [
             'titleHeader' => 'Site Administration',
