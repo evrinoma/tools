@@ -39,9 +39,6 @@ class DisplayController extends AbstractController
     }
 //endregion Public
 
-//    /**
-//     * @Route("/users", name="users")
-//     */
     /**
      * @Rest\Get("/users", name="users")
      */
