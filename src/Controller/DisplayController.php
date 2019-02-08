@@ -40,6 +40,21 @@ class DisplayController extends AbstractController
     }
 
 
+    /**
+     * @Route("/", name="encore_display")
+     * @Template("encore/show.html.twig")
+     *
+     * @return array
+     */
+    public function encore()
+    {
+        return [
+            'titleHeader' => 'Site Administration',
+            'pageName'    => 'Setup Module Administration',
+        ];
+    }
+
+
 
 
     /**

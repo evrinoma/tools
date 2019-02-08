@@ -1,45 +1,45 @@
 var Encore = require('@symfony/webpack-encore');
+var VueLoaderPlugin = require('vue-loader/lib/plugin')
 
 Encore
 // the project directory where compiled assets will be stored
     .setOutputPath('public/build/')
     // the public path used by the web server to access the previous directory
     .setPublicPath('/build')
-    .cleanupOutputBeforeBuild()
     .enableSourceMaps(!Encore.isProduction())
-    .enableSassLoader()
-    // uncomment to create hashed filenames (e.g. app.abc123.css)
-    // .enableVersioning(Encore.isProduction())
+    // Enable Vue SFC compilation
+    .enableVueLoader()
 
-    // uncomment to define the assets of the project
-    // .addEntry('js/app', './assets/js/app.js')
-    // .addStyleEntry('css/app', './assets/css/app.scss')
-    .addEntry('main', './assets/js/main.js')
-  //  .addEntry('menu', './assets/js/menu.js')
-    .addEntry('modules', './assets/js/modules.js')
-    .addEntry('tabber', './assets/js/tabber-minimized.js')
-    .addStyleEntry('style', './assets/css/style.css')
-    .addStyleEntry('loginMain', './assets/css/login/main.css')
-    .addStyleEntry('loginUtils', './assets/css/login/util.css')
+    // assets_old
+    // .addEntry('main', './assets/js/main.js')
+    // .addEntry('modules', './assets/js/modules.js')
+    // .addEntry('tabber', './assets/js/tabber-minimized.js')
+    // .addStyleEntry('style', './assets/css/style.css')
+    // .addStyleEntry('loginUtils', './assets/css/login/util.css')
+
+    .addEntry('app', './assets/js/app.js')
+    .addStyleEntry('loginMain', './assets/css/login/util.css')
+
 
     // uncomment if you use Sass/SCSS files
     .enableSassLoader()
 
-    // uncomment for legacy applications that require $/jQuery as a global variable
-    // .autoProvidejQuery
+    .cleanupOutputBeforeBuild()
     .autoProvideVariables({
         $: 'jquery',
         jQuery: 'jquery',
         'window.jQuery': 'jquery',
         "window.$": "jquery",
     })
-    .enableVersioning()
-    .createSharedEntry('vendor', ['jquery', 'jquery-ui'])
+    .enableVersioning(Encore.isProduction())
+    .splitEntryChunks()
+    .enableSingleRuntimeChunk()
+  //  .createSharedEntry('vendor', ['jquery', 'jquery-ui'])
 
 //.enableSassLoader()
 //.enableTypeScriptLoader()
 //.enableSourceMaps(!Encore.isProduction())
 ;
-;
+
 
 module.exports = Encore.getWebpackConfig();
