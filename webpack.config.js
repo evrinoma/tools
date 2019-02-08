@@ -1,5 +1,4 @@
 var Encore = require('@symfony/webpack-encore');
-var VueLoaderPlugin = require('vue-loader/lib/plugin')
 
 Encore
 // the project directory where compiled assets will be stored
@@ -32,13 +31,9 @@ Encore
         "window.$": "jquery",
     })
     .enableVersioning(Encore.isProduction())
-    .splitEntryChunks()
     .enableSingleRuntimeChunk()
+    .autoProvidejQuery()
   //  .createSharedEntry('vendor', ['jquery', 'jquery-ui'])
-
-//.enableSassLoader()
-//.enableTypeScriptLoader()
-//.enableSourceMaps(!Encore.isProduction())
 ;
 
 
