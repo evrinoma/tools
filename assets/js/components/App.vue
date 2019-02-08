@@ -1,6 +1,6 @@
 <template>
     <!-- Your HTML tags-->
-    <h2 class="center"> Ahoy! </h2>
+    <h2 class="center"> hello {{titleHeader}}</h2>
 </template>
 
 <script>
