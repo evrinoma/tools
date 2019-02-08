@@ -12,6 +12,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
+use Symfony\Component\Security\Core\Encoder\EncoderFactoryInterface;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Security\Core\Exception\BadCredentialsException;
 use Symfony\Component\Security\Core\Exception\InvalidCsrfTokenException;
@@ -50,7 +51,10 @@ class AuthenticatorGuard extends AbstractGuardAuthenticator
      * @var CsrfTokenManagerInterface
      */
     private $csrfTokenManager;
-
+    /**
+     * @var EncoderFactoryInterface
+     */
+    private $encoderFactory;
 //endregion Fields
 
 //region SECTION: Constructor
@@ -60,17 +64,31 @@ class AuthenticatorGuard extends AbstractGuardAuthenticator
      * @param TokenStorageInterface     $tokenStorage
      * @param CsrfTokenManagerInterface $csrfTokenManager
      */
-    public function __construct(httpUtils $httpUtils, Ldap $ldap, TokenStorageInterface $tokenStorage, CsrfTokenManagerInterface $csrfTokenManager)    {
-        $this->httpUtils         = $httpUtils;
-        $this->ldap              = $ldap;
-        $this->tokenStorage      = $tokenStorage;
-        $this->csrfTokenManager  = $csrfTokenManager;
+    public function __construct(httpUtils $httpUtils, Ldap $ldap, EncoderFactoryInterface $encoderFactory, TokenStorageInterface $tokenStorage, CsrfTokenManagerInterface $csrfTokenManager)
+    {
+        $this->httpUtils        = $httpUtils;
+        $this->ldap             = $ldap;
+        $this->tokenStorage     = $tokenStorage;
+        $this->csrfTokenManager = $csrfTokenManager;
+        $this->encoderFactory   = $encoderFactory;
 
     }
 //endregion Constructor
 
 
 //region SECTION: Public
+
+    private function checkUser($user,$password)
+    {
+        $encoder      = $this->encoderFactory->getEncoder($user);
+        $encodedPass = $encoder->encodePassword($password, $user->getSalt());
+
+        if ($encodedPass === $user->getPassword()) {
+            return true;
+        }
+
+        return false;
+    }
 
     /**
      * Returns a response that directs the user to authenticate.
@@ -131,7 +149,12 @@ class AuthenticatorGuard extends AbstractGuardAuthenticator
             return false;
         }
 
-        if (($user && $credentials->isAuthorized()) || ($user && $credentials->isTestUser()) || ($user && $this->ldap->checkUser($credentials->getUserName(), $credentials->getPassword()))) {
+        if (
+            ($user && $credentials->isAuthorized())
+            || ($user && $credentials->isTestUser())
+            || ($user && $this->checkUser($user,$credentials->getPassword()))
+            || ($user && $this->ldap->checkUser($credentials->getUserName(), $credentials->getPassword()))
+        ) {
             $credentials->authorizeUser();
 
             return true;
