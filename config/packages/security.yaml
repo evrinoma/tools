@@ -29,7 +29,7 @@ security:
                 #check_path: fos_user_security_check
                 check_path: login_check
                 always_use_default_target_path: true
-                default_target_path: core_display
+                default_target_path: core_home
             anonymous:    true
             guard:
                 provider: core_provider

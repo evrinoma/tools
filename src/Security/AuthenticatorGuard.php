@@ -32,7 +32,7 @@ class AuthenticatorGuard extends AbstractGuardAuthenticator
 {
 
 //region SECTION: Fields
-    private const         HOMEPAGE    = 'core_display';
+    private const         HOMEPAGE    = 'core_home';
     private const         LOGIN_CHECK = 'login_check';
     private const         LOGIN       = 'login';
     /**

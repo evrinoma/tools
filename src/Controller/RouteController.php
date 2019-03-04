@@ -17,7 +17,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Swagger\Annotations as SWG;
 
-class DisplayController extends AbstractController
+class RouteController extends AbstractController
 {
 //region SECTION: Public
     /**
@@ -39,6 +39,15 @@ class DisplayController extends AbstractController
         ];
     }
 
+    /**
+     * @Route("/", name="core_home")
+     * @Template("base.html.twig")
+     *
+     * @return array
+     */
+    public function home(){
+        return [];
+    }
 
     /**
      * @Route("/", name="encore_display")
