@@ -10,32 +10,57 @@ namespace App\Core;
 
 
 use Knp\Menu\FactoryInterface;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
+/**
+ * Class MenuBuilder
+ *
+ * @package App\Core
+ */
 class MenuBuilder
 {
 
+//region SECTION: Fields
+    /**
+     * @var AuthorizationCheckerInterface
+     */
+    private $security;
+    /**
+     * @var FactoryInterface
+     */
     private $factory;
+//endregion Fields
 
+//region SECTION: Constructor
     /**
      * @param FactoryInterface $factory
      *
      * Add any other dependency you need
      */
-    public function __construct(FactoryInterface $factory)
+    public function __construct(FactoryInterface $factory, AuthorizationCheckerInterface $security)
     {
-        $this->factory = $factory;
+        $this->factory  = $factory;
+        $this->security = $security;
     }
+//endregion Constructor
 
+//region SECTION: Public
     public function createMainMenu(array $options)
     {
         $menu = $this->factory->createItem('root');
 
         $menu->addChild('display', ['route' => 'core_display']);
+        if( $this->security->isGranted( 'ROLE_SUPER_ADMIN' ) ) {
+            $exim = $menu->addChild('exim', ['route' => 'core_home']);
+            $exim->addChild('exim_search', ['route' => 'core_display']);
+            $exim->addChild('exim_acl', ['route' => 'core_display']);
 
+            $exim->addChild('api_doc', ['route' => 'app.swagger_ui']);
+
+        }
         $menu->addChild('logout', ['route' => 'fos_user_security_logout']);
-
-        // ... add more children
 
         return $menu;
     }
+//endregion Public
 }

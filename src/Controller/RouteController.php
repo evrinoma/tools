@@ -40,6 +40,8 @@ class RouteController extends AbstractController
     }
 
     /**
+     * титуальная страница
+     *
      * @Route("/", name="core_home")
      * @Template("base.html.twig")
      *
