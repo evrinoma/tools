@@ -4,34 +4,33 @@
     <meta charset="UTF-8">
     <title>{% block title %}Wellcome{% endblock %}</title>
     {% block stylesheets %}
-        <link rel="stylesheet" href="{{ asset('build/style.css') }}">
     {% endblock %}
 </head>
 <body>
 {% block body %}
-        {% spaceless %}
-            {% block menubar %}
-                <div id="header">
-                    {% include 'menu/knp.html.twig' %}
-                </div>
+    {% spaceless %}
+        {% block menubar %}
+            <div class="menu">
+                <nav>
+                    {{ knp_menu_render('main') }}
+                </nav>
+            </div>
+        {% endblock %}
+        <div id="page">
+            {% block page %}
             {% endblock %}
-            <div id="page">
-                {% block page %}
+        </div>
+        <div id="footer">
+            <hr>
+            <div id="footer_content">
+                {% block footer %}
                 {% endblock %}
             </div>
-            <div id="footer">
-                <hr>
-                <div id="footer_content">
-                    {% block footer %}
-                    {% endblock %}
-                </div>
-            </div>
-        {% endspaceless %}
+        </div>
+    {% endspaceless %}
 {% endblock %}
 {% block javascripts %}
-    <script src="{{ asset("build/manifest.js") }}"></script>
-    <script src="{{ asset("build/vendor.js") }}"></script>
-    <script src="{{ asset("build/main.js") }}"></script>
+    <script src="{{ asset('build/app.js', 'webpack') }}"></script>
 {% endblock %}
 </body>
 </html>

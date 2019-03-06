@@ -12,7 +12,8 @@ const {VueLoaderPlugin} = require('vue-loader');
 module.exports = (env) => {
     const config = {
         entry: {
-            app: path.join(__dirname, 'assets/js/app.js'),
+            app: path.join(__dirname, 'assets/entrypoints/app.entry.js'),
+            login: path.join(__dirname, 'assets/entrypoints/login.entry.js'),
         },
         node: {
             fs: 'empty'
