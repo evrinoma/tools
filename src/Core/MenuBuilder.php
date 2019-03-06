@@ -49,17 +49,17 @@ class MenuBuilder
     {
         $menu = $this->factory->createItem('root');
 
-        $menu->addChild('display', ['route' => 'core_display', 'attributes' => ['class' => 'display']]);
+        $menu->addChild('display', ['route' => 'core_display']);
 
         if ($this->security->isGranted('ROLE_SUPER_ADMIN')) {
-            $exim = $menu->addChild('exim', ['route' => 'core_home', 'attributes' => ['class' => 'exim']]);
-            $exim->addChild('Search', ['route' => 'core_display']);
-            $exim->addChild('ACL', ['route' => 'core_display']);
+            $exim = $menu->addChild('Exim', ['uri' => 'exim']);
+            $exim->addChild('Log Search', ['uri' => 'exim#search']);
+            $exim->addChild('Edit ACL', ['uri' => 'exim#acl']);
 
-            $menu->addChild('api_doc', ['route' => 'app.swagger_ui']);
+            $menu->addChild('ApiDoc', ['route' => 'app.swagger_ui']);
         }
 
-        $menu->addChild('logout', ['route' => 'fos_user_security_logout', 'attributes' => ['class' => 'logout']]);
+        $menu->addChild('Logout', ['route' => 'fos_user_security_logout', 'attributes' => ['class' => 'logout']]);
 
         return $menu;
     }

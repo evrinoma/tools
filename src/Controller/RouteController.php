@@ -42,14 +42,16 @@ class RouteController extends AbstractController
     /**
      * титуальная страница
      *
-     * @Route("/", name="core_home")
+     * @Route("/{url}", name="core_home")
      * @Template("base.html.twig")
      *
      * @return array
      */
-    public function home(){
+    public function home($url = ''){
         return [];
     }
+
+
 
     /**
      * @Route("/", name="encore_display")
@@ -64,10 +66,6 @@ class RouteController extends AbstractController
             'pageName'    => 'Setup Module Administration',
         ];
     }
-
-
-
-
 
     /**
      * @Rest\Get("/users", name="users")
