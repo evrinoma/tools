@@ -13,9 +13,9 @@ use App\Core\Core;
 use App\Manager\ModuleManager;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Swagger\Annotations as SWG;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
-use Swagger\Annotations as SWG;
 
 class RouteController extends AbstractController
 {
@@ -39,19 +39,19 @@ class RouteController extends AbstractController
         ];
     }
 
+
     /**
      * титуальная страница
      *
-     * @Route("/{url}", name="core_home")
+     * @Route("/", name="core_home")
      * @Template("base.html.twig")
      *
      * @return array
      */
-    public function home($url = ''){
+    public function home()
+    {
         return [];
     }
-
-
 
     /**
      * @Route("/", name="encore_display")
