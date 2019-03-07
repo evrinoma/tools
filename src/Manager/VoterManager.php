@@ -31,13 +31,15 @@ class VoterManager
         $this->security = $security;
     }
 
+//region SECTION: Public
     /**
      * @param string $role
      *
      * @return bool
      */
-    public function checkPermission($role):bool
+    public function checkPermission($role): bool
     {
-        return true;
+        return $this->security->isGranted($role) ? true : false;
     }
+//endregion Public
 }
