@@ -10,11 +10,8 @@ namespace App\Controller;
 
 
 use App\Core\Core;
-use App\Core\MenuBuilder;
 use App\Manager\ModuleManager;
-use FOS\RestBundle\Controller\Annotations as Rest;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Swagger\Annotations as SWG;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -68,49 +65,7 @@ class RouteController extends AbstractController
         ];
     }
 
-    /**
-     * @Rest\Get("/users", name="users")
-     *
-     * @SWG\Response(
-     *     response=200,
-     *     description="Returns the rewards of an user"
-     * )
-     * @SWG\Parameter(
-     *     name="order",
-     *     in="query",
-     *     type="string",
-     *     description="The field used to order rewards"
-     * )
-     */
-    public function index()
-    {
-        return $this->json(
-            [
-                'message' => 'Welcome to your new controller!',
-                'path'    => 'src/Controller/DisplayController.php',
-            ]
-        );
-    }
 
-    /**
-     * @Rest\Put("/default_menu", name="/default_menu")
-     *
-     * @SWG\Response(
-     *     response=200,
-     *     description="Returns the rewards of default generated menu"
-     * )
-     */
-    public function generateDefaultMenu(MenuBuilder $menuBuilder)
-    {
-        $menuBuilder->generateDefaultMenu();
-
-        return $this->json(
-            [
-                'message' => 'Welcome to your new controller!',
-                'path'    => 'src/Controller/DisplayController.php',
-            ]
-        );
-    }
 //endregion Public
 
 }
