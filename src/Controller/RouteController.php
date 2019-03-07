@@ -64,8 +64,6 @@ class RouteController extends AbstractController
             'pageName'    => 'Setup Module Administration',
         ];
     }
-
-
 //endregion Public
 
 }

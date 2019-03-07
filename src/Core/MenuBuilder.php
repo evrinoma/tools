@@ -13,6 +13,7 @@ use App\Entity\MenuItem;
 use App\Manager\VoterManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Menu\FactoryInterface;
+use Knp\Menu\ItemInterface;
 
 /**
  * Class MenuBuilder
@@ -50,30 +51,17 @@ class MenuBuilder
         $this->entityManager = $entityManager;
     }
 //endregion Constructor
-//
-//    private function getMenuItems()
-//    {
-//        return [];
-//    }
 
 //region SECTION: Public
     public function createMainMenu(array $options)
     {
-        $menu = $this->factory->createItem('root');
+        $root = $this->factory->createItem('root');
 
-        $menu->addChild('display', ['route' => 'core_display']);
+        $items = $this->getMenuItems($root);
 
-        if ($this->security->isGranted('ROLE_SUPER_ADMIN')) {
-            $exim = $menu->addChild('Exim', ['uri' => 'exim']);
-            $exim->addChild('Log Search', ['uri' => 'exim#search']);
-            $exim->addChild('Edit ACL', ['uri' => 'exim#acl']);
+        $this->createMenu($root, $items);
 
-            $menu->addChild('ApiDoc', ['route' => 'app.swagger_ui']);
-        }
-
-        $menu->addChild('Logout', ['route' => 'fos_user_security_logout', 'attributes' => ['class' => 'logout']]);
-
-        return $menu;
+        return $root;
     }
 
     public function generateDefaultMenu(): void
@@ -93,6 +81,14 @@ class MenuBuilder
             ->setRoute('fos_user_security_logout')
             ->setAttributes(['class' => 'logout']);
         $this->entityManager->persist($logout);
+
+        $apiDoc = new MenuItem();
+        $apiDoc
+            ->setRole('ROLE_SUPER_ADMIN')
+            ->setName('ApiDoc')
+            ->setRoute('app.swagger_ui');
+
+        $this->entityManager->persist($apiDoc);
 
         $eximSearch = new MenuItem();
         $eximSearch
@@ -122,4 +118,42 @@ class MenuBuilder
         $this->entityManager->flush();
     }
 //endregion Public
+
+//region SECTION: Private
+    /**
+     * @param MenuItem $menuItem
+     */
+    /**
+     * @param ItemInterface $menuLevel
+     * @param MenuItem      $menuItem
+     *
+     * @return mixed
+     */
+    private function createItem($menuLevel, $menuItem)
+    {
+        return $menuLevel->addChild($menuItem->getName(), $menuItem->getOptions());
+    }
+
+    /**
+     * @param MenuItem[] $items
+     */
+    private function createMenu($menu, array $items)
+    {
+        foreach ($items as $menuItem) {
+            if ($this->voterManager->checkPermission($menuItem->getRole())) {
+                if ($menuItem->hasChildren()) {
+                    $menuLevel = $this->createItem($menu, $menuItem);
+                    $this->createMenu($menuLevel, $menuItem->getChildren());
+                } else {
+                    $this->createItem($menu, $menuItem);
+                }
+            }
+        }
+    }
+
+    private function getMenuItems()
+    {
+        return $this->entityManager->getRepository(MenuItem::class)->findBy(['parent' => null]);
+    }
+//endregion Private
 }

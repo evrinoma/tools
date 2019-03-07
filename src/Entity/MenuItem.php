@@ -64,7 +64,7 @@ class MenuItem
      * @var array
      * @ORM\Column(name="attributes", type="array", nullable=true)
      */
-    protected $attributes = '';
+    protected $attributes = null;
 
     /**
      * @var string
@@ -102,6 +102,14 @@ class MenuItem
 
         return $this;
     }
+
+    /**
+     * @return bool
+     */
+    public function hasChildren(): bool
+    {
+        return ($this->children->count() != 0);
+    }
 //endregion Public
 
 //region SECTION: Getters/Setters
@@ -124,9 +132,9 @@ class MenuItem
     /**
      * @return MenuItem[]
      */
-    public function getChildren(): array
+    public function getChildren(): ?array
     {
-        return $this->children;
+        return $this->children->getValues();
     }
 
     /**
@@ -154,11 +162,11 @@ class MenuItem
     }
 
     /**
-     * @return array
+     * @return array|null
      */
-    public function getAttributes(): array
+    public function getAttributes(): ?array
     {
-        return ['attributes' => $this->attributes];
+        return $this->attributes ? ['attributes' => $this->attributes] : null;
     }
 
     /**
@@ -167,6 +175,11 @@ class MenuItem
     public function getRole(): string
     {
         return $this->role;
+    }
+
+    public function getOptions()
+    {
+        return (array)$this->getUri() + (array)$this->getRoute() + (array)$this->getAttributes();
     }
 
     /**
@@ -216,7 +229,6 @@ class MenuItem
 
         return $this;
     }
-
 
     /**
      * @param string $uri
