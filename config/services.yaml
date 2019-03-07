@@ -43,18 +43,7 @@ services:
         arguments:
             $servers: "%ldap.servers%"
 
-#    app.menu_builder:
-#        class: App\Core\MenuBuilder
-#
-#
-#    app.menu.usertopbar:
-#        class: Knp\Menu\MenuItem
-#        factory:  ['@app.menu_builder', 'createMainMenu']
-#        tags:
-#            - { name: knp_menu.menu_builder, method: createMainMenu, alias: main }
-
     App\Core\MenuBuilder:
-#        class: AppBundle\Menu\MenuBuilder
         arguments: ["@knp_menu.factory"]
         tags:
             - { name: knp_menu.menu_builder, method: createMainMenu, alias: main }

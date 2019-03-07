@@ -10,6 +10,7 @@ namespace App\Controller;
 
 
 use App\Core\Core;
+use App\Core\MenuBuilder;
 use App\Manager\ModuleManager;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -83,6 +84,26 @@ class RouteController extends AbstractController
      */
     public function index()
     {
+        return $this->json(
+            [
+                'message' => 'Welcome to your new controller!',
+                'path'    => 'src/Controller/DisplayController.php',
+            ]
+        );
+    }
+
+    /**
+     * @Rest\Put("/default_menu", name="/default_menu")
+     *
+     * @SWG\Response(
+     *     response=200,
+     *     description="Returns the rewards of default generated menu"
+     * )
+     */
+    public function generateDefaultMenu(MenuBuilder $menuBuilder)
+    {
+        $menuBuilder->generateDefaultMenu();
+
         return $this->json(
             [
                 'message' => 'Welcome to your new controller!',

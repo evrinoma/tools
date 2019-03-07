@@ -54,6 +54,7 @@ nav {
 
 nav ul {
     padding: 0;
+    padding-bottom: 2px;
     margin: 0;
     list-style: none;
     position: relative;

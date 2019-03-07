@@ -9,8 +9,10 @@
 namespace App\Core;
 
 
+use App\Entity\MenuItem;
+use App\Manager\VoterManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Knp\Menu\FactoryInterface;
-use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 /**
  * Class MenuBuilder
@@ -22,13 +24,17 @@ class MenuBuilder
 
 //region SECTION: Fields
     /**
-     * @var AuthorizationCheckerInterface
+     * @var VoterManager
      */
-    private $security;
+    private $voterManager;
     /**
      * @var FactoryInterface
      */
     private $factory;
+    /**
+     * @var EntityManagerInterface
+     */
+    private $entityManager;
 //endregion Fields
 
 //region SECTION: Constructor
@@ -37,12 +43,18 @@ class MenuBuilder
      *
      * Add any other dependency you need
      */
-    public function __construct(FactoryInterface $factory, AuthorizationCheckerInterface $security)
+    public function __construct(FactoryInterface $factory, VoterManager $voterManager, EntityManagerInterface $entityManager)
     {
-        $this->factory  = $factory;
-        $this->security = $security;
+        $this->factory       = $factory;
+        $this->voterManager  = $voterManager;
+        $this->entityManager = $entityManager;
     }
 //endregion Constructor
+//
+//    private function getMenuItems()
+//    {
+//        return [];
+//    }
 
 //region SECTION: Public
     public function createMainMenu(array $options)
@@ -62,6 +74,52 @@ class MenuBuilder
         $menu->addChild('Logout', ['route' => 'fos_user_security_logout', 'attributes' => ['class' => 'logout']]);
 
         return $menu;
+    }
+
+    public function generateDefaultMenu(): void
+    {
+        $display = new MenuItem();
+        $display
+            ->setRole('ROLE_USER')
+            ->setName('Display')
+            ->setRoute('core_display');
+
+        $this->entityManager->persist($display);
+
+        $logout = new MenuItem();
+        $logout
+            ->setRole('ROLE_USER')
+            ->setName('Logout')
+            ->setRoute('fos_user_security_logout')
+            ->setAttributes(['class' => 'logout']);
+        $this->entityManager->persist($logout);
+
+        $eximSearch = new MenuItem();
+        $eximSearch
+            ->setRole('ROLE_SUPER_ADMIN')
+            ->setName('Log Search')
+            ->setUri('exim#search');
+
+        $this->entityManager->persist($eximSearch);
+
+        $eximAcl = new MenuItem();
+        $eximAcl
+            ->setRole('ROLE_SUPER_ADMIN')
+            ->setName('Edit ACL')
+            ->setUri('exim#acl');
+
+        $this->entityManager->persist($eximAcl);
+
+        $exim = new MenuItem();
+        $exim
+            ->setRole('ROLE_SUPER_ADMIN')
+            ->setName('Exim')
+            ->setUri('exim')
+            ->addChild($eximSearch)
+            ->addChild($eximAcl);
+
+        $this->entityManager->persist($exim);
+        $this->entityManager->flush();
     }
 //endregion Public
 }

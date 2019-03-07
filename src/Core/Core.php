@@ -14,6 +14,9 @@ use App\Manager\ModuleManager;
 class Core
 {
 //region SECTION: Fields
+    /**
+     * @var ModuleManager
+     */
     private $moduleManager;
 //endregion Fields
 
