@@ -10,6 +10,7 @@ namespace App\Controller;
 
 
 use App\Core\Core;
+use App\Dashboard\DashBoard;
 use App\Manager\ModuleManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -29,6 +30,10 @@ class RouteController extends AbstractController
      */
     public function display($moduleName = '', Core $core, ModuleManager $module)
     {
+
+        $dashBoard = new DashBoard();
+        $sysinfo = $dashBoard->getSysInfo();
+        $procinfo = $dashBoard->getProcInfo();
         return [
             'titleHeader' => 'Site Administration',
             'pageName'    => 'Setup Module Administration',

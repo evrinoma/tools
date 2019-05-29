@@ -8,13 +8,13 @@
 
 namespace App\Dto;
 
-use App\Dto\SysInfoDto\CpuDto;
-use App\Dto\SysInfoDto\DevDto;
-use App\Dto\SysInfoDto\DiskDto;
-use App\Dto\SysInfoDto\LoadAvgDto;
-use App\Dto\SysInfoDto\MemoryDto;
-use App\Dto\SysInfoDto\NetworkDto;
-use App\Dto\SysInfoDto\ScsiDto;
+use App\Dto\SysInfo\CpuDto;
+use App\Dto\SysInfo\DevDto;
+use App\Dto\SysInfo\DiskDto;
+use App\Dto\SysInfo\LoadAvgDto;
+use App\Dto\SysInfo\MemoryDto;
+use App\Dto\SysInfo\NetworkDto;
+use App\Dto\SysInfo\ScsiDto;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**

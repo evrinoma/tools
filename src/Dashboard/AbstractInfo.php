@@ -138,7 +138,7 @@ abstract class AbstractInfo
      */
     public function toArrayString(): array
     {
-        return explode('\n', $this->getResult());
+        return explode("\n", $this->getResult());
     }
 //endregion Public
 
@@ -150,6 +150,7 @@ abstract class AbstractInfo
      */
     private function findProgram($program): ?string
     {
+        reset($this->paths);
         if (function_exists('is_executable')) {
             while ($this_path = current($this->paths)) {
                 if (is_executable("$this_path/$program")) {

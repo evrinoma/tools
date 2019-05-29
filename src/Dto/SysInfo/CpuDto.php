@@ -6,7 +6,7 @@
  * Time: 1:30 AM
  */
 
-namespace App\Dto\SysInfoDto;
+namespace App\Dto\SysInfo;
 
 /**
  * Class CpuDto

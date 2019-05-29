@@ -6,7 +6,7 @@
  * Time: 4:13 PM
  */
 
-namespace App\Dto\SysInfoDto;
+namespace App\Dto\SysInfo;
 
 
 class DevDto

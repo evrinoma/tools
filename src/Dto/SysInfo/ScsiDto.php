@@ -6,7 +6,7 @@
  * Time: 3:46 PM
  */
 
-namespace App\Dto\SysInfoDto;
+namespace App\Dto\SysInfo;
 
 
 use App\Dto\SysInfoDto;

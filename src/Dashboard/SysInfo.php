@@ -9,13 +9,13 @@
 namespace App\Dashboard;
 
 
+use App\Dto\SysInfo\CpuDto;
+use App\Dto\SysInfo\DevDto;
+use App\Dto\SysInfo\DiskDto;
+use App\Dto\SysInfo\MemoryDto;
+use App\Dto\SysInfo\NetworkDto;
+use App\Dto\SysInfo\ScsiDto;
 use App\Dto\SysInfoDto;
-use App\Dto\SysInfoDto\CpuDto;
-use App\Dto\SysInfoDto\DevDto;
-use App\Dto\SysInfoDto\DiskDto;
-use App\Dto\SysInfoDto\MemoryDto;
-use App\Dto\SysInfoDto\NetworkDto;
-use App\Dto\SysInfoDto\ScsiDto;
 
 /**
  * Class SysInfo
@@ -78,7 +78,7 @@ class SysInfo extends AbstractInfo
     protected function getIpAddress()
     {
         $varName = getenv('SERVER_ADDR');
-        if (!$varName) {
+        if ($varName !== '') {
             $this->sysInfo->setIpAddress($varName);
         }
 
@@ -88,7 +88,7 @@ class SysInfo extends AbstractInfo
     protected function getVHostName()
     {
         $varName = getenv('SERVER_NAME');
-        if (!$varName) {
+        if ($varName !== '') {
             $this->sysInfo->setVHostName($varName);
         }
 
@@ -167,24 +167,11 @@ class SysInfo extends AbstractInfo
     protected function getCpuInfo()
     {
         if ($this->rfts('/proc/cpuinfo')) {
-            $values = $this->toArrayString();
-            $keys   = preg_grep('/^\s*$/', explode("\n", $values));
-            $i      = 0;
-            $stop   = true;
-            do {
-                $j = $i + 1;
-                if (array_key_exists($i, $keys)) {
-                    $i = $keys[$i];
-                }
-                if (array_key_exists($j, $keys)) {
-                    $j = $keys[$j];
-                } else {
-                    $j    = count($values);
-                    $stop = false;
-                }
-                $cpu = new CpuDto();
-                for (; $i < $j; $i++) {
-                    [$key, $value] = explode('=', $values[$i], 2);
+            $cpu = new CpuDto();
+            foreach ($this->toArrayString() as $item) {
+                $splite = preg_split('/\s+:\s+/', $item);
+                if (count($splite) > 1) {
+                    [$key, $value] = $splite;
                     switch ($key) {
                         case 'model name':
                         case 'cpu':
@@ -231,8 +218,8 @@ class SysInfo extends AbstractInfo
                             break;
                     }
                 }
-                $this->sysInfo->addCpu($cpu);
-            } while ($stop);
+            }
+            $this->sysInfo->addCpu($cpu);
         }
 
         return $this;
@@ -364,32 +351,40 @@ class SysInfo extends AbstractInfo
             foreach ($this->toArrayString() as $buf) {
                 if (preg_match('/^MemTotal:\s+(.*)\s*kB/i', $buf, $ar_buf)) {
                     $memory->setMemTotal($ar_buf[1]);
+                    continue;
                 }
                 if (preg_match('/^MemFree:\s+(.*)\s*kB/i', $buf, $ar_buf)) {
                     $memory->setMemFree($ar_buf[1]);
+                    continue;
                 }
                 if (preg_match('/^Cached:\s+(.*)\s*kB/i', $buf, $ar_buf)) {
                     $memory->setCached($ar_buf[1]);
+                    continue;
                 }
                 if (preg_match('/^Buffers:\s+(.*)\s*kB/i', $buf, $ar_buf)) {
                     $memory->setBuffers($ar_buf[1]);
+                    continue;
                 }
                 if (preg_match('/^SwapTotal:\s+(.*)\s*kB/i', $buf, $ar_buf)) {
                     $memory->setSwapTotal($ar_buf[1]);
+                    continue;
                 }
                 if (preg_match('/^SwapFree:\s+(.*)\s*kB/i', $buf, $ar_buf)) {
                     $memory->setSwapFree($ar_buf[1]);
+                    continue;
                 }
             }
 
             if ($this->rfts('/proc/swaps')) {
                 foreach ($this->toArrayString() as $item) {
-                    $arBuf   = preg_split('/\s+/', $item, 6);
-                    $devSwap = new DiskDto();
-                    $devSwap->setName($arBuf[0])
-                        ->setTotal($arBuf[2])
-                        ->setUsed($arBuf[3]);
-                    $this->sysInfo->getMemory()->addDevSwap($devSwap);
+                    if ($item !== '' & (strpos($item, 'Filename') === false)) {
+                        $arBuf   = preg_split('/\s+/', $item, 6);
+                        $devSwap = new DiskDto();
+                        $devSwap->setName($arBuf[0])
+                            ->setTotal($arBuf[2])
+                            ->setUsed($arBuf[3]);
+                        $this->sysInfo->getMemory()->addDevSwap($devSwap);
+                    }
                 }
             }
         }
@@ -404,7 +399,7 @@ class SysInfo extends AbstractInfo
      */
     protected function getFilesystems($showBind = true)
     {
-                $j = 0;
+        $j = 0;
 
         if ($this->executeProgram('df', '-kPl')) {
             $df = preg_grep('/(\\%\\s)/', preg_split("/\n/", $this->getResult(), -1, PREG_SPLIT_NO_EMPTY));
@@ -419,7 +414,7 @@ class SysInfo extends AbstractInfo
         }
 
         if ($this->executeProgram('mount')) {
-            $mount = preg_grep('/(\\%\\s)/', preg_split("/\n/", $this->getResult(), -1, PREG_SPLIT_NO_EMPTY));
+            $mount = preg_split("/\n/", $this->getResult(), -1, PREG_SPLIT_NO_EMPTY);
         } else {
             $mount = [];
         }
@@ -447,7 +442,7 @@ class SysInfo extends AbstractInfo
                 }
 
                 if ($showBind || false === stripos($mount_buf[2], 'bind')) {
-                    $disk        = new DiskDto();
+                    $disk = new DiskDto();
                     $disk
                         ->setName(str_replace("\\$", '$', $df_buf[0]))
                         ->setTotal($df_buf[1])
@@ -472,8 +467,9 @@ class SysInfo extends AbstractInfo
 
         return $this;
     }
+//endregion Protected
 
-
+//region SECTION: Getters/Setters
     public function getSysInfo()
     {
         return $this
@@ -491,10 +487,7 @@ class SysInfo extends AbstractInfo
             ->getUsers()
             ->getScsi()
             ->getVHostName()
-            ->sysInfo
-            ;
+            ->sysInfo;
     }
-
-
-//endregion Protected
+//endregion Getters/Setters
 }

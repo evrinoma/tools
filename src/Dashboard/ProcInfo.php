@@ -17,18 +17,14 @@ class ProcInfo
 {
 //region SECTION: Fields
     private $timeout = 5;
+    private $ports = [];
 //endregion Fields
 
 //region SECTION: Public
-    /**
-     * @param $host
-     *
-     * @return bool
-     */
-    public function checkSSH($host): bool
+
+    private function getPorts($host)
     {
         $cont       = file('/proc/net/tcp');
-        $search     = 'SSH';
         $array_port = '';
         $max        = count($cont);
         for ($i = 0; $i < $max; $i++) {
@@ -40,14 +36,25 @@ class ProcInfo
                 }
             }
         }
-        $array_port = array_diff(array_unique(explode(':', $array_port)), array(''));
-        $max = count($array_port);
+        $this->ports = array_diff(array_unique(explode(':', $array_port)), array(''));
+
+        return $this;
+    }
+    /**
+     * @param $host
+     *
+     * @return bool
+     */
+    public function checkSSH($host): bool
+    {
+        $this->getPorts($host);
+        $max = count($this->ports);
         for ($i = 0; $i < $max; $i++) {
-            if ($sock = @fsockopen($host, $array_port[$i], $errno, $errstr, $this->timeout)) {
+            if ($sock = @fsockopen($host, $this->ports[$i], $errno, $errstr, $this->timeout)) {
                 stream_set_timeout($sock, 0, 100000);
                 $tmp = strtoupper(fread($sock, 127));
-                if (strpos($tmp, $search) !== false) {
-                    return $array_port[$i];
+                if (strpos($tmp, 'SSH') !== false) {
+                    return $this->ports[$i];
                 }
                 fclose($sock);
             }

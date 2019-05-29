@@ -20,8 +20,18 @@ class DashBoard
 {
 
 //region SECTION: Fields
+    /**
+     * @var ProcInfo
+     */
     private $procInfo;
+    /**
+     * @var Settings
+     */
     private $settings;
+    /**
+     * @var SysInfo
+     */
+    private $sysInfo;
 //endregion Fields
 
 //region SECTION: Constructor
@@ -32,28 +42,34 @@ class DashBoard
      * @param SysInfo  $sysInfo
      * @param Settings $settings
      */
-    public function __construct(ProcInfo $procInfo, SysInfo $sysInfo,Settings $settings)
+    // public function __construct(ProcInfo $procInfo, SysInfo $sysInfo,Settings $settings)
+    public function __construct()
     {
-        $this->procInfo = $procInfo;
-        $this->sysInfo = $sysInfo;
-        $this->settings = $settings;
+        $this->procInfo = new ProcInfo();
+        $this->sysInfo  = new SysInfo();
+        $this->settings = new Settings();
     }
 //endregion Constructor
 
 //region SECTION: Private
-    private function getProcInfo()
+//endregion Private
+
+//region SECTION: Getters/Setters
+    public function getProcInfo()
     {
         if ($this->settings->isMysql()) {
-            $this->procInfo->checkMysql($this->settings->getDbHost(),$this->settings->getDbPort());
+            $this->procInfo->checkMysql($this->settings->getDbHost(), $this->settings->getDbPort());
         }
         $this->procInfo->checkSSH($this->settings->getDbHost());
+
+        return $this->procInfo;
     }
 
-    private function getSysInfo()
+    public function getSysInfo()
     {
         $this->sysInfo->getSysInfo();
+
+        return $this->sysInfo;
     }
-
-
-//endregion Private
+//endregion Getters/Setters
 }

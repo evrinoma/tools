@@ -6,7 +6,7 @@
  * Time: 5:56 PM
  */
 
-namespace App\Dto\SysInfoDto;
+namespace App\Dto\SysInfo;
 
 /**
  * Class DiskDto

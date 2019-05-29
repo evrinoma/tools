@@ -6,7 +6,7 @@
  * Time: 5:27 PM
  */
 
-namespace App\Dto\SysInfoDto;
+namespace App\Dto\SysInfo;
 
 use Doctrine\Common\Collections\ArrayCollection;
 

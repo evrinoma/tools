@@ -6,7 +6,7 @@
  * Time: 3:03 PM
  */
 
-namespace App\Dto\SysInfoDto;
+namespace App\Dto\SysInfo;
 
 /**
  * Class LoadAvgDto
