@@ -27,6 +27,72 @@ class NetworkDto
     private $txDrop;
 //endregion Fields
 
+//region SECTION: Private
+    /**
+     * @return mixed
+     */
+    private function getRxPackets()
+    {
+        return $this->rxPackets;
+    }
+
+    /**
+     * @return mixed
+     */
+    private function getRxErrors()
+    {
+        return $this->rxErrors;
+    }
+
+    /**
+     * @return mixed
+     */
+    private function getRxDrop()
+    {
+        return $this->rxDrop;
+    }
+
+    /**
+     * @return mixed
+     */
+    private function getTxPackets()
+    {
+        return $this->txPackets;
+    }
+
+    /**
+     * @return mixed
+     */
+    private function getTxErrors()
+    {
+        return $this->txErrors;
+    }
+
+    /**
+     * @return mixed
+     */
+    private function getTxDrop()
+    {
+        return $this->txDrop;
+    }
+
+    /**
+     * @return mixed
+     */
+    private function getErrors()
+    {
+        return $this->getRxErrors() + $this->getTxErrors();
+    }
+
+    /**
+     * @return mixed
+     */
+    private function getDrop()
+    {
+        return $this->getRxDrop() + $this->getTxDrop();
+    }
+//endregion Private
+
 //region SECTION: Getters/Setters
     /**
      * @return mixed
@@ -47,73 +113,9 @@ class NetworkDto
     /**
      * @return mixed
      */
-    public function getRxPackets()
-    {
-        return $this->rxPackets;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getRxErrors()
-    {
-        return $this->rxErrors;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getRxDrop()
-    {
-        return $this->rxDrop;
-    }
-
-    /**
-     * @return mixed
-     */
     public function getTxBytes()
     {
         return $this->txBytes;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getTxPackets()
-    {
-        return $this->txPackets;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getTxErrors()
-    {
-        return $this->txErrors;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getTxDrop()
-    {
-        return $this->txDrop;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getErrors()
-    {
-        return $this->getRxErrors() + $this->getTxErrors();
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getDrop()
-    {
-        return $this->getRxDrop() + $this->getTxDrop();
     }
 
     /**

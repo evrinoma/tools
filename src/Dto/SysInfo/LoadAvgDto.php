@@ -31,11 +31,27 @@ class LoadAvgDto
     private $idleCpuLast   = 0;
 //endregion Fields
 
-//region SECTION: Getters/Setters
+//region SECTION: Private
+    /**
+     * @return mixed
+     */
+    private function calcLoadCpu()
+    {
+        $loadLast  = $this->getUserCpuLast() + $this->getNiceCpuLast() + $this->getSystemCpuLast();
+        $totalLast = $loadLast + $this->getIdleCpuLast();
+
+        $loadNext  = $this->getUserCpuNext() + $this->getNiceCpuNext() + $this->getSystemCpuNext();
+        $totalNext = $loadNext + $this->getIdleCpuNext();
+
+        $loadCpu = ($totalNext !== $totalLast) ? ($loadNext - $loadLast) / ($totalNext - $totalLast) : 0;
+
+        return $loadCpu;
+    }
+
     /**
      * @return int
      */
-    public function getUserCpuLast(): int
+    private function getUserCpuLast(): int
     {
         return $this->userCpuLast;
     }
@@ -43,7 +59,7 @@ class LoadAvgDto
     /**
      * @return int
      */
-    public function getNiceCpuLast(): int
+    private function getNiceCpuLast(): int
     {
         return $this->niceCpuLast;
     }
@@ -51,7 +67,7 @@ class LoadAvgDto
     /**
      * @return int
      */
-    public function getSystemCpuLast(): int
+    private function getSystemCpuLast(): int
     {
         return $this->systemCpuLast;
     }
@@ -59,7 +75,7 @@ class LoadAvgDto
     /**
      * @return int
      */
-    public function getIdleCpuLast(): int
+    private function getIdleCpuLast(): int
     {
         return $this->idleCpuLast;
     }
@@ -67,7 +83,7 @@ class LoadAvgDto
     /**
      * @return int
      */
-    public function getUserCpuNext(): int
+    private function getUserCpuNext(): int
     {
         return $this->userCpuNext;
     }
@@ -75,7 +91,7 @@ class LoadAvgDto
     /**
      * @return int
      */
-    public function getNiceCpuNext(): int
+    private function getNiceCpuNext(): int
     {
         return $this->niceCpuNext;
     }
@@ -83,7 +99,7 @@ class LoadAvgDto
     /**
      * @return int
      */
-    public function getSystemCpuNext(): int
+    private function getSystemCpuNext(): int
     {
         return $this->systemCpuNext;
     }
@@ -91,9 +107,19 @@ class LoadAvgDto
     /**
      * @return int
      */
-    public function getIdleCpuNext(): int
+    private function getIdleCpuNext(): int
     {
         return $this->idleCpuNext;
+    }
+//endregion Private
+
+//region SECTION: Getters/Setters
+    /**
+     * @return mixed
+     */
+    public function getLoadCpu()
+    {
+        return round($this->calcLoadCpu(), 2);
     }
 
     /**
@@ -101,13 +127,13 @@ class LoadAvgDto
      */
     public function getPercentCpu()
     {
-        $loadLast  = $this->getUserCpuLast() + $this->getNiceCpuLast() + $this->getSystemCpuLast();
-        $totalLast = $loadLast + $this->getIdleCpuLast();
+//        $loadLast  = $this->getUserCpuLast() + $this->getNiceCpuLast() + $this->getSystemCpuLast();
+//        $totalLast = $loadLast + $this->getIdleCpuLast();
+//
+//        $loadNext  = $this->getUserCpuNext() + $this->getNiceCpuNext() + $this->getSystemCpuNext();
+//        $totalNext = $loadNext + $this->getIdleCpuNext();
 
-        $loadNext  = $this->getUserCpuNext() + $this->getNiceCpuNext() + $this->getSystemCpuNext();
-        $totalNext = $loadLast + $this->getIdleCpuNext();
-
-        return ($totalNext !== $totalLast) ? ((100 * ($loadNext - $loadLast)) / ($totalNext - $totalLast)) : 0;
+        return round(100 * $this->calcLoadCpu(), 2);
     }
 
     /**
@@ -137,7 +163,7 @@ class LoadAvgDto
     /**
      * @param int $userCpuLast
      *
-     * @return LoadAvg
+     * @return LoadAvgDto
      */
     public function setUserCpuLast(int $userCpuLast)
     {
@@ -149,7 +175,7 @@ class LoadAvgDto
     /**
      * @param int $niceCpuLast
      *
-     * @return LoadAvg
+     * @return LoadAvgDto
      */
     public function setNiceCpuLast(int $niceCpuLast)
     {
@@ -161,7 +187,7 @@ class LoadAvgDto
     /**
      * @param int $systemCpuLast
      *
-     * @return LoadAvg
+     * @return LoadAvgDto
      */
     public function setSystemCpuLast(int $systemCpuLast)
     {
@@ -173,7 +199,7 @@ class LoadAvgDto
     /**
      * @param int $idleCpuLast
      *
-     * @return LoadAvg
+     * @return LoadAvgDto
      */
     public function setIdleCpuLast(int $idleCpuLast)
     {
@@ -185,7 +211,7 @@ class LoadAvgDto
     /**
      * @param int $userCpuNext
      *
-     * @return LoadAvg
+     * @return LoadAvgDto
      */
     public function setUserCpuNext(int $userCpuNext)
     {
@@ -197,7 +223,7 @@ class LoadAvgDto
     /**
      * @param int $niceCpuNext
      *
-     * @return LoadAvg
+     * @return LoadAvgDto
      */
     public function setNiceCpuNext(int $niceCpuNext)
     {
@@ -209,7 +235,7 @@ class LoadAvgDto
     /**
      * @param int $systemCpuNext
      *
-     * @return LoadAvg
+     * @return LoadAvgDto
      */
     public function setSystemCpuNext(int $systemCpuNext)
     {
@@ -221,7 +247,7 @@ class LoadAvgDto
     /**
      * @param int $idleCpuNext
      *
-     * @return LoadAvg
+     * @return LoadAvgDto
      */
     public function setIdleCpuNext(int $idleCpuNext)
     {
@@ -233,7 +259,7 @@ class LoadAvgDto
     /**
      * @param mixed $loadAve1
      *
-     * @return LoadAvg
+     * @return LoadAvgDto
      */
     public function setLoadAve1($loadAve1)
     {
@@ -245,7 +271,7 @@ class LoadAvgDto
     /**
      * @param mixed $loadAve5
      *
-     * @return LoadAvg
+     * @return LoadAvgDto
      */
     public function setLoadAve5($loadAve5)
     {
@@ -257,7 +283,7 @@ class LoadAvgDto
     /**
      * @param mixed $loadAve15
      *
-     * @return LoadAvg
+     * @return LoadAvgDto
      */
     public function setLoadAve15($loadAve15)
     {

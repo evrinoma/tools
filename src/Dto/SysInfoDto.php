@@ -35,12 +35,30 @@ class SysInfoDto
     private $upTime    = self::UNKNOWN;
     private $users     = self::UNKNOWN;
     private $loadAvg;
+    /**
+     * @var ScsiDto[]
+     */
     private $scsi;
+    /**
+     * @var DevDto[]
+     */
     private $usb;
+    /**
+     * @var DevDto[]
+     */
     private $pci;
+    /**
+     * @var NetworkDto[]
+     */
     private $network;
+    /**
+     * @var DiskDto[]
+     */
     private $disk;
     private $memory;
+    /**
+     * @var CpuDto[]
+     */
     private $cpu;
 //endregion Fields
 

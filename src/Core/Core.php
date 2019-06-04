@@ -8,29 +8,24 @@
 
 namespace App\Core;
 
-
-use App\Manager\ModuleManager;
-
+/**
+ * Class Core
+ *
+ * @package App\Core
+ */
 class Core
 {
-//region SECTION: Fields
-    /**
-     * @var ModuleManager
-     */
-    private $moduleManager;
-//endregion Fields
-
 //region SECTION: Constructor
-    public function __construct(ModuleManager $manager)
+    public function __construct()
     {
-        $this->moduleManager = $manager;
+
     }
 //endregion Constructor
 
 //region SECTION: Getters/Setters
     public function getMenuList()
     {
-        return $this->moduleManager->getListModules();
+
     }
 //endregion Getters/Setters
 }

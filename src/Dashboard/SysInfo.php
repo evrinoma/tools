@@ -12,7 +12,6 @@ namespace App\Dashboard;
 use App\Dto\SysInfo\CpuDto;
 use App\Dto\SysInfo\DevDto;
 use App\Dto\SysInfo\DiskDto;
-use App\Dto\SysInfo\MemoryDto;
 use App\Dto\SysInfo\NetworkDto;
 use App\Dto\SysInfo\ScsiDto;
 use App\Dto\SysInfoDto;
@@ -43,7 +42,10 @@ class SysInfo extends AbstractInfo
     {
         $this->sysInfo = new SysInfoDto();
     }
+
 //endregion Constructor
+
+//region SECTION: Protected
     // get the distro name and icon when create the sysinfo object
 //    function sysinfo() {
 //
@@ -72,9 +74,13 @@ class SysInfo extends AbstractInfo
 //    }
 
     // get our apache SERVER_NAME or vhost
+    protected function getDistr()
+    {
+        $this->sysInfo->setDistr("Linux");
 
+        return $this;
+    }
 
-//region SECTION: Protected
     protected function getIpAddress()
     {
         $varName = getenv('SERVER_ADDR');
@@ -157,7 +163,7 @@ class SysInfo extends AbstractInfo
 
                 $this->rfts('/proc/stat', 1);
                 sscanf($this->getResult(), '%*s %f %f %f %f', $ab, $ac, $ad, $ae);
-                $this->sysInfo->getLoadAvg()->setUserCpuLast($ab)->setNiceCpuLast($ac)->setSystemCpuLast($ad)->setIdleCpuLast($ae);
+                $this->sysInfo->getLoadAvg()->setUserCpuNext($ab)->setNiceCpuNext($ac)->setSystemCpuNext($ad)->setIdleCpuNext($ae);
             }
         }
 
@@ -347,30 +353,29 @@ class SysInfo extends AbstractInfo
     protected function getMemory()
     {
         if ($this->rfts('/proc/meminfo')) {
-            $memory = new MemoryDto();
             foreach ($this->toArrayString() as $buf) {
                 if (preg_match('/^MemTotal:\s+(.*)\s*kB/i', $buf, $ar_buf)) {
-                    $memory->setMemTotal($ar_buf[1]);
+                    $this->sysInfo->getMemory()->setMemTotal((int)$ar_buf[1] * 1000);
                     continue;
                 }
                 if (preg_match('/^MemFree:\s+(.*)\s*kB/i', $buf, $ar_buf)) {
-                    $memory->setMemFree($ar_buf[1]);
+                    $this->sysInfo->getMemory()->setMemFree((int)$ar_buf[1] * 1000);
                     continue;
                 }
                 if (preg_match('/^Cached:\s+(.*)\s*kB/i', $buf, $ar_buf)) {
-                    $memory->setCached($ar_buf[1]);
+                    $this->sysInfo->getMemory()->setCached((int)$ar_buf[1] * 1000);
                     continue;
                 }
                 if (preg_match('/^Buffers:\s+(.*)\s*kB/i', $buf, $ar_buf)) {
-                    $memory->setBuffers($ar_buf[1]);
+                    $this->sysInfo->getMemory()->setBuffers((int)$ar_buf[1] * 1000);
                     continue;
                 }
                 if (preg_match('/^SwapTotal:\s+(.*)\s*kB/i', $buf, $ar_buf)) {
-                    $memory->setSwapTotal($ar_buf[1]);
+                    $this->sysInfo->getMemory()->setSwapTotal((int)$ar_buf[1] * 1000);
                     continue;
                 }
                 if (preg_match('/^SwapFree:\s+(.*)\s*kB/i', $buf, $ar_buf)) {
-                    $memory->setSwapFree($ar_buf[1]);
+                    $this->sysInfo->getMemory()->setSwapFree((int)$ar_buf[1] * 1000);
                     continue;
                 }
             }
@@ -381,8 +386,8 @@ class SysInfo extends AbstractInfo
                         $arBuf   = preg_split('/\s+/', $item, 6);
                         $devSwap = new DiskDto();
                         $devSwap->setName($arBuf[0])
-                            ->setTotal($arBuf[2])
-                            ->setUsed($arBuf[3]);
+                            ->setTotal((int)$arBuf[2])
+                            ->setUsed((int)$arBuf[3]);
                         $this->sysInfo->getMemory()->addDevSwap($devSwap);
                     }
                 }
@@ -445,9 +450,9 @@ class SysInfo extends AbstractInfo
                     $disk = new DiskDto();
                     $disk
                         ->setName(str_replace("\\$", '$', $df_buf[0]))
-                        ->setTotal($df_buf[1])
-                        ->setUsed($df_buf[2])
-                        ->setFree($df_buf[3])
+                        ->setTotal($df_buf[1] * 1000)
+                        ->setUsed($df_buf[2] * 1000)
+                        ->setFree($df_buf[3] * 1000)
                         ->setMount($df_buf[5])
                         ->setFstype(substr($mount_buf[1], 0, strpos($mount_buf[1], ',')))
                         ->setOptions(substr($mount_buf[1], strpos($mount_buf[1], ',') + 1, strlen($mount_buf[1])));
@@ -469,10 +474,10 @@ class SysInfo extends AbstractInfo
     }
 //endregion Protected
 
-//region SECTION: Getters/Setters
-    public function getSysInfo()
+//region SECTION: Public
+    public function createSysInfo()
     {
-        return $this
+        $this
             ->getMemory()
             ->getLoadAvg()
             ->getCHostName()
@@ -487,7 +492,16 @@ class SysInfo extends AbstractInfo
             ->getUsers()
             ->getScsi()
             ->getVHostName()
-            ->sysInfo;
+            ->getDistr();
+
+        return $this;
+    }
+//endregion Public
+
+//region SECTION: Getters/Setters
+    public function getSysInfo()
+    {
+        return $this->sysInfo;
     }
 //endregion Getters/Setters
 }

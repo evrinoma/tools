@@ -69,8 +69,8 @@ class MenuBuilder
         $display = new MenuItem();
         $display
             ->setRole('ROLE_USER')
-            ->setName('Display')
-            ->setRoute('core_display');
+            ->setName('Status')
+            ->setRoute('core_status');
 
         $this->entityManager->persist($display);
 

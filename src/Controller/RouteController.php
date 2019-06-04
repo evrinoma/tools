@@ -9,9 +9,7 @@
 namespace App\Controller;
 
 
-use App\Core\Core;
 use App\Dashboard\DashBoard;
-use App\Manager\ModuleManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
@@ -20,25 +18,24 @@ class RouteController extends AbstractController
 {
 //region SECTION: Public
     /**
-     * @Route("/display/{moduleName}", name="core_display")
-     * @Template("modules/show.html.twig")
-     * @param               $moduleName
-     * @param Core          $core
-     * @param ModuleManager $module
+     * @Route("/status", name="core_status")
+     * @Template("modules/display.html.twig")
      *
      * @return array
      */
-    public function display($moduleName = '', Core $core, ModuleManager $module)
+    public function status()
     {
 
         $dashBoard = new DashBoard();
-        $sysinfo = $dashBoard->getSysInfo();
-        $procinfo = $dashBoard->getProcInfo();
+
+        $sysinfo  = $dashBoard->createInfo()->getSysInfo();
+        $procinfo = $dashBoard->getProcInfo()->getProcInfo();
+
         return [
-            'titleHeader' => 'Site Administration',
-            'pageName'    => 'Setup Module Administration',
-            'menu'        => $core->getMenuList(),
-            'listModules' => $module->getListModules(),
+            'titleHeader' => 'Administration',
+            'pageName'    => 'System Status',
+            'sysinfo'     => $sysinfo,
+            'procinfo'    => $procinfo,
         ];
     }
 

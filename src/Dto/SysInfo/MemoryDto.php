@@ -8,6 +8,7 @@
 
 namespace App\Dto\SysInfo;
 
+use App\Dto\Model\SizeTrait;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
@@ -17,14 +18,19 @@ use Doctrine\Common\Collections\ArrayCollection;
  */
 class MemoryDto
 {
-private $memTotal = 0;
-private $memFree = 0;
-private $cached = 0;
-private $swapTotal = 0;
-private $swapFree = 0;
-    private $buffers = 0;
-    private $devSwap;
+    use SizeTrait;
 
+//region SECTION: Fields
+    private $memTotal  = 0;
+    private $memFree   = 0;
+    private $cached    = 0;
+    private $swapTotal = 0;
+    private $swapFree  = 0;
+    private $buffers   = 0;
+    private $devSwap;
+//endregion Fields
+
+//region SECTION: Constructor
     /**
      * MemoryDto constructor.
      */
@@ -32,15 +38,9 @@ private $swapFree = 0;
     {
         $this->devSwap = new ArrayCollection();
     }
+//endregion Constructor
 
-    /**
-     * @return ArrayCollection
-     */
-    public function getDevSwap(): ArrayCollection
-    {
-        return $this->devSwap;
-    }
-
+//region SECTION: Public
     /**
      * @param DiskDto $devSwap
      *
@@ -49,16 +49,108 @@ private $swapFree = 0;
     public function addDevSwap(DiskDto $devSwap)
     {
         $this->devSwap->add($devSwap);
+
         return $this;
+    }
+
+    public function calcRamApp()
+    {
+        return $this->getMemTotal() ? $this->getRamApp() / $this->getMemTotal() : 0;
+    }
+
+    public function calcRamSwap()
+    {
+        return ($this->getSwapTotal() !== $this->getSwapFree()) ? $this->getSwapFree() / $this->getSwapTotal() : 0;
+    }
+
+    public function calcRamBuffers()
+    {
+        return $this->getMemTotal() ? $this->getBuffers() / $this->getMemTotal() : 0;
+    }
+
+    public function calcRamCached()
+    {
+        return $this->getMemTotal() ? $this->getCached() / $this->getMemTotal() : 0;
     }
 
     /**
      * @return mixed
      */
-    public function getRamUsed()
+    public function calcRam()
+    {
+        return ($this->getMemTotal() !== $this->getMemFree()) ? $this->getMemFree() / $this->getMemTotal() : 0;
+    }
+
+//endregion Public
+
+//region SECTION: Private
+    /**
+     * @return ArrayCollection
+     */
+    private function getDevSwap(): ArrayCollection
+    {
+        return $this->devSwap;
+    }
+
+    /**
+     * @return mixed
+     */
+    private function getRamUsed()
     {
         return $this->getMemTotal() - $this->getMemFree();
     }
+
+    /**
+     * @return mixed
+     */
+    private function getBuffers()
+    {
+        return $this->buffers / $this->getSize();
+    }
+
+    /**
+     * @return mixed
+     */
+    private function getMemFree()
+    {
+        return $this->memFree / $this->getSize();
+    }
+
+    /**
+     * @return mixed
+     */
+    private function getCached()
+    {
+        return $this->cached / $this->getSize();
+    }
+
+    /**
+     * @return mixed
+     */
+    private function getSwapFree()
+    {
+        return $this->swapFree / $this->getSize();
+    }
+//endregion Private
+
+//region SECTION: Getters/Setters
+    /**
+     * @return mixed
+     */
+    public function getSwapUsed()
+    {
+        return $this->getSwapTotal() - $this->getSwapFree();
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getSwapTotal()
+    {
+        return $this->swapTotal / $this->getSize();
+    }
+
+
 
     /**
      * @return mixed
@@ -71,61 +163,49 @@ private $swapFree = 0;
     /**
      * @return mixed
      */
-    public function getRamAppPercent()
+    public function getMemTotal()
     {
-        return $this->getMemTotal() ? round(($this->getRamApp() * 100) / $this->getMemTotal()) : 0;
-    }
-
-
-    /**
-     * @return mixed
-     */
-    public function getRamBuffersPercent()
-    {
-        return $this->getMemTotal() ? round(($this->getBuffers() * 100) / $this->getMemTotal()) : 0;
+        return $this->memTotal / $this->getSize();
     }
 
     /**
      * @return mixed
      */
-    public function getRamCachedPercent()
+    public function getPercentRamApp()
     {
-        return $this->getMemTotal() ? round(($this->getCached() * 100) / $this->getMemTotal()) : 0;
+        return round($this->calcRamApp() * 100, 2);
     }
 
     /**
      * @return mixed
      */
-    public function getRamPercent()
+    public function getPercentRamSwap()
     {
-        return $this->getMemTotal() ? round(($this->getMemFree() * 100) / $this->getMemTotal()) : 0;
+        return round($this->calcRamSwap() * 100, 2);
     }
 
     /**
      * @return mixed
      */
-    public function getSwapUsed()
+    public function getPercentRamBuffers()
     {
-        return $this->getSwapTotal() - $this->getSwapFree();
+        return round($this->calcRamBuffers() * 100, 2);
     }
-
 
     /**
      * @return mixed
      */
-    public function getSwapPercent()
+    public function getPercentRamCached()
     {
-        return $this->getSwapTotal() ? round(($this->getSwapFree() * 100) / $this->getSwapTotal()) : 0;
+        return round($this->calcRamCached() * 100, 2);
     }
-
-
 
     /**
      * @return mixed
      */
-    public function getBuffers()
+    public function getPercentRam()
     {
-        return $this->buffers;
+        return round($this->calcRam() * 100, 2);
     }
 
     /**
@@ -133,17 +213,11 @@ private $swapFree = 0;
      *
      * @return MemoryDto
      */
-    public function setBuffers($buffers)
+    public function setBuffers(int $buffers)
     {
         $this->buffers = $buffers;
+
         return $this;
-    }
-    /**
-     * @return mixed
-     */
-    public function getMemTotal()
-    {
-        return $this->memTotal;
     }
 
     /**
@@ -151,7 +225,7 @@ private $swapFree = 0;
      *
      * @return MemoryDto
      */
-    public function setMemTotal($memTotal)
+    public function setMemTotal(int $memTotal)
     {
         $this->memTotal = $memTotal;
 
@@ -159,30 +233,15 @@ private $swapFree = 0;
     }
 
     /**
-     * @return mixed
-     */
-    public function getMemFree()
-    {
-        return $this->memFree;
-    }
-
-    /**
      * @param mixed $memFree
      *
      * @return MemoryDto
      */
-    public function setMemFree($memFree)
+    public function setMemFree(int $memFree)
     {
         $this->memFree = $memFree;
-        return $this;
-    }
 
-    /**
-     * @return mixed
-     */
-    public function getCached()
-    {
-        return $this->cached;
+        return $this;
     }
 
     /**
@@ -190,18 +249,11 @@ private $swapFree = 0;
      *
      * @return MemoryDto
      */
-    public function setCached($cached)
+    public function setCached(int $cached)
     {
         $this->cached = $cached;
-        return $this;
-    }
 
-    /**
-     * @return mixed
-     */
-    public function getSwapTotal()
-    {
-        return $this->swapTotal;
+        return $this;
     }
 
     /**
@@ -209,18 +261,11 @@ private $swapFree = 0;
      *
      * @return MemoryDto
      */
-    public function setSwapTotal($swapTotal)
+    public function setSwapTotal(int $swapTotal)
     {
         $this->swapTotal = $swapTotal;
-        return $this;
-    }
 
-    /**
-     * @return mixed
-     */
-    public function getSwapFree()
-    {
-        return $this->swapFree;
+        return $this;
     }
 
     /**
@@ -228,12 +273,13 @@ private $swapFree = 0;
      *
      * @return MemoryDto
      */
-    public function setSwapFree($swapFree)
+    public function setSwapFree(int $swapFree)
     {
         $this->swapFree = $swapFree;
+
         return $this;
     }
-
+//endregion Getters/Setters
 
 
 }

@@ -8,6 +8,8 @@
 
 namespace App\Dto\SysInfo;
 
+use App\Dto\Model\SizeTrait;
+
 /**
  * Class DiskDto
  *
@@ -15,6 +17,8 @@ namespace App\Dto\SysInfo;
  */
 class DiskDto
 {
+    use SizeTrait;
+
 //region SECTION: Fields
     private $name    = '';
     private $total   = 0;
@@ -30,7 +34,7 @@ class DiskDto
     /**
      * @return int
      */
-    public function calcFree()
+    private function calcFree()
     {
 
         return $this->getTotal() - $this->getUsed();
@@ -41,7 +45,7 @@ class DiskDto
     /**
      * @return mixed
      */
-    public function getInodes()
+    private function getInodes()
     {
         return $this->inodes;
     }
@@ -49,7 +53,7 @@ class DiskDto
     /**
      * @return mixed
      */
-    public function getOptions()
+    private function getOptions()
     {
         return $this->options;
     }
@@ -57,7 +61,7 @@ class DiskDto
     /**
      * @return string
      */
-    public function getFstype()
+    private function getFstype()
     {
         return $this->fstype;
     }
@@ -73,9 +77,15 @@ class DiskDto
     /**
      * @return int
      */
-    public function getFree()
+    private function getFree()
     {
         return $this->free;
+    }
+
+    private function calc()
+    {
+
+        return $this->getTotal() ? $this->getUsed() / $this->getTotal() : 0;
     }
 
     /**
@@ -83,14 +93,13 @@ class DiskDto
      */
     public function getPercent()
     {
-
-        return $this->getTotal() ? round(($this->getUsed() * 100) / $this->getTotal()) : 0;
+        return round($this->calc() * 100, 2);
     }
 
     /**
      * @return string
      */
-    public function getName()
+    private function getName()
     {
         return $this->name;
     }
@@ -100,7 +109,7 @@ class DiskDto
      */
     public function getTotal()
     {
-        return $this->total;
+        return $this->total / $this->getSize();
     }
 
     /**
@@ -108,7 +117,7 @@ class DiskDto
      */
     public function getUsed()
     {
-        return $this->used;
+        return $this->used / $this->getSize();
     }
 
     /**
