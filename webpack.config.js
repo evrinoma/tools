@@ -14,6 +14,7 @@ module.exports = (env) => {
         entry: {
             app: path.join(__dirname, 'assets/entrypoints/app.entry.js'),
             login: path.join(__dirname, 'assets/entrypoints/login.entry.js'),
+            status: path.join(__dirname, 'assets/entrypoints/status.entry.js'),
         },
         node: {
             fs: 'empty'
@@ -166,6 +167,8 @@ module.exports = (env) => {
                 }
             }),
             new webpack.ProvidePlugin({
+                $: 'jquery',
+                jQuery: 'jquery',
                 'Promise': 'es6-promise', // Thanks Aaron (https://gist.github.com/Couto/b29676dd1ab8714a818f#gistcomment-1584602)
                 'fetch': 'imports?this=>global!exports?global.fetch!whatwg-fetch'
             }),

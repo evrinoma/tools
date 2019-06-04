@@ -10,10 +10,17 @@
 {% block body %}
     {% spaceless %}
         {% block menubar %}
-            <div class="menu">
-                <nav>
-                    {{ knp_menu_render('main') }}
-                </nav>
+            <div>
+                <div class="menu">
+                    <nav>
+                        {{ knp_menu_render('main') }}
+                    </nav>
+                </div>
+                {% block spinner %}
+                    <div id="spinner">
+                        <progress class="button-right" id="ajax_spinner" style="display: block;"></progress>
+                    </div>
+                {% endblock %}
             </div>
         {% endblock %}
         <div id="page">

@@ -18,7 +18,7 @@ class RouteController extends AbstractController
 {
 //region SECTION: Public
     /**
-     * @Route("/status", name="core_status")
+     * @Route("/status", options={"expose"=true}, name="core_status")
      * @Template("modules/display.html.twig")
      *
      * @return array

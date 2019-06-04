@@ -53,6 +53,7 @@ nav {
 }
 
 nav ul {
+    z-index: 100;
     padding: 0;
     padding-bottom: 2px;
     margin: 0;
@@ -117,18 +118,5 @@ li > a:after {
 
 li > a:only-child:after {
     content: '';
-}
-
-
-div#page {
-    padding: 15px;
-}
-
-div#footer {
-    position: absolute;
-    bottom: 0;
-    width: 99%;
-    height: 80px;
-    font-size: 10px;
 }
 
