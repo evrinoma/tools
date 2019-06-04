@@ -10,6 +10,7 @@ namespace App\Controller;
 
 
 use App\Core\MenuBuilder;
+use App\Dashboard\DashBoard;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use Swagger\Annotations as SWG;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -47,7 +48,25 @@ class ApiController extends AbstractController
     }
 
     /**
-     * @Rest\Put("/default_menu", name="/default_menu")
+     * @Rest\Get("/api/system_status", name="system_status")
+     *
+     * @SWG\Response(
+     *     response=200,
+     *     description="Returns system status"
+     * )
+     */
+    public function getSystemStatus()
+    {
+        $dashBoard = new DashBoard();
+
+        $sysinfo  = $dashBoard->createInfo()->getSysInfo();
+        $procinfo = $dashBoard->getProcInfo()->getProcInfo();
+
+        return $this->json(['sysinfo' => $sysinfo, 'procinfo' => $procinfo]);
+    }
+
+    /**
+     * @Rest\Put("/default_menu", name="default_menu")
      *
      * @SWG\Response(
      *     response=200,

@@ -70,7 +70,7 @@ class CpuDto
      */
     public function getCache()
     {
-        return $this->cache / 1024 .' KB';
+        return $this->cache . 'B';
     }
 
     /**
