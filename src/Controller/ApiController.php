@@ -48,7 +48,7 @@ class ApiController extends AbstractController
     }
 
     /**
-     * @Rest\Get("/api/system_status", name="system_status")
+     * @Rest\Get("/api/system_status", options={"expose"=true}, name="system_status")
      *
      * @SWG\Response(
      *     response=200,

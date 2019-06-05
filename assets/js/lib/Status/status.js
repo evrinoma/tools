@@ -11,8 +11,16 @@ let Status = function () {
                 let div = $('<div/>').html(html).contents();
                 dashboard.html(div.find('#dashboard'));
                 App.hideSpinner();
+
             }
         });
+        // $.ajax({
+        //     url: App.getRouting().generate('system_status'),
+        //     type: 'GET',
+        //     success: function (html) {
+        //         console.log(html);
+        //     }
+        // });
     };
 
     this.init = function () {
