@@ -35,6 +35,16 @@ class RouteController extends AbstractController
         return ['titleHeader' => 'Administration', 'pageName' => 'System Status'] + $dashBoardManager->getDashBoard();
     }
 
+    /**
+     * @Route("/journal", options={"expose"=true}, name="core_journal")
+     * @Template("base.html.twig")
+     *
+     * @return array
+     */
+    public function journal()
+    {
+        return ['titleHeader' => 'Delta8 Administration', 'pageName' => 'Journal Delta8'];
+    }
 
     /**
      * титуальная страница

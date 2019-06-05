@@ -83,6 +83,14 @@ class MenuManager
 
         $this->entityManager->persist($display);
 
+        $journal = new MenuItem();
+        $journal
+            ->setRole('ROLE_USER')
+            ->setName('Journal')
+            ->setRoute('core_journal');
+
+        $this->entityManager->persist($journal);
+
         $logout = new MenuItem();
         $logout
             ->setRole('ROLE_USER')
