@@ -9,11 +9,16 @@
 namespace App\Controller;
 
 
-use App\Dashboard\DashBoard;
+use App\Manager\DashBoardManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 
+/**
+ * Class RouteController
+ *
+ * @package App\Controller
+ */
 class RouteController extends AbstractController
 {
 //region SECTION: Public
@@ -21,22 +26,13 @@ class RouteController extends AbstractController
      * @Route("/status", options={"expose"=true}, name="core_status")
      * @Template("modules/display.html.twig")
      *
+     * @param DashBoardManager $dashBoardManager
+     *
      * @return array
      */
-    public function status()
+    public function status(DashBoardManager $dashBoardManager)
     {
-
-        $dashBoard = new DashBoard();
-
-        $sysinfo  = $dashBoard->createInfo()->getSysInfo();
-        $procinfo = $dashBoard->getProcInfo()->getProcInfo();
-
-        return [
-            'titleHeader' => 'Administration',
-            'pageName'    => 'System Status',
-            'sysinfo'     => $sysinfo,
-            'procinfo'    => $procinfo,
-        ];
+        return ['titleHeader' => 'Administration', 'pageName' => 'System Status'] + $dashBoardManager->getDashBoard();
     }
 
 
@@ -61,10 +57,7 @@ class RouteController extends AbstractController
      */
     public function encore()
     {
-        return [
-            'titleHeader' => 'Site Administration',
-            'pageName'    => 'Setup Module Administration',
-        ];
+        return ['titleHeader' => 'Site Administration', 'pageName' => 'Setup Module Administration'];
     }
 //endregion Public
 

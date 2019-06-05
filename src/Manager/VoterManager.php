@@ -11,6 +11,11 @@ namespace App\Manager;
 
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
+/**
+ * Class VoterManager
+ *
+ * @package App\Manager
+ */
 class VoterManager
 {
 //region SECTION: Fields

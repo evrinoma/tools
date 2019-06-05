@@ -9,8 +9,9 @@
 namespace App\Controller;
 
 
-use App\Core\MenuBuilder;
 use App\Dashboard\DashBoard;
+use App\Manager\DashBoardManager;
+use App\Manager\MenuManager;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use Swagger\Annotations as SWG;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -54,16 +55,26 @@ class ApiController extends AbstractController
      *     response=200,
      *     description="Returns system status"
      * )
+     * @param DashBoardManager $dashBoardManager
+     *
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
-    public function getSystemStatus()
+    public function getSystemStatus(DashBoardManager $dashBoardManager)
     {
-        $dashBoard = new DashBoard();
-
-        $sysinfo  = $dashBoard->createInfo()->getSysInfo();
-        $procinfo = $dashBoard->getProcInfo()->getProcInfo();
-
-        return $this->json(['sysinfo' => $sysinfo, 'procinfo' => $procinfo]);
+        return $this->json($dashBoardManager->getDashBoard());
     }
+
+
+    /**
+     * @Rest\Get("/api/journal", options={"expose"=true}, name="journal")
+     *
+     * @SWG\Response(response=200,description="Returns journal delta 8")
+     */
+    public function getJournal()
+    {
+        return $this->json(['journal' => 'journal']);
+    }
+
 
     /**
      * @Rest\Put("/default_menu", name="default_menu")
@@ -73,9 +84,9 @@ class ApiController extends AbstractController
      *     description="Returns the rewards of default generated menu"
      * )
      */
-    public function generateDefaultMenu(MenuBuilder $menuBuilder)
+    public function generateDefaultMenu(MenuManager $menuManager)
     {
-        $menuBuilder->generateDefaultMenu();
+        $menuManager->generateDefaultMenu();
 
         return $this->json(['message' => 'the Menu was generate successFully']);
     }

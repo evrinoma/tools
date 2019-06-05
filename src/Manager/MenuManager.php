@@ -6,21 +6,20 @@
  * Time: 3:38 PM
  */
 
-namespace App\Core;
+namespace App\Manager;
 
 
 use App\Entity\MenuItem;
-use App\Manager\VoterManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Menu\FactoryInterface;
 use Knp\Menu\ItemInterface;
 
 /**
- * Class MenuBuilder
+ * Class MenuManager
  *
- * @package App\Core
+ * @package App\Manager
  */
-class MenuBuilder
+class MenuManager
 {
 
 //region SECTION: Fields
@@ -40,9 +39,11 @@ class MenuBuilder
 
 //region SECTION: Constructor
     /**
-     * @param FactoryInterface $factory
+     * @param FactoryInterface       $factory
      *
      * Add any other dependency you need
+     * @param VoterManager           $voterManager
+     * @param EntityManagerInterface $entityManager
      */
     public function __construct(FactoryInterface $factory, VoterManager $voterManager, EntityManagerInterface $entityManager)
     {
@@ -53,6 +54,11 @@ class MenuBuilder
 //endregion Constructor
 
 //region SECTION: Public
+    /**
+     * @param array $options
+     *
+     * @return ItemInterface
+     */
     public function createMainMenu(array $options)
     {
         $root = $this->factory->createItem('root');
@@ -64,6 +70,9 @@ class MenuBuilder
         return $root;
     }
 
+    /**
+     *
+     */
     public function generateDefaultMenu(): void
     {
         $display = new MenuItem();
@@ -121,9 +130,6 @@ class MenuBuilder
 
 //region SECTION: Private
     /**
-     * @param MenuItem $menuItem
-     */
-    /**
      * @param ItemInterface $menuLevel
      * @param MenuItem      $menuItem
      *
@@ -151,6 +157,9 @@ class MenuBuilder
         }
     }
 
+    /**
+     * @return mixed
+     */
     private function getMenuItems()
     {
         return $this->entityManager->getRepository(MenuItem::class)->findBy(['parent' => null]);

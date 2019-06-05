@@ -15,17 +15,5 @@ namespace App\Core;
  */
 class Core
 {
-//region SECTION: Constructor
-    public function __construct()
-    {
 
-    }
-//endregion Constructor
-
-//region SECTION: Getters/Setters
-    public function getMenuList()
-    {
-
-    }
-//endregion Getters/Setters
 }

@@ -66,7 +66,7 @@ class DashBoard
 
     public function getProcInfo()
     {
-        return $this->procInfo;
+        return $this->procInfo->getProcInfo();
     }
 //endregion Getters/Setters
 }
