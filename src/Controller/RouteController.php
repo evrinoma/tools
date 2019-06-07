@@ -10,6 +10,7 @@ namespace App\Controller;
 
 
 use App\Manager\DashBoardManager;
+use App\Manager\JournalManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
@@ -41,8 +42,9 @@ class RouteController extends AbstractController
      *
      * @return array
      */
-    public function journal()
+    public function journal(JournalManager $journalManager)
     {
+        $params = $journalManager->getParams();
         return ['titleHeader' => 'Delta8 Administration', 'pageName' => 'Journal Delta8'];
     }
 

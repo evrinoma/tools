@@ -19,7 +19,7 @@ class Ldap
     /**
      * @var mixed $connect ldap server connector
      */
-    private $connect = false;
+            private $connect = false;
 
     /**
      * @var mixed $servers list ldap servers

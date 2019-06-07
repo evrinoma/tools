@@ -9,6 +9,7 @@
 namespace App\Manager;
 
 
+use App\Core\AbstractEntityManager;
 use App\Entity\MenuItem;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Menu\FactoryInterface;
@@ -19,10 +20,13 @@ use Knp\Menu\ItemInterface;
  *
  * @package App\Manager
  */
-class MenuManager
+class MenuManager extends AbstractEntityManager
 {
-
 //region SECTION: Fields
+    /**
+     * @var string
+     */
+    protected $repositoryClass = MenuItem::class;
     /**
      * @var VoterManager
      */
@@ -31,25 +35,21 @@ class MenuManager
      * @var FactoryInterface
      */
     private $factory;
-    /**
-     * @var EntityManagerInterface
-     */
-    private $entityManager;
 //endregion Fields
 
 //region SECTION: Constructor
     /**
-     * @param FactoryInterface       $factory
+     * MenuManager constructor.
      *
-     * Add any other dependency you need
-     * @param VoterManager           $voterManager
      * @param EntityManagerInterface $entityManager
+     * @param FactoryInterface       $factory
+     * @param VoterManager           $voterManager
      */
-    public function __construct(FactoryInterface $factory, VoterManager $voterManager, EntityManagerInterface $entityManager)
+    public function __construct(EntityManagerInterface $entityManager, FactoryInterface $factory, VoterManager $voterManager)
     {
-        $this->factory       = $factory;
-        $this->voterManager  = $voterManager;
-        $this->entityManager = $entityManager;
+        parent::__construct($entityManager);
+        $this->factory      = $factory;
+        $this->voterManager = $voterManager;
     }
 //endregion Constructor
 
@@ -170,7 +170,7 @@ class MenuManager
      */
     private function getMenuItems()
     {
-        return $this->entityManager->getRepository(MenuItem::class)->findBy(['parent' => null]);
+        return $this->repository->findBy(['parent' => null]);
     }
 //endregion Private
 }
