@@ -9,6 +9,7 @@
 namespace App\Manager;
 
 
+use Symfony\Component\Security\Core\Authorization\AuthorizationChecker;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 /**
@@ -23,6 +24,10 @@ class VoterManager
      * @var AuthorizationCheckerInterface
      */
     private $security;
+    /**
+     * @var AuthorizationChecker
+     */
+    private $securit;
 //endregion Fields
 
 //region SECTION: Constructor
@@ -38,13 +43,13 @@ class VoterManager
 
 //region SECTION: Public
     /**
-     * @param string $role
+     * @param array $roles
      *
      * @return bool
      */
-    public function checkPermission($role): bool
+    public function checkPermission($roles): bool
     {
-        return $this->security->isGranted($role) ? true : false;
+        return $this->security->isGranted($roles)? true: false;
     }
 //endregion Public
 }

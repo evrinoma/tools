@@ -79,16 +79,18 @@ class JournalManager extends AbstractEntityManager
      */
     public function findDataParams($date)
     {
-        $metadata = $this->entityManagerCustom->getClassMetadata(ParamData::class);
-        $metadata->setPrimaryTable(['name' => $this->toTableName($date)]);
-        /** @var EntityRepository $repository */
-        $repository       = $this->entityManagerCustom->getRepository(ParamData::class);
-        $this->dataParams = $repository->findAll();
+        if ($date) {
+            $metadata = $this->entityManagerCustom->getClassMetadata(ParamData::class);
+            $metadata->setPrimaryTable(['name' => $this->toTableName($date)]);
+            /** @var EntityRepository $repository */
+            $repository       = $this->entityManagerCustom->getRepository(ParamData::class);
+            $this->dataParams = $repository->findAll();
 
-        /** @var ParamData $item */
-        foreach ( $this->dataParams as $item)
-        {
-            $this->params[$item->getN()]->addParamData($item);
+            /** @var ParamData $item */
+            foreach ($this->dataParams as $item) {
+                $this->params[$item->getN()]->addParamData($item);
+            }
+
         }
 
         return $this;

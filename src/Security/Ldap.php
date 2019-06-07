@@ -105,7 +105,7 @@ class Ldap
     public function closeLdap()
     {
         if ($this->connect) {
-            ldap_close($this->connect);
+            ldap_unbind($this->connect);
         }
     }
 

@@ -77,7 +77,7 @@ class MenuManager extends AbstractEntityManager
     {
         $display = new MenuItem();
         $display
-            ->setRole('ROLE_USER')
+            ->setRole(['ROLE_USER'])
             ->setName('Status')
             ->setRoute('core_status');
 
@@ -85,7 +85,7 @@ class MenuManager extends AbstractEntityManager
 
         $journal = new MenuItem();
         $journal
-            ->setRole('ROLE_USER')
+            ->setRole(['ROLE_USER'])
             ->setName('Journal')
             ->setRoute('core_journal');
 
@@ -93,7 +93,7 @@ class MenuManager extends AbstractEntityManager
 
         $logout = new MenuItem();
         $logout
-            ->setRole('ROLE_USER')
+            ->setRole(['ROLE_USER'])
             ->setName('Logout')
             ->setRoute('fos_user_security_logout')
             ->setAttributes(['class' => 'logout']);
@@ -101,7 +101,7 @@ class MenuManager extends AbstractEntityManager
 
         $apiDoc = new MenuItem();
         $apiDoc
-            ->setRole('ROLE_SUPER_ADMIN')
+            ->setRole(['ROLE_SUPER_ADMIN', 'ROLE_API'])
             ->setName('ApiDoc')
             ->setRoute('app.swagger_ui');
 
@@ -109,7 +109,7 @@ class MenuManager extends AbstractEntityManager
 
         $eximSearch = new MenuItem();
         $eximSearch
-            ->setRole('ROLE_SUPER_ADMIN')
+            ->setRole(['ROLE_SUPER_ADMIN'])
             ->setName('Log Search')
             ->setUri('exim#search');
 
@@ -117,7 +117,7 @@ class MenuManager extends AbstractEntityManager
 
         $eximAcl = new MenuItem();
         $eximAcl
-            ->setRole('ROLE_SUPER_ADMIN')
+            ->setRole(['ROLE_SUPER_ADMIN'])
             ->setName('Edit ACL')
             ->setUri('exim#acl');
 
@@ -125,7 +125,7 @@ class MenuManager extends AbstractEntityManager
 
         $exim = new MenuItem();
         $exim
-            ->setRole('ROLE_SUPER_ADMIN')
+            ->setRole(['ROLE_SUPER_ADMIN'])
             ->setName('Exim')
             ->setUri('exim')
             ->addChild($eximSearch)

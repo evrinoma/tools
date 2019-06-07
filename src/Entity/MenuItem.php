@@ -67,8 +67,8 @@ class MenuItem
     protected $attributes = null;
 
     /**
-     * @var string
-     * @ORM\Column(name="role", type="string", nullable=true)
+     * @var array
+     * @ORM\Column(name="role", type="array", nullable=true)
      */
     protected $role = null;
 //endregion Fields
@@ -170,11 +170,11 @@ class MenuItem
     }
 
     /**
-     * @return string
+     * @return array|null
      */
-    public function getRole(): string
+    public function getRole(): ?array
     {
-        return $this->role;
+        return  $this->role;
     }
 
     public function getOptions()
@@ -255,11 +255,11 @@ class MenuItem
     }
 
     /**
-     * @param string $role
+     * @param array $role
      *
      * @return MenuItem
      */
-    public function setRole(string $role): self
+    public function setRole($role): self
     {
         $this->role = $role;
 

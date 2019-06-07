@@ -38,14 +38,13 @@ class RouteController extends AbstractController
 
     /**
      * @Route("/journal", options={"expose"=true}, name="core_journal")
-     * @Template("base.html.twig")
+     * @Template("modules/journal.html.twig")
      *
      * @return array
      */
     public function journal(JournalManager $journalManager)
     {
-        $params = $journalManager->getParams();
-        return ['titleHeader' => 'Delta8 Administration', 'pageName' => 'Journal Delta8'];
+        return ['titleHeader' => 'Delta8 Administration', 'pageName' => 'Journal Delta8', 'journal' =>  $journalManager->findParams()->findDataParams('07-06-2019')->getData()];
     }
 
     /**
