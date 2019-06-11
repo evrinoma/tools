@@ -26,7 +26,7 @@ class ApiController extends AbstractController
 {
 //region SECTION: Public
     /**
-     * @Rest\Get("/users", name="users")
+     * @Rest\Get("/internal/users", name="users")
      * @SWG\Parameter(
      *     name="order",
      *     in="query",
@@ -49,7 +49,7 @@ class ApiController extends AbstractController
     }
 
     /**
-     * @Rest\Put("/default_menu", name="default_menu")
+     * @Rest\Put("/api/default_menu", name="default_menu")
      * @SWG\Response(response=200,description="Returns the rewards of default generated menu")
      *
      * @param MenuManager $menuManager
@@ -80,7 +80,7 @@ class ApiController extends AbstractController
     }
 
     /**
-     * @Rest\Post("/api/journal", options={"expose"=true}, name="journal")
+     * @Rest\Get("/api/journal", options={"expose"=true}, name="journal")
      * @SWG\Parameter(
      *     name="date",
      *     in="query",
