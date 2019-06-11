@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Relaytofrom
  *
- * @ORM\Table(name="relaytofrom", indexes={@ORM\Index(name="rcpt_to", columns={"rcpt_to"}), @ORM\Index(name="relay_ip", columns={"relay_ip"}), @ORM\Index(name="mail_from", columns={"mail_from"})})
+ * @ORM\Table(name="relaytofrom")
  * @ORM\Entity
  */
 class Relaytofrom

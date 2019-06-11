@@ -11,6 +11,7 @@ namespace App\Controller;
 
 use App\Manager\DashBoardManager;
 use App\Manager\JournalManager;
+use App\Manager\MailManager;
 use App\Manager\MenuManager;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use Swagger\Annotations as SWG;
@@ -49,7 +50,7 @@ class ApiController extends AbstractController
     }
 
     /**
-     * @Rest\Put("/api/default_menu", name="default_menu")
+     * @Rest\Put("/internal/default_menu", name="default_menu")
      * @SWG\Response(response=200,description="Returns the rewards of default generated menu")
      *
      * @param MenuManager $menuManager
@@ -62,11 +63,37 @@ class ApiController extends AbstractController
 
         return $this->json(['message' => 'the Menu was generate successFully']);
     }
+
+    /**
+     * @Rest\Get("/internal/domains", name="domains")
+     * @SWG\Response(response=200,description="Returns the rewards of default generated menu")
+     *
+     * @param MailManager $mailManager
+     *
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     */
+    public function generateDomains(MailManager $mailManager)
+    {
+        return $this->json(['domains' => $mailManager->getDomains()]);
+    }
+
+    /**
+     * @Rest\Post("/internal/m/domains", name="m_domains")
+     * @SWG\Response(response=200,description="Returns the rewards of default generated menu")
+     *
+     * @param MailManager $mailManager
+     *
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     */
+    public function migrateDomains(MailManager $mailManager)
+    {
+        return $this->json(['domains' => $mailManager->megrateDomains()]);
+    }
 //endregion Public
 
 //region SECTION: Getters/Setters
     /**
-     * @Rest\Get("/api/system_status", options={"expose"=true}, name="system_status")
+     * @Rest\Get("/api/doc/system_status", options={"expose"=true}, name="system_status")
      *
      * @SWG\Response(response=200,description="Returns system status")
      *
@@ -80,7 +107,7 @@ class ApiController extends AbstractController
     }
 
     /**
-     * @Rest\Get("/api/journal", options={"expose"=true}, name="journal")
+     * @Rest\Get("/api/doc/journal", options={"expose"=true}, name="journal")
      * @SWG\Parameter(
      *     name="date",
      *     in="query",

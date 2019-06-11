@@ -7,8 +7,8 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * TbSpamRules
  *
- * @ORM\Table(name="tb_spam_rules", indexes={@ORM\Index(name="conformity", columns={"conformity"}), @ORM\Index(name="domain", columns={"domain"}), @ORM\Index(name="type", columns={"type"})})
- * @ORM\Entity
+ * ORM\Table(name="tb_spam_rules")
+ * ORM\Entity
  */
 class TbSpamRules
 {

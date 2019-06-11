@@ -7,8 +7,8 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * TbSpamFishing
  *
- * @ORM\Table(name="tb_spam_fishing", uniqueConstraints={@ORM\UniqueConstraint(name="sender_host_name", columns={"sender_host_name", "sender_helo_name", "sender_ident", "local_part"})}, indexes={@ORM\Index(name="tb_spam_rules", columns={"tb_spam_rules"})})
- * @ORM\Entity
+ * ORM\Table(name="tb_spam_fishing")
+ * ORM\Entity
  */
 class TbSpamFishing
 {
@@ -59,9 +59,9 @@ class TbSpamFishing
     /**
      * @var \TbSpamRules
      *
-     * @ORM\ManyToOne(targetEntity="TbSpamRules")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="tb_spam_rules", referencedColumnName="id")
+     * ORM\ManyToOne(targetEntity="TbSpamRules")
+     * ORM\JoinColumns({
+     *   ORM\JoinColumn(name="tb_spam_rules", referencedColumnName="id")
      * })
      */
     private $tbSpamRules;

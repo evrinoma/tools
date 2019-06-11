@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Entity;
+namespace App\Entity\Mail;
 
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * TbDomains
  *
- * @ORM\Table(name="tb_domains", uniqueConstraints={@ORM\UniqueConstraint(name="domain", columns={"domain"})})
+ * @ORM\Table(name="tb_domains", uniqueConstraints={@ORM\UniqueConstraint(name="domain", columns={"domain"}), @ORM\UniqueConstraint(name="id", columns={"id"})})
  * @ORM\Entity
  */
 class TbDomains
@@ -132,6 +132,142 @@ class TbDomains
      * @ORM\Column(name="mx", type="string", length=255, nullable=true)
      */
     private $mx;
+
+    /**
+     * @return int
+     */
+    public function getId(): int
+    {
+        return $this->id;
+    }
+
+    /**
+     * @return int
+     */
+    public function getOwnerId(): int
+    {
+        return $this->ownerId;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDomain(): string
+    {
+        return $this->domain;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isSpamscan(): bool
+    {
+        return $this->spamscan;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isVirusscan(): bool
+    {
+        return $this->virusscan;
+    }
+
+    /**
+     * @return string
+     */
+    public function getSubject(): string
+    {
+        return $this->subject;
+    }
+
+    /**
+     * @return float
+     */
+    public function getTag(): float
+    {
+        return $this->tag;
+    }
+
+    /**
+     * @return float
+     */
+    public function getQuarantine(): float
+    {
+        return $this->quarantine;
+    }
+
+    /**
+     * @return float
+     */
+    public function getBlock(): float
+    {
+        return $this->block;
+    }
+
+    /**
+     * @return float
+     */
+    public function getDelta(): float
+    {
+        return $this->delta;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isReject(): bool
+    {
+        return $this->reject;
+    }
+
+    /**
+     * @return string
+     */
+    public function getForward(): string
+    {
+        return $this->forward;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isFwdVerbose(): bool
+    {
+        return $this->fwdVerbose;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isHdrReport(): bool
+    {
+        return $this->hdrReport;
+    }
+
+    /**
+     * @return string
+     */
+    public function getReleyAdr(): string
+    {
+        return $this->releyAdr;
+    }
+
+    /**
+     * @return int
+     */
+    public function getGeoip(): int
+    {
+        return $this->geoip;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getMx(): ?string
+    {
+        return $this->mx;
+    }
 
 
 }

@@ -7,8 +7,8 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * TbEmails
  *
- * @ORM\Table(name="tb_emails", indexes={@ORM\Index(name="domain_id", columns={"domain_id"})})
- * @ORM\Entity
+ * ORM\Table(name="tb_emails")
+ * ORM\Entity
  */
 class TbEmails
 {
@@ -36,7 +36,7 @@ class TbEmails
     private $email = '';
 
     /**
-     * @var \TbDomains
+     * @var TbDomains
      *
      * @ORM\ManyToOne(targetEntity="TbDomains")
      * @ORM\JoinColumns({

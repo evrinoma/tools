@@ -10,5 +10,6 @@ nelmio_api_doc:
               - ^/internal
         default:
             path_patterns:
-              - ^/api(?!/doc$) # Accepts routes under /api except /api/doc
+              - ^/api(?!/doc/{area}$)
+              #- ^/api(?!/doc$) # Accepts routes under /api except /api/doc
 
