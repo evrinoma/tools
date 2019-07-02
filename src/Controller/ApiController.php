@@ -28,6 +28,7 @@ class ApiController extends AbstractController
 //region SECTION: Public
     /**
      * @Rest\Get("/internal/users", name="users")
+     * @SWG\Get(tags={"users"})
      * @SWG\Parameter(
      *     name="order",
      *     in="query",
@@ -51,6 +52,7 @@ class ApiController extends AbstractController
 
     /**
      * @Rest\Put("/internal/menu/create_default", name="create_default_menu")
+     * @SWG\Put(tags={"menu"})
      * @SWG\Response(response=200,description="Returns the rewards of default generated menu")
      *
      * @param MenuManager $menuManager
@@ -66,6 +68,7 @@ class ApiController extends AbstractController
 
     /**
      * @Rest\Delete("/internal/menu/delete", name="delete_menu")
+     * @SWG\Delete(tags={"menu"})
      * @SWG\Response(response=200,description="Returns nothing")
      *
      * @param MenuManager $menuManager
@@ -81,6 +84,7 @@ class ApiController extends AbstractController
 
     /**
      * @Rest\Get("/internal/domains/create_default", name="create_default_domains")
+     * @SWG\Get(tags={"domains"})
      * @SWG\Response(response=200,description="Returns the rewards of default generated menu")
      *
      * @param MailManager $mailManager
@@ -94,6 +98,7 @@ class ApiController extends AbstractController
 
     /**
      * @Rest\Post("/internal/m/domains", name="m_domains")
+     * @SWG\Post(tags={"domains"})
      * @SWG\Response(response=200,description="Returns the rewards of default generated menu")
      *
      * @param MailManager $mailManager
@@ -109,7 +114,7 @@ class ApiController extends AbstractController
 //region SECTION: Getters/Setters
     /**
      * @Rest\Get("/api/doc/system_status", options={"expose"=true}, name="system_status")
-     *
+     * @SWG\Get(tags={"system"})
      * @SWG\Response(response=200,description="Returns system status")
      *
      * @param DashBoardManager $dashBoardManager
@@ -123,6 +128,7 @@ class ApiController extends AbstractController
 
     /**
      * @Rest\Get("/api/doc/journal", options={"expose"=true}, name="journal")
+     * @SWG\Get(tags={"delta8"})
      * @SWG\Parameter(
      *     name="date",
      *     in="query",
