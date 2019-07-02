@@ -70,10 +70,19 @@ class MenuManager extends AbstractEntityManager
         return $root;
     }
 
+    public function deleteDefaultMenu(): void
+    {
+        $allMenuItems = $this->repository->findAll();
+        foreach ($allMenuItems as $menu) {
+            $this->entityManager->remove($menu);
+        }
+        $this->entityManager->flush();
+    }
+
     /**
      *
      */
-    public function generateDefaultMenu(): void
+    public function createDefaultMenu(): void
     {
         $display = new MenuItem();
         $display
@@ -99,39 +108,64 @@ class MenuManager extends AbstractEntityManager
             ->setAttributes(['class' => 'logout']);
         $this->entityManager->persist($logout);
 
+        $apiDocDefault = new MenuItem();
+        $apiDocDefault
+            ->setRole(['ROLE_SUPER_ADMIN', 'ROLE_API'])
+            ->setName('Default')
+            ->setRoute('app.swagger_ui');
+        $this->entityManager->persist($apiDocDefault);
+
+        $apiDocInternal = new MenuItem();
+        $apiDocInternal
+            ->setRole(['ROLE_SUPER_ADMIN'])
+            ->setName('Internal')
+            ->setRoute('app.swagger_ui.internal');
+        $this->entityManager->persist($apiDocInternal);
+
         $apiDoc = new MenuItem();
         $apiDoc
             ->setRole(['ROLE_SUPER_ADMIN', 'ROLE_API'])
             ->setName('ApiDoc')
-            ->setRoute('app.swagger_ui');
+            ->setUri('#')
+            ->addChild($apiDocDefault)
+            ->addChild($apiDocInternal);
 
         $this->entityManager->persist($apiDoc);
 
-        $eximSearch = new MenuItem();
-        $eximSearch
+        $mailSearch = new MenuItem();
+        $mailSearch
             ->setRole(['ROLE_SUPER_ADMIN'])
             ->setName('Log Search')
-            ->setUri('exim#search');
+            ->setUri('mail#search');
 
-        $this->entityManager->persist($eximSearch);
+        $this->entityManager->persist($mailSearch);
 
-        $eximAcl = new MenuItem();
-        $eximAcl
+        $mailDomain = new MenuItem();
+        $mailDomain
+            ->setRole(['ROLE_SUPER_ADMIN'])
+            ->setName('Edit Domain')
+            ->setUri('mail#domain');
+
+        $this->entityManager->persist($mailDomain);
+
+        $mailAcl = new MenuItem();
+        $mailAcl
             ->setRole(['ROLE_SUPER_ADMIN'])
             ->setName('Edit ACL')
-            ->setUri('exim#acl');
+            ->setUri('mail#acl');
 
-        $this->entityManager->persist($eximAcl);
+        $this->entityManager->persist($mailAcl);
 
-        $exim = new MenuItem();
-        $exim
+        $mail = new MenuItem();
+        $mail
             ->setRole(['ROLE_SUPER_ADMIN'])
-            ->setName('Exim')
-            ->setUri('exim')
-            ->addChild($eximSearch)
-            ->addChild($eximAcl);
+            ->setName('Mail')
+            ->setUri('#')
+            ->addChild($mailSearch)
+            ->addChild($mailDomain)
+            ->addChild($mailAcl);
 
-        $this->entityManager->persist($exim);
+        $this->entityManager->persist($mail);
         $this->entityManager->flush();
     }
 //endregion Public

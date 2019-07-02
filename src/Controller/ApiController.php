@@ -50,22 +50,37 @@ class ApiController extends AbstractController
     }
 
     /**
-     * @Rest\Put("/internal/default_menu", name="default_menu")
+     * @Rest\Put("/internal/menu/create_default", name="create_default_menu")
      * @SWG\Response(response=200,description="Returns the rewards of default generated menu")
      *
      * @param MenuManager $menuManager
      *
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
-    public function generateDefaultMenu(MenuManager $menuManager)
+    public function createDefaultMenu(MenuManager $menuManager)
     {
-        $menuManager->generateDefaultMenu();
+        $menuManager->createDefaultMenu();
 
         return $this->json(['message' => 'the Menu was generate successFully']);
     }
 
     /**
-     * @Rest\Get("/internal/domains", name="domains")
+     * @Rest\Delete("/internal/menu/delete", name="delete_menu")
+     * @SWG\Response(response=200,description="Returns nothing")
+     *
+     * @param MenuManager $menuManager
+     *
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     */
+    public function deleteMenu(MenuManager $menuManager)
+    {
+        $menuManager->deleteDefaultMenu();
+
+        return $this->json(['message' => 'the Menu was delete successFully']);
+    }
+
+    /**
+     * @Rest\Get("/internal/domains/create_default", name="create_default_domains")
      * @SWG\Response(response=200,description="Returns the rewards of default generated menu")
      *
      * @param MailManager $mailManager
