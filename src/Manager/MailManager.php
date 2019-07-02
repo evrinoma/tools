@@ -45,6 +45,12 @@ class MailManager extends AbstractEntityManager
         return $this;
     }
 
+
+    public function createDomain()
+    {
+        return [];
+    }
+
     public function megrateDomains()
     {
 

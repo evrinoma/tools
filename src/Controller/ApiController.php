@@ -14,6 +14,7 @@ use App\Manager\JournalManager;
 use App\Manager\MailManager;
 use App\Manager\MenuManager;
 use FOS\RestBundle\Controller\Annotations as Rest;
+use Nelmio\ApiDocBundle\Annotation\Model;
 use Swagger\Annotations as SWG;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -83,23 +84,46 @@ class ApiController extends AbstractController
     }
 
     /**
-     * @Rest\Get("/internal/domains/create_default", name="create_default_domains")
-     * @SWG\Get(tags={"domains"})
-     * @SWG\Response(response=200,description="Returns the rewards of default generated menu")
+     * @Rest\Post("/internal/domain/create_default", name="create_default_domain")
+     * @SWG\Post(tags={"domain"})
+     * @SWG\Parameter(
+     *     name="ip",
+     *     in="query",
+     *     type="string",
+     *     pattern="\d{1,3}.\d{1,3}.\d{1,3}.\d{1,3}",
+     *     default="172.20.1.4",
+     *     description="ip address mail server"
+     * )
+     * @SWG\Parameter(
+     *     name="name",
+     *     in="query",
+     *     type="string",
+     *     default="mail.ite-ng.ru",
+     *     description="name mail server"
+     * )
+     * @SWG\Response(response=200,description="Returns the rewards of default generated domain",
+     *     @SWG\Schema(
+     *        type="object",
+     *        example={"foo": "bar", "hello": "world"}
+     *     )
+     * )
      *
      * @param MailManager $mailManager
      *
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
-    public function generateDomains(MailManager $mailManager)
+    public function createDomain(MailManager $mailManager, Request $request)
     {
-        return $this->json(['domains' => $mailManager->getDomains()]);
+        $ip   = $request->get('ip');
+        $name = $request->get('name');
+
+        return $this->json(['domains' => $mailManager->createDomain()]);
     }
 
     /**
-     * @Rest\Post("/internal/m/domains", name="m_domains")
-     * @SWG\Post(tags={"domains"})
-     * @SWG\Response(response=200,description="Returns the rewards of default generated menu")
+     * @Rest\Put("/internal/domain/merge", name="merge_default_domains")
+     * @SWG\Put(tags={"domain"})
+     * @SWG\Response(response=200,description="Returns the merge of domains")
      *
      * @param MailManager $mailManager
      *
@@ -112,6 +136,20 @@ class ApiController extends AbstractController
 //endregion Public
 
 //region SECTION: Getters/Setters
+    /**
+     * @Rest\Get("/internal/domain/domains", name="domains")
+     * @SWG\Get(tags={"domain"})
+     * @SWG\Response(response=200,description="Returns the rewards of default generated domain")
+     *
+     * @param MailManager $mailManager
+     *
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     */
+    public function getDomain(MailManager $mailManager)
+    {
+        return $this->json(['domains' => $mailManager->getDomains()]);
+    }
+
     /**
      * @Rest\Get("/api/doc/system_status", options={"expose"=true}, name="system_status")
      * @SWG\Get(tags={"system"})
