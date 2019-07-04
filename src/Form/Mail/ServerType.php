@@ -8,7 +8,7 @@
 
 namespace App\Form\Mail;
 
-use App\Form\RestChoiceType;
+use App\Form\Rest\RestChoiceType;
 use App\Manager\ServerManager;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\OptionsResolver\Options;
@@ -52,7 +52,7 @@ class ServerType extends AbstractType
             return $servers;
         };
         $resolver->setDefault(RestChoiceType::REST_COMPONENT_NAME, 'server');
-        $resolver->setDefault(RestChoiceType::REST_DESCRIPTION, 'Servername');
+        $resolver->setDefault(RestChoiceType::REST_DESCRIPTION, 'ServerIp');
         $resolver->setDefault(RestChoiceType::REST_CHOICES, $callback);
     }
 //endregion Public
