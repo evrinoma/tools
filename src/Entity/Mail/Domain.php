@@ -40,15 +40,7 @@ class Domain
     private $server;
 //endregion Fields
 
-//region SECTION: Getters/Setters
-    /**
-     * @return string
-     */
-    public function getDomain(): string
-    {
-        return $this->domain;
-    }
-
+//region SECTION: Public
     /**
      * @param $server
      *
@@ -57,7 +49,18 @@ class Domain
     public function addServer($server)
     {
         $this->server = $server;
+
         return $this;
+    }
+//endregion Public
+
+//region SECTION: Getters/Setters
+    /**
+     * @return string
+     */
+    public function getDomain(): string
+    {
+        return $this->domain;
     }
 
     /**

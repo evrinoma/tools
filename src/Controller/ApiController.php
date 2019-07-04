@@ -29,30 +29,6 @@ class ApiController extends AbstractController
 {
 //region SECTION: Public
     /**
-     * @Rest\Get("/internal/users", name="users")
-     * @SWG\Get(tags={"users"})
-     * @SWG\Parameter(
-     *     name="order",
-     *     in="query",
-     *     type="string",
-     *     description="The field used to order rewards"
-     * )
-     * @SWG\Response(
-     *     response=200,
-     *     description="Returns the rewards of an user"
-     * )
-     */
-    public function index()
-    {
-        return $this->json(
-            [
-                'message' => 'Welcome to your new controller!',
-                'path'    => 'src/Controller/DisplayController.php',
-            ]
-        );
-    }
-
-    /**
      * @Rest\Put("/internal/menu/create_default", name="create_default_menu")
      * @SWG\Put(tags={"menu"})
      * @SWG\Response(response=200,description="Returns the rewards of default generated menu")
@@ -111,10 +87,12 @@ class ApiController extends AbstractController
      *        example={"name": "ite-ng.ru", "ip": "172.20.1.4"}
      *     )
      * )
+     * @SWG\Response(response=400,description="set ip and name domain")
      *
      * @param MailManager $mailManager
      *
      * @return \Symfony\Component\HttpFoundation\JsonResponse
+     * @throws \Exception
      */
     public function createDomain(MailManager $mailManager, Request $request)
     {
@@ -122,7 +100,10 @@ class ApiController extends AbstractController
         $ip   = $request->get('ip');
         $name = $request->get('name');
 
-        return $this->json(['domains' => $mailManager->createDomain()], $mailManager->getRestStatus());
+        return $this->json(
+            ['domains' => $mailManager->setRestSuccessOk()->createDomain($ip, $name)],
+            $mailManager->getRestStatus()
+        );
     }
 
     /**
@@ -136,7 +117,7 @@ class ApiController extends AbstractController
      */
     public function migrateDomains(MailManager $mailManager)
     {
-        return $this->json(['domains' => $mailManager->megrateDomains()]);
+        return $this->json(['domains' => $mailManager->setRestSuccessOk()->megrateDomains()], $mailManager->getRestStatus());
     }
 
     /**
@@ -152,30 +133,38 @@ class ApiController extends AbstractController
      *     description="ip server"
      * )
      * @SWG\Parameter(
-     *     name="name",
+     *     name="hostname",
      *     in="query",
      *     type="string",
      *     default="mail.ite-ng.ru",
-     *     description="name server"
+     *     description="hostname server"
      * )
      *
      * @SWG\Response(response=200,description="Returns the rewards of default generated domain",
      *     @SWG\Schema(
      *        type="object",
-     *        example={"name": "mail.ite-ng.ru", "ip": "172.20.1.4"}
+     *        example={"hostname": "mail.ite-ng.ru", "ip": "172.20.1.4"}
+     *     )
+     * )
+     *
+     * @SWG\Response(response=409,description="Generated domain with spme value ip or hostname allready exist",
+     *     @SWG\Schema(
+     *        type="object",
+     *        example={"hostname": "mail.ite-ng.ru", "ip": "172.20.1.4"}
      *     )
      * )
      *
      * @param ServerManager $serverManger
      *
      * @return \Symfony\Component\HttpFoundation\JsonResponse
+     * @throws \Exception
      */
     public function createServer(ServerManager $serverManger, Request $request)
     {
-        $ip   = $request->get('ip');
-        $name = $request->get('name');
+        $ip       = $request->get('ip');
+        $hostname = $request->get('hostname');
 
-        return $this->json(['server' => $serverManger->createServer()]);
+        return $this->json(['servers' => $serverManger->setRestSuccessOk()->createServer($ip, $hostname)], $serverManger->getRestStatus());
     }
 //endregion Public
 
@@ -191,7 +180,7 @@ class ApiController extends AbstractController
      */
     public function getDomain(MailManager $mailManager)
     {
-        return $this->json(['domains' => $mailManager->getDomains()]);
+        return $this->json(['domains' => $mailManager->setRestSuccessOk()->getDomains()], $mailManager->getRestStatus());
     }
 
     /**
@@ -205,7 +194,7 @@ class ApiController extends AbstractController
      */
     public function getServer(ServerManager $serverManger)
     {
-        return $this->json(['server' => $serverManger->getServers()]);
+        return $this->json(['servers' => $serverManger->setRestSuccessOk()->getServers()], $serverManger->getRestStatus());
     }
 
     /**
@@ -219,7 +208,7 @@ class ApiController extends AbstractController
      */
     public function getSystemStatus(DashBoardManager $dashBoardManager)
     {
-        return $this->json($dashBoardManager->getDashBoard());
+        return $this->json(['system' => $dashBoardManager->getDashBoard()]);
     }
 
     /**
@@ -248,7 +237,7 @@ class ApiController extends AbstractController
         $data = $journalManager->findParams()->findDataParams($date)->getData();
 
 
-        return $this->json(['journal' => $data]);
+        return $this->json(['delta8' => $data]);
     }
 //endregion Getters/Setters
 }
