@@ -13,6 +13,7 @@ use App\Manager\DashBoardManager;
 use App\Manager\JournalManager;
 use App\Manager\MailManager;
 use App\Manager\MenuManager;
+use App\Manager\ServerManager;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use Nelmio\ApiDocBundle\Annotation\Model;
 use Swagger\Annotations as SWG;
@@ -85,26 +86,29 @@ class ApiController extends AbstractController
 
     /**
      * @Rest\Post("/internal/domain/create_default", name="create_default_domain")
+     *
      * @SWG\Post(tags={"domain"})
      * @SWG\Parameter(
-     *     name="ip",
+     *  name="ip",
      *     in="query",
-     *     type="string",
-     *     pattern="\d{1,3}.\d{1,3}.\d{1,3}.\d{1,3}",
-     *     default="172.20.1.4",
-     *     description="ip address mail server"
+     *     type="array",
+     *     description="This is a parameter",
+     *     items=@SWG\Items(
+     *         type="string",
+     *         @Model(type=App\Form\Mail\ServerType::class)
+     *     )
      * )
      * @SWG\Parameter(
      *     name="name",
      *     in="query",
      *     type="string",
-     *     default="mail.ite-ng.ru",
-     *     description="name mail server"
+     *     default="ite-ng.ru",
+     *     description="name server"
      * )
      * @SWG\Response(response=200,description="Returns the rewards of default generated domain",
      *     @SWG\Schema(
      *        type="object",
-     *        example={"foo": "bar", "hello": "world"}
+     *        example={"name": "mail.ite-ng.ru", "ip": "172.20.1.4"}
      *     )
      * )
      *
@@ -114,7 +118,7 @@ class ApiController extends AbstractController
      */
     public function createDomain(MailManager $mailManager, Request $request)
     {
-        $ip   = $request->get('ip');
+        $id   = $request->get('id');
         $name = $request->get('name');
 
         return $this->json(['domains' => $mailManager->createDomain()]);
@@ -139,7 +143,7 @@ class ApiController extends AbstractController
     /**
      * @Rest\Get("/internal/domain/domains", name="domains")
      * @SWG\Get(tags={"domain"})
-     * @SWG\Response(response=200,description="Returns the rewards of default generated domain")
+     * @SWG\Response(response=200,description="Returns the rewards of all generated domains")
      *
      * @param MailManager $mailManager
      *
@@ -148,6 +152,60 @@ class ApiController extends AbstractController
     public function getDomain(MailManager $mailManager)
     {
         return $this->json(['domains' => $mailManager->getDomains()]);
+    }
+
+    /**
+     * @Rest\Get("/internal/servers/servers", name="servers")
+     * @SWG\Get(tags={"servers"})
+     * @SWG\Response(response=200,description="Returns the rewards of all servers")
+     *
+     * @param ServerManager $serverManger
+     *
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     */
+    public function getServer(ServerManager $serverManger)
+    {
+        return $this->json(['server' => $serverManger->getServers()]);
+    }
+
+
+    /**
+     * @Rest\Post("/internal/servers/create_default", name="create_default_server")
+     *
+     * @SWG\Post(tags={"servers"})
+     * @SWG\Parameter(
+     *     name="ip",
+     *     in="query",
+     *     type="string",
+     *     pattern="\d{1,3}.\d{1,3}.\d{1,3}.\d{1,3}",
+     *     default="172.20.1.4",
+     *     description="ip server"
+     * )
+     * @SWG\Parameter(
+     *     name="name",
+     *     in="query",
+     *     type="string",
+     *     default="mail.ite-ng.ru",
+     *     description="name server"
+     * )
+     *
+     * @SWG\Response(response=200,description="Returns the rewards of default generated domain",
+     *     @SWG\Schema(
+     *        type="object",
+     *        example={"name": "mail.ite-ng.ru", "ip": "172.20.1.4"}
+     *     )
+     * )
+     *
+     * @param ServerManager $serverManger
+     *
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     */
+    public function createServer(ServerManager $serverManger, Request $request)
+    {
+        $ip   = $request->get('ip');
+        $name = $request->get('name');
+
+        return $this->json(['server' => $serverManger->createServer()]);
     }
 
     /**
