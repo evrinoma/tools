@@ -6,16 +6,16 @@
  * Time: 5:09 PM
  */
 
-namespace App\Dto;
+namespace App\Dashboard\Dto;
 
 
-use App\Dto\ProcInfo\ServiceDto;
+use App\Dashboard\Dto\ProcInfo\ServiceDto;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Class ProcInfoDto
  *
- * @package App\Dto
+ * @package App\Dashboard\Dto
  */
 class ProcInfoDto
 {

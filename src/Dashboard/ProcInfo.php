@@ -8,8 +8,8 @@
 
 namespace App\Dashboard;
 
-use App\Dto\ProcInfo\ServiceDto;
-use App\Dto\ProcInfoDto;
+use App\Dashboard\Dto\ProcInfo\ServiceDto;
+use App\Dashboard\Dto\ProcInfoDto;
 use App\Entity\Settings;
 
 /**

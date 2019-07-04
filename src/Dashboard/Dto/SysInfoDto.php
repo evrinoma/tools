@@ -6,21 +6,21 @@
  * Time: 2:46 PM
  */
 
-namespace App\Dto;
+namespace App\Dashboard\Dto;
 
-use App\Dto\SysInfo\CpuDto;
-use App\Dto\SysInfo\DevDto;
-use App\Dto\SysInfo\DiskDto;
-use App\Dto\SysInfo\LoadAvgDto;
-use App\Dto\SysInfo\MemoryDto;
-use App\Dto\SysInfo\NetworkDto;
-use App\Dto\SysInfo\ScsiDto;
+use App\Dashboard\Dto\SysInfo\CpuDto;
+use App\Dashboard\Dto\SysInfo\DevDto;
+use App\Dashboard\Dto\SysInfo\DiskDto;
+use App\Dashboard\Dto\SysInfo\LoadAvgDto;
+use App\Dashboard\Dto\SysInfo\MemoryDto;
+use App\Dashboard\Dto\SysInfo\NetworkDto;
+use App\Dashboard\Dto\SysInfo\ScsiDto;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Class SysInfoDto
  *
- * @package App\Dto
+ * @package App\Dashboard\Dto
  */
 class SysInfoDto
 {

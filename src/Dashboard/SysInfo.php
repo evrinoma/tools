@@ -9,12 +9,12 @@
 namespace App\Dashboard;
 
 
-use App\Dto\SysInfo\CpuDto;
-use App\Dto\SysInfo\DevDto;
-use App\Dto\SysInfo\DiskDto;
-use App\Dto\SysInfo\NetworkDto;
-use App\Dto\SysInfo\ScsiDto;
-use App\Dto\SysInfoDto;
+use App\Dashboard\Dto\SysInfo\CpuDto;
+use App\Dashboard\Dto\SysInfo\DevDto;
+use App\Dashboard\Dto\SysInfo\DiskDto;
+use App\Dashboard\Dto\SysInfo\NetworkDto;
+use App\Dashboard\Dto\SysInfo\ScsiDto;
+use App\Dashboard\Dto\SysInfoDto;
 
 /**
  * Class SysInfo

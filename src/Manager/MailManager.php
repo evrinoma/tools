@@ -10,7 +10,7 @@ namespace App\Manager;
 
 
 use App\Core\AbstractEntityManager;
-use App\Core\RestTrait;
+use App\Core\Rest\RestTrait;
 use App\Entity\Mail\Domain;
 use App\Entity\Mail\Server;
 use App\Entity\Mail\TbDomains;

@@ -6,7 +6,7 @@
  * Time: 1:32 PM
  */
 
-namespace App\Core\Rest;
+namespace App\Rest\Core;
 
 use App\Rest\Model\RestModel;
 

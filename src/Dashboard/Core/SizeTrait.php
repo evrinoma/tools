@@ -6,8 +6,10 @@
  * Time: 4:13 PM
  */
 
-namespace App\Dto\Model;
+namespace App\Dashboard\Core;
 
+
+use App\Dashboard\Model\SizeModel;
 
 /**
  * Trait SizeTrait

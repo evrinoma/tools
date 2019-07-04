@@ -6,11 +6,16 @@
  * Time: 3:46 PM
  */
 
-namespace App\Dto\SysInfo;
+namespace App\Dashboard\Dto\SysInfo;
 
 
-use App\Dto\SysInfoDto;
+use App\Dashboard\Dto\SysInfoDto;
 
+/**
+ * Class ScsiDto
+ *
+ * @package App\Dashboard\Dto\SysInfo
+ */
 class ScsiDto
 {
 //region SECTION: Fields
@@ -40,7 +45,7 @@ class ScsiDto
      *
      * @return ScsiDto
      */
-    public function setModel(string $model)
+    public function setModel(string $model):self
     {
         $this->model = $model;
 
@@ -52,7 +57,7 @@ class ScsiDto
      *
      * @return ScsiDto
      */
-    public function setMedia(string $media)
+    public function setMedia(string $media):self
     {
         $this->media = $media;
 

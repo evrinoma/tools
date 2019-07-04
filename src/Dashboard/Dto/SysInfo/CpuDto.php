@@ -6,12 +6,12 @@
  * Time: 1:30 AM
  */
 
-namespace App\Dto\SysInfo;
+namespace App\Dashboard\Dto\SysInfo;
 
 /**
  * Class CpuDto
  *
- * @package App\Dto\SysInfoDto
+ * @package App\Dashboard\Dto\SysInfo
  */
 class CpuDto
 {
@@ -86,7 +86,7 @@ class CpuDto
      *
      * @return CpuDto
      */
-    public function setModel($model)
+    public function setModel($model):self
     {
         $this->model = $model;
 
@@ -98,7 +98,7 @@ class CpuDto
      *
      * @return CpuDto
      */
-    public function setCpuSpeed($cpuSpeed)
+    public function setCpuSpeed($cpuSpeed):self
     {
         $this->cpuSpeed = $cpuSpeed;
 
@@ -110,7 +110,7 @@ class CpuDto
      *
      * @return CpuDto
      */
-    public function setCache($cache)
+    public function setCache($cache):self
     {
         $this->cache = $cache;
 
@@ -122,7 +122,7 @@ class CpuDto
      *
      * @return CpuDto
      */
-    public function setBogomips($bogomips)
+    public function setBogomips($bogomips):self
     {
         $this->bogomips = $bogomips;
 

@@ -6,14 +6,15 @@
  * Time: 5:56 PM
  */
 
-namespace App\Dto\SysInfo;
+namespace App\Dashboard\Dto\SysInfo;
 
-use App\Dto\Model\SizeTrait;
+
+use App\Dashboard\Core\SizeTrait;
 
 /**
  * Class DiskDto
  *
- * @package App\Dto\SysInfoDto
+ * @package App\Dto\SysInfo
  */
 class DiskDto
 {
@@ -125,7 +126,7 @@ class DiskDto
      *
      * @return DiskDto
      */
-    public function setInodes($inodes)
+    public function setInodes($inodes):self
     {
         $this->inodes = $inodes;
 
@@ -137,7 +138,7 @@ class DiskDto
      *
      * @return DiskDto
      */
-    public function setOptions($options)
+    public function setOptions($options):self
     {
         $this->options = $options;
 
@@ -149,7 +150,7 @@ class DiskDto
      *
      * @return DiskDto
      */
-    public function setFstype($fstype)
+    public function setFstype($fstype):self
     {
         $this->fstype = $fstype;
 
@@ -161,7 +162,7 @@ class DiskDto
      *
      * @return DiskDto
      */
-    public function setMount($mount)
+    public function setMount($mount):self
     {
         $this->mount = $mount;
 
@@ -173,7 +174,7 @@ class DiskDto
      *
      * @return DiskDto
      */
-    public function setFree($free)
+    public function setFree($free):self
     {
         $this->free = $free;
 
@@ -185,7 +186,7 @@ class DiskDto
      *
      * @return $this
      */
-    public function setUsed($used)
+    public function setUsed($used):self
     {
         $this->used = $used;
 
@@ -197,7 +198,7 @@ class DiskDto
      *
      * @return $this
      */
-    public function setName($name)
+    public function setName($name):self
     {
         $this->name = $name;
 
@@ -209,7 +210,7 @@ class DiskDto
      *
      * @return DiskDto
      */
-    public function setTotal($devSwapTotal)
+    public function setTotal($devSwapTotal):self
     {
         $this->total = $devSwapTotal;
 

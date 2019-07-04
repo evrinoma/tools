@@ -8,7 +8,11 @@
 
 namespace App\Dashboard;
 
-
+/**
+ * Class AbstractInfo
+ *
+ * @package App\Dashboard
+ */
 abstract class AbstractInfo
 {
 //region SECTION: Fields

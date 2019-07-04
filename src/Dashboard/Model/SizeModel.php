@@ -6,12 +6,12 @@
  * Time: 4:16 PM
  */
 
-namespace App\Dto\Model;
+namespace App\Dashboard\Model;
 
 /**
  * Class SizeModel
  *
- * @package App\Dto\SysInfo
+ * @package App\Dashboard\Model
  */
 abstract class SizeModel
 {

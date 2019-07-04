@@ -6,9 +6,13 @@
  * Time: 5:10 PM
  */
 
-namespace App\Dto\ProcInfo;
+namespace App\Dashboard\Dto\ProcInfo;
 
-
+/**
+ * Class ServiceDto
+ *
+ * @package App\Dashboard\Dto\ProcInfo
+ */
 class ServiceDto
 {
 //region SECTION: Fields

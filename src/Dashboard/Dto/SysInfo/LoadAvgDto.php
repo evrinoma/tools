@@ -6,12 +6,12 @@
  * Time: 3:03 PM
  */
 
-namespace App\Dto\SysInfo;
+namespace App\Dashboard\Dto\SysInfo;
 
 /**
  * Class LoadAvgDto
  *
- * @package App\Dto\SysInfoDto
+ * @package App\Dashboard\Dto\SysInfo
  */
 class LoadAvgDto
 {
@@ -165,7 +165,7 @@ class LoadAvgDto
      *
      * @return LoadAvgDto
      */
-    public function setUserCpuLast(int $userCpuLast)
+    public function setUserCpuLast(int $userCpuLast):self
     {
         $this->userCpuLast = $userCpuLast;
 
@@ -177,7 +177,7 @@ class LoadAvgDto
      *
      * @return LoadAvgDto
      */
-    public function setNiceCpuLast(int $niceCpuLast)
+    public function setNiceCpuLast(int $niceCpuLast):self
     {
         $this->niceCpuLast = $niceCpuLast;
 
@@ -189,7 +189,7 @@ class LoadAvgDto
      *
      * @return LoadAvgDto
      */
-    public function setSystemCpuLast(int $systemCpuLast)
+    public function setSystemCpuLast(int $systemCpuLast):self
     {
         $this->systemCpuLast = $systemCpuLast;
 
@@ -201,7 +201,7 @@ class LoadAvgDto
      *
      * @return LoadAvgDto
      */
-    public function setIdleCpuLast(int $idleCpuLast)
+    public function setIdleCpuLast(int $idleCpuLast):self
     {
         $this->idleCpuLast = $idleCpuLast;
 
@@ -213,7 +213,7 @@ class LoadAvgDto
      *
      * @return LoadAvgDto
      */
-    public function setUserCpuNext(int $userCpuNext)
+    public function setUserCpuNext(int $userCpuNext):self
     {
         $this->userCpuNext = $userCpuNext;
 
@@ -225,7 +225,7 @@ class LoadAvgDto
      *
      * @return LoadAvgDto
      */
-    public function setNiceCpuNext(int $niceCpuNext)
+    public function setNiceCpuNext(int $niceCpuNext):self
     {
         $this->niceCpuNext = $niceCpuNext;
 
@@ -237,7 +237,7 @@ class LoadAvgDto
      *
      * @return LoadAvgDto
      */
-    public function setSystemCpuNext(int $systemCpuNext)
+    public function setSystemCpuNext(int $systemCpuNext):self
     {
         $this->systemCpuNext = $systemCpuNext;
 
@@ -249,7 +249,7 @@ class LoadAvgDto
      *
      * @return LoadAvgDto
      */
-    public function setIdleCpuNext(int $idleCpuNext)
+    public function setIdleCpuNext(int $idleCpuNext):self
     {
         $this->idleCpuNext = $idleCpuNext;
 
@@ -261,7 +261,7 @@ class LoadAvgDto
      *
      * @return LoadAvgDto
      */
-    public function setLoadAve1($loadAve1)
+    public function setLoadAve1($loadAve1):self
     {
         $this->loadAve1 = $loadAve1;
 
@@ -273,7 +273,7 @@ class LoadAvgDto
      *
      * @return LoadAvgDto
      */
-    public function setLoadAve5($loadAve5)
+    public function setLoadAve5($loadAve5):self
     {
         $this->loadAve5 = $loadAve5;
 
@@ -285,7 +285,7 @@ class LoadAvgDto
      *
      * @return LoadAvgDto
      */
-    public function setLoadAve15($loadAve15)
+    public function setLoadAve15($loadAve15):self
     {
         $this->loadAve15 = $loadAve15;
 

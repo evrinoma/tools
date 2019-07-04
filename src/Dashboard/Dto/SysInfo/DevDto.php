@@ -6,9 +6,13 @@
  * Time: 4:13 PM
  */
 
-namespace App\Dto\SysInfo;
+namespace App\Dashboard\Dto\SysInfo;
 
-
+/**
+ * Class DevDto
+ *
+ * @package App\Dashboard\Dto\SysInfo
+ */
 class DevDto
 {
 //region SECTION: Fields

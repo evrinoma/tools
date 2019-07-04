@@ -6,12 +6,12 @@
  * Time: 5:15 PM
  */
 
-namespace App\Dto\SysInfo;
+namespace App\Dashboard\Dto\SysInfo;
 
 /**
  * Class NetworkDto
  *
- * @package App\Dto\SysInfoDto
+ * @package App\Dashboard\Dto\SysInfo
  */
 class NetworkDto
 {
@@ -123,7 +123,7 @@ class NetworkDto
      *
      * @return NetworkDto
      */
-    public function setName($name)
+    public function setName($name):self
     {
         $this->name = $name;
 
@@ -135,7 +135,7 @@ class NetworkDto
      *
      * @return NetworkDto
      */
-    public function setRxBytes($rxBytes)
+    public function setRxBytes($rxBytes):self
     {
         $this->rxBytes = $rxBytes;
 
@@ -147,7 +147,7 @@ class NetworkDto
      *
      * @return NetworkDto
      */
-    public function setRxPackets($rxPackets)
+    public function setRxPackets($rxPackets):self
     {
         $this->rxPackets = $rxPackets;
 
@@ -159,7 +159,7 @@ class NetworkDto
      *
      * @return NetworkDto
      */
-    public function setRxErrors($rxErrors)
+    public function setRxErrors($rxErrors):self
     {
         $this->rxErrors = $rxErrors;
 
@@ -171,7 +171,7 @@ class NetworkDto
      *
      * @return NetworkDto
      */
-    public function setRxDrop($rxDrop)
+    public function setRxDrop($rxDrop):self
     {
         $this->rxDrop = $rxDrop;
 
@@ -183,7 +183,7 @@ class NetworkDto
      *
      * @return NetworkDto
      */
-    public function setTxBytes($txBytes)
+    public function setTxBytes($txBytes):self
     {
         $this->txBytes = $txBytes;
 
@@ -195,7 +195,7 @@ class NetworkDto
      *
      * @return NetworkDto
      */
-    public function setTxPackets($txPackets)
+    public function setTxPackets($txPackets):self
     {
         $this->txPackets = $txPackets;
 
@@ -207,7 +207,7 @@ class NetworkDto
      *
      * @return NetworkDto
      */
-    public function setTxErrors($txErrors)
+    public function setTxErrors($txErrors):self
     {
         $this->txErrors = $txErrors;
 
@@ -219,7 +219,7 @@ class NetworkDto
      *
      * @return NetworkDto
      */
-    public function setTxDrop($txDrop)
+    public function setTxDrop($txDrop):self
     {
         $this->txDrop = $txDrop;
 

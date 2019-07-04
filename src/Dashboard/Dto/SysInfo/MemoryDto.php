@@ -6,15 +6,15 @@
  * Time: 5:27 PM
  */
 
-namespace App\Dto\SysInfo;
+namespace App\Dashboard\Dto\SysInfo;
 
-use App\Dto\Model\SizeTrait;
+use App\Dashboard\Core\SizeTrait;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Class MemoryDto
  *
- * @package App\Dto\SysInfoDto
+ * @package App\Dashboard\Dto\SysInfo
  */
 class MemoryDto
 {
@@ -46,7 +46,7 @@ class MemoryDto
      *
      * @return MemoryDto
      */
-    public function addDevSwap(DiskDto $devSwap)
+    public function addDevSwap(DiskDto $devSwap):self
     {
         $this->devSwap->add($devSwap);
 
@@ -213,7 +213,7 @@ class MemoryDto
      *
      * @return MemoryDto
      */
-    public function setBuffers(int $buffers)
+    public function setBuffers(int $buffers):self
     {
         $this->buffers = $buffers;
 
@@ -225,7 +225,7 @@ class MemoryDto
      *
      * @return MemoryDto
      */
-    public function setMemTotal(int $memTotal)
+    public function setMemTotal(int $memTotal):self
     {
         $this->memTotal = $memTotal;
 
@@ -237,7 +237,7 @@ class MemoryDto
      *
      * @return MemoryDto
      */
-    public function setMemFree(int $memFree)
+    public function setMemFree(int $memFree):self
     {
         $this->memFree = $memFree;
 
@@ -249,7 +249,7 @@ class MemoryDto
      *
      * @return MemoryDto
      */
-    public function setCached(int $cached)
+    public function setCached(int $cached):self
     {
         $this->cached = $cached;
 
@@ -261,7 +261,7 @@ class MemoryDto
      *
      * @return MemoryDto
      */
-    public function setSwapTotal(int $swapTotal)
+    public function setSwapTotal(int $swapTotal):self
     {
         $this->swapTotal = $swapTotal;
 
@@ -273,7 +273,7 @@ class MemoryDto
      *
      * @return MemoryDto
      */
-    public function setSwapFree(int $swapFree)
+    public function setSwapFree(int $swapFree):self
     {
         $this->swapFree = $swapFree;
 
