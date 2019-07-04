@@ -6,7 +6,7 @@
  * Time: 12:13 PM
  */
 
-namespace App\Form\Rest;
+namespace App\Rest\Form;
 
 
 use Symfony\Component\Form\AbstractType;

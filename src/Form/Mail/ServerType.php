@@ -8,8 +8,8 @@
 
 namespace App\Form\Mail;
 
-use App\Form\Rest\RestChoiceType;
 use App\Manager\ServerManager;
+use App\Rest\Form\RestChoiceType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\OptionsResolver\Options;
 use Symfony\Component\OptionsResolver\OptionsResolver;

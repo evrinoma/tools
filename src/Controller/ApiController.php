@@ -103,12 +103,12 @@ class ApiController extends AbstractController
      *     in="query",
      *     type="string",
      *     default="ite-ng.ru",
-     *     description="name server"
+     *     description="Mail name server"
      * )
      * @SWG\Response(response=200,description="Returns the rewards of default generated domain",
      *     @SWG\Schema(
      *        type="object",
-     *        example={"name": "mail.ite-ng.ru", "ip": "172.20.1.4"}
+     *        example={"name": "ite-ng.ru", "ip": "172.20.1.4"}
      *     )
      * )
      *
@@ -118,10 +118,11 @@ class ApiController extends AbstractController
      */
     public function createDomain(MailManager $mailManager, Request $request)
     {
-        $id   = $request->get('id');
+
+        $ip   = $request->get('ip');
         $name = $request->get('name');
 
-        return $this->json(['domains' => $mailManager->createDomain()]);
+        return $this->json(['domains' => $mailManager->createDomain()], $mailManager->getRestStatus());
     }
 
     /**
@@ -137,37 +138,6 @@ class ApiController extends AbstractController
     {
         return $this->json(['domains' => $mailManager->megrateDomains()]);
     }
-//endregion Public
-
-//region SECTION: Getters/Setters
-    /**
-     * @Rest\Get("/internal/domain/domains", name="domains")
-     * @SWG\Get(tags={"domain"})
-     * @SWG\Response(response=200,description="Returns the rewards of all generated domains")
-     *
-     * @param MailManager $mailManager
-     *
-     * @return \Symfony\Component\HttpFoundation\JsonResponse
-     */
-    public function getDomain(MailManager $mailManager)
-    {
-        return $this->json(['domains' => $mailManager->getDomains()]);
-    }
-
-    /**
-     * @Rest\Get("/internal/servers/servers", name="servers")
-     * @SWG\Get(tags={"servers"})
-     * @SWG\Response(response=200,description="Returns the rewards of all servers")
-     *
-     * @param ServerManager $serverManger
-     *
-     * @return \Symfony\Component\HttpFoundation\JsonResponse
-     */
-    public function getServer(ServerManager $serverManger)
-    {
-        return $this->json(['server' => $serverManger->getServers()]);
-    }
-
 
     /**
      * @Rest\Post("/internal/servers/create_default", name="create_default_server")
@@ -206,6 +176,36 @@ class ApiController extends AbstractController
         $name = $request->get('name');
 
         return $this->json(['server' => $serverManger->createServer()]);
+    }
+//endregion Public
+
+//region SECTION: Getters/Setters
+    /**
+     * @Rest\Get("/internal/domain/domains", name="domains")
+     * @SWG\Get(tags={"domain"})
+     * @SWG\Response(response=200,description="Returns the rewards of all generated domains")
+     *
+     * @param MailManager $mailManager
+     *
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     */
+    public function getDomain(MailManager $mailManager)
+    {
+        return $this->json(['domains' => $mailManager->getDomains()]);
+    }
+
+    /**
+     * @Rest\Get("/internal/servers/servers", name="servers")
+     * @SWG\Get(tags={"servers"})
+     * @SWG\Response(response=200,description="Returns the rewards of all servers")
+     *
+     * @param ServerManager $serverManger
+     *
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     */
+    public function getServer(ServerManager $serverManger)
+    {
+        return $this->json(['server' => $serverManger->getServers()]);
     }
 
     /**
