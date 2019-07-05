@@ -136,7 +136,7 @@ class MenuManager extends AbstractEntityManager
         $mailSearch
             ->setRole(['ROLE_SUPER_ADMIN'])
             ->setName('Log Search')
-            ->setUri('mail#search');
+            ->setRoute('mail_search');
 
         $this->entityManager->persist($mailSearch);
 
@@ -144,7 +144,7 @@ class MenuManager extends AbstractEntityManager
         $mailDomain
             ->setRole(['ROLE_SUPER_ADMIN'])
             ->setName('Edit Domain')
-            ->setUri('mail#domain');
+            ->setRoute('mail_domain');
 
         $this->entityManager->persist($mailDomain);
 
@@ -152,7 +152,7 @@ class MenuManager extends AbstractEntityManager
         $mailAcl
             ->setRole(['ROLE_SUPER_ADMIN'])
             ->setName('Edit ACL')
-            ->setUri('mail#acl');
+            ->setRoute('mail_acl');
 
         $this->entityManager->persist($mailAcl);
 
