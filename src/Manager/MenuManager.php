@@ -96,7 +96,7 @@ class MenuManager extends AbstractEntityManager
         $journal
             ->setRole(['ROLE_USER'])
             ->setName('Journal')
-            ->setRoute('core_journal');
+            ->setRoute('delta_journal');
 
         $this->entityManager->persist($journal);
 

@@ -10,7 +10,6 @@ namespace App\Controller;
 
 
 use App\Manager\DashBoardManager;
-use App\Manager\JournalManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
@@ -36,16 +35,6 @@ class RouteController extends AbstractController
         return ['titleHeader' => 'Administration', 'pageName' => 'System Status'] + $dashBoardManager->getDashBoard();
     }
 
-    /**
-     * @Route("/journal", options={"expose"=true}, name="core_journal")
-     * @Template("modules/journal.html.twig")
-     *
-     * @return array
-     */
-    public function journal(JournalManager $journalManager)
-    {
-        return ['titleHeader' => 'Delta8 Administration', 'pageName' => 'Journal Delta8', 'journal' =>  $journalManager->findParams()->findDataParams('07-06-2019')->getData()];
-    }
 
     /**
      * титуальная страница
