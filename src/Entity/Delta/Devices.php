@@ -1,16 +1,16 @@
 <?php
 
-namespace App\Entity\Journal;
+namespace App\Entity\Delta;
 
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Groups
+ * Devices
  *
- * @ORM\Table(name="GROUPS")
+ * @ORM\Table(name="DEVICES")
  * @ORM\Entity
  */
-class Groups
+class Devices
 {
     /**
      * @var int
@@ -24,14 +24,14 @@ class Groups
     /**
      * @var string
      *
-     * @ORM\Column(name="NAME", type="string", length=100, nullable=false)
+     * @ORM\Column(name="NAME", type="string", length=254, nullable=false)
      */
     private $name;
 
     /**
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
@@ -39,7 +39,7 @@ class Groups
     /**
      * @param string $name
      *
-     * @return Groups
+     * @return Devices
      */
     public function setName(string $name)
     {
@@ -47,4 +47,5 @@ class Groups
 
         return $this;
     }
+
 }

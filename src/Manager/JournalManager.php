@@ -11,7 +11,9 @@ namespace App\Manager;
 
 use App\Core\AbstractEntityManager;
 use App\Entity\Customer\ParamData;
-use App\Entity\Journal\Params;
+use App\Entity\Delta\DiscretInfo;
+use App\Entity\Delta\Params;
+use Doctrine\DBAL\Connection;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
@@ -24,18 +26,19 @@ use Symfony\Bridge\Doctrine\RegistryInterface;
 class JournalManager extends AbstractEntityManager
 {
 //region SECTION: Fields
-    /**
-     * @var string
-     */
-    protected $repositoryClass = Params::class;
+    const MSSQL_LINK      = 'delta';
+    const DEFAULT_DB      = 'TAZOVSKIY';
+    const DEFAULT_DB_DATA = 'TAZOVSKIY_DATA';
 
     /** @var Params[] */
-    private $params = [];
-
+    private $params     = [];
     private $dataParams = [];
+    private $entityManagerDelta;
 
-    private $entityManagerCustom;
-
+    /**
+     * @var Connection
+     */
+    private $connection;
 //endregion Fields
 
 
@@ -44,7 +47,8 @@ class JournalManager extends AbstractEntityManager
     {
         parent::__construct($entityManager);
 
-        $this->entityManagerCustom = $registry->getEntityManager('customer');
+        $this->entityManagerDelta = $registry->getEntityManager(self::MSSQL_LINK);
+        $this->connection         = $this->entityManagerDelta->getConnection();
     }
 //endregion Constructor
 
@@ -55,6 +59,27 @@ class JournalManager extends AbstractEntityManager
 
         return 'D'.$d->format('dmY');
     }
+
+    private function connectionSwitcher($dbName)
+    {
+        $params           = $this->connection->getParams();
+        $params['dbname'] = $dbName;
+        if ($this->connection->isConnected()) {
+            $this->connection->close();
+        }
+
+        $this->connection->__construct(
+            $params,
+            $this->connection->getDriver(),
+            $this->connection->getConfiguration(),
+            $this->connection->getEventManager()
+        );
+        try {
+            $this->connection->connect();
+        } catch (Exception $e) {
+            // log and handle exception
+        }
+    }
 //endregion Private
 
 //region SECTION: Find Filters Repository
@@ -64,8 +89,9 @@ class JournalManager extends AbstractEntityManager
     public function findParams()
     {
         /** @var Params $item */
-        foreach ( $this->repository->findAll() as $item)
-        {
+        $this->connectionSwitcher(self::DEFAULT_DB);
+        $repository = $this->entityManagerDelta->getRepository(Params::class);
+        foreach ($repository->findAll() as $item) {
             $this->params[$item->getId()] = $item;
         }
 
@@ -80,10 +106,12 @@ class JournalManager extends AbstractEntityManager
     public function findDataParams($date)
     {
         if ($date) {
-            $metadata = $this->entityManagerCustom->getClassMetadata(ParamData::class);
+            $this->connectionSwitcher(self::DEFAULT_DB_DATA);
+
+            $metadata = $this->entityManagerDelta->getClassMetadata(DiscretInfo::class);
             $metadata->setPrimaryTable(['name' => $this->toTableName($date)]);
             /** @var EntityRepository $repository */
-            $repository       = $this->entityManagerCustom->getRepository(ParamData::class);
+            $repository       = $this->entityManagerDelta->getRepository(DiscretInfo::class);
             $this->dataParams = $repository->findAll();
 
             /** @var ParamData $item */

@@ -213,17 +213,17 @@ class ApiController extends AbstractController
 
     /**
      * @Rest\Get("/api/doc/journal", options={"expose"=true}, name="journal")
-     * @SWG\Get(tags={"delta8"})
+     * @SWG\Get(tags={"delta"})
      * @SWG\Parameter(
      *     name="date",
      *     in="query",
      *     type="string",
      *     format="date",
      *     pattern="\d{1,2}-\d{1,2}-\d{4}",
-     *     default="07-06-2019",
+     *     default="13-07-2018",
      *     description="Select data by date value"
      * )
-     * @SWG\Response(response=200,description="Returns journal delta 8")
+     * @SWG\Response(response=200,description="Returns journal delta")
      *
      * @param JournalManager $journalManager
      * @param Request        $request
@@ -237,7 +237,7 @@ class ApiController extends AbstractController
         $data = $journalManager->findParams()->findDataParams($date)->getData();
 
 
-        return $this->json(['delta8' => $data]);
+        return $this->json(['delta' => $data]);
     }
 //endregion Getters/Setters
 }

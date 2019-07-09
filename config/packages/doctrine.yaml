@@ -7,6 +7,9 @@ parameters:
 
 doctrine:
     dbal:
+#        types:
+#            timestamp:  App\Type\Timestamp
+#            datetime2:  App\Type\DateTimeTwo
         default_connection: default
         connections:
             default:
@@ -18,14 +21,28 @@ doctrine:
                 # With Symfony 3.3, remove the `resolve:` prefix
                 url: '%env(resolve:DATABASE_URL)%'
 
-            customer:
+            delta:
                 # configure these for your database server
-                driver: 'pdo_mysql'
+                driver: 'pdo_sqlsrv'
                 server_version: '5.7'
                 charset: utf8mb4
-
+                schema_filter: ~^.*(^PARAMS*|^GROUPS*|^DEVICES*|^SCALES*|^SCRIPT_ENGINES*)~
                 # With Symfony 3.3, remove the `resolve:` prefix
-                url: '%env(resolve:DATABASE_CUSTOMER_URL)%'
+                url: '%env(resolve:DATABASE_DELTA_URL)%'
+#                mapping_types:
+#                    datetime2: datetime2
+#                    timestamp: timestamp
+
+            delta_data:
+                # configure these for your database server
+                driver: 'pdo_sqlsrv'
+                server_version: '5.7'
+                charset: utf8mb4
+                schema_filter: ~^.*(^A01012019*|^D01012019*)~
+                # With Symfony 3.3, remove the `resolve:` prefix
+                url: '%env(resolve:DATABASE_DELTA_DATA_URL)%'
+
+
 
     orm:
 #        auto_generate_proxy_classes: '%kernel.debug%'
@@ -49,12 +66,21 @@ doctrine:
                         dir: '%kernel.project_dir%/src/Entity'
                         prefix: 'App\Entity'
                         alias: App
-            customer:
-                connection: customer
+            delta:
+                connection: delta
                 mappings:
                     Customer:
                         is_bundle: false
                         type: annotation
-                        dir: '%kernel.project_dir%/src/Entity/Customer'
-                        prefix: 'App\Entity\Customer'
-                        alias: Customer
+                        dir: '%kernel.project_dir%/src/Entity/Delta'
+                        prefix: 'App\Entity\Delta'
+                        alias: Delta
+            delta_data:
+                connection: delta_data
+                mappings:
+                    Customer:
+                        is_bundle: false
+                        type: annotation
+                        dir: '%kernel.project_dir%/src/Entity/Delta'
+                        prefix: 'App\Entity\Delta'
+                        alias: DeltaData
