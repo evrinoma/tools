@@ -28,10 +28,37 @@ class SettingsManager extends AbstractEntityManager
      * @var string
      */
     protected $repositoryClass = Settings::class;
-
 //endregion Fields
 
 //region SECTION: Getters/Setters
+    public function getSqlServers()
+    {
+        $builder = $this->repository->createQueryBuilder('settings');
+
+        $builder
+            ->leftJoin('settings.serviceType', 'serviceType')
+            ->andWhere('serviceType.type = :type')
+            ->setParameter('type', 'sql')
+            ->groupBy('settings.port', 'serviceType.type', 'settings.host')
+;
+
+        return $builder->getQuery()->getResult();
+    }
+
+    public function getLocalSsh()
+    {
+        $builder = $this->repository->createQueryBuilder('settings');
+
+        $builder->where('settings.isRemote = 0')
+            ->andWhere('settings.host = :host')
+            ->setParameter('host', 'localhost')
+            ->leftJoin('settings.serviceType', 'serviceType')
+            ->andWhere('serviceType.type = :type')
+            ->setParameter('type', 'ssh');
+
+        return $builder->getQuery()->getResult();
+    }
+
     public function getRestStatus(): int
     {
         return $this->status;

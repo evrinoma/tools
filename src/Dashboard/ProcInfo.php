@@ -24,7 +24,7 @@ class ProcInfo
     private $timeout = 5;
     private $ports   = [];
     /**
-     * @var Settings
+     * @var SettingsManager
      */
     private $settingsManager;
 
@@ -37,7 +37,7 @@ class ProcInfo
 //region SECTION: Constructor
     public function __construct(SettingsManager $settingsManager)
     {
-        $this->procInfo = new ProcInfoDto();
+        $this->procInfo        = new ProcInfoDto();
         $this->settingsManager = $settingsManager;
     }
 //endregion Constructor
@@ -62,20 +62,19 @@ class ProcInfo
     private function checkLocalSql()
     {
 
-        $service = new ServiceDto();
-        $service
-            ->setName('MySQL')
-            ->setHost($this->settingsManager->getDbHost())
-            ->setPort($this->settingsManager->getDbPort());
+        /** @var Settings $server */
+        foreach ($this->settingsManager->getSqlServers() as $server) {
+            $service = new ServiceDto();
+            $service
+                ->setName($server->getServiceType()->getName())
+                ->setHost($server->getHost())
+                ->setPort($server->getPort());
 
-        if ($this->settingsManager->isMysql()) {
-            $status = $this->checkPort($this->settingsManager->getDbHost(), $this->settingsManager->getDbPort());
+            $status = $this->checkPort($server->getHost(), $server->getPort());
             $status ? $service->setStatusOK() : $service->setStatusError();
 
-        } else {
-            $service->setStatusNA();
+            $this->procInfo->addService($service);
         }
-        $this->procInfo->addService($service);
 
         return $this;
     }
@@ -83,19 +82,23 @@ class ProcInfo
 
     private function checkLocalSSH()
     {
-        $service = new ServiceDto();
-        $service
-            ->setName('SSH Server')
-            ->setHost($this->settingsManager->getDbHost());
+        /** @var Settings $server */
+        foreach ($this->settingsManager->getLocalSsh() as $server) {
+            $service = new ServiceDto();
+            $service
+                ->setName($server->getServiceType()->getName())
+                ->setHost($server->getHost())
+                ->setPort($server->getPort());
 
-        $service->setPort($this->checkPrefix($this->settingsManager->getDbHost(), 'SSH'));
-        if ($service->getPort()) {
-            $service->setStatusOK();
-        } else {
-            $service->setStatusError();
+            $service->setPort($this->checkPrefix($server->getHost(), 'SSH'));
+            if ($service->getPort()) {
+                $service->setStatusOK();
+            } else {
+                $service->setStatusError();
+            }
+
+            $this->procInfo->addService($service);
         }
-
-        $this->procInfo->addService($service);
 
         return $this;
     }
@@ -105,7 +108,7 @@ class ProcInfo
         $service = new ServiceDto();
         $service
             ->setName('Web Server')
-            ->setHost($this->settingsManager->getDbHost())
+            ->setHost('localhost')
             ->setStatusOK();
 
         $this->procInfo->addService($service);

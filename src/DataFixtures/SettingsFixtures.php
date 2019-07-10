@@ -37,7 +37,8 @@ class SettingsFixtures extends AbstractFixtures
         $settingsMysql = new Settings();
         $settingsMysql
             ->setPort('3306')
-            ->setHost('localhost')
+            ->setHost('172.18.1.2')
+            ->isRemote()
             ->setServiceType($descriptionMysql);
 
         $manager->persist($descriptionMysql);

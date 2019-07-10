@@ -17,17 +17,31 @@ use App\Dashboard\DashBoard;
  */
 class DashBoardManager
 {
+//region SECTION: Fields
+    private $dashBoard;
+//endregion Fields
+
+//region SECTION: Constructor
+    /**
+     * DashBoardManager constructor.
+     *
+     * @param $dashBoard
+     */
+    public function __construct(DashBoard $dashBoard)
+    {
+        $this->dashBoard = $dashBoard;
+    }
+//endregion Constructor
 
 //region SECTION: Getters/Setters
+
     /**
      * @return array
      */
     public function getDashBoard()
     {
-        $dashBoard = new DashBoard();
-
-        $sysinfo  = $dashBoard->createInfo()->getSysInfo();
-        $procinfo = $dashBoard->getProcInfo();
+        $sysinfo  = $this->dashBoard->createInfo()->getSysInfo();
+        $procinfo = $this->dashBoard->getProcInfo();
 
         return ['sysinfo' => $sysinfo, 'procinfo' => $procinfo];
     }
