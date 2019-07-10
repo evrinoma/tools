@@ -8,6 +8,7 @@
 
 namespace App\Form\Delta;
 
+use App\Entity\DescriptionService;
 use App\Manager\SettingsManager;
 use App\Rest\Form\RestChoiceType;
 use Symfony\Component\Form\AbstractType;
@@ -44,7 +45,11 @@ class DataFlowType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $callback = function (Options $options) {
-            $servers = ['1','2','3'];
+            $servers = [];
+            /** @var DescriptionService $server */
+            foreach ($this->settingsManager->getDeltaServices() as $server) {
+                $servers[] = $server->getDescription();
+            }
 
             return $servers;
         };

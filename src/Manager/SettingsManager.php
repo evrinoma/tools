@@ -10,6 +10,7 @@ namespace App\Manager;
 
 
 use App\Core\AbstractEntityManager;
+use App\Entity\DescriptionService;
 use App\Entity\Settings;
 use App\Rest\Core\RestTrait;
 
@@ -39,8 +40,7 @@ class SettingsManager extends AbstractEntityManager
             ->leftJoin('settings.serviceType', 'serviceType')
             ->andWhere('serviceType.type = :type')
             ->setParameter('type', 'sql')
-            ->groupBy('settings.port', 'serviceType.type', 'settings.host')
-;
+            ->groupBy('settings.port', 'serviceType.type', 'settings.host');
 
         return $builder->getQuery()->getResult();
     }
@@ -59,6 +59,25 @@ class SettingsManager extends AbstractEntityManager
         return $builder->getQuery()->getResult();
     }
 
+    /**
+     * @return DescriptionService[]
+     */
+    public function getDeltaServices()
+    {
+        $repository = $this->entityManager->getRepository(DescriptionService::class);
+
+        $builder = $repository->createQueryBuilder('description');
+        $builder->where('description.type = :type')
+            ->setParameter('type', 'sql')
+            ->andWhere('description.parent is null')
+            ->andWhere('description.instance is not null');
+
+        return $builder->getQuery()->getResult();
+    }
+
+    /**
+     * @return int
+     */
     public function getRestStatus(): int
     {
         return $this->status;
