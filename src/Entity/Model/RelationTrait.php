@@ -71,11 +71,11 @@ trait RelationTrait
 
 
     /**
-     * @return array|null
+     * @return ArrayCollection
      */
-    public function getChildren(): ?array
+    public function getChildren()
     {
-        return $this->children->getValues();
+        return $this->children;
     }
 
 

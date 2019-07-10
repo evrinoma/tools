@@ -19,8 +19,9 @@ use Symfony\Component\Routing\Annotation\Route;
  *
  * @package App\Controller
  */
-class DeltaController  extends AbstractController
+class DeltaController extends AbstractController
 {
+//region SECTION: Public
     /**
      * @Route("/delta/journal", options={"expose"=true}, name="delta_journal")
      * @Template("mail/display.html.twig")
@@ -29,6 +30,7 @@ class DeltaController  extends AbstractController
      */
     public function deltaJournal(JournalManager $journalManager)
     {
-        return ['titleHeader' => 'Delta8 Administration', 'pageName' => 'Journal Delta8', 'journal' =>  $journalManager->findParams()->findDataParams('07-06-2019')->getData()];
+        return ['titleHeader' => 'Delta8 Administration', 'pageName' => 'Journal Delta8', 'journal' => $journalManager->validate('TAZOVSKIY', '07-06-2019')->findParams()->findDataParams()->getData()];
     }
+//endregion Public
 }

@@ -66,14 +66,34 @@ class SettingsManager extends AbstractEntityManager
     {
         $repository = $this->entityManager->getRepository(DescriptionService::class);
 
-        $builder = $repository->createQueryBuilder('description');
-        $builder->where('description.type = :type')
+        $builder = $repository->createQueryBuilder('service');
+        $builder->where('service.type = :type')
             ->setParameter('type', 'sql')
-            ->andWhere('description.parent is null')
-            ->andWhere('description.instance is not null');
+            ->andWhere('service.parent is null')
+            ->andWhere('service.instance is not null');
 
         return $builder->getQuery()->getResult();
     }
+
+
+    /**
+     * @return DescriptionService
+     */
+    public function getDeltaServiceByDescription($description)
+    {
+        $repository = $this->entityManager->getRepository(DescriptionService::class);
+
+        $builder = $repository->createQueryBuilder('service');
+        $builder->where('service.parent is null')
+            ->andWhere('service.type = :type')
+            ->setParameter('type', 'sql')
+            ->andWhere('service.description = :description')
+            ->setParameter('description', $description);
+        
+
+        return $builder->getQuery()->getOneOrNullResult();
+    }
+
 
     /**
      * @return int

@@ -244,7 +244,9 @@ class ApiController extends AbstractController
     {
 
         $date = $request->get('date');
-        $data = $journalManager->findParams()->findDataParams($date)->getData();
+        $dataFlow = $request->get('dataFlow');
+
+        $data = $journalManager->validate($dataFlow,$date)->findParams()->findDataParams()->getData();
 
 
         return $this->json(['delta' => $data]);

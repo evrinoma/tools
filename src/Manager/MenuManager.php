@@ -191,7 +191,7 @@ class MenuManager extends AbstractEntityManager
             if ($this->voterManager->checkPermission($menuItem->getRole())) {
                 if ($menuItem->hasChildren()) {
                     $menuLevel = $this->createItem($menu, $menuItem);
-                    $this->createMenu($menuLevel, $menuItem->getChildren());
+                    $this->createMenu($menuLevel, $menuItem->getChildren()->getValues());
                 } else {
                     $this->createItem($menu, $menuItem);
                 }

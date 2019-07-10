@@ -35,7 +35,7 @@ class DeltaFixtures extends AbstractFixtures
             ->setType('sql')
             ->setInstance('DCSRV01')
             ->setDescription('TAZOVSKIY_DATA')
-            ->setDate((new \DateTime())->createFromFormat('dmY', '13072018'));
+            ->setDate((new \DateTime())->createFromFormat('dmY', '17112017'));
 
         $descriptionMssql = new DescriptionService();
         $descriptionMssql
@@ -64,7 +64,7 @@ class DeltaFixtures extends AbstractFixtures
             ->setType('sql')
             ->setInstance('DCSRV01')
             ->setDescription('BELOYARSK_DATA')
-            ->setDate((new \DateTime())->createFromFormat('dmY', '13072018'));
+            ->setDate((new \DateTime())->createFromFormat('dmY', '25032019'));
 
         $descriptionMssql = new DescriptionService();
         $descriptionMssql
@@ -92,7 +92,7 @@ class DeltaFixtures extends AbstractFixtures
             ->setType('sql')
             ->setInstance('DCSRV01')
             ->setDescription('KAMENNIY_GPA_DATA')
-            ->setDate((new \DateTime())->createFromFormat('dmY', '13072018'));
+            ->setDate((new \DateTime())->createFromFormat('dmY', '18032017'));
 
         $descriptionMssql = new DescriptionService();
         $descriptionMssql
@@ -119,7 +119,7 @@ class DeltaFixtures extends AbstractFixtures
             ->setType('sql')
             ->setInstance('DCSRV01')
             ->setDescription('TG6_DATA')
-            ->setDate((new \DateTime())->createFromFormat('dmY', '13072018'));
+            ->setDate((new \DateTime())->createFromFormat('dmY', '15042019'));
 
         $descriptionMssql = new DescriptionService();
         $descriptionMssql
@@ -146,7 +146,7 @@ class DeltaFixtures extends AbstractFixtures
             ->setType('sql')
             ->setInstance('DCSRV01')
             ->setDescription('TG8_DATA')
-            ->setDate((new \DateTime())->createFromFormat('dmY', '13072018'));
+            ->setDate((new \DateTime())->createFromFormat('dmY', '22032018'));
 
         $descriptionMssql = new DescriptionService();
         $descriptionMssql
@@ -172,8 +172,7 @@ class DeltaFixtures extends AbstractFixtures
             ->setName('MsSql')
             ->setType('sql')
             ->setInstance('DCSRV01')
-            ->setDescription('YARSALE_DATA')
-            ->setDate((new \DateTime())->createFromFormat('dmY', '13072018'));
+            ->setDescription('YARSALE_DATA');
 
         $descriptionMssql = new DescriptionService();
         $descriptionMssql

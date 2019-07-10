@@ -166,6 +166,24 @@ class DescriptionService
     }
 
     /**
+     * @return DescriptionService|null
+     */
+    public function getChildFirst()
+    {
+        return $this->getChildren() ? $this->getChildren()->first() : null;
+    }
+
+    /**
+     * @param \DateTime $date
+     *
+     * @return string
+     */
+    public function leDate(\DateTime $date)
+    {
+        return $this->date ? $this->date <= $date : false;
+    }
+
+    /**
      * @param \DateTime $date
      *
      * @return DescriptionService
