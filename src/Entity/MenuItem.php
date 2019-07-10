@@ -8,6 +8,7 @@
 
 namespace App\Entity;
 
+use App\Entity\Model\RelationTrait;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -21,6 +22,8 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class MenuItem
 {
+    use RelationTrait;
+
 //region SECTION: Fields
     /**
      * @ORM\Id
@@ -73,44 +76,6 @@ class MenuItem
     protected $role = null;
 //endregion Fields
 
-//region SECTION: Constructor
-    /**
-     * MenuItem constructor.
-     *
-     * @param $id
-     */
-    public function __construct()
-    {
-        $this->children = new ArrayCollection();
-    }
-//endregion Constructor
-
-//region SECTION: Public
-
-    /**
-     * @param MenuItem $child
-     *
-     * @return MenuItem
-     */
-    public function addChild(MenuItem $child): self
-    {
-        $child->setParent($this);
-
-        if (!$this->children->contains($child)) {
-            $this->children[] = $child;
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return bool
-     */
-    public function hasChildren(): bool
-    {
-        return ($this->children->count() != 0);
-    }
-//endregion Public
 
 //region SECTION: Getters/Setters
     /**
@@ -119,22 +84,6 @@ class MenuItem
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * @return MenuItem
-     */
-    public function getParent(): MenuItem
-    {
-        return $this->parent;
-    }
-
-    /**
-     * @return MenuItem[]
-     */
-    public function getChildren(): ?array
-    {
-        return $this->children->getValues();
     }
 
     /**
@@ -174,7 +123,7 @@ class MenuItem
      */
     public function getRole(): ?array
     {
-        return  $this->role;
+        return $this->role;
     }
 
     public function getOptions()
@@ -190,18 +139,6 @@ class MenuItem
     public function setId($id): self
     {
         $this->id = $id;
-
-        return $this;
-    }
-
-    /**
-     * @param MenuItem $parent
-     *
-     * @return MenuItem
-     */
-    public function setParent(MenuItem $parent): self
-    {
-        $this->parent = $parent;
 
         return $this;
     }

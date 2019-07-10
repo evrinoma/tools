@@ -18,7 +18,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity
  * @ORM\Table(name="settings")
  */
-class Settings extends AbstractSettings
+class Settings
 {
 //region SECTION: Fields
     /**
@@ -29,35 +29,55 @@ class Settings extends AbstractSettings
     protected $id;
 
     /**
-     * @var string
-     * @ORM\Column(name="db_engine", type="string", nullable=true)
+     * @var DescriptionService
+     *
+     * @ORM\ManyToOne(targetEntity="DescriptionService")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="description_id", referencedColumnName="id")
+     * })
      */
-    protected $dbEngine;
+    protected $serviceType;
 
     /**
      * @var string
-     * @ORM\Column(name="db_host", type="string", nullable=true)
+     * @ORM\Column(name="host", type="string", nullable=true)
      */
-    protected $dbHost;
+    protected $host;
 
     /**
      * @var string
-     * @ORM\Column(name="db_port", type="string", nullable=true)
+     * @ORM\Column(name="port", type="string", nullable=true)
      */
-    protected $dbPort;
+    protected $port;
 
     /**
-     * @var string
-     * @ORM\Column(name="ssh_host", type="string", nullable=true)
+     * @ORM\Column(name="remote", type="boolean", options={"default":"0"})
      */
-    protected $sshHost;
-
-    /**
-     * @var string
-     * @ORM\Column(name="ssh_port", type="string", nullable=true)
-     */
-    protected $sshPort;
+    protected $isRemote = false;
 //endregion Fields
+
+//region SECTION: Public
+
+    /**
+     * @return mixed
+     */
+    public function isRemote()
+    {
+        return $this->isRemote;
+    }
+
+    /**
+     * @param $serviceType
+     *
+     * @return $this
+     */
+    public function setServiceType($serviceType)
+    {
+        $this->serviceType = $serviceType;
+
+        return $this;
+    }
+//endregion Public
 
 //region SECTION: Getters/Setters
     /**
@@ -69,103 +89,65 @@ class Settings extends AbstractSettings
     }
 
     /**
-     * @return null|string
+     * @return DescriptionService
      */
-    public function getDbEngine(): ?string
+    public function getServiceType()
     {
-        return $this->dbEngine;
+        return $this->serviceType;
     }
 
     /**
-     * @return null|string
+     * @return string
      */
-    public function getDbHost(): ?string
+    public function getHost(): string
     {
-        return $this->dbHost ?? 'localhost';
+        return $this->host;
     }
 
     /**
-     * @return null|string
+     * @return string
      */
-    public function getDbPort(): ?string
+    public function getPort(): string
     {
-        return $this->dbPort ?? '3306';
+        return $this->port;
     }
 
     /**
-     * @return null|string
-     */
-    public function getSshHost(): ?string
-    {
-        return $this->sshHost  ?? '22';
-    }
-
-    /**
-     * @return null|string
-     */
-    public function getSshPort(): ?string
-    {
-        return $this->sshPort;
-    }
-
-    /**
-     * @param string $dbEngine
+     * @param string $host
      *
      * @return Settings
      */
-    public function setDbEngine(string $dbEngine): Settings
+    public function setHost(string $host)
     {
-        $this->dbEngine = $dbEngine;
+        $this->host = $host;
 
         return $this;
     }
 
     /**
-     * @param string $dbHost
+     * @param string $port
      *
      * @return Settings
      */
-    public function setDbHost(string $dbHost): Settings
+    public function setPort(string $port)
     {
-        $this->dbHost = $dbHost;
+        $this->port = $port;
 
         return $this;
     }
 
     /**
-     * @param string $dbPort
+     * @param mixed $isRemote
      *
      * @return Settings
      */
-    public function setDbPort(string $dbPort): Settings
+    public function setRemote($isRemote = true)
     {
-        $this->dbPort = $dbPort;
+        $this->isRemote = $isRemote;
 
         return $this;
     }
 
-    /**
-     * @param string $sshHost
-     *
-     * @return Settings
-     */
-    public function setSshHost(string $sshHost): Settings
-    {
-        $this->sshHost = $sshHost;
 
-        return $this;
-    }
-
-    /**
-     * @param string $sshPort
-     *
-     * @return Settings
-     */
-    public function setSshPort(string $sshPort): Settings
-    {
-        $this->sshPort = $sshPort;
-
-        return $this;
-    }
 //endregion Getters/Setters
 }

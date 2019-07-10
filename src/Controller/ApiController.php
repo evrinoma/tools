@@ -215,6 +215,16 @@ class ApiController extends AbstractController
      * @Rest\Get("/api/doc/journal", options={"expose"=true}, name="journal")
      * @SWG\Get(tags={"delta"})
      * @SWG\Parameter(
+     *      name="dataFlow",
+     *      in="query",
+     *      type="array",
+     *      description="Select data by date value",
+     *      items=@SWG\Items(
+     *         type="string",
+     *         @Model(type=App\Form\Delta\DataFlowType::class)
+     *     )
+     * )
+     * @SWG\Parameter(
      *     name="date",
      *     in="query",
      *     type="string",

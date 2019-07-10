@@ -9,7 +9,7 @@
 namespace App\Dashboard;
 
 
-use App\Entity\Settings;
+use App\Manager\SettingsManager;
 
 /**
  * Class DashBoard
@@ -24,10 +24,7 @@ class DashBoard
      * @var ProcInfo
      */
     private $procInfo;
-    /**
-     * @var Settings
-     */
-    private $settings;
+
     /**
      * @var SysInfo
      */
@@ -37,13 +34,13 @@ class DashBoard
 //region SECTION: Constructor
     /**
      * DashBoard constructor.
+     *
+     * @param SettingsManager $settingsManager
      */
-    // public function __construct(ProcInfo $procInfo, SysInfo $sysInfo,Settings $settings)
-    public function __construct()
+    public function __construct(SettingsManager $settingsManager)
     {
-        $this->procInfo = new ProcInfo();
-        $this->sysInfo  = new SysInfo();
-        $this->settings = new Settings();
+        $this->procInfo        = new ProcInfo($settingsManager);
+        $this->sysInfo         = new SysInfo();
     }
 //endregion Constructor
 
@@ -51,7 +48,7 @@ class DashBoard
     public function createInfo()
     {
         $this->sysInfo->createSysInfo();
-        $this->procInfo->setSettings($this->settings)->createProcInfo();
+        $this->procInfo->createProcInfo();
 
         return $this;
     }
