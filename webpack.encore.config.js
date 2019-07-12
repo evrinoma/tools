@@ -16,7 +16,7 @@ Encore
     // .addStyleEntry('style', './assets/css/style.css')
     // .addStyleEntry('loginUtils', './assets/css/login/util.css')
 
-    .addEntry('app', './assets/js/app.js')
+    .addEntry('app', './assets/js/comonents/Encore/app.js')
     .addStyleEntry('loginMain', './assets/css/login/util.css')
 
 

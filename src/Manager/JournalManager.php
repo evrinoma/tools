@@ -10,8 +10,7 @@ namespace App\Manager;
 
 
 use App\Core\AbstractEntityManager;
-use App\Entity\Customer\ParamData;
-use App\Entity\Delta\DiscretInfo;
+use App\Entity\Delta\DiscreetInfo;
 use App\Entity\Delta\Params;
 use App\Entity\DescriptionService;
 use App\Rest\Core\RestTrait;
@@ -35,8 +34,14 @@ class JournalManager extends AbstractEntityManager
     const DEFAULT_DB_DATA = 'TAZOVSKIY_DATA';
 
     /** @var Params[] */
-    private $params     = [];
-    private $dataParams = [];
+    private $params = [];
+
+    /** @var Params[] */
+    private $paramsHasDiscretInfo = [];
+
+    /** @var DiscreetInfo[] */
+    private $discretInfo = [];
+
     private $entityManagerDelta;
 
     /**
@@ -50,14 +55,11 @@ class JournalManager extends AbstractEntityManager
     private $settingsManager;
 
     /**
-     * @var DescriptionService
-     */
-    private $service;
-
-    /**
      * @var \DateTime
      */
     private $date;
+
+    private $dto;
 //endregion Fields
 
 
@@ -76,10 +78,12 @@ class JournalManager extends AbstractEntityManager
 //region SECTION: Public
     public function validate($dataFlow, $date): self
     {
-        $service    = $this->settingsManager->getDeltaServiceByDescription($dataFlow);
-        $this->date = (new \DateTime())->createFromFormat('d-m-Y', $date);
-        if ($service && $service->getChildFirst()->leDate($this->date)) {
-            $this->service = $service;
+        $dto = $this->getDto();
+        $dto->setService($this->settingsManager->getDeltaServiceByDescription($dataFlow));
+        $dto->setDate($date);
+
+        if ($dto->isValid()) {
+            $this->dto = $dto;
         } else {
             $this->setRestClientErrorBadRequest();
         }
@@ -91,7 +95,7 @@ class JournalManager extends AbstractEntityManager
 //region SECTION: Private
     private function toTableName()
     {
-        return 'D'.$this->date->format('dmY');
+        return 'D'.$this->dto->getDate()->format('dmY');
     }
 
     private function connectionSwitcher($dbName)
@@ -114,7 +118,187 @@ class JournalManager extends AbstractEntityManager
             // log and handle exception
         }
     }
+
+    /**
+     * @return $this
+     */
+    private function getDiscretInfo()
+    {
+        $this->connectionSwitcher($this->dto->getService()->getChildFirst()->getDescription());
+
+        $metadata = $this->entityManagerDelta->getClassMetadata(DiscreetInfo::class);
+        $metadata->setPrimaryTable(['name' => $this->toTableName()]);
+        /** @var EntityRepository $repository */
+        $repository = $this->entityManagerDelta->getRepository(DiscreetInfo::class);
+        $this->dto->addDiscreetInfo($repository->findBy([], ['t' => 'ASC']));
+
+        return $this;
+    }
 //endregion Private
+
+//region SECTION: Dto
+    private function getDto()
+    {
+        return new class()
+        {
+            /** @var Params[] */
+            private $params = [];
+
+            /** @var Params[] */
+            private $hasDiscreetInfo = [];
+
+            /** @var DiscreetInfo[] */
+            private $discreetInfo = [];
+            /**
+             * @var DescriptionService
+             */
+            private $service;
+            /**
+             * @var \DateTime
+             */
+            private $date;
+
+            /**
+             * @return Params[]
+             */
+            public function getParams(): array
+            {
+                return $this->params;
+            }
+
+            /**
+             * @param Params[] $params
+             *
+             * @return $this
+             */
+            public function setParams($params): self
+            {
+                $this->params = $params;
+
+                return $this;
+            }
+
+            /**
+             * @param Params $param
+             *
+             * @return $this
+             */
+            public function addParam($param): self
+            {
+                $this->params[$param->getId()] = $param;
+
+                return $this;
+            }
+
+            /**
+             * @return Params[]
+             */
+            public function getHasDiscreetInfo(): array
+            {
+                return $this->hasDiscreetInfo;
+            }
+
+            /**
+             * @param Params[] $hasDiscreetInfo
+             *
+             * @return $this
+             */
+            public function setHasDiscreetInfo($hasDiscreetInfo): self
+            {
+                $this->hasDiscreetInfo = $hasDiscreetInfo;
+
+                return $this;
+            }
+
+            /**
+             * @return DiscreetInfo[]
+             */
+            public function getDiscreetInfo(): array
+            {
+                return $this->discreetInfo;
+            }
+
+            /**
+             * @param DiscreetInfo[] $discreetInfo
+             *
+             * @return $this
+             */
+            public function setDiscreetInfo($discreetInfo): self
+            {
+                $this->discreetInfo = $discreetInfo;
+
+                return $this;
+            }
+
+            /**
+             * @param DiscreetInfo[] $discreetInfo
+             *
+             * @return $this
+             */
+            public function addDiscreetInfo($discreetInfo): self
+            {
+                $this->setDiscreetInfo($discreetInfo);
+
+                /** @var DiscreetInfo $item */
+                foreach ($this->discreetInfo as $item) {
+                    $this->params[$item->getN()]->addDiscreetInfo($item);
+                    $this->hasDiscreetInfo[] = &$this->params[$item->getN()];
+                }
+
+                return $this;
+            }
+
+            /**
+             * @return DescriptionService
+             */
+            public function getService(): DescriptionService
+            {
+                return $this->service;
+            }
+
+            /**
+             * @param DescriptionService $service
+             *
+             * @return $this
+             */
+            public function setService(DescriptionService $service): self
+            {
+                $this->service = $service;
+
+                return $this;
+            }
+
+            /**
+             * @return \DateTime
+             */
+            public function getDate(): \DateTime
+            {
+                return $this->date;
+            }
+
+            /**
+             * @param string $date
+             *
+             * @return $this
+             */
+            public function setDate(string $date): self
+            {
+                $this->date = (new \DateTime())->createFromFormat('d-m-Y', $date);
+
+                return $this;
+            }
+
+            /**
+             * @return bool
+             */
+            public function isValid(): bool
+            {
+                return ($this->getService() && $this->getService()->getChildFirst()->leDate($this->getDate()));
+            }
+
+        };
+    }
+//endregion SECTION: Dto
 
 //region SECTION: Find Filters Repository
     /**
@@ -122,12 +306,12 @@ class JournalManager extends AbstractEntityManager
      */
     public function findParams(): self
     {
-        if ($this->service) {
+        if ($this->dto) {
             /** @var Params $item */
-            $this->connectionSwitcher($this->service->getDescription());
+            $this->connectionSwitcher($this->dto->getService()->getDescription());
             $repository = $this->entityManagerDelta->getRepository(Params::class);
             foreach ($repository->findAll() as $item) {
-                $this->params[$item->getId()] = $item;
+                $this->dto->addParam($item);
             }
         }
 
@@ -137,22 +321,10 @@ class JournalManager extends AbstractEntityManager
     /**
      * @return $this
      */
-    public function findDataParams(): self
+    public function findDiscretInfo(): self
     {
-        if ($this->service) {
-            $this->connectionSwitcher($this->service->getChildFirst()->getDescription());
-
-            $metadata = $this->entityManagerDelta->getClassMetadata(DiscretInfo::class);
-            $metadata->setPrimaryTable(['name' => $this->toTableName()]);
-            /** @var EntityRepository $repository */
-            $repository       = $this->entityManagerDelta->getRepository(DiscretInfo::class);
-            $this->dataParams = $repository->findAll();
-
-            /** @var DiscretInfo $item */
-            foreach ($this->dataParams as $item) {
-                $this->params[$item->getN()]->addParamData($item);
-            }
-
+        if ($this->dto) {
+            $this->getDiscretInfo();
         }
 
         return $this;
@@ -165,7 +337,7 @@ class JournalManager extends AbstractEntityManager
      */
     public function getData()
     {
-        return $this->params;
+        return $this->dto->getHasDiscreetInfo();
     }
 
     public function getRestStatus(): int

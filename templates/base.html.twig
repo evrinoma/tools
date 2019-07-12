@@ -1,11 +1,18 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="UTF-8">
+    {% block meta %}
+        <meta charset="UTF-8">
+    {% endblock meta %}
     <title>{% block title %}Wellcome{% endblock %}</title>
+
     {% block stylesheets %}
-    {% endblock %}
+    {% endblock stylesheets %}
+
+    {% block load_data %}
+    {% endblock load_data %}
 </head>
+
 <body>
 {% block body %}
     {% spaceless %}

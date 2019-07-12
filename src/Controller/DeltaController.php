@@ -10,6 +10,7 @@ namespace App\Controller;
 
 
 use App\Manager\JournalManager;
+use JMS\Serializer\SerializerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
@@ -24,13 +25,21 @@ class DeltaController extends AbstractController
 //region SECTION: Public
     /**
      * @Route("/delta/journal", options={"expose"=true}, name="delta_journal")
-     * @Template("mail/display.html.twig")
+     * @Template("delta/display.html.twig")
      *
      * @return array
      */
-    public function deltaJournal(JournalManager $journalManager)
+    public function deltaJournal(JournalManager $journalManager, SerializerInterface $serializer)
     {
-        return ['titleHeader' => 'Delta8 Administration', 'pageName' => 'Journal Delta8', 'journal' => $journalManager->validate('TAZOVSKIY', '07-06-2019')->findParams()->findDataParams()->getData()];
+        //$data = $journalManager->validate('TAZOVSKIY', '13-07-2018')->findParams()->findDiscretInfo()->getData();
+
+       // $deltaData = $serializer->serialize($data, 'json');
+
+        return [
+            'titleHeader' => 'Delta8 Administration',
+            'pageName'    => 'Journal Delta8',
+         //   'delta_data'  => json_decode($deltaData,1),
+        ];
     }
 //endregion Public
 }

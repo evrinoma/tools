@@ -4,6 +4,7 @@ namespace App\Entity\Delta;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation as JMS;
 
 /**
  * Params
@@ -172,7 +173,7 @@ class Params
 
     /**
      * @var ScriptEngines
-     *
+     * @JMS\Exclude
      * @ORM\ManyToOne(targetEntity="ScriptEngines", fetch="EAGER")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="SCRIPT_ENGINE_ID", referencedColumnName="ID")
@@ -193,30 +194,31 @@ class Params
     /**
      * @var ArrayCollection
      */
-    private $paramData;
+    private $discreetInfo;
 //endregion Fields
 
 //region SECTION: Constructor
-    /**
-     * @ORM\PostLoad()
-     */
-    public function setInitialFoo()
-    {
-        $this->paramData = new ArrayCollection();
-    }
 //endregion Constructor
 
 //region SECTION: Public
     /**
      * @return ArrayCollection
      */
-    public function addParamData($paramData)
+    public function addDiscreetInfo($discreetInfo)
     {
-        return $this->paramData->add($paramData);
+        return $this->discreetInfo->add($discreetInfo);
     }
 //endregion Public
 
 //region SECTION: Getters/Setters
+    /**
+     * @JMS\VirtualProperty()
+     */
+    public function getDiscreetInfo()
+    {
+        return $this->discreetInfo ? $this->discreetInfo->toArray() : [];
+    }
+
     /**
      * @return int
      */
@@ -399,6 +401,14 @@ class Params
     public function getGroup()
     {
         return $this->group;
+    }
+
+    /**
+     * @ORM\PostLoad()
+     */
+    public function setInitial()
+    {
+        $this->discreetInfo = new ArrayCollection();
     }
 
     /**

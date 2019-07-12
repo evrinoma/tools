@@ -13,6 +13,7 @@ module.exports = (env) => {
     const config = {
         entry: {
             app: path.join(__dirname, 'assets/entrypoints/app.entry.js'),
+            delta: path.join(__dirname, 'assets/entrypoints/delta.entry.js'),
             login: path.join(__dirname, 'assets/entrypoints/login.entry.js'),
             status: path.join(__dirname, 'assets/entrypoints/status.entry.js'),
         },

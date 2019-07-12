@@ -1,5 +1,6 @@
 let Application = function () {
     this.Routing;
+    this.objects = [];
 
     this.setRouting = function (Routing) {
         this.Routing = Routing;

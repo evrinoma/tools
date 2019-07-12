@@ -1,7 +1,7 @@
 let Status = function () {
     this.interval = 5000;
 
-    this.getStatus = function () {
+    this.callBackGetStatus = function () {
         let dashboard= $('#dashboard');
         App.showSpinner();
         $.ajax({
@@ -11,7 +11,6 @@ let Status = function () {
                 let div = $('<div/>').html(html).contents();
                 dashboard.html(div.find('#dashboard'));
                 App.hideSpinner();
-
             }
         });
         // $.ajax({
@@ -24,7 +23,7 @@ let Status = function () {
     };
 
     this.init = function () {
-        window.setInterval(this.getStatus, this.interval);
+        window.setInterval(this.callBackGetStatus, this.interval);
     };
 
     this.init();

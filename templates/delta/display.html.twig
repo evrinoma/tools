@@ -2,11 +2,16 @@
 
 {% block title %}{{ titleHeader }}{% endblock %}
 
-{% block page %}
+{% block load_data %}
+    {{ parent() }}
+    {#<script id="delta-data" type="application/json">{{ delta_data|json_encode(65)|raw }}</script>#}
+{% endblock load_data %}
 
+{% block page %}
+    <div id="deltaTable"></div>
 {% endblock %}
 
 {% block javascripts %}
     {{ parent() }}
-    {#<script src="{{ asset('build/status.js', 'webpack') }}"></script>#}
+    <script src="{{ asset('build/delta.js', 'webpack') }}"></script>
 {% endblock %}

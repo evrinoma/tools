@@ -3,13 +3,14 @@
 namespace App\Entity\Delta;
 
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation as JMS;
 
 /**
- * DiscretInfo
+ * DiscreetInfo
  *
  * @ORM\Entity
  */
-class DiscretInfo
+class DiscreetInfo
 {
     /**
      * @var int
@@ -88,5 +89,15 @@ class DiscretInfo
     public function getXs(): int
     {
         return $this->xs;
+    }
+
+    /**
+     * @JMS\VirtualProperty()
+     */
+    public function getTime()
+    {
+        $time = mktime(null, null, $this->getT()/1000);
+
+        return date("H:i:s", $time);
     }
 }

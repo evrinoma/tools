@@ -29,7 +29,7 @@ class ApiController extends AbstractController
 {
 //region SECTION: Public
     /**
-     * @Rest\Put("/internal/menu/create_default", name="create_default_menu")
+     * @Rest\Put("/internal/menu/create_default", name="api_create_default_menu")
      * @SWG\Put(tags={"menu"})
      * @SWG\Response(response=200,description="Returns the rewards of default generated menu")
      *
@@ -45,7 +45,7 @@ class ApiController extends AbstractController
     }
 
     /**
-     * @Rest\Delete("/internal/menu/delete", name="delete_menu")
+     * @Rest\Delete("/internal/menu/delete", name="api_delete_menu")
      * @SWG\Delete(tags={"menu"})
      * @SWG\Response(response=200,description="Returns nothing")
      *
@@ -61,7 +61,7 @@ class ApiController extends AbstractController
     }
 
     /**
-     * @Rest\Post("/internal/domain/create_default", name="create_default_domain")
+     * @Rest\Post("/internal/domain/create_default", name="api_create_default_domain")
      *
      * @SWG\Post(tags={"domain"})
      * @SWG\Parameter(
@@ -107,7 +107,7 @@ class ApiController extends AbstractController
     }
 
     /**
-     * @Rest\Put("/internal/domain/merge", name="merge_default_domains")
+     * @Rest\Put("/internal/domain/merge", name="api_merge_default_domains")
      * @SWG\Put(tags={"domain"})
      * @SWG\Response(response=200,description="Returns the merge of domains")
      *
@@ -121,7 +121,7 @@ class ApiController extends AbstractController
     }
 
     /**
-     * @Rest\Post("/internal/servers/create_default", name="create_default_server")
+     * @Rest\Post("/internal/servers/create_default", name="api_create_default_server")
      *
      * @SWG\Post(tags={"servers"})
      * @SWG\Parameter(
@@ -170,7 +170,7 @@ class ApiController extends AbstractController
 
 //region SECTION: Getters/Setters
     /**
-     * @Rest\Get("/internal/domain/domains", name="domains")
+     * @Rest\Get("/internal/domain/domains", name="api_domains")
      * @SWG\Get(tags={"domain"})
      * @SWG\Response(response=200,description="Returns the rewards of all generated domains")
      *
@@ -184,7 +184,7 @@ class ApiController extends AbstractController
     }
 
     /**
-     * @Rest\Get("/internal/servers/servers", name="servers")
+     * @Rest\Get("/internal/servers/servers", name="api_servers")
      * @SWG\Get(tags={"servers"})
      * @SWG\Response(response=200,description="Returns the rewards of all servers")
      *
@@ -198,7 +198,7 @@ class ApiController extends AbstractController
     }
 
     /**
-     * @Rest\Get("/api/doc/system_status", options={"expose"=true}, name="system_status")
+     * @Rest\Get("/api/doc/system_status", options={"expose"=true}, name="api_system_status")
      * @SWG\Get(tags={"system"})
      * @SWG\Response(response=200,description="Returns system status")
      *
@@ -212,7 +212,7 @@ class ApiController extends AbstractController
     }
 
     /**
-     * @Rest\Get("/api/doc/journal", options={"expose"=true}, name="journal")
+     * @Rest\Get("/api/doc/journal", options={"expose"=true}, name="api_delta_journal")
      * @SWG\Get(tags={"delta"})
      * @SWG\Parameter(
      *      name="dataFlow",
@@ -230,7 +230,7 @@ class ApiController extends AbstractController
      *     type="string",
      *     format="date",
      *     pattern="\d{1,2}-\d{1,2}-\d{4}",
-     *     default="13-07-2018",
+     *     default="13-05-2019",
      *     description="Select data by date value"
      * )
      * @SWG\Response(response=200,description="Returns journal delta")
@@ -246,10 +246,10 @@ class ApiController extends AbstractController
         $date = $request->get('date');
         $dataFlow = $request->get('dataFlow');
 
-        $data = $journalManager->validate($dataFlow,$date)->findParams()->findDataParams()->getData();
+        $data = $journalManager->validate($dataFlow,$date)->findParams()->findDiscretInfo()->getData();
 
 
-        return $this->json(['delta' => $data]);
+        return $this->json(['delta_data' => $data]);
     }
 //endregion Getters/Setters
 }
