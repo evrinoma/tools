@@ -41,5 +41,19 @@ class DeltaController extends AbstractController
          //   'delta_data'  => json_decode($deltaData,1),
         ];
     }
+
+    /**
+     * @Route("/delta/rtt", options={"expose"=true}, name="delta_rtt")
+     * @Template("delta/display.html.twig")
+     *
+     * @return array
+     */
+    public function deltaJournalRtt(JournalManager $journalManager)
+    {
+        return [
+            'titleHeader' => 'Delta8 Administration',
+            'pageName'    => 'Journal Delta8',
+        ];
+    }
 //endregion Public
 }

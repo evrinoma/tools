@@ -195,18 +195,55 @@ class Params
      * @var ArrayCollection
      */
     private $discreetInfo;
+
+    /**
+     * @JMS\Exclude()
+     * @var bool
+     */
+    private $initial = false;
 //endregion Fields
 
 //region SECTION: Constructor
 //endregion Constructor
 
 //region SECTION: Public
+
     /**
-     * @return ArrayCollection
+     * @return $this
      */
-    public function addDiscreetInfo($discreetInfo)
+    public function setInitial()
     {
-        return $this->discreetInfo->add($discreetInfo);
+        $this->initial = !$this->initial;
+
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function getInitial()
+    {
+        return $this->initial;
+    }
+
+    /**
+     * @param $discreetInfo
+     *
+     * @return Params
+     */
+    public function addDiscreetInfo($discreetInfo):self
+    {
+        $this->discreetInfo->add($discreetInfo);
+
+        return $this;
+    }
+
+    /**
+     * @return DiscreetInfo
+     */
+    public function getLastDiscreetInfo()
+    {
+        return $this->discreetInfo->last();
     }
 //endregion Public
 
@@ -406,7 +443,7 @@ class Params
     /**
      * @ORM\PostLoad()
      */
-    public function setInitial()
+    public function initPostLoad()
     {
         $this->discreetInfo = new ArrayCollection();
     }

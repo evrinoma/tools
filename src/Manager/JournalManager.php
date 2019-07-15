@@ -241,8 +241,17 @@ class JournalManager extends AbstractEntityManager
 
                 /** @var DiscreetInfo $item */
                 foreach ($this->discreetInfo as $item) {
-                    $this->params[$item->getN()]->addDiscreetInfo($item);
-                    $this->hasDiscreetInfo[] = &$this->params[$item->getN()];
+                    $param = &$this->params[$item->getN()];
+                    if ($item->getV()) {
+                        $param
+                            ->addDiscreetInfo($item)
+                            ->setInitial();
+                        $this->hasDiscreetInfo[] = &$param;
+                    } elseif($this->params[$item->getN()]->getInitial()) {
+                        $discreetInfo = $param->getLastDiscreetInfo();
+                        $discreetInfo->setTe($item->getT());
+                        $param->setInitial();
+                    }
                 }
 
                 return $this;

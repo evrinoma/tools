@@ -37,13 +37,13 @@ let Delta = function () {
     this.toComponentData = function (journal, date) {
 
         let componentData = [];
-        $.each( journal, function( keyJournal, valueJournal ) {
-            $.each( valueJournal.discreetInfo, function( keyDiscreetInfo, valueDiscreetInfo ) {
-                componentData.push(componentData[keyDiscreetInfo]= {
-                    begin: date+' '+valueDiscreetInfo.time,
-                    end:0,
+        $.each(journal, function (keyJournal, valueJournal) {
+            $.each(valueJournal.discreetInfo, function (keyDiscreetInfo, valueDiscreetInfo) {
+                componentData.push(componentData[keyDiscreetInfo] = {
+                    begin: date + ' ' + valueDiscreetInfo.time,
+                    end: valueDiscreetInfo.timeEnd,
                     object: valueJournal.group.name,
-                    message:valueJournal.name,
+                    message: valueJournal.name,
                     notes: valueJournal.additionalname,
                 });
             });
@@ -81,7 +81,7 @@ let Delta = function () {
                     }
                 })
             },
-            getComponent:function (root) {
+            getComponent: function (root) {
                 let component = undefined;
                 root.$children.filter(
                     function (item, key) {
