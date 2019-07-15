@@ -100,6 +100,25 @@ class MenuManager extends AbstractEntityManager
 
         $this->entityManager->persist($journal);
 
+        $journalRtt = new MenuItem();
+        $journalRtt
+            ->setRole(['ROLE_USER'])
+            ->setName('Rtt')
+            ->setRoute('delta_rtt');
+
+        $this->entityManager->persist($journalRtt);
+
+        $menuDelta = new MenuItem();
+        $menuDelta
+            ->setRole(['ROLE_USER'])
+            ->setName('Delta8')
+            ->setUri('#')
+            ->addChild($journal)
+            ->addChild($journalRtt);
+
+        $this->entityManager->persist($menuDelta);
+
+
         $logout = new MenuItem();
         $logout
             ->setRole(['ROLE_USER'])
