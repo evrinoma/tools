@@ -16,8 +16,8 @@ let Delta = function () {
     this.callBackGetJournal = function () {
         App.showSpinner();
         let requestParam = {
-            dataFlow: 'TG6',
-            date: '13-05-2019'
+            dataFlow: 'TAZOVSKIY',
+            date: '15-07-2019'
         };
         $.ajax({
             url: App.getRouting().generate('api_delta_journal', requestParam),
@@ -70,7 +70,7 @@ let Delta = function () {
                             {name: 'begin', header: 'Начало', hasClasses: true},
                             {name: 'end', header: 'Конец', hasClasses: true},
                             {name: 'object', header: 'Объект', hasClasses: true},
-                            {name: 'message', header: 'ообщение', hasClasses: true},
+                            {name: 'message', header: 'Сообщение', hasClasses: true},
                             {name: 'notes', header: 'Пояснение', hasClasses: true},
                         ],
                         rowsTable: loadedData.versions,

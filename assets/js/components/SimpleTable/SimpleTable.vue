@@ -192,7 +192,7 @@
                 this.currentRow = this.currentRow + this.maxRow;
                 let maxRowSizeInPage = ~~(this.dataLoad.length / this.maxRow);
 
-                if (this.currentRow > maxRowSizeInPage) {
+                if (this.currentRow > (maxRowSizeInPage*this.maxRow)) {
                     this.currentRow = maxRowSizeInPage;
                 }
                 this.setRows(this.setColumnRows());
