@@ -26,6 +26,27 @@
             </tr>
             </tbody>
         </table>
+        <table class="pagination">
+            <tbody>
+            <tr>
+                <td>
+                    <div class="begin_button" @click="clickBeginButton()">
+                        <button style="font-size:24px"><i class="fa fa-home"></i></button>
+                    </div>
+                </td>
+                <td>
+                    <div class="prev_button" @click="clickPrevButton()">
+                        <button style="font-size:24px"><i class="fa fa-arrow-left"></i></button>
+                    </div>
+                </td>
+                <td>
+                    <div class="next_button" @click="clickNextButton()">
+                        <button style="font-size:24px"><i class="fa fa-arrow-right"></i></button>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
     </div>
 </template>
 
@@ -39,6 +60,7 @@
             deleteButton: Object,
         },
         data: function () {
+            this.init();
             let columns = this.setColumns();
             let rows = this.setColumnRows();
             let sortOrders = {};
@@ -51,6 +73,7 @@
                 sortKey: '',
                 sortOrders: sortOrders,
                 isDeleted: false,
+                dataLoad: this.rowsTable,
             }
         },
         computed: {
@@ -97,7 +120,7 @@
                         }
                     }
                 );
-                if (del != undefined) {
+                if (del !== undefined) {
                     this.deleteButton.callBack(id, this.deleteButton.route);
                     this.rows.splice(del, 1);
                 }
@@ -113,26 +136,36 @@
 
                 return columns.concat(this.columnsTable);
             },
+            init: function () {
+                this.maxRow = 10;
+                this.currentRow = 0;
+                this.dataLoad = this.rowsTable;
+            },
             setColumnRows: function () {
                 let rows = [];
-                for (let number in this.rowsTable) {
-                    this.rowsTable[number]['rowNum'] = number;
-                    let classes = {};
-                    let defaultClasses = {delete_row: false};
-                    this.columns.forEach(function (item) {
-                        if (item.hasClasses !== undefined && item.hasClasses) {
-                            let value = item.name;
-                            classes[value] = defaultClasses;
-                        }
-                    });
-                    this.rowsTable[number]['classesRow'] = classes;
-                    rows.push(this.rowsTable[number]);
+                let maxRow = this.currentRow + this.maxRow;
+                for (let number = this.currentRow; number < maxRow; number++) {
+                    if (this.dataLoad[number] !== undefined && rows.length < this.maxRow) {
+                        this.dataLoad[number]['rowNum'] = number;
+                        let classes = {};
+                        let defaultClasses = {delete_row: false};
+                        this.columns.forEach(function (item) {
+                            if (item.hasClasses !== undefined && item.hasClasses) {
+                                let value = item.name;
+                                classes[value] = defaultClasses;
+                            }
+                        });
+                        this.dataLoad[number]['classesRow'] = classes;
+                        rows.push(this.dataLoad[number]);
+                    } else {
+                        break;
+                    }
                 }
 
                 return rows;
             },
-            setRowsTable: function (rowsTable) {
-                this.rowsTable = rowsTable;
+            setDataLoad: function (dataLoad) {
+                this.dataLoad = dataLoad;
 
                 return this;
             },
@@ -141,8 +174,28 @@
 
                 return this;
             },
-            updateRows: function (rowsTable) {
-                this.setRowsTable(rowsTable).setRows(this.setColumnRows());
+            updateRows: function (dataLoad) {
+                this.setDataLoad(dataLoad).setRows(this.setColumnRows());
+            },
+            clickBeginButton: function () {
+                this.currentRow = 0;
+                this.setRows(this.setColumnRows());
+            },
+            clickPrevButton: function () {
+                this.currentRow = this.currentRow - this.maxRow;
+                if (this.currentRow < 0) {
+                    this.currentRow = 0;
+                }
+                this.setRows(this.setColumnRows());
+            },
+            clickNextButton: function () {
+                this.currentRow = this.currentRow + this.maxRow;
+                let maxRowSizeInPage = ~~(this.dataLoad.length / this.maxRow);
+
+                if (this.currentRow > maxRowSizeInPage) {
+                    this.currentRow = maxRowSizeInPage;
+                }
+                this.setRows(this.setColumnRows());
             },
         }
     };

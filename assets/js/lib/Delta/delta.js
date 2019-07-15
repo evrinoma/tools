@@ -5,6 +5,7 @@ let Delta = function () {
 
     this.interval = 20000;
 
+
     this.deltaTable;
 
 
@@ -14,7 +15,6 @@ let Delta = function () {
 
     this.callBackGetJournal = function () {
         App.showSpinner();
-        let dataLoad = {"snapshotId": {'begin': 'name', 'end': 'id',}};
         let requestParam = {
             dataFlow: 'TG6',
             date: '13-05-2019'
@@ -96,7 +96,8 @@ let Delta = function () {
 
     this.init = function () {
         this.createTable();
-        window.setInterval(this.callBackGetJournal, this.interval);
+        this.callBackGetJournal();
+        //window.setInterval(this.callBackGetJournal, this.interval);
     };
 
 
