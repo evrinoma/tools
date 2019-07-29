@@ -29,6 +29,7 @@ security:
                 #check_path: fos_user_security_check
                 check_path: login_check
                 always_use_default_target_path: true
+                require_previous_session: true
                 default_target_path: core_home
             anonymous:    true
             guard:
@@ -55,10 +56,12 @@ security:
     access_control:
         # - { path: ^/admin, roles: ROLE_ADMIN }
         # - { path: ^/profile, roles: ROLE_USER }
-        - { path: ^/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
+       # - { path: ^/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/register, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
         #- { path: ^/*, role: ROLE_USER }
-        - { path: ^/*, role: IS_AUTHENTICATED_REMEMBERED }
+        #- { path: ^/*, role: IS_AUTHENTICATED_REMEMBERED }
         - { path: ^/admin/, role: ROLE_SUPER_ADMIN }
+        - { path: ^/login$, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/.*, roles: IS_AUTHENTICATED_FULLY }
 
