@@ -12,6 +12,8 @@ security:
               class: App\Entity\User
               property: username
 
+    session_fixation_strategy: none
+
     firewalls:
 #        wsse_secured:
 #            pattern:   ^/
