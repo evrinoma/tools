@@ -2,11 +2,12 @@
 
 {% block title %}{{ titleHeader }}{% endblock %}
 
+{% block stylesheets %}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.7/semantic.min.css" media="screen" title="no title" charset="utf-8">
+{% endblock stylesheets %}
+
 {% block page %}
-    <div id="app">
-        <div id="table">
-        </div>
-    </div>
+    <div id="app"></div>
 {% endblock %}
 
 {% block javascripts %}

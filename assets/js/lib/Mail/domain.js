@@ -1,21 +1,11 @@
-import MyVuetable from '../../components/VueTables2/VueTables2'
+
 import Vue from 'vue';
+import domain from './Domain';
 
-let MailDomain = function () {
+/* eslint-disable no-new */
+new Vue({
+    el: '#app',
+    template: '<domain/>',
+    components: { domain }
+})
 
-    this.createTable = function () {
-        new Vue({
-            el: '#table',
-            render (h) {
-                return h(MyVuetable)
-            }
-        });
-    };
-
-    this.init = function () {
-        this.createTable();
-    };
-
-    this.init();
-};
-export default MailDomain;
