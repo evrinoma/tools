@@ -16,6 +16,7 @@ module.exports = (env) => {
             delta: path.join(__dirname, 'assets/entrypoints/delta.entry.js'),
             login: path.join(__dirname, 'assets/entrypoints/login.entry.js'),
             status: path.join(__dirname, 'assets/entrypoints/status.entry.js'),
+            mail_domain: path.join(__dirname, 'assets/entrypoints/mail.domain.entry.js'),
         },
         node: {
             fs: 'empty'

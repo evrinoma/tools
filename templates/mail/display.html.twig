@@ -3,10 +3,13 @@
 {% block title %}{{ titleHeader }}{% endblock %}
 
 {% block page %}
-
+    <div id="app">
+        <div id="table">
+        </div>
+    </div>
 {% endblock %}
 
 {% block javascripts %}
     {{ parent() }}
-    {#<script src="{{ asset('build/status.js', 'webpack') }}"></script>#}
+    <script src="{{ asset('build/mail_domain.js', 'webpack') }}"></script>
 {% endblock %}
