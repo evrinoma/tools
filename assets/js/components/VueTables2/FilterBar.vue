@@ -4,8 +4,22 @@
             <div class="inline field">
                 <label>Search for:</label>
                 <input type="text" v-model="filterText" class="three wide column" @keyup.enter="doFilter" placeholder="name, nickname, or email">
-                <button class="ui primary button" @click="doFilter">Go</button>
-                <button class="ui button" @click="resetFilter">Reset</button>
+
+                <div class="ui animated button" tabindex="0" @click="doFilter">
+                    <div class="visible content" >Go</div>
+                    <div class="hidden content">
+                        <i class="right search icon"></i>
+                    </div>
+                </div>
+                <div class="ui vertical animated button" tabindex="0" @click="resetFilter">
+                    <div class="hidden content">Reset</div>
+                    <div class="visible content">
+                        <i class="shop x icon"></i>
+                    </div>
+                </div>
+                <!--<button class="ui primary button" @click="doFilter">Go</button>-->
+                <!--<button class="ui button" @click="resetFilter">Reset</button>-->
+
             </div>
         </div>
     </div>
