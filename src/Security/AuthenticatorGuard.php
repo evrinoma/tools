@@ -32,9 +32,13 @@ class AuthenticatorGuard extends AbstractGuardAuthenticator
 {
 
 //region SECTION: Fields
-    private const         HOMEPAGE    = 'core_home';
-    private const         LOGIN_CHECK = 'login_check';
-    private const         LOGIN       = 'login';
+    private const HOMEPAGE     = 'core_home';
+    private const LOGIN_CHECK  = 'login_check';
+    private const LOGIN        = 'login';
+    public const  USERNAME     = '_username';
+    public const  PASSWORD     = '_password';
+    public const  CSRF_TOKEN   = '_csrf_token';
+    public const  AUTHENTICATE = 'authenticate';
     /**
      * @var HttpUtils
      */
@@ -77,19 +81,6 @@ class AuthenticatorGuard extends AbstractGuardAuthenticator
 
 
 //region SECTION: Public
-
-    private function checkUser($user,$password)
-    {
-        $encoder      = $this->encoderFactory->getEncoder($user);
-        $encodedPass = $encoder->encodePassword($password, $user->getSalt());
-
-        if ($encodedPass === $user->getPassword()) {
-            return true;
-        }
-
-        return false;
-    }
-
     /**
      * Returns a response that directs the user to authenticate.
      *
@@ -152,7 +143,7 @@ class AuthenticatorGuard extends AbstractGuardAuthenticator
         if (
             ($user && $credentials->isAuthorized())
             || ($user && $credentials->isTestUser())
-            || ($user && $this->checkUser($user,$credentials->getPassword()))
+            || ($user && $this->checkUser($user, $credentials->getPassword()))
             || ($user && $this->ldap->checkUser($credentials->getUserName(), $credentials->getPassword()))
         ) {
             $credentials->authorizeUser();
@@ -223,6 +214,18 @@ class AuthenticatorGuard extends AbstractGuardAuthenticator
 //endregion Public
 
 //region SECTION: Private
+    private function checkUser($user, $password)
+    {
+        $encoder     = $this->encoderFactory->getEncoder($user);
+        $encodedPass = $encoder->encodePassword($password, $user->getSalt());
+
+        if ($encodedPass === $user->getPassword()) {
+            return true;
+        }
+
+        return false;
+    }
+
     /**
      * @param UserInterface $user
      *
@@ -323,15 +326,15 @@ class AuthenticatorGuard extends AbstractGuardAuthenticator
             }
         };
 
-        if ($request->request->has('_username')) {
-            $credentials->setUserName(trim($request->request->get('_username')));
+        if ($request->request->has(self::USERNAME)) {
+            $credentials->setUserName(trim($request->request->get(self::USERNAME)));
         }
-        if ($request->request->has('_password')) {
-            $credentials->setPassword($request->request->get('_password'));
+        if ($request->request->has(self::PASSWORD)) {
+            $credentials->setPassword($request->request->get(self::PASSWORD));
         }
-        if ($request->request->has('_csrf_token')) {
-            $credentials->setCsrfToken($request->request->get('_csrf_token'));
-            if (false === $this->csrfTokenManager->isTokenValid(new CsrfToken('authenticate', $credentials->getCsrfToken()))) {
+        if ($request->request->has(self::CSRF_TOKEN)) {
+            $credentials->setCsrfToken($request->request->get(self::CSRF_TOKEN));
+            if (false === $this->csrfTokenManager->isTokenValid(new CsrfToken(self::AUTHENTICATE, $credentials->getCsrfToken()))) {
                 throw new InvalidCsrfTokenException('Invalid CSRF token.');
             }
 
