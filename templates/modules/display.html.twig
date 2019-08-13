@@ -10,23 +10,23 @@
                     <h3 class="ui-widget-header  ui-state-default ui-corner-all">{{ pageName }}</h3>
 
                     <h4>Processor</h4>
-                    <div class="databox" style="width:200px;" title="Load Average: {{ sysinfo.LoadAvg.LoadAve1 }}">
+                    <div class="databox"  title="Load Average: {{ sysinfo.LoadAvg.LoadAve1 }}">
                         <div class="dataname">Load Average 1 min</div>
                         <div class="bargraph graphok" style="width:{{ sysinfo.LoadAvg.LoadAve1 }}px;"></div>
                         <div class="datavalue"><a href="#" title="Load Average: {{ sysinfo.LoadAvg.LoadAve1 }}">{{ sysinfo.LoadAvg.LoadAve1 }}</a></div>
                     </div>
-                    <div class="databox" style="width:200px;" title="Load Average: {{ sysinfo.LoadAvg.LoadAve5 }}">
+                    <div class="databox"  title="Load Average: {{ sysinfo.LoadAvg.LoadAve5 }}">
                         <div class="dataname">Load Average 5 min</div>
                         <div class="bargraph graphok" style="width:{{ sysinfo.LoadAvg.LoadAve5 }}px;"></div>
                         <div class="datavalue"><a href="#" title="Load Average: {{ sysinfo.LoadAvg.LoadAve5 }}">{{ sysinfo.LoadAvg.LoadAve5 }}</a></div>
                     </div>
-                    <div class="databox" style="width:200px;" title="Load Average: {{ sysinfo.LoadAvg.LoadAve15 }}">
+                    <div class="databox"  title="Load Average: {{ sysinfo.LoadAvg.LoadAve15 }}">
                         <div class="dataname">Load Average 15 min</div>
                         <div class="bargraph graphok" style="width:{{ sysinfo.LoadAvg.LoadAve15 }}px;"></div>
                         <div class="datavalue"><a href="#" title="Load Average: {{ sysinfo.LoadAvg.LoadAve15 }}">{{ sysinfo.LoadAvg.LoadAve15 }}</a></div>
                     </div>
 
-                    <div class="databox graphbox" style="width:200px;" title="CPU: {{ sysinfo.LoadAvg.LoadCpu }}/ 100 ({{ sysinfo.LoadAvg.PercentCpu }})%">
+                    <div class="databox graphbox"  title="CPU: {{ sysinfo.LoadAvg.LoadCpu }}/ 100 ({{ sysinfo.LoadAvg.PercentCpu }})%">
                         <div class="bargraph graphok" style="width:{{ sysinfo.LoadAvg.PercentCpu }}px;"></div>
                         <div class="dataname">CPU</div>
                         <div class="datavalue">{{ sysinfo.LoadAvg.PercentCpu }}%</div>
@@ -34,12 +34,12 @@
 
                     <h4>Memory</h4>
                     {% set letter=sysinfo.Memory.sizeInGigaByte.Letter %}
-                    <div class="databox graphbox" style="width:200px;" title="App Memory: {{ sysinfo.Memory.RamApp }}{{ letter }} / {{ sysinfo.Memory.MemTotal }}{{ letter }} ({{ sysinfo.Memory.PercentRamApp }})%">
+                    <div class="databox graphbox"  title="App Memory: {{ sysinfo.Memory.RamApp }}{{ letter }} / {{ sysinfo.Memory.MemTotal }}{{ letter }} ({{ sysinfo.Memory.PercentRamApp }})%">
                         <div class="bargraph graphok" style="width:{{ sysinfo.Memory.PercentRamApp }}px;"></div>
                         <div class="dataname">App Memory</div>
                         <div class="datavalue">{{ sysinfo.Memory.PercentRamApp }}%</div>
                     </div>
-                    <div class="databox graphbox" style="width:200px;" title="Swap: {{ sysinfo.Memory.SwapUsed }}{{ letter }} / {{ sysinfo.Memory.SwapTotal }}{{ letter }} ({{ sysinfo.Memory.PercentRamSwap }})%">
+                    <div class="databox graphbox"  title="Swap: {{ sysinfo.Memory.SwapUsed }}{{ letter }} / {{ sysinfo.Memory.SwapTotal }}{{ letter }} ({{ sysinfo.Memory.PercentRamSwap }})%">
                         <div class="bargraph graphok" style="width:{{ sysinfo.Memory.PercentRamSwap }}px;"></div>
                         <div class="dataname">Swap</div>
                         <div class="datavalue">{{ sysinfo.Memory.PercentRamSwap }}%</div>
@@ -48,7 +48,7 @@
                     <h4>Disks</h4>
                     {% for disk in sysinfo.disk %}
                         {% set letter=disk.sizeInGigaByte.Letter %}
-                        <div class="databox graphbox" style="width:200px;" title="{{ disk.Mount }}: {{ disk.Used }}{{ letter }} / {{ disk.Total }}{{ letter }} ({{ disk.Percent }}%)">
+                        <div class="databox graphbox"  title="{{ disk.Mount }}: {{ disk.Used }}{{ letter }} / {{ disk.Total }}{{ letter }} ({{ disk.Percent }}%)">
                             <div class="bargraph graphok" style="width:{{ disk.Percent }}px;"></div>
                             <div class="dataname">{{ disk.Mount }}</div>
                             <div class="datavalue">{{ disk.Percent }}%</div>
@@ -57,20 +57,22 @@
 
                     <h4>Networks</h4>
                     {% for network in sysinfo.network %}
-                        <div class="databox" style="width:200px;">
+                        <div class="databox" >
                             <div class="dataname">{{ network.Name }} receive</div>
                             <div class="datavalue"><a href="#" title="{{ network.Name }} receive: {{ network.RxBytes }}B/s">{{ network.RxBytes }}KB/s</a></div>
                         </div>
-                        <div class="databox" style="width:200px;">
+                        <div class="databox" >
                             <div class="dataname">{{ network.Name }} transmit</div>
                             <div class="datavalue"><a href="#" title="{{ network.Name }} transmit: {{ network.TxBytes }}B/s">{{ network.TxBytes }}KB/s</a></div>
                         </div>
                     {% endfor %}
                 </div>
+            </div>
+            <div id="sysinfo-centr">
                 <div id="procinfo" class="infobox ui-widget-content  ui-corner-all">
                     <h3 class="ui-widget-header  ui-state-default ui-corner-all">Server Status</h3>
                     {% for service in procinfo.Service %}
-                        <div class="databox statusbox" style="width:200px;">
+                        <div class="databox statusbox" >
                             <div class="dataname">{{ service.name }}</div>
                             {% if service.isAvailable %}
                                 <div id="datavalue_{{ service.tag }}" class="datavalue graphok">

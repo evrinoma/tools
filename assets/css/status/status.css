@@ -4,8 +4,14 @@
 
 /* two columns, sizes of each category box */
 #sysinfo-left, #sysinfo-left .infobox {
-    width: 200px;
+    width: 270px;
     float: left;
+}
+
+#sysinfo-centr {
+    float: left;
+    width: 290px;
+    padding-left: 30px;
 }
 
 #sysinfo-right {
@@ -48,11 +54,12 @@
     border: 1px solid #ccc;
     font-size: 9pt;
     margin-top: 4px;
+    width:250px;
 }
 
 /* height of main container and actual bar graph */
-.databox, .graphbox .bargraph {
-    height: 12pt;
+.databox, .graphbox, .bargraph {
+    height: 18pt;
 }
 
 /* positioning of data title  */
