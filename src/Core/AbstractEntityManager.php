@@ -9,6 +9,7 @@
 namespace App\Core;
 
 
+use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
 
@@ -20,6 +21,7 @@ use Doctrine\ORM\EntityRepository;
 abstract class AbstractEntityManager
 {
 
+//region SECTION: Fields
     protected $entityManager;
 
     /**
@@ -33,6 +35,13 @@ abstract class AbstractEntityManager
     protected $repositoryClass;
 
     /**
+     * @var mixed
+     */
+    private $data;
+//endregion Fields
+
+//region SECTION: Constructor
+    /**
      * AbstractEntity constructor.
      *
      * @param EntityManagerInterface $entityManager
@@ -44,5 +53,55 @@ abstract class AbstractEntityManager
             $this->repository = $this->entityManager->getRepository($this->repositoryClass);
         }
     }
+//endregion Constructor
+
+//region SECTION: Protected
+    /**
+     * @return Criteria
+     */
+    protected function getCriteria()
+    {
+        $criteria = new Criteria();
+        $criteria->where(
+            $criteria->expr()->eq('active', 'a')
+        );
+
+        return $criteria;
+    }
+//endregion Protected
+
+//region SECTION: Getters/Setters
+    /**
+     * @return mixed
+     */
+    public function getData()
+    {
+        return $this->data;
+    }
+
+    /**
+     * @return int
+     */
+    public function getCount($criteria = null)
+    {
+        if (!$criteria) {
+            $criteria = $this->getCriteria();
+        }
+
+        return $this->repository->matching($criteria)->count();
+    }
+
+    /**
+     * @param mixed $data
+     *
+     * @return AbstractEntityManager
+     */
+    public function setData($data)
+    {
+        $this->data = $data;
+
+        return $this;
+    }
+//endregion Getters/Setters
 
 }

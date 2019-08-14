@@ -87,10 +87,7 @@ class ServerManager extends AbstractEntityManager
      */
     public function getServers()
     {
-        $criteria = new Criteria();
-        $criteria->where(
-            $criteria->expr()->eq('active', 'a')
-        );
+        $criteria = $this->getCriteria();
 
         return $this->repository->matching($criteria)->toArray();
     }

@@ -3,7 +3,7 @@
         <div class="ui form">
             <div class="inline field">
                 <label>Search for:</label>
-                <input type="text" v-model="filterText" class="three wide column" @keyup.enter="doFilter" placeholder="name, nickname, or email">
+                <input type="text" v-model="filterText" class="three wide column" @keyup.enter="doFilter" placeholder="Domain or mx">
 
                 <div class="ui animated button" tabindex="0" @click="doFilter">
                     <div class="visible content" >Go</div>
@@ -37,7 +37,7 @@
                 this.$events.fire('filter-set', this.filterText);
             },
             resetFilter () {
-                this.filterText = ''
+                this.filterText = '';
                 this.$events.fire('filter-reset');
             }
         }

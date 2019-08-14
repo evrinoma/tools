@@ -13,6 +13,7 @@ use App\Core\AbstractEntityManager;
 use App\Entity\Mail\Domain;
 use App\Entity\Mail\Server;
 use App\Entity\Mail\TbDomains;
+use App\Repository\DomainRepository;
 use App\Rest\Core\RestTrait;
 use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\EntityManagerInterface;
@@ -21,6 +22,7 @@ use Doctrine\ORM\EntityManagerInterface;
  * Class MailManager
  *
  * @package App\Manager
+ * @property DomainRepository $repository
  */
 class MailManager extends AbstractEntityManager
 {
@@ -34,6 +36,11 @@ class MailManager extends AbstractEntityManager
 
     private $serverManager;
 
+    private $page;
+
+    private $perPage;
+
+    private $filter;
 //endregion Fields
 
 //region SECTION: Constructor
@@ -51,8 +58,6 @@ class MailManager extends AbstractEntityManager
 //endregion Constructor
 
 //region SECTION: Public
-
-
     /**
      * @param $ip
      * @param $name
@@ -143,19 +148,120 @@ class MailManager extends AbstractEntityManager
 //endregion Private
 
 //region SECTION: Getters/Setters
+    /**
+     * @return mixed
+     */
+    public function getFilter()
+    {
+        return $this->filter;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPage()
+    {
+        return $this->page;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPerPage()
+    {
+        return $this->perPage;
+    }
+
     public function getDomains()
     {
-        $criteria = new Criteria();
-        $criteria->where(
-            $criteria->expr()->eq('active', 'a')
-        );
+        $firstResult = $this->page * $this->perPage - $this->perPage;
 
-        return $this->repository->matching($criteria)->toArray();
+        if ($this->filter) {
+            $this->repository
+                ->createCriteria()
+                ->setFilter($this->filter)
+                ->setFirstResult($firstResult)
+                ->setMaxResults($this->perPage);
+
+            $this->setData($this->repository->filterDomain());
+
+        } else {
+
+            $criteria = $this->getCriteria();
+
+            if ($this->page > 1) {
+                $criteria
+                    ->setFirstResult($firstResult);
+            }
+            if ($this->perPage > 0) {
+                $criteria
+                    ->setMaxResults($this->perPage);
+            }
+
+            $this->setData($this->repository->matching($criteria)->toArray());
+        }
+
+        return $this;
     }
+
+    /**
+     * если фильтр задан то возвращаем число всех найденных записей
+     *
+     * @return int
+     */
+    public function getCount($criteria = null)
+    {
+        if ($this->filter) {
+            $this->repository
+                ->createCriteria()
+                ->setFilter($this->filter);
+
+            return count($this->repository->filterDomain());
+        }
+
+        return parent::getCount();
+    }
+
 
     public function getRestStatus(): int
     {
         return $this->status;
+    }
+
+    /**
+     * @param mixed $filter
+     *
+     * @return MailManager
+     */
+    public function setFilter($filter)
+    {
+        $this->filter = $filter;
+
+        return $this;
+    }
+
+    /**
+     * @param mixed $page
+     *
+     * @return MailManager
+     */
+    public function setPage($page)
+    {
+        $this->page = (int)$page;
+
+        return $this;
+    }
+
+    /**
+     * @param mixed $perPage
+     *
+     * @return MailManager
+     */
+    public function setPerPage($perPage)
+    {
+        $this->perPage = (int)$perPage;
+
+        return $this;
     }
 //endregion Getters/Setters
 }

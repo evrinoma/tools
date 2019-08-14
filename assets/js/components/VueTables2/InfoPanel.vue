@@ -4,20 +4,22 @@
         <p></p>
         <div class="ui form">
             <div class="field">
-                <label>Name:</label>
-                <input type="text" v-model="nameText" class="three wide column" placeholder="name">
+                <label>Domain Name:</label>
+                <div class="ui right labeled left icon input">
+                    <i class="linkify icon"></i>
+                    <input type="text" v-model="domainText" class="three wide column" placeholder="Domain name">
+                    <a class="ui tag label">
+                        {{ id }}
+                    </a>
+                </div>
             </div>
             <div class="field">
-                <label>Age:</label>
-                <input type="text" v-model="ageText" class="three wide column" placeholder="age">
+                <label>Relay Address:</label>
+                <input type="text" v-model="relayAdrText" class="three wide column" placeholder="Address relay">
             </div>
             <div class="field">
-                <label>Email:</label>
-                <input type="text" v-model="emailText" class="three wide column" placeholder="email">
-            </div>
-            <div class="field">
-                <label>NickName:</label>
-                <input type="text" v-model="nickNameText" class="three wide column" placeholder="nickname">
+                <label>Mx:</label>
+                <input type="text" v-model="mxText" class="three wide column" placeholder="MX name">
             </div>
             <br>
             <div class="ui animated button" tabindex="0" @click="doSave">
@@ -51,10 +53,9 @@
     export default {
         data() {
             return {
-                nameText: '',
-                ageText: '',
-                emailText: '',
-                nickNameText: '',
+                domainText: '',
+                relayAdrText: '',
+                mxText: '',
                 id: '',
             }
         },
@@ -64,18 +65,16 @@
         methods: {
             _getData() {
                 return {
-                    name: this.nameText,
-                    age: this.ageText,
-                    email: this.emailText,
-                    nickName: this.nickNameText,
+                    domain: this.domainText,
+                    relayAdr: this.relayAdrText,
+                    mx: this.mxText,
                     id: this.id
                 }
             },
             onSet(eventData) {
-                this.nameText = eventData.name;
-                this.ageText = eventData.age;
-                this.emailText = eventData.email;
-                this.nickNameText = eventData.nickname;
+                this.domainText = eventData.domain;
+                this.relayAdrText = eventData.relayAdr;
+                this.mxText = eventData.mx;
                 this.id = eventData.id;
                 Vue.nextTick(() => this.$parent.$refs.vuetable.refresh());
             },
@@ -86,10 +85,9 @@
                 this.$events.fire('info-delete', this._getData());
             },
             resetEdit() {
-                this.nameText = '';
-                this.ageText = '';
-                this.emailText = '';
-                this.nickNameText = '';
+                this.domainText = '';
+                this.relayAdrText = '';
+                this.mxText = '';
             }
         }
     }

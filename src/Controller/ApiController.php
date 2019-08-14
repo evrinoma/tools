@@ -9,6 +9,7 @@
 namespace App\Controller;
 
 
+use App\Core\AbstractEntityManager;
 use App\Manager\DashBoardManager;
 use App\Manager\JournalManager;
 use App\Manager\MailManager;
@@ -168,19 +169,93 @@ class ApiController extends AbstractController
     }
 //endregion Public
 
+//region SECTION: Private
+    /**
+     * @param AbstractEntityManager $manager
+     * @param                       $perPage
+     * @param                       $page
+     * @param                       $data
+     *
+     * @return array
+     */
+    private function toVuetable($manager, $perPage, $page, $data)
+    {
+        $total = $manager->getCount();
+
+        return [
+            'total'         => $total,
+            'per_page'      => $perPage,
+            'current_page'  => $page,
+            'last_page'     => ($perPage !== 0) ? round($total / $perPage) : 1,
+            'next_page_url' => null,
+            'prev_page_url' => null,
+            'from'          => $page * $perPage - $perPage + 1,
+            'to'            => $page * $perPage,
+            'data'          => $data,
+        ];
+    }
+//endregion Private
+
 //region SECTION: Getters/Setters
     /**
      * @Rest\Get("/internal/domain/domains", name="api_domains")
      * @SWG\Get(tags={"domain"})
+     *
      * @SWG\Response(response=200,description="Returns the rewards of all generated domains")
      *
      * @param MailManager $mailManager
      *
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
-    public function getDomain(MailManager $mailManager)
+    public function getDomain(MailManager $mailManager, Request $request)
     {
-        return $this->json(['domains' => $mailManager->setRestSuccessOk()->getDomains()], $mailManager->getRestStatus());
+        return $this->json($mailManager->setRestSuccessOk()->getDomains(), $mailManager->getRestStatus());
+    }
+
+    /**
+     * @Rest\Get("/internal/domain/query", name="api_query_domains")
+     * @SWG\Get(tags={"domain"})
+     * @SWG\Parameter(
+     *     name="page",
+     *     in="query",
+     *     type="integer",
+     *     default="1",
+     *     description="page number"
+     * )
+     * @SWG\Parameter(
+     *     name="per_page",
+     *     in="query",
+     *     type="integer",
+     *     default="0",
+     *     description="per page records"
+     * )
+     * @SWG\Parameter(
+     *     name="filter",
+     *     in="query",
+     *     type="string",
+     *     default="",
+     *     description="filter by domain or mx"
+     * )
+     *
+     * @SWG\Response(response=200,description="Returns the rewards of all generated domains")
+     *
+     * @param MailManager $mailManager
+     *
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     */
+    public function getDomainByQuery(MailManager $mailManager, Request $request)
+    {
+        $mailManager
+            ->setPage($request->get('page'))
+            ->setPerPage($request->get('per_page'))
+            ->setFilter($request->get('filter'))
+            ->getDomains();
+
+        $response = $this->toVuetable($mailManager, $mailManager->getPerPage(), $mailManager->getPage(), $mailManager->getData());
+
+        $mailManager->setRestSuccessOk();
+
+        return $this->json($response, $mailManager->getRestStatus());
     }
 
     /**
@@ -243,10 +318,10 @@ class ApiController extends AbstractController
     public function getJournal(JournalManager $journalManager, Request $request)
     {
 
-        $date = $request->get('date');
+        $date     = $request->get('date');
         $dataFlow = $request->get('dataFlow');
 
-        $data = $journalManager->validate($dataFlow,$date)->findParams()->findDiscretInfo()->getData();
+        $data = $journalManager->validate($dataFlow, $date)->findParams()->findDiscretInfo()->getData();
 
 
         return $this->json(['delta_data' => $data]);

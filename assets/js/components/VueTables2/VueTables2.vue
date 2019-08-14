@@ -1,22 +1,11 @@
 <template>
     <div>
-        <div class="ui segment">
+        <div class="ui segment block">
             <div class="ui two column very relaxed grid">
                 <div class="column">
                     <filter-bar></filter-bar>
-                    <!--<div class="vuetable-pagination ui basic segment grid">-->
-                    <!--<vuetable-pagination-info ref="paginationInfoTop"-->
-                    <!--&gt;</vuetable-pagination-info>-->
-                    <!--<vuetable-pagination ref="paginationTop"-->
-                    <!--@vuetable-pagination:change-page="onChangePage"-->
-                    <!--&gt;</vuetable-pagination>-->
-                    <!--</div>-->
-
-
-                    <!--detail-row-component="my-detail-row"-->
-
                     <vuetable ref="vuetable"
-                              api-url="https://vuetable.ratiw.net/api/users"
+                              api-url="http://php72.tools/internal/domain/query"
                               :fields="fields"
                               :per-page="5"
                               :multi-sort="true"
@@ -29,14 +18,6 @@
                     ></vuetable>
                     <template slot="actions" scope="props">
                         <div class="custom-actions">
-                            <button class="ui basic button"
-                                    @click="onAction('view-item', props.rowData, props.rowIndex)">
-                                <i class="zoom icon"></i>
-                            </button>
-                            <button class="ui basic button"
-                                    @click="onAction('edit-item', props.rowData, props.rowIndex)">
-                                <i class="edit icon"></i>
-                            </button>
                             <button class="ui basic button"
                                     @click="onAction('delete-item', props.rowData, props.rowIndex)">
                                 <i class="delete icon"></i>
@@ -76,7 +57,6 @@
     import VuetablePagination from 'vuetable-2/src/components/VuetablePagination';
     import VuetablePaginationInfo from 'vuetable-2/src/components/VuetablePaginationInfo'
     import CustomActions from './CustomActions';
-    // import DetailRow from './DetailRow';
     import FilterBar from './FilterBar';
     import FieldDefs from './FieldDefs';
     import InfoPanel from './InfoPanel';
@@ -97,8 +77,8 @@
             return {
                 sortOrder: [
                     {
-                        field: 'email',
-                        sortField: 'email',
+                        field: 'domain',
+                        sortField: 'domain',
                         direction: 'asc'
                     }
                 ],
@@ -113,27 +93,15 @@
             this.$events.$on('info-delete', eventData => this.onInfoDelete(eventData));
         },
         methods: {
-            allcap(value) {
-                return value.toUpperCase()
-            },
-            genderLabel(value) {
-                return value === 'M'
-                    ? '<span class="ui teal label"><i class="large man icon"></i>Male</span>'
-                    : '<span class="ui pink label"><i class="large woman icon"></i>Female</span>'
-            },
             onChangePage(page) {
                 this.$refs.vuetable.changePage(page)
             },
             onPaginationData(paginationData) {
-                // this.$refs.paginationTop.setPaginationData(paginationData);
-                // this.$refs.paginationInfoTop.setPaginationData(paginationData);
 
                 this.$refs.pagination.setPaginationData(paginationData);
                 this.$refs.paginationInfo.setPaginationData(paginationData);
             },
             onCellClicked(data, field, event) {
-                console.log('cellClicked: ', field.name);
-                this.$refs.vuetable.toggleDetailRow(data.id);
                 this.$events.fire('info-set', data);
             },
             onFilterSet(filterText) {

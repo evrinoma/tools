@@ -9,7 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Domains
  *
  * @ORM\Table(name="mail_domain")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="App\Repository\DomainRepository")
  */
 class Domain
 {
@@ -24,14 +24,12 @@ class Domain
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $id;
-
     /**
      * @var string
      *
      * @ORM\Column(name="domain", type="string", length=255, nullable=false)
      */
     private $domain = '';
-
     /**
      * @var Server
      *
@@ -55,6 +53,14 @@ class Domain
 //endregion Public
 
 //region SECTION: Getters/Setters
+    /**
+     * @return int
+     */
+    public function getId(): int
+    {
+        return $this->id;
+    }
+
     /**
      * @return string
      */

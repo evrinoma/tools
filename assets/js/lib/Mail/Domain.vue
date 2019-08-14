@@ -33,4 +33,7 @@
         padding: 5px;
 
     }
+    .ui.segment.block {
+        height: 84vh;
+    }
 </style>

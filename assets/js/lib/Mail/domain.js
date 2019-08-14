@@ -7,5 +7,5 @@ new Vue({
     el: '#app',
     template: '<domain/>',
     components: { domain }
-})
+});
 
