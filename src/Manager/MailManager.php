@@ -47,7 +47,8 @@ class MailManager extends AbstractEntityManager
     /**
      * MailManager constructor.
      *
-     * @param string $repositoryClass
+     * @param EntityManagerInterface $entityManager
+     * @param ServerManager          $serverManager
      */
     public function __construct(EntityManagerInterface $entityManager, ServerManager $serverManager)
     {
@@ -90,6 +91,9 @@ class MailManager extends AbstractEntityManager
         return $entity;
     }
 
+    /**
+     * @return array
+     */
     public function megrateDomains()
     {
         return [];
@@ -125,6 +129,13 @@ class MailManager extends AbstractEntityManager
 //endregion Public
 
 //region SECTION: Private
+    /**
+     * @param Domain $entity
+     * @param Server $server
+     * @param        $name
+     *
+     * @return Domain
+     */
     private function save(Domain $entity, Server $server, $name)
     {
         $entity->setDomain($name)->addServer($server)->setActive();
@@ -134,6 +145,11 @@ class MailManager extends AbstractEntityManager
         return $entity;
     }
 
+    /**
+     * @param $className
+     *
+     * @return $this
+     */
     private function deleteAllEntity($className)
     {
         $repository = $this->entityManager->getRepository($className);
@@ -172,6 +188,9 @@ class MailManager extends AbstractEntityManager
         return $this->perPage;
     }
 
+    /**
+     * @return $this
+     */
     public function getDomains()
     {
         $firstResult = $this->page * $this->perPage - $this->perPage;
@@ -222,7 +241,9 @@ class MailManager extends AbstractEntityManager
         return parent::getCount();
     }
 
-
+    /**
+     * @return int
+     */
     public function getRestStatus(): int
     {
         return $this->status;

@@ -1,7 +1,7 @@
 <template>
-    <div class="custom-actions">
-        <!--<button class="ui basic button" @click="itemAction('edit-item', rowData, rowIndex)"><i class="edit icon"></i></button>-->
-        <button class="ui basic button" @click="itemAction('delete-item', rowData, rowIndex)"><i class="trash icon"></i></button>
+    <div class="selector-actions">
+        <option value="">Select Relay Address</option>
+
     </div>
 </template>
 
@@ -18,7 +18,7 @@
         },
         methods: {
             itemAction (action, data, index) {
-                console.log('custom-actions: ' + action, data.name, index)
+                console.log('selector-actions: ' + action, data.name, index)
             }
         }
     }

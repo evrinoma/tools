@@ -9,7 +9,6 @@
 namespace App\Entity\Mail;
 
 use App\Entity\Model\ActiveTrait;
-
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -53,6 +52,14 @@ class Server
     public function getHostname(): ?string
     {
         return $this->hostname;
+    }
+
+    /**
+     * @return int
+     */
+    public function getId(): int
+    {
+        return $this->id;
     }
 
     /**

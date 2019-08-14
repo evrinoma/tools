@@ -32,6 +32,9 @@ class SettingsManager extends AbstractEntityManager
 //endregion Fields
 
 //region SECTION: Getters/Setters
+    /**
+     * @return mixed
+     */
     public function getSqlServers()
     {
         $builder = $this->repository->createQueryBuilder('settings');
@@ -45,6 +48,9 @@ class SettingsManager extends AbstractEntityManager
         return $builder->getQuery()->getResult();
     }
 
+    /**
+     * @return mixed
+     */
     public function getLocalSsh()
     {
         $builder = $this->repository->createQueryBuilder('settings');

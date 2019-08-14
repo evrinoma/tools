@@ -14,16 +14,8 @@
                               pagination-path=""
                               @vuetable:pagination-data="onPaginationData"
                               @vuetable:cell-clicked="onCellClicked"
-                              :append-params="moreParams"
+                              :append-params="moreParams"s
                     ></vuetable>
-                    <template slot="actions" scope="props">
-                        <div class="custom-actions">
-                            <button class="ui basic button"
-                                    @click="onAction('delete-item', props.rowData, props.rowIndex)">
-                                <i class="delete icon"></i>
-                            </button>
-                        </div>
-                    </template>
                     <div class="vuetable-pagination ui basic segment grid">
                         <vuetable-pagination-info ref="paginationInfo">
                         </vuetable-pagination-info>
@@ -63,7 +55,6 @@
 
     Vue.use(VueEvents);
     Vue.component('custom-actions', CustomActions);
-    // Vue.component('my-detail-row', DetailRow);
     Vue.component('filter-bar', FilterBar)
     Vue.component('info-panel', InfoPanel);
 
@@ -90,14 +81,13 @@
             this.$events.$on('filter-set', eventData => this.onFilterSet(eventData));
             this.$events.$on('filter-reset', eventData => this.onFilterReset());
             this.$events.$on('info-save', eventData => this.onInfoSave(eventData));
-            this.$events.$on('info-delete', eventData => this.onInfoDelete(eventData));
+            this.$events.$on('info-add', eventData => this.onInfoAdd(eventData));
         },
         methods: {
             onChangePage(page) {
                 this.$refs.vuetable.changePage(page)
             },
             onPaginationData(paginationData) {
-
                 this.$refs.pagination.setPaginationData(paginationData);
                 this.$refs.paginationInfo.setPaginationData(paginationData);
             },
@@ -115,7 +105,7 @@
             onInfoSave(infoPanel) {
                 Vue.nextTick(() => this.$refs.vuetable.refresh());
             },
-            onInfoDelete(infoPanel) {
+            onInfoAdd(infoPanel) {
                 Vue.nextTick(() => this.$refs.vuetable.refresh());
             },
         }
