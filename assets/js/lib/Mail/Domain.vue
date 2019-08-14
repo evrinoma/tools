@@ -1,14 +1,15 @@
 <template>
     <div id="app">
         <!--<img src="./assets/logo.png">-->
-        <div class="ui container">
+        <!--<div class="ui container">-->
             <vuetable></vuetable>
-        </div>
+        <!--</div>-->
     </div>
 </template>
 
 <script>
     import Vuetable from '../../components/VueTables2/VueTables2'
+
     export default {
         name: 'domain',
         components: {
@@ -26,5 +27,10 @@
         color: #2c3e50;
         margin-top: 5px;
         font-size: smaller;
+    }
+
+    .ui.table.vuetable td{
+        padding: 5px;
+
     }
 </style>

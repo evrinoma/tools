@@ -1,5 +1,5 @@
 <template>
-    <div @click="onClick">
+    <div class="ui mini message" @click="onClick">
         <div class="inline field">
             <label>Name: </label>
             <span>{{rowData.name}}</span>
