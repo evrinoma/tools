@@ -122,6 +122,34 @@ class ApiController extends AbstractController
     }
 
     /**
+     * @Rest\Delete("/internal/domain/delete", name="api_delete_domains")
+     * @SWG\Delete(tags={"domain"})
+     * @SWG\Parameter(
+     *     name="id",
+     *     in="query",
+     *     type="string",
+     *     default="-1",
+     *     description="id record"
+     * )
+     * @SWG\Response(response=200,description="Returns nothing")
+     *
+     * @param MailManager $mailManager
+     * @param Request     $request
+     *
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     */
+    public function deleteDomain(MailManager $mailManager, Request $request)
+    {
+        $id   = $request->get('id');
+        $ip   = $request->get('ip');
+        $name = $request->get('name');
+
+        $mailManager->getDomain($id)->lockEntitys()->setRestSuccessOk();
+
+        return $this->json(['message' => 'the Domain was delete successFully'],$mailManager->getRestStatus());
+    }
+
+    /**
      * @Rest\Post("/internal/servers/create_default", name="api_create_default_server")
      *
      * @SWG\Post(tags={"servers"})

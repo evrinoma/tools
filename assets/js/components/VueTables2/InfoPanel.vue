@@ -9,7 +9,7 @@
                     <i class="linkify icon"></i>
                     <input type="text" v-model="domainText" class="three wide column" placeholder="Domain name">
                     <a class="ui tag label">
-                        {{ id }}
+                        ID[{{ id }}]
                     </a>
                 </div>
             </div>
@@ -69,7 +69,7 @@
             this.$events.$on('info-set', eventData => this.onSet(eventData));
             axios
                 .get('http://php72.tools/internal/servers/servers')
-                .then(response => (this._setServers(response)));
+                .then(response => (this._axiosResponse(response)));
         },
         methods: {
             relayAdrHandleChange(e) {
@@ -79,7 +79,7 @@
                 const selectedIndex = select.options[select.selectedIndex].attributes.index.value;
                 this.mxText = this.servers[selectedIndex].hostname;
             },
-            _setServers(response) {
+            _axiosResponse(response) {
                 this.servers = response.data.servers;
             },
             // _createSelector() {

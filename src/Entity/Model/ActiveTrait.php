@@ -39,6 +39,16 @@ trait ActiveTrait
     }
 
     /**
+     * @return ActiveTrait
+     */
+    public function setActiveToDelete()
+    {
+        $this->active = ActiveModel::DELETED;
+
+        return $this;
+    }
+
+    /**
      * @return bool
      */
     public function isActive()

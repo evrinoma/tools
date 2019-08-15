@@ -9,6 +9,7 @@
 namespace App\Core;
 
 
+use App\Entity\Model\ActiveTrait;
 use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
@@ -68,7 +69,50 @@ abstract class AbstractEntityManager
 
         return $criteria;
     }
+
+    /**
+     * @param $className
+     *
+     * @return self
+     */
+    protected function getRepositoryAll($className)
+    {
+        /** @var EntityRepository $repository */
+        $repository = $this->entityManager->getRepository($className);
+        $this->setData($repository->findAll());
+
+        return $this;
+    }
 //endregion Protected
+
+//region SECTION: Public
+    /**
+     * @return self
+     */
+    public function removeEntitys()
+    {
+        foreach ($this->getData() as $entity) {
+            $this->entityManager->remove($entity);
+        }
+        $this->entityManager->flush();
+
+        return $this;
+    }
+
+    /**
+     * @return self
+     */
+    public function lockEntitys()
+    {
+        /** @var ActiveTrait $entity */
+        foreach ($this->getData() as $entity) {
+            $entity->setActiveToDelete();
+        }
+        $this->entityManager->flush();
+
+        return $this;
+    }
+//endregion Public
 
 //region SECTION: Getters/Setters
     /**

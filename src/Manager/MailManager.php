@@ -98,7 +98,9 @@ class MailManager extends AbstractEntityManager
     {
         return [];
 
-        $this->deleteAllEntity(Domain::class)->deleteAllEntity(Server::class);
+        $this
+            ->getRepositoryAll(Domain::class)->removeEntitys()
+            ->getRepositoryAll(Server::class)->removeEntitys();
         $created    = [];
         $rTbDomains = $this->entityManager->getRepository(TbDomains::class);
         /** @var TbDomains $value */
@@ -145,22 +147,6 @@ class MailManager extends AbstractEntityManager
         return $entity;
     }
 
-    /**
-     * @param $className
-     *
-     * @return $this
-     */
-    private function deleteAllEntity($className)
-    {
-        $repository = $this->entityManager->getRepository($className);
-        $entities   = $repository->findAll();
-        foreach ($entities as $entity) {
-            $this->entityManager->remove($entity);
-        }
-        $this->entityManager->flush();
-
-        return $this;
-    }
 //endregion Private
 
 //region SECTION: Getters/Setters
@@ -218,6 +204,25 @@ class MailManager extends AbstractEntityManager
             }
 
             $this->setData($this->repository->matching($criteria)->toArray());
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param $id
+     *
+     * @return MailManager
+     */
+    public function getDomain($id)
+    {
+        if ($id) {
+            $criteria = $this->getCriteria();
+            $criteria->andWhere(
+                $criteria->expr()->eq('id', $id)
+            );
+
+            $this->setData($this->repository->matching($criteria)->getValues());
         }
 
         return $this;
