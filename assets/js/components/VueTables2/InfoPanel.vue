@@ -15,7 +15,9 @@
             </div>
             <div class="field">
                 <label>Relay Address:</label>
-                <select class="ui search dropdown" v-html="relayAdrSelector" @click="relayAdrAction('select-item',relayAdrIndex)">
+                <select class="form-control" @change="relayAdrHandleChange">
+                    <option :selected="relayAdrSelected === false">Select Relay Address</option>
+                    <option v-for="(selectValue, index) in servers" :index="index" :param="selectValue.id" :value="selectValue.ip" :selected="relayAdrSelected === selectValue.ip">{{ selectValue.ip }}</option>
                 </select>
             </div>
             <div class="field">
@@ -60,8 +62,7 @@
                 mxText: '',
                 id: '',
                 servers: {},
-                relayAdrSelector: '',
-                relayAdrIndex: null
+                relayAdrSelected: false,
             }
         },
         mounted() {
@@ -71,27 +72,27 @@
                 .then(response => (this._setServers(response)));
         },
         methods: {
+            relayAdrHandleChange(e) {
+                const select = e.target;
+                const selectedIp = select.value;
+                const selectedId = select.options[select.selectedIndex].attributes.param.value;
+                const selectedIndex = select.options[select.selectedIndex].attributes.index.value;
+                this.mxText = this.servers[selectedIndex].hostname;
+            },
             _setServers(response) {
                 this.servers = response.data.servers;
-                this._createSelector();
             },
-            _createSelector(activeRelayAdr) {
-                let selector = '<option value="">Select Relay Address</option>';
-                let relayAdrIndex = null;
-                this.servers.some(function (value, key) {
-                    if (activeRelayAdr === value.ip) {
-                        selector += '<option value="' + value.id + '" selected>' + value.ip + '</option>';
-                        relayAdrIndex = key;
-                    } else
-                        selector += '<option value="' + value.id + '">' + value.ip + '</option>';
-                });
-                this.relayAdrSelector = selector;
-                this.relayAdrIndex = relayAdrIndex;
-            },
+            // _createSelector() {
+            //     let selector = [];
+            //     this.servers.some(function (value, key) {
+            //         selector.push(value.ip);
+            //     });
+            //     this.relayAdrSelector = selector;
+            // },
             _getData() {
                 return {
                     domain: this.domainText,
-                    relayAdr: this.relayAdrText,
+                    relayAdr: this.relayAdrSelected,
                     mx: this.mxText,
                     id: this.id
                 }
@@ -100,7 +101,7 @@
                 this.domainText = eventData.domain;
                 this.mxText = eventData.mx;
                 this.id = eventData.id;
-                this._createSelector(eventData.relayAdr);
+                this.relayAdrSelected = eventData.relayAdr;
             },
             doSave() {
                 this.$events.fire('info-save', this._getData());
@@ -110,11 +111,8 @@
             },
             resetEdit() {
                 this.domainText = '';
-                this._createSelector();
+                this.relayAdrSelected = false;
                 this.mxText = '';
-            },
-            relayAdrAction(action, data, index) {
-
             }
         }
     }
