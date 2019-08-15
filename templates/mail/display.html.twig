@@ -5,8 +5,3 @@
 {% block page %}
     <div id="app"></div>
 {% endblock %}
-
-{% block javascripts %}
-    {{ parent() }}
-    <script src="{{ asset('build/mail_domain.js', 'webpack') }}"></script>
-{% endblock %}
