@@ -224,6 +224,49 @@ class ApiController extends AbstractController
 
         return $this->json(['message' => 'the Domain was delete successFully'], $serverManger->getRestStatus());
     }
+
+
+    /**
+     * @Rest\Post("/internal/server/save", name="api_save_server")
+     * @SWG\Post(tags={"server"})
+     * @SWG\Parameter(
+     *     name="ip",
+     *     in="query",
+     *     type="string",
+     *     pattern="\d{1,3}.\d{1,3}.\d{1,3}.\d{1,3}",
+     *     default="172.20.1.4",
+     *     description="ip server"
+     * )
+     * @SWG\Parameter(
+     *     name="hostname",
+     *     in="query",
+     *     type="string",
+     *     default="mail.ite-ng.ru",
+     *     description="hostname server"
+     * )
+     * @SWG\Response(response=200,description="Returns the rewards of default generated domain",
+     *     @SWG\Schema(
+     *        type="object",
+     *        example={"name": "ite-ng.ru", "ip": "172.20.1.4"}
+     *     )
+     * )
+     * @SWG\Response(response=400,description="set ip and name domain")
+     *
+     * @param ServerManager $serverManager
+     *
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     * @throws \Exception
+     */
+    public function saveServer(ServerManager $serverManager, Request $request)
+    {
+        $ip   = $request->get('ip');
+        $name = $request->get('name');
+
+        return $this->json(
+            ['domains' => $serverManager->setRestSuccessOk()],
+            $serverManager->getRestStatus()
+        );
+    }
 //endregion Public
 
 //region SECTION: Private

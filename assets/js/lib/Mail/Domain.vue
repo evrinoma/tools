@@ -23,6 +23,7 @@
                     ></info-panel>
                     <server-panel
                             :api-url-servers="apiUrlServers"
+                            :api-url-save="apiUrlServerSave"
                             :api-url-delete="apiUrlServerDelete"
                     ></server-panel>
                 </div>
@@ -64,6 +65,7 @@
                 apiUrlServers: 'http://php72.tools/internal/server/server',
                 apiUrlSave: 'http://php72.tools/internal/domain/save',
                 apiUrlServerDelete:'http://php72.tools/internal/server/delete',
+                apiUrlServerSave:'http://php72.tools/internal/server/save',
             }
         }
     }
