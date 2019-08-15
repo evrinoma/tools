@@ -1,46 +1,25 @@
 <template>
     <div>
-        <div class="ui segment block">
-            <div class="ui two column very relaxed grid">
-                <div class="column">
-                    <filter-bar></filter-bar>
-                    <vuetable ref="vuetable"
-                              :api-url="apiUrl"
-                              :fields="fields"
-                              :per-page="5"
-                              :multi-sort="true"
-                              multi-sort-key="ctrl"
-                              :sort-order="sortOrder"
-                              pagination-path=""
-                              @vuetable:pagination-data="onPaginationData"
-                              @vuetable:cell-clicked="onCellClicked"
-                              :append-params="moreParams"
-                    ></vuetable>
-                    <div class="vuetable-pagination ui basic segment grid">
-                        <vuetable-pagination-info ref="paginationInfo">
-                        </vuetable-pagination-info>
+        <filter-bar></filter-bar>
+        <vuetable ref="vuetable"
+                  :api-url="apiUrl"
+                  :fields="fields"
+                  :per-page="5"
+                  :multi-sort="true"
+                  multi-sort-key="ctrl"
+                  :sort-order="sortOrder"
+                  pagination-path=""
+                  @vuetable:pagination-data="onPaginationData"
+                  @vuetable:cell-clicked="onCellClicked"
+                  :append-params="moreParams"
+        ></vuetable>
+        <div class="vuetable-pagination ui basic segment grid">
+            <vuetable-pagination-info ref="paginationInfo">
+            </vuetable-pagination-info>
 
-                        <vuetable-pagination ref="pagination"
-                                             @vuetable-pagination:change-page="onChangePage"
-                        ></vuetable-pagination>
-                    </div>
-                </div>
-                <div class="column">
-                    <p></p>
-                    <p></p>
-                    <p></p>
-                    <p></p>
-                    <p></p>
-                    <p></p>
-                    <info-panel
-                            :api-url-servers="apiUrlServers"
-                            :api-url-save="apiUrlSave"
-                    ></info-panel>
-                </div>
-            </div>
-            <div class="ui vertical divider">
-                |
-            </div>
+            <vuetable-pagination ref="pagination"
+                                 @vuetable-pagination:change-page="onChangePage"
+            ></vuetable-pagination>
         </div>
     </div>
 </template>
@@ -53,7 +32,7 @@
     import VuetablePaginationInfo from 'vuetable-2/src/components/VuetablePaginationInfo'
     import CustomActions from './CustomActions';
     import FilterBar from './FilterBar';
-    import InfoPanel from './InfoPanel';
+    import InfoPanel from '../../lib/Mail/InfoPanel';
     import axios from 'axios';
 
     Vue.use(VueEvents);

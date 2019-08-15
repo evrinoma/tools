@@ -1,13 +1,34 @@
 <template>
-    <div id="app">
-        <vuetable
-                :fields="fields"
-                :sort-order="sortOrder"
-                :api-url="apiUrl"
-                :api-url-delete="apiUrlDelete"
-                :api-url-servers="apiUrlServers"
-                :api-url-save="apiUrlSave"
-        ></vuetable>
+    <div>
+        <div class="ui segment block">
+            <div class="ui two column very relaxed grid">
+                <div class="column">
+                    <vuetable
+                            :fields="fields"
+                            :sort-order="sortOrder"
+                            :api-url="apiUrl"
+                            :api-url-delete="apiUrlDelete"
+                            :api-url-servers="apiUrlServers"
+                            :api-url-save="apiUrlSave"
+                    ></vuetable>
+                </div>
+                <div class="column">
+                    <p></p>
+                    <p></p>
+                    <p></p>
+                    <p></p>
+                    <p></p>
+                    <p></p>
+                    <info-panel
+                            :api-url-servers="apiUrlServers"
+                            :api-url-save="apiUrlSave"
+                    ></info-panel>
+                </div>
+            </div>
+            <div class="ui vertical divider">
+                |
+            </div>
+        </div>
     </div>
 </template>
 
