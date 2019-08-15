@@ -50,7 +50,6 @@
     import VuetablePaginationInfo from 'vuetable-2/src/components/VuetablePaginationInfo'
     import CustomActions from './CustomActions';
     import FilterBar from './FilterBar';
-    import FieldDefs from './FieldDefs';
     import InfoPanel from './InfoPanel';
 
     Vue.use(VueEvents);
@@ -64,17 +63,21 @@
             VuetablePagination,
             VuetablePaginationInfo
         },
+        props: {
+            fields: {
+                type: Array,
+                required: true
+            },
+            sortOrder: {
+                type: Array,
+                default() {
+                    return []
+                }
+            },
+        },
         data() {
             return {
-                sortOrder: [
-                    {
-                        field: 'domain',
-                        sortField: 'domain',
-                        direction: 'asc'
-                    }
-                ],
                 moreParams: {},
-                fields: FieldDefs,
             }
         },
         mounted() {

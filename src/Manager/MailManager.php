@@ -69,15 +69,14 @@ class MailManager extends AbstractEntityManager
     public function saveDomain($ip, $name)
     {
         $entity = ['ip' => $ip, 'name' => $name];
-
-        if ($ip && $name) {
+        if ($ip && $name && (preg_match("/(?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\.)+[a-z0-9][a-z0-9-]{0,61}[a-z0-9]/", $name) === 1)) {
             $criteria = new Criteria();
             $criteria->where(
                 $criteria->expr()->eq('domain', $name)
             );
             $existDomain = $this->repository->matching($criteria);
             $server      = $this->serverManager->getServer($ip)->getData();
-            $entity = $this->save($existDomain->count() ? $existDomain->first() : new Domain(), $name, $server);
+            $entity      = $this->save($existDomain->count() ? $existDomain->first() : new Domain(), $name, $server);
         } else {
             $this->setRestClientErrorBadRequest();
         }

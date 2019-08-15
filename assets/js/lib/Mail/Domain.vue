@@ -1,19 +1,32 @@
 <template>
     <div id="app">
-        <!--<img src="./assets/logo.png">-->
-        <!--<div class="ui container">-->
-            <vuetable></vuetable>
-        <!--</div>-->
+        <vuetable
+                :fields="fields"
+                :sort-order="sortOrder"
+        ></vuetable>
     </div>
 </template>
 
 <script>
-    import Vuetable from '../../components/VueTables2/VueTables2'
+    import Vuetable from '../../components/VueTables2/VueTables2';
+    import DomainFieldDefs from './DomainFieldDefs';
 
     export default {
         name: 'domain',
         components: {
             Vuetable
+        },
+        data() {
+            return {
+                fields: DomainFieldDefs,
+                sortOrder: [
+                    {
+                        field: 'domain',
+                        sortField: 'domain',
+                        direction: 'asc'
+                    }
+                ],
+            }
         }
     }
 </script>
@@ -29,10 +42,11 @@
         font-size: smaller;
     }
 
-    .ui.table.vuetable td{
+    .ui.table.vuetable td {
         padding: 5px;
 
     }
+
     .ui.segment.block {
         height: 84vh;
     }

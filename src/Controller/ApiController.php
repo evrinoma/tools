@@ -214,7 +214,7 @@ class ApiController extends AbstractController
             'total'         => $total,
             'per_page'      => $perPage,
             'current_page'  => $page,
-            'last_page'     => ($perPage !== 0) ? round($total / $perPage) + (($total % $perPage) !== 0 ? 1 : 0) : 1,
+            'last_page'     => ($perPage !== 0) ? intdiv($total, $perPage) + (($total % $perPage) !== 0 ? 1 : 0) : 1,
             'next_page_url' => null,
             'prev_page_url' => null,
             'from'          => $page * $perPage - $perPage + 1,

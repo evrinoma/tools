@@ -11,16 +11,13 @@ export default [
     },
     {
         name: 'relayAdr',
-        sortField: 'relayAdr',
         dataClass: 'center aligned'
     },
     {
         name: 'mx',
-        sortField: 'mx'
     },
     {
         name: 'active',
-        sortField: 'active',
         titleClass: 'center aligned',
         dataClass: 'center aligned'
     },

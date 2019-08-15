@@ -30,7 +30,6 @@
         },
         methods: {
             itemAction(action, data, index) {
-                console.log('custom-actions: ' + action, data, index);
                 axios
                     .delete('http://php72.tools/internal/domain/delete', {data: data})
                     .then(response => (this._axiosResponse(response)));
