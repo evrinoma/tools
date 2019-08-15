@@ -38,7 +38,7 @@ abstract class AbstractEntityManager
     /**
      * @var mixed
      */
-    private $data;
+    private $data = [];
 //endregion Fields
 
 //region SECTION: Constructor

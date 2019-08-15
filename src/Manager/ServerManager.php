@@ -93,7 +93,7 @@ class ServerManager extends AbstractEntityManager
     }
 
 
-    public function getServer($ip = '')
+    public function getServer($ip)
     {
         $criteria = new Criteria();
         $criteria->where(
@@ -106,7 +106,11 @@ class ServerManager extends AbstractEntityManager
             throw new \Exception(__METHOD__);
         }
 
-        return $value->first();
+        if ($value->count()) {
+            $this->setData($value->first());
+        }
+
+        return $this;
     }
 
     public function getRestStatus(): int

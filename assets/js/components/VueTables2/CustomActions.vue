@@ -7,8 +7,10 @@
 
 <script>
     import Vue from 'vue';
+    import VueEvents from 'vue-events';
     import axios from 'axios';
 
+    Vue.use(VueEvents);
     Vue.use(axios);
 
     export default {
@@ -35,7 +37,7 @@
             },
             _axiosResponse(response) {
                 this.servers = response.data.servers;
-                Vue.nextTick(() => this.$parent.$parent.$refs.vuetable.refresh());
+                this.$events.fire('custom-actions-delete');
             },
         }
     }

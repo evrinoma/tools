@@ -63,27 +63,21 @@ class MailManager extends AbstractEntityManager
      * @param $ip
      * @param $name
      *
-     * @return Domain|array
+     * @return Domain
      * @throws \Exception
      */
-    public function createDomain($ip, $name)
+    public function saveDomain($ip, $name)
     {
-        $entity = [];
+        $entity = ['ip' => $ip, 'name' => $name];
 
         if ($ip && $name) {
             $criteria = new Criteria();
             $criteria->where(
                 $criteria->expr()->eq('domain', $name)
             );
-
-            $value = $this->repository->matching($criteria);
-
-            if ($value->count() > 1) {
-                $this->setRestServerErrorUnknownError();
-            } else {
-                $server = $this->serverManager->getServer($ip);
-                $entity = $this->save($value->count() ? $value->first() : new Domain(), $server, $name);
-            }
+            $existDomain = $this->repository->matching($criteria);
+            $server      = $this->serverManager->getServer($ip)->getData();
+            $entity = $this->save($existDomain->count() ? $existDomain->first() : new Domain(), $name, $server);
         } else {
             $this->setRestClientErrorBadRequest();
         }
@@ -133,14 +127,15 @@ class MailManager extends AbstractEntityManager
 //region SECTION: Private
     /**
      * @param Domain $entity
-     * @param Server $server
      * @param        $name
+     * @param Server $server
      *
      * @return Domain
      */
-    private function save(Domain $entity, Server $server, $name)
+    private function save(Domain $entity, $name, $server = null)
     {
         $entity->setDomain($name)->addServer($server)->setActive();
+
         $this->entityManager->persist($entity);
         $this->entityManager->flush();
 

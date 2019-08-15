@@ -14,7 +14,7 @@
                               pagination-path=""
                               @vuetable:pagination-data="onPaginationData"
                               @vuetable:cell-clicked="onCellClicked"
-                              :append-params="moreParams"s
+                              :append-params="moreParams" s
                     ></vuetable>
                     <div class="vuetable-pagination ui basic segment grid">
                         <vuetable-pagination-info ref="paginationInfo">
@@ -80,8 +80,8 @@
         mounted() {
             this.$events.$on('filter-set', eventData => this.onFilterSet(eventData));
             this.$events.$on('filter-reset', eventData => this.onFilterReset());
-            this.$events.$on('info-save', eventData => this.onInfoSave(eventData));
-            this.$events.$on('info-add', eventData => this.onInfoAdd(eventData));
+            this.$events.$on('info-save', eventData => this.update(eventData));
+            this.$events.$on('custom-actions-delete', eventData => this.update(eventData));
         },
         methods: {
             onChangePage(page) {
@@ -102,10 +102,7 @@
                 delete this.moreParams.filter;
                 Vue.nextTick(() => this.$refs.vuetable.refresh());
             },
-            onInfoSave(infoPanel) {
-                Vue.nextTick(() => this.$refs.vuetable.refresh());
-            },
-            onInfoAdd(infoPanel) {
+            update(infoPanel) {
                 Vue.nextTick(() => this.$refs.vuetable.refresh());
             },
         }

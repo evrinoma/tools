@@ -18,8 +18,9 @@ use Symfony\Component\Routing\Annotation\Route;
  *
  * @package App\Controller
  */
-class MailController  extends AbstractController
+class MailController extends AbstractController
 {
+//region SECTION: Public
     /**
      * @Route("/mail/search", options={"expose"=true}, name="mail_search")
      * @Template("mail/display.html.twig")
@@ -33,7 +34,7 @@ class MailController  extends AbstractController
 
     /**
      * @Route("/mail/domain", options={"expose"=true}, name="mail_domain")
-     * @Template("mail/display.html.twig")
+     * @Template("mail/display.domain.html.twig")
      *
      * @return array
      */
@@ -52,4 +53,5 @@ class MailController  extends AbstractController
     {
         return ['titleHeader' => 'Mail', 'pageName' => 'System Status'];
     }
+//endregion Public
 }

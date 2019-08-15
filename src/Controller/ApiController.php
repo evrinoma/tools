@@ -62,9 +62,10 @@ class ApiController extends AbstractController
     }
 
     /**
-     * @Rest\Post("/internal/domain/create_default", name="api_create_default_domain")
+     * @Rest\Post("/internal/domain/save", name="api_save_domain")
      *
      * @SWG\Post(tags={"domain"})
+     *
      * @SWG\Parameter(
      *  name="ip",
      *     in="query",
@@ -95,14 +96,13 @@ class ApiController extends AbstractController
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      * @throws \Exception
      */
-    public function createDomain(MailManager $mailManager, Request $request)
+    public function saveDomain(MailManager $mailManager, Request $request)
     {
-
         $ip   = $request->get('ip');
         $name = $request->get('name');
 
         return $this->json(
-            ['domains' => $mailManager->setRestSuccessOk()->createDomain($ip, $name)],
+            ['domains' => $mailManager->setRestSuccessOk()->saveDomain($ip, $name)],
             $mailManager->getRestStatus()
         );
     }
@@ -144,9 +144,9 @@ class ApiController extends AbstractController
         $ip   = $request->get('ip');
         $name = $request->get('name');
 
-        $mailManager->getDomain($id)->lockEntitys()->setRestSuccessOk();
+        $mailManager->setRestSuccessOk()->getDomain($id)->lockEntitys();
 
-        return $this->json(['message' => 'the Domain was delete successFully'],$mailManager->getRestStatus());
+        return $this->json(['message' => 'the Domain was delete successFully'], $mailManager->getRestStatus());
     }
 
     /**
@@ -214,7 +214,7 @@ class ApiController extends AbstractController
             'total'         => $total,
             'per_page'      => $perPage,
             'current_page'  => $page,
-            'last_page'     => ($perPage !== 0) ? round($total / $perPage) : 1,
+            'last_page'     => ($perPage !== 0) ? round($total / $perPage) + (($total % $perPage) !== 0 ? 1 : 0) : 1,
             'next_page_url' => null,
             'prev_page_url' => null,
             'from'          => $page * $perPage - $perPage + 1,
