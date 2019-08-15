@@ -76,7 +76,7 @@ class MailManager extends AbstractEntityManager
             );
             $existDomain = $this->repository->matching($criteria);
             $server      = $this->serverManager->getServer($ip)->getData();
-            $entity      = $this->save($existDomain->count() ? $existDomain->first() : new Domain(), $name, $server);
+            $entity      = $this->save($existDomain->count() ? $existDomain->first() : new Domain(), $name, $server->count() ? $server->first():null);
         } else {
             $this->setRestClientErrorBadRequest();
         }
@@ -171,6 +171,23 @@ class MailManager extends AbstractEntityManager
     /**
      * @return $this
      */
+    public function getDomainsByIp()
+    {
+        if ($this->filter) {
+            $this->repository
+                ->createCriteria()
+                ->setFilterIp($this->filter);
+
+            $this->setData($this->repository->filterDomain());
+
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return $this
+     */
     public function getDomains()
     {
         $firstResult = $this->page * $this->perPage - $this->perPage;
@@ -178,7 +195,7 @@ class MailManager extends AbstractEntityManager
         if ($this->filter) {
             $this->repository
                 ->createCriteria()
-                ->setFilter($this->filter)
+                ->setFilterDomain($this->filter)
                 ->setFirstResult($firstResult)
                 ->setMaxResults($this->perPage);
 
@@ -232,7 +249,7 @@ class MailManager extends AbstractEntityManager
         if ($this->filter) {
             $this->repository
                 ->createCriteria()
-                ->setFilter($this->filter);
+                ->setFilterDomain($this->filter);
 
             return count($this->repository->filterDomain());
         }

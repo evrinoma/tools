@@ -63,9 +63,7 @@ class ApiController extends AbstractController
 
     /**
      * @Rest\Post("/internal/domain/save", name="api_save_domain")
-     *
      * @SWG\Post(tags={"domain"})
-     *
      * @SWG\Parameter(
      *  name="ip",
      *     in="query",
@@ -108,7 +106,7 @@ class ApiController extends AbstractController
     }
 
     /**
-     * @Rest\Put("/internal/domain/merge", name="api_merge_default_domains")
+     * @Rest\Put("/internal/domain/merge", name="api_merge_default_domain")
      * @SWG\Put(tags={"domain"})
      * @SWG\Response(response=200,description="Returns the merge of domains")
      *
@@ -122,7 +120,7 @@ class ApiController extends AbstractController
     }
 
     /**
-     * @Rest\Delete("/internal/domain/delete", name="api_delete_domains")
+     * @Rest\Delete("/internal/domain/delete", name="api_delete_domain")
      * @SWG\Delete(tags={"domain"})
      * @SWG\Parameter(
      *     name="id",
@@ -150,9 +148,8 @@ class ApiController extends AbstractController
     }
 
     /**
-     * @Rest\Post("/internal/servers/create_default", name="api_create_default_server")
-     *
-     * @SWG\Post(tags={"servers"})
+     * @Rest\Post("/internal/server/create_default", name="api_create_default_server")
+     * @SWG\Post(tags={"server"})
      * @SWG\Parameter(
      *     name="ip",
      *     in="query",
@@ -195,6 +192,38 @@ class ApiController extends AbstractController
 
         return $this->json(['servers' => $serverManger->setRestSuccessOk()->createServer($ip, $hostname)], $serverManger->getRestStatus());
     }
+
+    /**
+     * @Rest\Delete("/internal/server/delete", name="api_delete_server")
+     * @SWG\Delete(tags={"server"})
+     * @SWG\Parameter(
+     *  name="ip",
+     *     in="query",
+     *     type="array",
+     *     description="This is a parameter",
+     *     items=@SWG\Items(
+     *         type="string",
+     *         @Model(type=App\Form\Mail\ServerType::class)
+     *     )
+     * )
+     * @SWG\Response(response=200,description="Returns nothing")
+     *
+     * @param MailManager   $mailManager
+     * @param ServerManager $serverManger
+     * @param Request       $request
+     *
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     * @throws \Exception
+     */
+    public function deleteServer(MailManager $mailManager, ServerManager $serverManger, Request $request)
+    {
+        $ip = $request->get('ip');
+
+        $serverManger->setRestSuccessOk()->getServer($ip)->lockEntitys();
+        $mailManager->setFilter($ip)->getDomainsByIp()->lockEntitys();
+
+        return $this->json(['message' => 'the Domain was delete successFully'], $serverManger->getRestStatus());
+    }
 //endregion Public
 
 //region SECTION: Private
@@ -226,7 +255,7 @@ class ApiController extends AbstractController
 
 //region SECTION: Getters/Setters
     /**
-     * @Rest\Get("/internal/domain/domains", name="api_domains")
+     * @Rest\Get("/internal/domain/domain", name="api_domain")
      * @SWG\Get(tags={"domain"})
      *
      * @SWG\Response(response=200,description="Returns the rewards of all generated domains")
@@ -241,7 +270,7 @@ class ApiController extends AbstractController
     }
 
     /**
-     * @Rest\Get("/internal/domain/query", name="api_query_domains")
+     * @Rest\Get("/internal/domain/query", name="api_query_domain")
      * @SWG\Get(tags={"domain"})
      * @SWG\Parameter(
      *     name="page",
@@ -287,8 +316,8 @@ class ApiController extends AbstractController
     }
 
     /**
-     * @Rest\Get("/internal/servers/servers", name="api_servers")
-     * @SWG\Get(tags={"servers"})
+     * @Rest\Get("/internal/server/server", name="api_server")
+     * @SWG\Get(tags={"server"})
      * @SWG\Response(response=200,description="Returns the rewards of all servers")
      *
      * @param ServerManager $serverManger

@@ -29,10 +29,16 @@ class DomainRepository extends EntityRepository
 
         $builder
             ->leftJoin('domain.server', 'server')
-            ->where("domain.active = 'a'")
-            ->andWhere('domain.domain like :filter or server.hostname like :filter')
-            ->setParameter('filter', '%'.$this->criteria->getFilter().'%')
-            ->setMaxResults($this->criteria->getMaxResults())
+            ->where("domain.active = 'a'");
+        if ($this->criteria->getFilterDomain()) {
+            $builder->andWhere('domain.domain like :filter or server.hostname like :filter')
+                ->setParameter('filter', '%'.$this->criteria->getFilterDomain().'%');
+        }
+        if ($this->criteria->getFilterIp()) {
+            $builder->andWhere('server.ip like :filter')
+                ->setParameter('filter', $this->criteria->getFilterIp());
+        }
+        $builder->setMaxResults($this->criteria->getMaxResults())
             ->setFirstResult($this->criteria->getFirstResult());
 
         return $builder->getQuery()->getResult();
@@ -45,9 +51,30 @@ class DomainRepository extends EntityRepository
     {
         return $this->criteria = new class()
         {
-            private $filter;
+            private $filterDomain;
+            private $filterIp;
             private $firstResult;
             private $maxResults;
+
+            /**
+             * @return mixed
+             */
+            public function getFilterIp()
+            {
+                return $this->filterIp;
+            }
+
+            /**
+             * @param mixed $filterIp
+             *
+             * @return self
+             */
+            public function setFilterIp($filterIp)
+            {
+                $this->filterIp = $filterIp;
+
+                return $this;
+            }
 
             /**
              * @return mixed
@@ -73,19 +100,19 @@ class DomainRepository extends EntityRepository
             /**
              * @return mixed
              */
-            public function getFilter()
+            public function getFilterDomain()
             {
-                return $this->filter;
+                return $this->filterDomain;
             }
 
             /**
-             * @param mixed $filter
+             * @param mixed $filterDomain
              *
              * @return self
              */
-            public function setFilter($filter)
+            public function setFilterDomain($filterDomain)
             {
-                $this->filter = $filter;
+                $this->filterDomain = $filterDomain;
 
                 return $this;
             }

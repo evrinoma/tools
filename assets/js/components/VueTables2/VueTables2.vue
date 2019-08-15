@@ -32,14 +32,12 @@
     import VuetablePaginationInfo from 'vuetable-2/src/components/VuetablePaginationInfo'
     import CustomActions from './CustomActions';
     import FilterBar from './FilterBar';
-    import InfoPanel from '../../lib/Mail/InfoPanel';
     import axios from 'axios';
 
     Vue.use(VueEvents);
     Vue.use(axios);
     Vue.component('custom-actions', CustomActions);
     Vue.component('filter-bar', FilterBar)
-    Vue.component('info-panel', InfoPanel);
 
     export default {
         components: {
@@ -60,14 +58,6 @@
                 type: String,
                 required: true
             },
-            apiUrlServers: {
-                type: String,
-                required: true
-            },
-            apiUrlSave: {
-                type: String,
-                required: true
-            },
             sortOrder: {
                 type: Array,
                 default() {
@@ -83,7 +73,7 @@
         mounted() {
             this.$events.$on('filter-set', eventData => this.onFilterSet(eventData));
             this.$events.$on('filter-reset', eventData => this.onFilterReset());
-            this.$events.$on('info-save', eventData => this.onUpdate());
+            this.$events.$on('table-save', eventData => this.onUpdate());
             this.$events.$on('custom-actions-delete', eventData => this.onDelete(eventData));
         },
         methods: {

@@ -8,8 +8,6 @@
                             :sort-order="sortOrder"
                             :api-url="apiUrl"
                             :api-url-delete="apiUrlDelete"
-                            :api-url-servers="apiUrlServers"
-                            :api-url-save="apiUrlSave"
                     ></vuetable>
                 </div>
                 <div class="column">
@@ -23,6 +21,10 @@
                             :api-url-servers="apiUrlServers"
                             :api-url-save="apiUrlSave"
                     ></info-panel>
+                    <server-panel
+                            :api-url-servers="apiUrlServers"
+                            :api-url-delete="apiUrlServerDelete"
+                    ></server-panel>
                 </div>
             </div>
             <div class="ui vertical divider">
@@ -33,8 +35,14 @@
 </template>
 
 <script>
-    import Vuetable from '../../components/VueTables2/VueTables2';
+    import Vue from 'vue';
     import DomainFieldDefs from './DomainFieldDefs';
+    import InfoPanel from './InfoPanel';
+    import ServerPanel from './ServerPanel';
+    import Vuetable from '../../components/VueTables2/VueTables2';
+
+    Vue.component('info-panel', InfoPanel);
+    Vue.component('server-panel', ServerPanel);
 
     export default {
         name: 'domain',
@@ -53,8 +61,9 @@
                 ],
                 apiUrl: 'http://php72.tools/internal/domain/query',
                 apiUrlDelete: 'http://php72.tools/internal/domain/delete',
-                apiUrlServers: 'http://php72.tools/internal/servers/servers',
+                apiUrlServers: 'http://php72.tools/internal/server/server',
                 apiUrlSave: 'http://php72.tools/internal/domain/save',
+                apiUrlServerDelete:'http://php72.tools/internal/server/delete',
             }
         }
     }

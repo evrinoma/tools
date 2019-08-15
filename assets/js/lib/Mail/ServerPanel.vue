@@ -1,20 +1,22 @@
 <template>
-    <div class="info-panel">
-        <div class="ui huge header">Edit Domain</div>
+    <div class="server-panel">
+        <div class="ui huge header">Edit Server</div>
         <p></p>
         <div class="ui form">
-            <div class="field" v-bind:class="{ 'error': hasError }">
-                <label>Domain Name:</label>
-                <div class="ui right labeled left icon input">
-                    <i class="linkify icon "></i>
-                    <input type="text" v-model="domainText" class="three wide column" placeholder="Domain name">
-                    <a class="ui tag label">
-                        ID[{{ id }}]
-                    </a>
+            <div class="field">
+                <label>Mx:</label>
+                <div class="ui input">
+                    <input type="text" v-model="mxText" class="three wide column" placeholder="MX name">
                 </div>
             </div>
             <div class="field">
-                <label>Relay Address:</label>
+                <label>IP:</label>
+                <div class="ui input">
+                    <input type="text" v-model="ipText" class="three wide column" placeholder="IP address">
+                </div>
+            </div>
+            <div class="field">
+                <label>Server Address:</label>
                 <select class="form-control" @change="relayAdrHandleChange">
                     <option v-if="relayAdrSelected === false" selected>
                         Select Relay Address
@@ -26,12 +28,6 @@
 
                 </select>
             </div>
-            <div class="field">
-                <label>Mx:</label>
-                <div class="ui disabled input">
-                    <input type="text" v-model="mxText" class="three wide column" placeholder="MX name">
-                </div>
-            </div>
             <br>
             <div class="ui animated button" tabindex="0" @click="doSave">
                 <div class="visible content">Save</div>
@@ -39,10 +35,10 @@
                     <i class="right save icon"></i>
                 </div>
             </div>
-            <div class="ui vertical animated button" tabindex="0" @click="resetEdit">
-                <div class="hidden content">Reset</div>
+            <div class="ui vertical animated button" tabindex="0" @click="doDelete">
+                <div class="hidden content">Delete</div>
                 <div class="visible content">
-                    <i class="shop x icon"></i>
+                    <i class="shop trash icon"></i>
                 </div>
             </div>
         </div>
@@ -78,11 +74,16 @@
                 type: String,
                 required: true
             },
+            apiUrlDelete: {
+                type: String,
+                required: true
+            },
         },
         data() {
             return {
                 domainText: '',
                 mxText: '',
+                ipText: '',
                 id: '',
                 servers: {},
                 relayAdrSelected: false,
@@ -92,9 +93,7 @@
             }
         },
         mounted() {
-            this.$events.$on('info-set', eventData => this.onSet(eventData));
-            this.$events.$on('info-reload', eventData => this.doLoad());
-            this.doLoad();
+            this.doMount();
         },
         methods: {
             relayAdrHandleChange(e) {
@@ -103,17 +102,28 @@
                 const selectedId = select.options[select.selectedIndex].attributes.param.value;
                 const selectedIndex = select.options[select.selectedIndex].attributes.index.value;
                 this.mxText = this.servers[selectedIndex].hostname;
+                this.ipText = this.servers[selectedIndex].ip;
                 this.relayAdrSelected = this.servers[selectedIndex].ip;
             },
             _axiosResponse(type, response) {
                 switch (type) {
-                    case 'info-load':
+                    case 'server-mount':
                         this.servers = response.data.servers;
                         break;
-                    case 'info-save':
+                    case 'server-delete':
+                        this.doMount();
+
+                        break;
+                    case 'server-delete-error':
+                        this.hasError = true;
+                        this.showError = true;
+                        this.errorText = 'Запись [' + response.response.data.domains.name + '] невозможно удалить.';
+                        setTimeout(this._resetError, 2000);
+                        break;
+                    case 'server-save':
                         this.$events.fire('table-save', this._getData());
                         break;
-                    case 'info-save-error':
+                    case 'server-save-error':
                         this.hasError = true;
                         this.showError = true;
                         this.errorText = 'Запись [' + response.response.data.domains.name + '] невозможно сохранить.';
@@ -134,6 +144,7 @@
                     domain: this.domainText,
                     relayAdr: this.relayAdrSelected,
                     mx: this.mxText,
+                    ip: this.ipText,
                     id: this.id
                 }
             },
@@ -149,22 +160,28 @@
                 this.id = eventData.id;
                 this.relayAdrSelected = eventData.relayAdr;
             },
-            doLoad() {
-                this.resetEdit();
+            doMount() {
+                this.$events.fire('info-reload');
+                this.$events.fire('table-save', this._getData());
                 axios
                     .get(this.apiUrlServers)
-                    .then(response => (this._axiosResponse('info-load', response)));
+                    .then(response => (this._axiosResponse('server-mount', response)));
             },
             doSave() {
                 axios
                     .post(this.apiUrlSave, this._getAddData())
-                    .then(response => (this._axiosResponse('info-save', response)))
-                    .catch(error => (this._axiosResponse('info-save-error', error)));
+                    .then(response => (this._axiosResponse('server-save', response)))
+                    .catch(error => (this._axiosResponse('server-save-error', error)));
             },
-            resetEdit() {
+            doDelete() {
+                axios
+                    .delete(this.apiUrlDelete, {data: this._getAddData()})
+                    .then(response => (this._axiosResponse('server-delete', response)))
+                    .catch(error => (this._axiosResponse('server-delete-error', error)));
                 this.domainText = '';
                 this.relayAdrSelected = false;
                 this.mxText = '';
+                this.ipText = '';
             }
         }
     }
