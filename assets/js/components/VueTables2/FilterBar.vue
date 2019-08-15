@@ -17,8 +17,6 @@
                         <i class="shop x icon"></i>
                     </div>
                 </div>
-                <!--<button class="ui primary button" @click="doFilter">Go</button>-->
-                <!--<button class="ui button" @click="resetFilter">Reset</button>-->
 
             </div>
         </div>

@@ -16,8 +16,14 @@
             <div class="field">
                 <label>Relay Address:</label>
                 <select class="form-control" @change="relayAdrHandleChange">
-                    <option :key="componentKey" :selected="relayAdrSelected === false">Select Relay Address</option>
-                    <option :key="componentKey" v-for="(selectValue, index) in servers" :index="index" :param="selectValue.id" :value="selectValue.ip" :selected="relayAdrSelected === selectValue.ip">{{ selectValue.ip }}</option>
+                    <option v-if="relayAdrSelected === false" selected>
+                        Select Relay Address
+                    </option>
+                    <option v-else>
+                        Select Relay Address
+                    </option>
+                    <option v-for="(selectValue, index) in servers" :index="index" :param="selectValue.id" :value="selectValue.ip" :selected="relayAdrSelected === selectValue.ip">{{ selectValue.ip }}</option>
+
                 </select>
             </div>
             <div class="field">
@@ -63,6 +69,16 @@
     Vue.use(axios);
 
     export default {
+        props: {
+            apiUrlServers: {
+                type: String,
+                required: true
+            },
+            apiUrlSave: {
+                type: String,
+                required: true
+            },
+        },
         data() {
             return {
                 domainText: '',
@@ -72,14 +88,13 @@
                 relayAdrSelected: false,
                 hasError: false,
                 showError: false,
-                componentKey: false,
                 errorText: ''
             }
         },
         mounted() {
             this.$events.$on('info-set', eventData => this.onSet(eventData));
             axios
-                .get('http://php72.tools/internal/servers/servers')
+                .get(this.apiUrlServers)
                 .then(response => (this._axiosResponse('info-mount', response)));
         },
         methods: {
@@ -137,7 +152,7 @@
             },
             doSave() {
                 axios
-                    .post('http://php72.tools/internal/domain/save', this._getAddData())
+                    .post(this.apiUrlSave, this._getAddData())
                     .then(response => (this._axiosResponse('info-save', response)))
                     .catch(error => (this._axiosResponse('info-save-error', error)));
             },
@@ -145,8 +160,6 @@
                 this.domainText = '';
                 this.relayAdrSelected = false;
                 this.mxText = '';
-                componentKey = true;
-                Vue.nextTick(() => this.$refs.vuetable.refresh());
             }
         }
     }

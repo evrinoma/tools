@@ -1,6 +1,5 @@
 <template>
     <div class="custom-actions">
-        <!--<button class="ui basic button" @click="itemAction('edit-item', rowData, rowIndex)"><i class="edit icon"></i></button>-->
         <button class="ui basic button" @click="itemAction('delete-item', rowData, rowIndex)"><i class="trash icon"></i></button>
     </div>
 </template>
@@ -8,10 +7,8 @@
 <script>
     import Vue from 'vue';
     import VueEvents from 'vue-events';
-    import axios from 'axios';
 
     Vue.use(VueEvents);
-    Vue.use(axios);
 
     export default {
         props: {
@@ -21,7 +18,7 @@
             },
             rowIndex: {
                 type: Number
-            }
+            },
         },
         data() {
             return {
@@ -30,13 +27,7 @@
         },
         methods: {
             itemAction(action, data, index) {
-                axios
-                    .delete('http://php72.tools/internal/domain/delete', {data: data})
-                    .then(response => (this._axiosResponse(response)));
-            },
-            _axiosResponse(response) {
-                this.servers = response.data.servers;
-                this.$events.fire('custom-actions-delete');
+                this.$events.fire('custom-actions-delete', {data: data});
             },
         }
     }

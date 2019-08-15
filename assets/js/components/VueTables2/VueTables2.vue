@@ -5,7 +5,7 @@
                 <div class="column">
                     <filter-bar></filter-bar>
                     <vuetable ref="vuetable"
-                              api-url="http://php72.tools/internal/domain/query"
+                              :api-url="apiUrl"
                               :fields="fields"
                               :per-page="5"
                               :multi-sort="true"
@@ -14,7 +14,7 @@
                               pagination-path=""
                               @vuetable:pagination-data="onPaginationData"
                               @vuetable:cell-clicked="onCellClicked"
-                              :append-params="moreParams" s
+                              :append-params="moreParams"
                     ></vuetable>
                     <div class="vuetable-pagination ui basic segment grid">
                         <vuetable-pagination-info ref="paginationInfo">
@@ -32,7 +32,10 @@
                     <p></p>
                     <p></p>
                     <p></p>
-                    <info-panel></info-panel>
+                    <info-panel
+                            :api-url-servers="apiUrlServers"
+                            :api-url-save="apiUrlSave"
+                    ></info-panel>
                 </div>
             </div>
             <div class="ui vertical divider">
@@ -51,8 +54,10 @@
     import CustomActions from './CustomActions';
     import FilterBar from './FilterBar';
     import InfoPanel from './InfoPanel';
+    import axios from 'axios';
 
     Vue.use(VueEvents);
+    Vue.use(axios);
     Vue.component('custom-actions', CustomActions);
     Vue.component('filter-bar', FilterBar)
     Vue.component('info-panel', InfoPanel);
@@ -66,6 +71,22 @@
         props: {
             fields: {
                 type: Array,
+                required: true
+            },
+            apiUrl: {
+                type: String,
+                required: true
+            },
+            apiUrlDelete: {
+                type: String,
+                required: true
+            },
+            apiUrlServers: {
+                type: String,
+                required: true
+            },
+            apiUrlSave: {
+                type: String,
                 required: true
             },
             sortOrder: {
@@ -83,8 +104,8 @@
         mounted() {
             this.$events.$on('filter-set', eventData => this.onFilterSet(eventData));
             this.$events.$on('filter-reset', eventData => this.onFilterReset());
-            this.$events.$on('info-save', eventData => this.update(eventData));
-            this.$events.$on('custom-actions-delete', eventData => this.update(eventData));
+            this.$events.$on('info-save', eventData => this.onUpdate());
+            this.$events.$on('custom-actions-delete', eventData => this.onDelete(eventData));
         },
         methods: {
             onChangePage(page) {
@@ -105,9 +126,21 @@
                 delete this.moreParams.filter;
                 Vue.nextTick(() => this.$refs.vuetable.refresh());
             },
-            update(infoPanel) {
+            onUpdate() {
                 Vue.nextTick(() => this.$refs.vuetable.refresh());
             },
+            onDelete(data) {
+                axios
+                    .delete(this.apiUrlDelete, data)
+                    .then(response => (this._axiosResponse('custom-actions-delete', response)));
+            },
+            _axiosResponse(type, response) {
+                switch (type) {
+                    case 'custom-actions-delete':
+                        Vue.nextTick(() => this.$refs.vuetable.refresh());
+                        break;
+                }
+            }
         }
     }
 </script>

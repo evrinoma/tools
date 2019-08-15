@@ -3,6 +3,10 @@
         <vuetable
                 :fields="fields"
                 :sort-order="sortOrder"
+                :api-url="apiUrl"
+                :api-url-delete="apiUrlDelete"
+                :api-url-servers="apiUrlServers"
+                :api-url-save="apiUrlSave"
         ></vuetable>
     </div>
 </template>
@@ -26,6 +30,10 @@
                         direction: 'asc'
                     }
                 ],
+                apiUrl: 'http://php72.tools/internal/domain/query',
+                apiUrlDelete: 'http://php72.tools/internal/domain/delete',
+                apiUrlServers: 'http://php72.tools/internal/servers/servers',
+                apiUrlSave: 'http://php72.tools/internal/domain/save',
             }
         }
     }
