@@ -23,13 +23,13 @@ class MailController extends AbstractController
 //region SECTION: Public
     /**
      * @Route("/mail/search", options={"expose"=true}, name="mail_search")
-     * @Template("mail/display.html.twig")
+     * @Template("mail/display.search.html.twig")
      *
      * @return array
      */
     public function mailSearch()
     {
-        return ['titleHeader' => 'Mail', 'pageName' => 'System Status'];
+        return ['titleHeader' => 'Mail', 'pageName' => 'Log Search'];
     }
 
     /**
@@ -40,7 +40,7 @@ class MailController extends AbstractController
      */
     public function mailDomain()
     {
-        return ['titleHeader' => 'Mail', 'pageName' => 'System Status'];
+        return ['titleHeader' => 'Mail', 'pageName' => 'Domain'];
     }
 
     /**

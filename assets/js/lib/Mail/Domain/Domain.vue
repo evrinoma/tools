@@ -40,7 +40,7 @@
     import DomainFieldDefs from './DomainFieldDefs';
     import InfoPanel from './InfoPanel';
     import ServerPanel from './ServerPanel';
-    import Vuetable from '../../components/VueTables2/VueTables2';
+    import Vuetable from '../../../components/VueTables2/VueTables2';
 
     Vue.component('info-panel', InfoPanel);
     Vue.component('server-panel', ServerPanel);

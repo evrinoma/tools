@@ -1,1 +1,1 @@
-import MailDomain from '../js/lib/Mail/domain';
+import MailDomain from '../js/lib/Mail/Domain/domain';
