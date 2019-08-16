@@ -29,14 +29,15 @@ class DomainRepository extends EntityRepository
 
         $builder
             ->leftJoin('domain.server', 'server')
-            ->where("domain.active = 'a'");
-        if ($this->criteria->getFilterDomain()) {
+            ->where("domain.active = 'a'")
+            ->andWhere("server.active = 'a'");
+        if ($this->criteria->getDomain()) {
             $builder->andWhere('domain.domain like :filter or server.hostname like :filter')
-                ->setParameter('filter', '%'.$this->criteria->getFilterDomain().'%');
+                ->setParameter('filter', '%'.$this->criteria->getDomain().'%');
         }
-        if ($this->criteria->getFilterIp()) {
+        if ($this->criteria->getIp()) {
             $builder->andWhere('server.ip like :filter')
-                ->setParameter('filter', $this->criteria->getFilterIp());
+                ->setParameter('filter', $this->criteria->getIp());
         }
         $builder->setMaxResults($this->criteria->getMaxResults())
             ->setFirstResult($this->criteria->getFirstResult());
@@ -51,27 +52,27 @@ class DomainRepository extends EntityRepository
     {
         return $this->criteria = new class()
         {
-            private $filterDomain;
-            private $filterIp;
+            private $domain;
+            private $ip;
             private $firstResult;
             private $maxResults;
 
             /**
              * @return mixed
              */
-            public function getFilterIp()
+            public function getIp()
             {
-                return $this->filterIp;
+                return $this->ip;
             }
 
             /**
-             * @param mixed $filterIp
+             * @param mixed $ip
              *
              * @return self
              */
-            public function setFilterIp($filterIp)
+            public function setIp($ip)
             {
-                $this->filterIp = $filterIp;
+                $this->ip = $ip;
 
                 return $this;
             }
@@ -100,19 +101,19 @@ class DomainRepository extends EntityRepository
             /**
              * @return mixed
              */
-            public function getFilterDomain()
+            public function getDomain()
             {
-                return $this->filterDomain;
+                return $this->domain;
             }
 
             /**
-             * @param mixed $filterDomain
+             * @param mixed $domain
              *
              * @return self
              */
-            public function setFilterDomain($filterDomain)
+            public function setDomain($domain)
             {
-                $this->filterDomain = $filterDomain;
+                $this->domain = $domain;
 
                 return $this;
             }

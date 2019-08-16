@@ -208,19 +208,17 @@ class ApiController extends AbstractController
      * )
      * @SWG\Response(response=200,description="Returns nothing")
      *
-     * @param MailManager   $mailManager
      * @param ServerManager $serverManger
      * @param Request       $request
      *
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      * @throws \Exception
      */
-    public function deleteServer(MailManager $mailManager, ServerManager $serverManger, Request $request)
+    public function deleteServer(ServerManager $serverManger, Request $request)
     {
         $ip = $request->get('ip');
 
         $serverManger->setRestSuccessOk()->getServer($ip)->lockEntitys();
-        $mailManager->setFilter($ip)->getDomainsByIp()->lockEntitys();
 
         return $this->json(['message' => 'the Domain was delete successFully'], $serverManger->getRestStatus());
     }

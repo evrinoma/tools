@@ -171,51 +171,17 @@ class MailManager extends AbstractEntityManager
     /**
      * @return $this
      */
-    public function getDomainsByIp()
-    {
-        if ($this->filter) {
-            $this->repository
-                ->createCriteria()
-                ->setFilterIp($this->filter);
-
-            $this->setData($this->repository->filterDomain());
-
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return $this
-     */
     public function getDomains()
     {
         $firstResult = $this->page * $this->perPage - $this->perPage;
 
-        if ($this->filter) {
             $this->repository
                 ->createCriteria()
-                ->setFilterDomain($this->filter)
+                ->setDomain($this->filter)
                 ->setFirstResult($firstResult)
                 ->setMaxResults($this->perPage);
 
             $this->setData($this->repository->filterDomain());
-
-        } else {
-
-            $criteria = $this->getCriteria();
-
-            if ($this->page > 1) {
-                $criteria
-                    ->setFirstResult($firstResult);
-            }
-            if ($this->perPage > 0) {
-                $criteria
-                    ->setMaxResults($this->perPage);
-            }
-
-            $this->setData($this->repository->matching($criteria)->toArray());
-        }
 
         return $this;
     }
@@ -246,15 +212,11 @@ class MailManager extends AbstractEntityManager
      */
     public function getCount($criteria = null)
     {
-        if ($this->filter) {
             $this->repository
                 ->createCriteria()
-                ->setFilterDomain($this->filter);
+                ->setDomain($this->filter);
 
-            return count($this->repository->filterDomain());
-        }
-
-        return parent::getCount();
+        return count($this->repository->filterDomain());
     }
 
     /**
