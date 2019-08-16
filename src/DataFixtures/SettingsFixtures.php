@@ -38,7 +38,8 @@ class SettingsFixtures extends AbstractFixtures
         $settingsMysql
             ->setPort('3306')
             ->setHost('172.18.1.2')
-            ->isRemote()
+            ->setType(DescriptionService::class)
+            ->setRemote()
             ->setServiceType($descriptionMysql);
 
         $manager->persist($descriptionMysql);
@@ -53,6 +54,7 @@ class SettingsFixtures extends AbstractFixtures
         $settingsSsh
             ->setPort('22')
             ->setHost('localhost')
+            ->setType(DescriptionService::class)
             ->setServiceType($descriptionSsh);
 
         $manager->persist($descriptionSsh);

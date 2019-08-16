@@ -50,6 +50,7 @@ class DeltaFixtures extends AbstractFixtures
         $settingsMssql
             ->setPort('1433')
             ->setHost('172.16.45.10')
+            ->setType(DescriptionService::class)
             ->setServiceType($descriptionMssql)
             ->setRemote();
 
@@ -78,6 +79,7 @@ class DeltaFixtures extends AbstractFixtures
         $settingsMssql
             ->setPort('1433')
             ->setHost('172.16.45.10')
+            ->setType(DescriptionService::class)
             ->setServiceType($descriptionMssql)
             ->setRemote();
 
@@ -106,6 +108,7 @@ class DeltaFixtures extends AbstractFixtures
         $settingsMssql
             ->setPort('1433')
             ->setHost('172.16.45.10')
+            ->setType(DescriptionService::class)
             ->setServiceType($descriptionMssql)
             ->setRemote();
 
@@ -133,6 +136,7 @@ class DeltaFixtures extends AbstractFixtures
         $settingsMssql
             ->setPort('1433')
             ->setHost('172.16.45.10')
+            ->setType(DescriptionService::class)
             ->setServiceType($descriptionMssql)
             ->setRemote();
 
@@ -160,6 +164,7 @@ class DeltaFixtures extends AbstractFixtures
         $settingsMssql
             ->setPort('1433')
             ->setHost('172.16.45.10')
+            ->setType(DescriptionService::class)
             ->setServiceType($descriptionMssql)
             ->setRemote();
 
@@ -186,6 +191,7 @@ class DeltaFixtures extends AbstractFixtures
         $settingsMssql
             ->setPort('1433')
             ->setHost('172.16.45.10')
+            ->setType(DescriptionService::class)
             ->setServiceType($descriptionMssql)
             ->setRemote();
 
