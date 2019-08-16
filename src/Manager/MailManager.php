@@ -15,7 +15,6 @@ use App\Entity\Mail\Server;
 use App\Entity\Mail\TbDomains;
 use App\Repository\DomainRepository;
 use App\Rest\Core\RestTrait;
-use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\EntityManagerInterface;
 
 /**
@@ -70,13 +69,14 @@ class MailManager extends AbstractEntityManager
     {
         $entity = ['ip' => $ip, 'name' => $name];
         if ($ip && $name && (preg_match("/(?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\.)+[a-z0-9][a-z0-9-]{0,61}[a-z0-9]/", $name) === 1)) {
-            $criteria = new Criteria();
-            $criteria->where(
+            $criteria = $this->getCriteria();
+            $criteria->andWhere(
                 $criteria->expr()->eq('domain', $name)
             );
+
             $existDomain = $this->repository->matching($criteria);
             $server      = $this->serverManager->getServer($ip)->getData();
-            $entity      = $this->save($existDomain->count() ? $existDomain->first() : new Domain(), $name, $server->count() ? $server->first():null);
+            $entity      = $this->save($existDomain->count() ? $existDomain->first() : new Domain(), $name, $server->count() ? $server->first() : null);
         } else {
             $this->setRestClientErrorBadRequest();
         }
@@ -175,13 +175,13 @@ class MailManager extends AbstractEntityManager
     {
         $firstResult = $this->page * $this->perPage - $this->perPage;
 
-            $this->repository
-                ->createCriteria()
-                ->setDomain($this->filter)
-                ->setFirstResult($firstResult)
-                ->setMaxResults($this->perPage);
+        $this->repository
+            ->createCriteria()
+            ->setDomain($this->filter)
+            ->setFirstResult($firstResult)
+            ->setMaxResults($this->perPage);
 
-            $this->setData($this->repository->filterDomain());
+        $this->setData($this->repository->filterDomain());
 
         return $this;
     }
@@ -212,9 +212,9 @@ class MailManager extends AbstractEntityManager
      */
     public function getCount($criteria = null)
     {
-            $this->repository
-                ->createCriteria()
-                ->setDomain($this->filter);
+        $this->repository
+            ->createCriteria()
+            ->setDomain($this->filter);
 
         return count($this->repository->filterDomain());
     }

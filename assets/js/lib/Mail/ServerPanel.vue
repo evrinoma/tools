@@ -3,13 +3,13 @@
         <div class="ui huge header">Edit Server</div>
         <p></p>
         <div class="ui form">
-            <div class="field">
+            <div class="field" v-bind:class="{ 'error': hasError }">
                 <label>Mx:</label>
                 <div class="ui input">
                     <input type="text" v-model="mxText" class="three wide column" placeholder="MX name">
                 </div>
             </div>
-            <div class="field">
+            <div class="field" v-bind:class="{ 'error': hasError }">
                 <label>IP:</label>
                 <div class="ui input">
                     <input type="text" v-model="ipText" class="three wide column" placeholder="IP address">
@@ -112,21 +112,22 @@
                         break;
                     case 'server-delete':
                         this.doMount();
-
                         break;
                     case 'server-delete-error':
                         this.hasError = true;
                         this.showError = true;
-                        this.errorText = 'Запись [' + response.response.data.domains.name + '] невозможно удалить.';
+                        this.errorText = 'Запись [' + response.response.data.servers.name + '] невозможно удалить.';
                         setTimeout(this._resetError, 2000);
                         break;
                     case 'server-save':
                         this.$events.fire('table-save', this._getData());
+                        this.relayAdrSelected = response.data.servers.ip;
+                            this.doMount();
                         break;
                     case 'server-save-error':
                         this.hasError = true;
                         this.showError = true;
-                        this.errorText = 'Запись [' + response.response.data.domains.name + '] невозможно сохранить.';
+                        this.errorText = 'Запись [' + response.response.data.servers.name + '] невозможно сохранить.';
                         setTimeout(this._resetError, 2000);
                         this.$events.fire('info-add', this._getData());
                         break;
@@ -150,8 +151,8 @@
             },
             _getAddData() {
                 return {
-                    name: this.domainText,
-                    ip: this.relayAdrSelected,
+                    name: this.mxText,
+                    ip: this.ipText,
                 }
             },
             onSet(eventData) {

@@ -33,30 +33,29 @@ class ServerManager extends AbstractEntityManager
 
 //region SECTION: Public
     /**
-     * @param $ip
-     * @param $hostname
-     *
-     * @return array
-     * @throws \Exception
+     * @return Server[]
      */
-    public function createServer($ip, $hostname)
+    public function saveServer($ip, $name)
     {
-        $entity = [];
+        $entity = ['ip' => $ip, 'name' => $name];
+        if ($ip && $name
+            && (preg_match("/(?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\.)+[a-z0-9][a-z0-9-]{0,61}[a-z0-9]/", $name) === 1)
+            && (preg_match("/^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$/", $ip) === 1)
+        ) {
+            $criteria = $this->getCriteria();
+            $criteria
+                ->andWhere(
+                    $criteria->expr()->orX(
+                        $criteria->expr()->eq('ip', $ip),
+                        $criteria->expr()->eq('hostname', $name)
+                    )
+                );
 
-        if ($ip && $hostname) {
-            $criteria = new Criteria();
-            $criteria->where(
-                $criteria->expr()->eq('ip', $ip)
-            )->orWhere(
-                $criteria->expr()->eq('hostname', $hostname)
-            );
-
-            $value = $this->repository->matching($criteria);
-
-            if ($value->count() > 1) {
+            $existServer = $this->repository->matching($criteria);
+            if ($existServer->count() > 1) {
                 $this->setRestServerErrorUnknownError();
             } else {
-                $entity = $this->save($value->count() ? $value->first() : new Server(), $ip, $hostname);
+                $entity = $this->save($existServer->count() ? $existServer->first() : new Server(), $ip, $name);
             }
         } else {
             $this->setRestClientErrorBadRequest();
@@ -69,13 +68,9 @@ class ServerManager extends AbstractEntityManager
 //region SECTION: Private
     private function save(Server $entity, $ip, $hostname)
     {
-        if (($entity->getIp() && $entity->getIp() === $ip) && ($entity->getHostname() && $entity->getHostname() === $hostname)) {
-            $entity->setIp($ip)->setHostname($hostname)->setActive();
-            $this->entityManager->persist($entity);
-            $this->entityManager->flush();
-        } else {
-            $this->setRestClientErrorConflict();
-        }
+        $entity->setIp($ip)->setHostname($hostname)->setActive();
+        $this->entityManager->persist($entity);
+        $this->entityManager->flush();
 
         return $entity;
     }

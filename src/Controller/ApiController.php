@@ -148,52 +148,6 @@ class ApiController extends AbstractController
     }
 
     /**
-     * @Rest\Post("/internal/server/create_default", name="api_create_default_server")
-     * @SWG\Post(tags={"server"})
-     * @SWG\Parameter(
-     *     name="ip",
-     *     in="query",
-     *     type="string",
-     *     pattern="\d{1,3}.\d{1,3}.\d{1,3}.\d{1,3}",
-     *     default="172.20.1.4",
-     *     description="ip server"
-     * )
-     * @SWG\Parameter(
-     *     name="hostname",
-     *     in="query",
-     *     type="string",
-     *     default="mail.ite-ng.ru",
-     *     description="hostname server"
-     * )
-     *
-     * @SWG\Response(response=200,description="Returns the rewards of default generated domain",
-     *     @SWG\Schema(
-     *        type="object",
-     *        example={"hostname": "mail.ite-ng.ru", "ip": "172.20.1.4"}
-     *     )
-     * )
-     *
-     * @SWG\Response(response=409,description="Generated domain with spme value ip or hostname allready exist",
-     *     @SWG\Schema(
-     *        type="object",
-     *        example={"hostname": "mail.ite-ng.ru", "ip": "172.20.1.4"}
-     *     )
-     * )
-     *
-     * @param ServerManager $serverManger
-     *
-     * @return \Symfony\Component\HttpFoundation\JsonResponse
-     * @throws \Exception
-     */
-    public function createServer(ServerManager $serverManger, Request $request)
-    {
-        $ip       = $request->get('ip');
-        $hostname = $request->get('hostname');
-
-        return $this->json(['servers' => $serverManger->setRestSuccessOk()->createServer($ip, $hostname)], $serverManger->getRestStatus());
-    }
-
-    /**
      * @Rest\Delete("/internal/server/delete", name="api_delete_server")
      * @SWG\Delete(tags={"server"})
      * @SWG\Parameter(
@@ -259,9 +213,8 @@ class ApiController extends AbstractController
     {
         $ip   = $request->get('ip');
         $name = $request->get('name');
-
         return $this->json(
-            ['domains' => $serverManager->setRestSuccessOk()],
+            ['servers' => $serverManager->setRestSuccessOk()->saveServer($ip, $name)],
             $serverManager->getRestStatus()
         );
     }
