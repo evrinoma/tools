@@ -8,6 +8,7 @@
 
 namespace App\Entity;
 
+use App\Entity\Model\ActiveTrait;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -20,6 +21,8 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Settings
 {
+    use ActiveTrait;
+
 //region SECTION: Fields
     /**
      * @ORM\Id
@@ -54,10 +57,21 @@ class Settings
      * @ORM\Column(name="remote", type="boolean", options={"default":"0"})
      */
     protected $isRemote = false;
+
+    /**
+     * @var string
+     * @ORM\Column(name="type", type="string", nullable=false)
+     */
+    protected $type;
+
+    /**
+     * @var object
+     * @ORM\Column(name="data", type="object")
+     */
+    protected $data;
 //endregion Fields
 
 //region SECTION: Public
-
     /**
      * @return mixed
      */
@@ -66,20 +80,23 @@ class Settings
         return $this->isRemote;
     }
 
-    /**
-     * @param $serviceType
-     *
-     * @return $this
-     */
-    public function setServiceType($serviceType)
-    {
-        $this->serviceType = $serviceType;
-
-        return $this;
-    }
-//endregion Public
-
 //region SECTION: Getters/Setters
+    /**
+     * @return object
+     */
+    public function getData()
+    {
+        return $this->data;
+    }
+
+    /**
+     * @return string
+     */
+    public function getType(): string
+    {
+        return $this->type;
+    }
+
     /**
      * @return mixed
      */
@@ -110,6 +127,42 @@ class Settings
     public function getPort(): string
     {
         return $this->port;
+    }
+
+    /**
+     * @param object $data
+     *
+     * @return Settings
+     */
+    public function setData($data)
+    {
+        $this->data = $data;
+
+        return $this;
+    }
+
+    /**
+     * @param string $type
+     *
+     * @return Settings
+     */
+    public function setType(string $type)
+    {
+        $this->type = $type;
+
+        return $this;
+    }
+
+    /**
+     * @param $serviceType
+     *
+     * @return $this
+     */
+    public function setServiceType($serviceType)
+    {
+        $this->serviceType = $serviceType;
+
+        return $this;
     }
 
     /**
@@ -147,6 +200,7 @@ class Settings
 
         return $this;
     }
+//endregion Getters/Setters
 
 
 //endregion Getters/Setters
