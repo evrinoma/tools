@@ -92,7 +92,7 @@ class Settings
     /**
      * @return string
      */
-    public function getType(): string
+    public function getType()
     {
         return $this->type;
     }
@@ -116,7 +116,7 @@ class Settings
     /**
      * @return string
      */
-    public function getHost(): string
+    public function getHost()
     {
         return $this->host;
     }
@@ -124,7 +124,7 @@ class Settings
     /**
      * @return string
      */
-    public function getPort(): string
+    public function getPort()
     {
         return $this->port;
     }

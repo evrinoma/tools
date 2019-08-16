@@ -66,6 +66,24 @@ class SettingsManager extends AbstractEntityManager
     }
 
     /**
+     * @param string $class
+     *
+     * @return mixed
+     */
+    public function getFiles($class = '')
+    {
+        $builder = $this->repository->createQueryBuilder('settings');
+
+        $builder
+            ->where('settings.active = \'a\'')
+            ->andWhere('settings.type = :classEntity')
+            ->setParameter('classEntity', $class)
+        ;
+
+        return $builder->getQuery()->getResult();
+    }
+
+    /**
      * @return DescriptionService[]
      */
     public function getDeltaServices()

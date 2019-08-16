@@ -34,6 +34,14 @@ class FileDto
     }
 
     /**
+     * @return string
+     */
+    public function getFilePath()
+    {
+        return $this->path.$this->name;
+    }
+
+    /**
      * @param mixed $name
      *
      * @return FileDto

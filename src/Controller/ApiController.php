@@ -14,6 +14,7 @@ use App\Manager\DashBoardManager;
 use App\Manager\JournalManager;
 use App\Manager\MailManager;
 use App\Manager\MenuManager;
+use App\Manager\SearchManager;
 use App\Manager\ServerManager;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use Nelmio\ApiDocBundle\Annotation\Model;
@@ -262,6 +263,31 @@ class ApiController extends AbstractController
     {
         return $this->json($mailManager->setRestSuccessOk()->getDomains(), $mailManager->getRestStatus());
     }
+
+    /**
+     * @Rest\GET("/internal/log/search", name="api_log_search")
+     * @SWG\Get(tags={"log"})
+     * @SWG\Parameter(
+     *     name="search",
+     *     in="query",
+     *     type="string",
+     *     default="@ite-ng.ru",
+     *     description="search for"
+     * )
+     * @SWG\Response(response=200,description="Returns nothing")
+     *
+     * @param SearchManager $searchManager
+     * @param Request     $request
+     *
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     */
+    public function logSearch(SearchManager $searchManager, Request $request)
+    {
+        $search   = $request->get('search');
+
+        return $this->json(['message' => $searchManager->setSearchStr($search)->getSearch()->getSearchResult()], $searchManager->getRestStatus());
+    }
+
 
     /**
      * @Rest\Get("/internal/domain/query", name="api_query_domain")
