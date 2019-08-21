@@ -214,10 +214,47 @@ class ApiController extends AbstractController
     {
         $ip   = $request->get('ip');
         $name = $request->get('name');
+
         return $this->json(
             ['servers' => $serverManager->setRestSuccessOk()->saveServer($ip, $name)],
             $serverManager->getRestStatus()
         );
+    }
+
+    /**
+     * @Rest\GET("/internal/log/search", name="api_log_search")
+     * @SWG\Get(tags={"log"})
+     * @SWG\Parameter(
+     *     name="searchString",
+     *     in="query",
+     *     type="string",
+     *     default="@ite-ng.ru",
+     *     description="search for"
+     * )
+     * @SWG\Parameter(
+     *     name="searchFile",
+     *     in="query",
+     *     type="array",
+     *     description="search there",
+     *     items=@SWG\Items(
+     *         type="string",
+     *         @Model(type=App\Form\Mail\FileSearchType::class, options={"rest_class_type":"App\Manager\SearchManager"})
+     *     )
+     * )
+     * @SWG\Response(response=200,description="Returns nothing")
+     *
+     * @param SearchManager $searchManager
+     * @param Request       $request
+     *
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     */
+    public function logSearch(SearchManager $searchManager, Request $request)
+    {
+        $searchString = $request->get('searchString');
+        $searchFile   = $request->get('searchFile');
+
+
+        return $this->json(['message' => $searchManager->setSearchString($searchString)->setSearchFile($searchFile)->getSearch()->getSearchResult()], $searchManager->getRestStatus());
     }
 //endregion Public
 
@@ -263,31 +300,6 @@ class ApiController extends AbstractController
     {
         return $this->json($mailManager->setRestSuccessOk()->getDomains(), $mailManager->getRestStatus());
     }
-
-    /**
-     * @Rest\GET("/internal/log/search", name="api_log_search")
-     * @SWG\Get(tags={"log"})
-     * @SWG\Parameter(
-     *     name="search",
-     *     in="query",
-     *     type="string",
-     *     default="@ite-ng.ru",
-     *     description="search for"
-     * )
-     * @SWG\Response(response=200,description="Returns nothing")
-     *
-     * @param SearchManager $searchManager
-     * @param Request     $request
-     *
-     * @return \Symfony\Component\HttpFoundation\JsonResponse
-     */
-    public function logSearch(SearchManager $searchManager, Request $request)
-    {
-        $search   = $request->get('search');
-
-        return $this->json(['message' => $searchManager->setSearchStr($search)->getSearch()->getSearchResult()], $searchManager->getRestStatus());
-    }
-
 
     /**
      * @Rest\Get("/internal/domain/query", name="api_query_domain")

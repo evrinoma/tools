@@ -36,7 +36,8 @@ class SearchManager extends AbstractEntityManager
      */
     private $settings;
     private $searchResult = [];
-    private $searchStr    = '';
+    private $searchString = '';
+    private $searchFile   = '';
     private $step         = 5;
 
     private $settingsManager;
@@ -88,17 +89,24 @@ class SearchManager extends AbstractEntityManager
         foreach ($this->settings as $setting) {
             $fileDto = $setting->getData();
             if ($fileDto instanceof FileDto) {
-                $file = $fileDto->getFilePath();
-                $run  = $this->programs['cat'].' '.escapeshellarg($file).' | '.
-                    $this->programs['grep'].' -ni \''.escapeshellarg($this->searchStr).'\' | '.
-                    $this->programs['sed'].' -n \'s/^\\([0-9]*\\)[:].*/\\1/p\'';
-                if ($this->setClean()->executeProgram($run)) {
-                    $this->getLineMeet($this->getResult(), $file, $fileDto->getName());
+                if ($this->isFile($fileDto->getName())) {
+                    $file = $fileDto->getFilePath();
+                    $run  = $this->programs['cat'].' '.escapeshellarg($file).' | '.
+                        $this->programs['grep'].' -ni \''.escapeshellarg($this->searchString).'\' | '.
+                        $this->programs['sed'].' -n \'s/^\\([0-9]*\\)[:].*/\\1/p\'';
+                    if ($this->setClean()->executeProgram($run)) {
+                        $this->getLineMeet($this->getResult(), $file, $fileDto->getName());
+                    }
                 }
             }
         }
 
         return $this;
+    }
+
+    private function isFile($fileName)
+    {
+        return ($this->searchFile === '' || $this->searchFile === $fileName);
     }
 
     /**
@@ -145,11 +153,22 @@ class SearchManager extends AbstractEntityManager
      */
     private function isSearchStr()
     {
-        return $this->searchStr !== '';
+        return $this->searchString !== '';
     }
 //endregion Private
 
 //region SECTION: Getters/Setters
+    public function getResult()
+    {
+        $converts = [];
+        foreach ($this->result as $value) {
+            $string = preg_replace( '/[^[:print:]\r\n]/', '',$value);
+            $converts[] = mb_convert_encoding($string, 'UTF-8', 'UTF-8');
+        }
+
+        return $converts;
+    }
+
     /**
      * @return array
      */
@@ -169,9 +188,9 @@ class SearchManager extends AbstractEntityManager
     /**
      * @return string
      */
-    public function getSearchStr(): string
+    public function getSearchString(): string
     {
-        return $this->searchStr;
+        return $this->searchString;
     }
 
     /**
@@ -196,6 +215,14 @@ class SearchManager extends AbstractEntityManager
     }
 
     /**
+     * @return string
+     */
+    public function getSearchFile(): string
+    {
+        return $this->searchFile;
+    }
+
+    /**
      * @param array $files
      *
      * @return SearchManager
@@ -208,17 +235,33 @@ class SearchManager extends AbstractEntityManager
     }
 
     /**
-     * @param string $searchStr
+     * @param string $searchString
      *
      * @return SearchManager
      */
-    public function setSearchStr($searchStr)
+    public function setSearchString($searchString)
     {
-        if ($searchStr) {
-            $this->searchStr = $searchStr;
+        if ($searchString) {
+            $this->searchString = $searchString;
         }
 
         return $this;
     }
+
+    /**
+     * @param string $searchFile
+     *
+     * @return SearchManager
+     */
+    public function setSearchFile(string $searchFile)
+    {
+        if ($searchFile) {
+            $this->searchFile = $searchFile;
+        }
+
+        return $this;
+    }
+
+
 //endregion Getters/Setters
 }
