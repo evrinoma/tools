@@ -82,6 +82,16 @@ class SearchManager extends AbstractEntityManager
     }
 
     /**
+     * @return Settings[]
+     */
+    public function getSettings()
+    {
+        $this->loadSettings();
+
+        return $this->settings;
+    }
+
+    /**
      * $files берем активные из настроек
      */
     private function getNumberLineMeet()

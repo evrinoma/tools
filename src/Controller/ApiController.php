@@ -254,7 +254,22 @@ class ApiController extends AbstractController
         $searchFile   = $request->get('searchFile');
 
 
-        return $this->json(['message' => $searchManager->setSearchString($searchString)->setSearchFile($searchFile)->getSearch()->getSearchResult()], $searchManager->getRestStatus());
+        return $this->json(['message' => $searchManager->setRestSuccessOk()->setSearchString($searchString)->setSearchFile($searchFile)->getSearch()->getSearchResult()], $searchManager->getRestStatus());
+    }
+
+    /**
+     * @Rest\GET("/internal/log/settings", name="api_log_settings")
+     * @SWG\Get(tags={"log"})
+     *
+     * @SWG\Response(response=200,description="Returns nothing")
+     *
+     * @param SearchManager $searchManager
+     *
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     */
+    public function logSearchSettings(SearchManager $searchManager)
+    {
+        return $this->json(['message' => $searchManager->setRestSuccessOk()->getSettings()], $searchManager->getRestStatus());
     }
 //endregion Public
 
