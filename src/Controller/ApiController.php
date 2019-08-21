@@ -254,7 +254,7 @@ class ApiController extends AbstractController
         $searchFile   = $request->get('searchFile');
 
 
-        return $this->json(['message' => $searchManager->setRestSuccessOk()->setSearchString($searchString)->setSearchFile($searchFile)->getSearch()->getSearchResult()], $searchManager->getRestStatus());
+        return $this->json(['search' => $searchManager->setRestSuccessOk()->setSearchString($searchString)->setSearchFile($searchFile)->getSearch()->getSearchResult()], $searchManager->getRestStatus());
     }
 
     /**
@@ -269,7 +269,7 @@ class ApiController extends AbstractController
      */
     public function logSearchSettings(SearchManager $searchManager)
     {
-        return $this->json(['message' => $searchManager->setRestSuccessOk()->getSettings()], $searchManager->getRestStatus());
+        return $this->json(['settings' => $searchManager->setRestSuccessOk()->getSettings()], $searchManager->getRestStatus());
     }
 //endregion Public
 

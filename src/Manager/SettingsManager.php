@@ -75,7 +75,7 @@ class SettingsManager extends AbstractEntityManager
         $builder = $this->repository->createQueryBuilder('settings');
 
         $builder
-            ->where('settings.active = \'a\'')
+            ->where('settings.active != \'d\'')
             ->andWhere('settings.type = :classEntity')
             ->setParameter('classEntity', $class)
         ;
