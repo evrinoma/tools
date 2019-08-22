@@ -79,9 +79,8 @@ class SearchManager extends AbstractEntityManager
      */
     public function saveSettings($settingsDto)
     {
-        foreach ($this->getSettings() as $entity)
-        {
-            if ($settingsDto[$entity->getId()]){
+        foreach ($this->getSettings() as $entity) {
+            if ($settingsDto[$entity->getId()]) {
                 $settingsDto[$entity->getId()]->fillEntity($entity);
             }
         }
@@ -102,7 +101,7 @@ class SearchManager extends AbstractEntityManager
     }
 
     /**
-     * $files берем активные из настроек
+     * @return $this
      */
     private function getNumberLineMeet()
     {
@@ -141,11 +140,16 @@ class SearchManager extends AbstractEntityManager
     private function getLineMeet(array $lines, $file, $name)
     {
 //        $name = mb_strcut(mb_strrchr($file, '/'), 1, mb_strlen($file));
+        $message = [];
         foreach ($lines as $number) {
             $run = $this->programs['sed'].' -n \''.$number.','.($number + $this->step).'p;'.($number + $this->step + 1).'q\' '.$file;
             if ($this->setClean()->executeProgram($run)) {
-                $this->searchResult[$name][] = $this->getResult();
+                // $message['_'.$number] = $this->getResult();
+                $message[] = $this->getResult();
             }
+        }
+        if (count($message)) {
+            $this->searchResult[] = ['file' => $name, 'messages' => $message];
         }
 
         return $this;
