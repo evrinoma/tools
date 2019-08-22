@@ -10,6 +10,7 @@ namespace App\Manager;
 
 
 use App\Core\AbstractEntityManager;
+use App\Dto\ServerDto;
 use App\Entity\Mail\Server;
 use App\Rest\Core\RestTrait;
 use Doctrine\Common\Collections\Criteria;
@@ -33,21 +34,20 @@ class ServerManager extends AbstractEntityManager
 
 //region SECTION: Public
     /**
-     * @return Server[]
+     * @param ServerDto[] $serverDto
+     *
+     * @return Server|array
      */
-    public function saveServer($ip, $name)
+    public function saveServer($serverDto)
     {
-        $entity = ['ip' => $ip, 'name' => $name];
-        if ($ip && $name
-            && (preg_match("/(?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\.)+[a-z0-9][a-z0-9-]{0,61}[a-z0-9]/", $name) === 1)
-            && (preg_match("/^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$/", $ip) === 1)
-        ) {
+        $dto = reset($serverDto);
+        if ($dto->isValidHostName() && $dto->isValidIp()) {
             $criteria = $this->getCriteria();
             $criteria
                 ->andWhere(
                     $criteria->expr()->orX(
-                        $criteria->expr()->eq('ip', $ip),
-                        $criteria->expr()->eq('hostname', $name)
+                        $criteria->expr()->eq('ip', $dto->getIp()),
+                        $criteria->expr()->eq('hostname', $dto->getHostName())
                     )
                 );
 
@@ -55,20 +55,26 @@ class ServerManager extends AbstractEntityManager
             if ($existServer->count() > 1) {
                 $this->setRestServerErrorUnknownError();
             } else {
-                $entity = $this->save($existServer->count() ? $existServer->first() : new Server(), $ip, $name);
+                $dto = $this->save($existServer->count() ? $existServer->first() : new Server(), $dto);
             }
         } else {
             $this->setRestClientErrorBadRequest();
         }
 
-        return $entity;
+        return $dto;
     }
 //endregion Public
 
 //region SECTION: Private
-    private function save(Server $entity, $ip, $hostname)
+    /**
+     * @param Server    $entity
+     * @param ServerDto $serverDto
+     *
+     * @return Server
+     */
+    private function save(Server $entity, $serverDto)
     {
-        $entity->setIp($ip)->setHostname($hostname)->setActive();
+        $serverDto->fillEntity($entity);
         $this->entityManager->persist($entity);
         $this->entityManager->flush();
 

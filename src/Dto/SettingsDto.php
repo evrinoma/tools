@@ -11,6 +11,7 @@ namespace App\Dto;
 
 use App\Entity\Model\ActiveTrait;
 use App\Entity\Settings;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Class SettingsDto
@@ -43,12 +44,12 @@ class SettingsDto implements FactoryDtoInterface
     /**
      * @param $request
      *
-     * @return mixed
+     * @return array
      */
-    public static function toDto(&$request)
+    public static function toDto(Request $request)
     {
         $result = [];
-        foreach ($request as $item) {
+        foreach (self::getRequest($request) as $item) {
             if (isset($item['id'], $item['active'])) {
                 $dto = new self();
                 $dto->setId($item['id'])->setActive($item['active']);
@@ -61,6 +62,16 @@ class SettingsDto implements FactoryDtoInterface
 //endregion SECTION: Dto
 
 //region SECTION: Getters/Setters
+    /**
+     * @param Request $request
+     *
+     * @return mixed
+     */
+    public static function getRequest(Request $request)
+    {
+        return $request->get('settings');
+    }
+
     /**
      * @return mixed
      */

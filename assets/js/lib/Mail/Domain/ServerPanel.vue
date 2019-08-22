@@ -122,7 +122,7 @@
                     case 'server-save':
                         this.$events.fire('table-save', this._getData());
                         this.relayAdrSelected = response.data.servers.ip;
-                            this.doMount();
+                        this.doMount();
                         break;
                     case 'server-save-error':
                         this.hasError = true;

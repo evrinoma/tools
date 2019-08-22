@@ -8,6 +8,8 @@
 
 namespace App\Dto;
 
+use Symfony\Component\HttpFoundation\Request;
+
 /**
  * Interface FactoryDtoInterface
  *
@@ -23,8 +25,15 @@ interface FactoryDtoInterface
     /**
      * @param $request
      *
+     * @return array
+     */
+    public static function toDto(Request $request);
+
+    /**
+     * @param Request $request
+     *
      * @return mixed
      */
-    public static function toDto(&$request);
+    public static function getRequest(Request $request);
 //endregion SECTION: Dto
 }

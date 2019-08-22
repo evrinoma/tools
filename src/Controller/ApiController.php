@@ -11,6 +11,7 @@ namespace App\Controller;
 
 use App\Core\AbstractEntityManager;
 use App\Dto\FactoryDto;
+use App\Dto\ServerDto;
 use App\Dto\SettingsDto;
 use App\Manager\DashBoardManager;
 use App\Manager\JournalManager;
@@ -18,7 +19,6 @@ use App\Manager\MailManager;
 use App\Manager\MenuManager;
 use App\Manager\SearchManager;
 use App\Manager\ServerManager;
-use App\Manager\SettingsManager;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use Nelmio\ApiDocBundle\Annotation\Model;
 use Swagger\Annotations as SWG;
@@ -213,13 +213,12 @@ class ApiController extends AbstractController
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      * @throws \Exception
      */
-    public function saveServer(ServerManager $serverManager, Request $request)
+    public function saveServer(FactoryDto $factoryDto, ServerManager $serverManager, Request $request)
     {
-        $ip   = $request->get('ip');
-        $name = $request->get('name');
+        $serverDto = $factoryDto->setRequest($request)->createDto(ServerDto::class);
 
         return $this->json(
-            ['servers' => $serverManager->setRestSuccessOk()->saveServer($ip, $name)],
+            ['servers' => $serverManager->setRestSuccessOk()->saveServer($serverDto)],
             $serverManager->getRestStatus()
         );
     }
@@ -305,7 +304,7 @@ class ApiController extends AbstractController
      */
     public function saveSearchSettings(FactoryDto $factoryDto, SearchManager $searchManager, Request $request)
     {
-        $settingsDto =$factoryDto->setRequest($request->get('settings'))->createDto(SettingsDto::class);
+        $settingsDto = $factoryDto->setRequest($request)->createDto(SettingsDto::class);
 
         return $this->json(['settings' => $searchManager->setRestSuccessOk()->saveSettings($settingsDto)], $searchManager->getRestStatus());
     }
@@ -349,7 +348,7 @@ class ApiController extends AbstractController
      *
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
-    public function getDomain(MailManager $mailManager, Request $request)
+    public function getDomain(MailManager $mailManager)
     {
         return $this->json($mailManager->setRestSuccessOk()->getDomains(), $mailManager->getRestStatus());
     }
