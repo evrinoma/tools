@@ -48,7 +48,7 @@ class FileSearchType extends AbstractType
             $fileList = [];
             $class    = $options->offsetGet(self::REST_CLASS_TYPE);
             if ($class) {
-                foreach ($this->settingsManager->getFiles($class) as $file) {
+                foreach ($this->settingsManager->getSettings($class) as $file) {
                     $data = $file->getData();
                     if ($data instanceof FileDto) {
                         /** @var $data FileDto */

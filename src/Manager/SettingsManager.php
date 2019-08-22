@@ -13,6 +13,7 @@ use App\Core\AbstractEntityManager;
 use App\Entity\DescriptionService;
 use App\Entity\Settings;
 use App\Rest\Core\RestTrait;
+use Doctrine\Common\Collections\Criteria;
 
 /**
  * Class SettingsManager
@@ -30,6 +31,23 @@ class SettingsManager extends AbstractEntityManager
      */
     protected $repositoryClass = Settings::class;
 //endregion Fields
+
+//region SECTION: Public
+    public function save($settingsDto)
+    {
+//        $criteria = new Criteria();
+//        $criteria
+//            ->where(
+//                $criteria->expr()->in('id', $range)
+//            );
+//        $loadSettings = $this->repository->matching($criteria);
+//        /** @var Settings $item */
+//        foreach ($loadSettings as $item) {
+//            $item->setActive($settings[$item->getId()]['active']);
+//        }
+        $this->entityManager->flush();
+    }
+//endregion Public
 
 //region SECTION: Getters/Setters
     /**
@@ -70,15 +88,14 @@ class SettingsManager extends AbstractEntityManager
      *
      * @return mixed
      */
-    public function getFiles($class = '')
+    public function getSettings($class = '')
     {
         $builder = $this->repository->createQueryBuilder('settings');
 
         $builder
             ->where('settings.active != \'d\'')
             ->andWhere('settings.type = :classEntity')
-            ->setParameter('classEntity', $class)
-        ;
+            ->setParameter('classEntity', $class);
 
         return $builder->getQuery()->getResult();
     }
@@ -99,7 +116,6 @@ class SettingsManager extends AbstractEntityManager
         return $builder->getQuery()->getResult();
     }
 
-
     /**
      * @return DescriptionService
      */
@@ -113,11 +129,10 @@ class SettingsManager extends AbstractEntityManager
             ->setParameter('type', 'sql')
             ->andWhere('service.description = :description')
             ->setParameter('description', $description);
-        
+
 
         return $builder->getQuery()->getOneOrNullResult();
     }
-
 
     /**
      * @return int

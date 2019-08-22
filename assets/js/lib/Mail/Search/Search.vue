@@ -31,15 +31,21 @@
                             <div class="ui form">
                                 <div class="inline fields">
                                     <label>Files:</label>
-                                    <div v-for="section in settings" class="field">
+                                    <div v-for="(section, group) in settings" class="field">
                                         <div class="ui compact menu">
                                             <div class="ui simple dropdown item">
                                                 {{section.key}}
                                                 <i class="dropdown icon"></i>
                                                 <div class="menu">
-                                                    <div v-for="selectValue in section.items" class="item">
+                                                    <div class="item">
                                                         <div class="ui slider checkbox">
-                                                            <input type="checkbox" name="public" :checked="selectValue.active == 'a'">
+                                                            <input type="checkbox" name="public" :checked="section.active === 'a'" @click="itemAction(section.active, group, undefined)">
+                                                            <label>All</label>
+                                                        </div>
+                                                    </div>
+                                                    <div v-for="(selectValue, index) in section.items" class="item">
+                                                        <div class="ui slider checkbox">
+                                                            <input type="checkbox" name="public" :checked="selectValue.active === 'a'" @click="itemAction(selectValue.active, group, index)">
                                                             <label>{{selectValue.data.name}}</label>
                                                         </div>
                                                     </div>
@@ -85,6 +91,7 @@
                 settings: {},
                 tabSelected: false,
                 apiUrlSettings: 'http://php72.tools/internal/log/settings',
+                apiUrlSettingsSave: 'http://php72.tools/internal/log/settings/save',
             }
         },
         mounted() {
@@ -94,42 +101,53 @@
             _axiosResponse(type, response) {
                 switch (type) {
                     case 'search-load':
-                        // let settings = [];
-                        // let keys = [];
-                        // let count = 0;
-                        // response.data.settings.some(function (value) {
-                        //     let key = value.data.name.substr(0, value.data.name.indexOf('.'));
-                        //     if (keys[key] === undefined) {
-                        //         settings[count] = [];
-                        //         keys[key] = count++;
-                        //     }
-                        //     settings[keys[key]].push(value);
-                        //
-                        // });
-                        //
-                        // this.settings = settings;
-
-                        let settings = [];
-                        let keys = [];
-                        let count = 0;
-                        response.data.settings.some(function (value) {
-                            let key = value.data.name.substr(0, value.data.name.indexOf('.'));
-                            if (keys[key] === undefined) {
-                                settings[count] = {items: [], key: key};
-                                keys[key] = count++;
-                            }
-                            settings[keys[key]].items.push(value);
-
-                        });
-
-                        this.settings = settings;
-
+                        this._setSettings(response);
 
                         break;
                 }
             },
+            itemAction(active, group, index) {
+                let newActive = (active === 'a') ? 'b' : 'a';
+                if (index !== undefined) {
+                    this.settings[group].items[index].active = newActive;
+                } else {
+                    this.settings[group].active = newActive;
+                    this.settings[group].items.some(function (value) {
+                        value.active = newActive;
+                    });
+                }
+            },
+            _setSettings(response) {
+                let settings = [];
+                let keys = [];
+                let count = 0;
+                response.data.settings.some(function (value) {
+                    let key = value.data.name.substr(0, value.data.name.indexOf('.'));
+                    if (keys[key] === undefined) {
+                        settings[count] = {items: [], key: key, active: 'a'};
+                        keys[key] = count++;
+                    }
+                    settings[keys[key]].items.push(value);
+                    settings[keys[key]].active = (value.active === 'a' & settings[keys[key]].active === 'a') ? 'a' : 'b';
+                });
+
+                this.settings = settings;
+            },
+            _getAddData() {
+                let data = [];
+                this.settings.some(function (group) {
+                    group.items.some(function (value) {
+                        data.push({id: value.id, active: value.active});
+                    });
+                });
+
+                return {settings: data};
+            },
             doSave() {
-                // this.$events.fire('filter-set', this.filterText);
+                axios
+                    .post(this.apiUrlSettingsSave, this._getAddData())
+                    .then(response => (this._axiosResponse('search-settings-save', response)))
+                    .catch(error => (this._axiosResponse('search-settings-error', error)));
             },
             doFilter() {
                 // this.$events.fire('filter-set', this.filterText);

@@ -12,6 +12,7 @@ namespace App\Manager;
 use App\Core\AbstractEntityManager;
 use App\Core\CoreShellTrait;
 use App\Dto\FileDto;
+use App\Dto\SettingsDto;
 use App\Entity\Settings;
 use App\Rest\Core\RestTrait;
 use Doctrine\ORM\EntityManagerInterface;
@@ -70,25 +71,34 @@ class SearchManager extends AbstractEntityManager
     }
 //endregion Protected
 
+//region SECTION: Public
+    /**
+     * @param SettingsDto[] $settingsDto
+     *
+     * @return Settings[]
+     */
+    public function saveSettings($settingsDto)
+    {
+        foreach ($this->getSettings() as $entity)
+        {
+            if ($settingsDto[$entity->getId()]){
+                $settingsDto[$entity->getId()]->fillEntity($entity);
+            }
+        }
+
+        return $this->entityManager->flush();
+    }
+//endregion Public
+
 //region SECTION: Private
     /**
      * @return $this
      */
     private function loadSettings()
     {
-        $this->settings = $this->settingsManager->getFiles(SearchManager::class);
+        $this->settings = $this->settingsManager->getSettings(SearchManager::class);
 
         return $this;
-    }
-
-    /**
-     * @return Settings[]
-     */
-    public function getSettings()
-    {
-        $this->loadSettings();
-
-        return $this->settings;
     }
 
     /**
@@ -168,11 +178,21 @@ class SearchManager extends AbstractEntityManager
 //endregion Private
 
 //region SECTION: Getters/Setters
+    /**
+     * @return Settings[]
+     */
+    public function getSettings()
+    {
+        $this->loadSettings();
+
+        return $this->settings;
+    }
+
     public function getResult()
     {
         $converts = [];
         foreach ($this->result as $value) {
-            $string = preg_replace( '/[^[:print:]\r\n]/', '',$value);
+            $string     = preg_replace('/[^[:print:]\r\n]/', '', $value);
             $converts[] = mb_convert_encoding($string, 'UTF-8', 'UTF-8');
         }
 
@@ -182,15 +202,7 @@ class SearchManager extends AbstractEntityManager
     /**
      * @return array
      */
-    public function getFiles(): array
-    {
-        return $this->files;
-    }
-
-    /**
-     * @return array
-     */
-    public function getSearchResult(): array
+    public function getSearchResult()
     {
         return $this->searchResult;
     }
@@ -230,18 +242,6 @@ class SearchManager extends AbstractEntityManager
     public function getSearchFile(): string
     {
         return $this->searchFile;
-    }
-
-    /**
-     * @param array $files
-     *
-     * @return SearchManager
-     */
-    public function setFiles(array $files)
-    {
-        $this->files = $files;
-
-        return $this;
     }
 
     /**

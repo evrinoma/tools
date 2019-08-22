@@ -10,12 +10,15 @@ namespace App\Controller;
 
 
 use App\Core\AbstractEntityManager;
+use App\Dto\FactoryDto;
+use App\Dto\SettingsDto;
 use App\Manager\DashBoardManager;
 use App\Manager\JournalManager;
 use App\Manager\MailManager;
 use App\Manager\MenuManager;
 use App\Manager\SearchManager;
 use App\Manager\ServerManager;
+use App\Manager\SettingsManager;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use Nelmio\ApiDocBundle\Annotation\Model;
 use Swagger\Annotations as SWG;
@@ -270,6 +273,41 @@ class ApiController extends AbstractController
     public function logSearchSettings(SearchManager $searchManager)
     {
         return $this->json(['settings' => $searchManager->setRestSuccessOk()->getSettings()], $searchManager->getRestStatus());
+    }
+
+    /**
+     * @Rest\Post("/internal/log/settings/save", name="api_save_settings")
+     * @SWG\Post(tags={"log"})
+     * @SWG\Parameter(
+     * name="body",
+     * in="body",
+     * required=true,
+     *      @SWG\Schema(
+     *          @SWG\Property(
+     *          property="settings",
+     *          type="array",
+     *          @SWG\Items(
+     *              type="object",
+     *              @SWG\Property(property="id", type="string", ),
+     *              @SWG\Property(property="active", type="string",),
+     *              ),
+     *          ),
+     *      ),
+     *  ),
+     *
+     * @SWG\Response(response=200,description="Returns nothing")
+     *
+     * @param FactoryDto    $factoryDto
+     * @param SearchManager $searchManager
+     * @param Request       $request
+     *
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     */
+    public function saveSearchSettings(FactoryDto $factoryDto, SearchManager $searchManager, Request $request)
+    {
+        $settingsDto =$factoryDto->setRequest($request->get('settings'))->createDto(SettingsDto::class);
+
+        return $this->json(['settings' => $searchManager->setRestSuccessOk()->saveSettings($settingsDto)], $searchManager->getRestStatus());
     }
 //endregion Public
 
