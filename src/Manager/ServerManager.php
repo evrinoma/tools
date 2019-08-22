@@ -95,16 +95,18 @@ class ServerManager extends AbstractEntityManager
 
 
     /**
-     * @param $ip
+     * @param ServerDto[] $serverDto
      *
      * @return $this
      * @throws \Exception
      */
-    public function getServer($ip)
+    public function getServer($serverDto)
     {
+        $dto = reset($serverDto);
+
         $criteria = new Criteria();
         $criteria->where(
-            $criteria->expr()->eq('ip', $ip)
+            $criteria->expr()->eq('ip', $dto->getIp())
         );
 
         $value = $this->repository->matching($criteria);

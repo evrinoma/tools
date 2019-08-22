@@ -10,6 +10,7 @@ namespace App\Controller;
 
 
 use App\Core\AbstractEntityManager;
+use App\Dto\DomainDto;
 use App\Dto\FactoryDto;
 use App\Dto\ServerDto;
 use App\Dto\SettingsDto;
@@ -93,18 +94,20 @@ class ApiController extends AbstractController
      * )
      * @SWG\Response(response=400,description="set ip and name domain")
      *
+     * @param FactoryDto  $factoryDto
      * @param MailManager $mailManager
+     *
+     * @param Request     $request
      *
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      * @throws \Exception
      */
-    public function saveDomain(MailManager $mailManager, Request $request)
+    public function saveDomain(FactoryDto $factoryDto, MailManager $mailManager, Request $request)
     {
-        $ip   = $request->get('ip');
-        $name = $request->get('name');
+        $domainDto = $factoryDto->setRequest($request)->createDto(DomainDto::class);
 
         return $this->json(
-            ['domains' => $mailManager->setRestSuccessOk()->saveDomain($ip, $name)],
+            ['domains' => $mailManager->setRestSuccessOk()->saveDomain($domainDto)],
             $mailManager->getRestStatus()
         );
     }
@@ -135,18 +138,17 @@ class ApiController extends AbstractController
      * )
      * @SWG\Response(response=200,description="Returns nothing")
      *
+     * @param FactoryDto  $factoryDto
      * @param MailManager $mailManager
      * @param Request     $request
      *
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
-    public function deleteDomain(MailManager $mailManager, Request $request)
+    public function deleteDomain(FactoryDto $factoryDto, MailManager $mailManager, Request $request)
     {
-        $id   = $request->get('id');
-        $ip   = $request->get('ip');
-        $name = $request->get('name');
+        $domainDto = $factoryDto->setRequest($request)->createDto(DomainDto::class);
 
-        $mailManager->setRestSuccessOk()->getDomain($id)->lockEntitys();
+        $mailManager->setRestSuccessOk()->getDomain($domainDto)->lockEntitys();
 
         return $this->json(['message' => 'the Domain was delete successFully'], $mailManager->getRestStatus());
     }
@@ -166,17 +168,18 @@ class ApiController extends AbstractController
      * )
      * @SWG\Response(response=200,description="Returns nothing")
      *
+     * @param FactoryDto    $factoryDto
      * @param ServerManager $serverManger
      * @param Request       $request
      *
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      * @throws \Exception
      */
-    public function deleteServer(ServerManager $serverManger, Request $request)
+    public function deleteServer(FactoryDto $factoryDto, ServerManager $serverManger, Request $request)
     {
-        $ip = $request->get('ip');
+        $serverDto = $factoryDto->setRequest($request)->createDto(ServerDto::class);
 
-        $serverManger->setRestSuccessOk()->getServer($ip)->lockEntitys();
+        $serverManger->setRestSuccessOk()->getServer($serverDto)->lockEntitys();
 
         return $this->json(['message' => 'the Domain was delete successFully'], $serverManger->getRestStatus());
     }
@@ -208,10 +211,11 @@ class ApiController extends AbstractController
      * )
      * @SWG\Response(response=400,description="set ip and name domain")
      *
+     * @param FactoryDto    $factoryDto
      * @param ServerManager $serverManager
+     * @param Request       $request
      *
      * @return \Symfony\Component\HttpFoundation\JsonResponse
-     * @throws \Exception
      */
     public function saveServer(FactoryDto $factoryDto, ServerManager $serverManager, Request $request)
     {

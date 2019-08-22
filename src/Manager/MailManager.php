@@ -10,6 +10,7 @@ namespace App\Manager;
 
 
 use App\Core\AbstractEntityManager;
+use App\Dto\DomainDto;
 use App\Entity\Mail\Domain;
 use App\Entity\Mail\Server;
 use App\Entity\Mail\TbDomains;
@@ -59,29 +60,28 @@ class MailManager extends AbstractEntityManager
 
 //region SECTION: Public
     /**
-     * @param $ip
-     * @param $name
+     * @param DomainDto[] $domainDto
      *
      * @return Domain
      * @throws \Exception
      */
-    public function saveDomain($ip, $name)
+    public function saveDomain($domainDto)
     {
-        $entity = ['ip' => $ip, 'name' => $name];
-        if ($ip && $name && (preg_match("/(?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\.)+[a-z0-9][a-z0-9-]{0,61}[a-z0-9]/", $name) === 1)) {
+        $dto = reset($domainDto);
+        if ($dto->isValidName() && $dto->isValidIp()) {
             $criteria = $this->getCriteria();
             $criteria->andWhere(
-                $criteria->expr()->eq('domain', $name)
+                $criteria->expr()->eq('domain', $dto->getName())
             );
 
             $existDomain = $this->repository->matching($criteria);
-            $server      = $this->serverManager->getServer($ip)->getData();
-            $entity      = $this->save($existDomain->count() ? $existDomain->first() : new Domain(), $name, $server->count() ? $server->first() : null);
+            $dto->setServers($this->serverManager->getServer($dto->getIp())->getData());
+            $dto         = $this->save($existDomain->count() ? $existDomain->first() : new Domain(), $dto);
         } else {
             $this->setRestClientErrorBadRequest();
         }
 
-        return $entity;
+        return $dto;
     }
 
     /**
@@ -125,16 +125,14 @@ class MailManager extends AbstractEntityManager
 
 //region SECTION: Private
     /**
-     * @param Domain $entity
-     * @param        $name
-     * @param Server $server
+     * @param Domain    $entity
+     * @param DomainDto $serverDto
      *
      * @return Domain
      */
-    private function save(Domain $entity, $name, $server = null)
+    private function save(Domain $entity, $serverDto)
     {
-        $entity->setDomain($name)->addServer($server)->setActive();
-
+        $serverDto->fillEntity($entity);
         $this->entityManager->persist($entity);
         $this->entityManager->flush();
 
@@ -187,16 +185,18 @@ class MailManager extends AbstractEntityManager
     }
 
     /**
-     * @param $id
+     * @param DomainDto[] $domainDto
      *
      * @return MailManager
      */
-    public function getDomain($id)
+    public function getDomain($domainDto)
     {
-        if ($id) {
+        $dto = reset($domainDto);
+
+        if ($dto->getId()) {
             $criteria = $this->getCriteria();
             $criteria->andWhere(
-                $criteria->expr()->eq('id', $id)
+                $criteria->expr()->eq('id', $dto->getId())
             );
 
             $this->setData($this->repository->matching($criteria)->getValues());

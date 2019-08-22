@@ -70,10 +70,17 @@ class ServerDto implements FactoryDtoInterface
         $name = $request->get('hostname');
 
         $result = [];
+
         if ($ip && $name) {
             $dto = new self();
             $dto->setIp($ip)->setHostName($name);
             $result[] = $dto;
+        } else {
+            if ($ip) {
+                $dto = new self();
+                $dto->setIp($ip);
+                $result[] = $dto;
+            }
         }
 
         return $result;
