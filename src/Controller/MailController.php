@@ -45,7 +45,7 @@ class MailController extends AbstractController
 
     /**
      * @Route("/mail/acl", options={"expose"=true}, name="mail_acl")
-     * @Template("mail/display.html.twig")
+     * @Template("mail/display.acl.html.twig")
      *
      * @return array
      */
