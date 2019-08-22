@@ -11,9 +11,11 @@ namespace App\Manager;
 
 use App\Core\AbstractEntityManager;
 use App\Dto\DomainDto;
+use App\Entity\Mail\Acl;
 use App\Entity\Mail\Domain;
+use App\Entity\Mail\Migrations\TbDomains;
+use App\Entity\Mail\Migrations\TbEmails;
 use App\Entity\Mail\Server;
-use App\Entity\Mail\TbDomains;
 use App\Repository\DomainRepository;
 use App\Rest\Core\RestTrait;
 use Doctrine\ORM\EntityManagerInterface;
@@ -76,7 +78,7 @@ class MailManager extends AbstractEntityManager
 
             $existDomain = $this->repository->matching($criteria);
             $dto->setServers($this->serverManager->getServer($dto->getIp())->getData());
-            $dto         = $this->save($existDomain->count() ? $existDomain->first() : new Domain(), $dto);
+            $dto = $this->save($existDomain->count() ? $existDomain->first() : new Domain(), $dto);
         } else {
             $this->setRestClientErrorBadRequest();
         }
@@ -89,11 +91,10 @@ class MailManager extends AbstractEntityManager
      */
     public function megrateDomains()
     {
-        return [];
-
         $this
             ->getRepositoryAll(Domain::class)->removeEntitys()
             ->getRepositoryAll(Server::class)->removeEntitys();
+
         $created    = [];
         $rTbDomains = $this->entityManager->getRepository(TbDomains::class);
         /** @var TbDomains $value */
@@ -116,6 +117,28 @@ class MailManager extends AbstractEntityManager
                 ->setDomain($value->getDomain())
                 ->setActive();
             $this->entityManager->persist($domain);
+        }
+        $this->entityManager->flush();
+
+        return [];
+    }
+
+    /**
+     * @return array
+     */
+    public function megrateAcls()
+    {
+
+        $this->getRepositoryAll(Acl::class)->removeEntitys();
+
+        $rTbEmails = $this->entityManager->getRepository(TbEmails::class);
+        /** @var TbDomains $value */
+        foreach ($rTbEmails->all() as $value) {
+            $acl = new Acl();
+            $acl->setType($value['type'])
+                ->setEmail($value['email'])
+                ->setDomain($this->entityManager->getReference(Domain::class, $value['id']));
+            $this->entityManager->persist($acl);
         }
         $this->entityManager->flush();
 

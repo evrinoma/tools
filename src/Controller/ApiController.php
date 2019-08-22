@@ -113,7 +113,7 @@ class ApiController extends AbstractController
     }
 
     /**
-     * @Rest\Put("/internal/domain/merge", name="api_merge_default_domain")
+     * @Rest\Put("/internal/domain/migrate", name="api_migrate_default_domain")
      * @SWG\Put(tags={"domain"})
      * @SWG\Response(response=200,description="Returns the merge of domains")
      *
@@ -124,6 +124,20 @@ class ApiController extends AbstractController
     public function migrateDomains(MailManager $mailManager)
     {
         return $this->json(['domains' => $mailManager->setRestSuccessOk()->megrateDomains()], $mailManager->getRestStatus());
+    }
+
+    /**
+     * @Rest\Put("/internal/acl/migrate", name="api_migrate_default_acl")
+     * @SWG\Put(tags={"acl"})
+     * @SWG\Response(response=200,description="Returns the merge of domains")
+     *
+     * @param MailManager $mailManager
+     *
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     */
+    public function migrateAcls(MailManager $mailManager)
+    {
+        return $this->json(['domains' => $mailManager->setRestSuccessOk()->megrateAcls()], $mailManager->getRestStatus());
     }
 
     /**
