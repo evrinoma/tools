@@ -23,28 +23,6 @@ class DomainRepository extends EntityRepository
 //endregion Fields
 
 //region SECTION: Public
-    public function filterDomain()
-    {
-        $builder = $this->createQueryBuilder('domain');
-
-        $builder
-            ->leftJoin('domain.server', 'server')
-            ->where("domain.active = 'a'")
-            ->andWhere("server.active = 'a'");
-        if ($this->criteria->getDomain()) {
-            $builder->andWhere('domain.domain like :filter or server.hostname like :filter')
-                ->setParameter('filter', '%'.$this->criteria->getDomain().'%');
-        }
-        if ($this->criteria->getIp()) {
-            $builder->andWhere('server.ip like :filter')
-                ->setParameter('filter', $this->criteria->getIp());
-        }
-        $builder->setMaxResults($this->criteria->getMaxResults())
-            ->setFirstResult($this->criteria->getFirstResult());
-
-        return $builder->getQuery()->getResult();
-    }
-
     /**
      * @return mixed
      */
@@ -141,4 +119,28 @@ class DomainRepository extends EntityRepository
         };
     }
 //endregion Public
+
+//region SECTION: Find Filters Repository
+    public function findDomain()
+    {
+        $builder = $this->createQueryBuilder('domain');
+
+        $builder
+            ->leftJoin('domain.server', 'server')
+            ->where("domain.active = 'a'")
+            ->andWhere("server.active = 'a'");
+        if ($this->criteria->getDomain()) {
+            $builder->andWhere('domain.domain like :filter or server.hostname like :filter')
+                ->setParameter('filter', '%'.$this->criteria->getDomain().'%');
+        }
+        if ($this->criteria->getIp()) {
+            $builder->andWhere('server.ip like :filter')
+                ->setParameter('filter', $this->criteria->getIp());
+        }
+        $builder->setMaxResults($this->criteria->getMaxResults())
+            ->setFirstResult($this->criteria->getFirstResult());
+
+        return $builder->getQuery()->getResult();
+    }
+//endregion Find Filters Repository
 }

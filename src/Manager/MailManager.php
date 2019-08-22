@@ -179,7 +179,7 @@ class MailManager extends AbstractEntityManager
             ->setFirstResult($firstResult)
             ->setMaxResults($this->perPage);
 
-        $this->setData($this->repository->filterDomain());
+        $this->setData($this->repository->findDomain());
 
         return $this;
     }
@@ -216,7 +216,7 @@ class MailManager extends AbstractEntityManager
             ->createCriteria()
             ->setDomain($this->filter);
 
-        return count($this->repository->filterDomain());
+        return count($this->repository->findDomain());
     }
 
     /**

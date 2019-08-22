@@ -10,17 +10,20 @@ namespace App\Manager;
 
 
 use App\Core\AbstractEntityManager;
+use App\Dto\AclDto;
 use App\Entity\Mail\Acl;
 use App\Entity\Mail\Domain;
 use App\Entity\Mail\Migrations\TbDomains;
 use App\Entity\Mail\Migrations\TbEmails;
 use App\Entity\Model\AclModel;
+use App\Repository\AclRepository;
 use App\Rest\Core\RestTrait;
 
 /**
  * Class AclManager
  *
  * @package App\Manager
+ * @property AclRepository $repository
  */
 class AclManager extends AbstractEntityManager
 {
@@ -41,7 +44,6 @@ class AclManager extends AbstractEntityManager
      */
     public function megrateAcls()
     {
-
         $this->getRepositoryAll(Acl::class)->removeEntitys();
 
         $rTbEmails = $this->entityManager->getRepository(TbEmails::class);
@@ -61,13 +63,20 @@ class AclManager extends AbstractEntityManager
 
 //region SECTION: Getters/Setters
     /**
+     * @param AclDto[] $aclDto
+     *
      * @return $this
      */
-    public function getAcls()
+    public function getAcls($aclDto)
     {
-        $criteria = $this->getCriteria();
+        $dto = reset($aclDto);
 
-        $this->setData($this->repository->matching($criteria)->getValues());
+        $this->repository
+            ->createCriteria()
+            ->setId($dto ? $dto->getId() : null);
+
+
+        $this->setData($this->repository->findAcl());
 
         return $this;
     }
@@ -77,7 +86,7 @@ class AclManager extends AbstractEntityManager
      */
     public function getAclModel()
     {
-        $this->setData([AclModel::class => [AclModel::WHITE, AclModel::BLACK]]);
+        $this->setData(['class' => AclModel::class, 'model' => [AclModel::WHITE, AclModel::BLACK]]);
 
         return $this;
     }

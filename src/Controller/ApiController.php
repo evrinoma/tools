@@ -10,6 +10,7 @@ namespace App\Controller;
 
 
 use App\Core\AbstractEntityManager;
+use App\Dto\AclDto;
 use App\Dto\DomainDto;
 use App\Dto\FactoryDto;
 use App\Dto\ServerDto;
@@ -143,36 +144,6 @@ class ApiController extends AbstractController
     }
 
     /**
-     * @Rest\Get("/internal/acl/acl", name="api_acl")
-     * @SWG\Get(tags={"acl"})
-     *
-     * @SWG\Response(response=200,description="Returns the acl list")
-     *
-     * @param AclManager $aclManager
-     *
-     * @return \Symfony\Component\HttpFoundation\JsonResponse
-     */
-    public function getAcl(AclManager $aclManager)
-    {
-        return $this->json($aclManager->setRestSuccessOk()->getAcls()->getData(), $aclManager->getRestStatus());
-    }
-
-    /**
-     * @Rest\Get("/internal/acl/model", name="api_acl_model")
-     * @SWG\Get(tags={"acl"})
-     *
-     * @SWG\Response(response=200,description="Returns the acl model")
-     *
-     * @param AclManager $aclManager
-     *
-     * @return \Symfony\Component\HttpFoundation\JsonResponse
-     */
-    public function getAclModel(AclManager $aclManager)
-    {
-        return $this->json($aclManager->setRestSuccessOk()->getAclModel()->getData(), $aclManager->getRestStatus());
-    }
-
-    /**
      * @Rest\Delete("/internal/domain/delete", name="api_delete_domain")
      * @SWG\Delete(tags={"domain"})
      * @SWG\Parameter(
@@ -229,7 +200,6 @@ class ApiController extends AbstractController
 
         return $this->json(['message' => 'the Domain was delete successFully'], $serverManger->getRestStatus());
     }
-
 
     /**
      * @Rest\Post("/internal/server/save", name="api_save_server")
@@ -388,6 +358,43 @@ class ApiController extends AbstractController
 //endregion Private
 
 //region SECTION: Getters/Setters
+    /**
+     * @Rest\Get("/internal/acl/acl", name="api_acl")
+     * @SWG\Get(tags={"acl"})
+     * @SWG\Parameter(
+     *     name="id",
+     *     in="query",
+     *     type="string",
+     *     description="id record"
+     * )
+     * @SWG\Response(response=200,description="Returns the acl list")
+     *
+     * @param AclManager $aclManager
+     *
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     */
+    public function getAcl(FactoryDto $factoryDto, AclManager $aclManager, Request $request)
+    {
+        $aclDto = $factoryDto->setRequest($request)->createDto(AclDto::class);
+
+        return $this->json($aclManager->setRestSuccessOk()->getAcls($aclDto)->getData(), $aclManager->getRestStatus());
+    }
+
+    /**
+     * @Rest\Get("/internal/acl/model", name="api_acl_model")
+     * @SWG\Get(tags={"acl"})
+     *
+     * @SWG\Response(response=200,description="Returns the acl model")
+     *
+     * @param AclManager $aclManager
+     *
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     */
+    public function getAclModel(AclManager $aclManager)
+    {
+        return $this->json($aclManager->setRestSuccessOk()->getAclModel()->getData(), $aclManager->getRestStatus());
+    }
+
     /**
      * @Rest\Get("/internal/domain/domain", name="api_domain")
      * @SWG\Get(tags={"domain"})

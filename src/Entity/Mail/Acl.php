@@ -10,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Acl
  *
  * @ORM\Table(name="mail_acl")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="App\Repository\AclRepository")
  */
 class Acl
 {
@@ -71,6 +71,14 @@ class Acl
     public function isBlack()
     {
         return $this->type === AclModel::BLACK;
+    }
+
+    /**
+     * @return string
+     */
+    public function getType(): string
+    {
+        return $this->type;
     }
 
     /**
