@@ -11,10 +11,8 @@ namespace App\Manager;
 
 use App\Core\AbstractEntityManager;
 use App\Dto\DomainDto;
-use App\Entity\Mail\Acl;
 use App\Entity\Mail\Domain;
 use App\Entity\Mail\Migrations\TbDomains;
-use App\Entity\Mail\Migrations\TbEmails;
 use App\Entity\Mail\Server;
 use App\Repository\DomainRepository;
 use App\Rest\Core\RestTrait;
@@ -123,27 +121,6 @@ class MailManager extends AbstractEntityManager
         return [];
     }
 
-    /**
-     * @return array
-     */
-    public function megrateAcls()
-    {
-
-        $this->getRepositoryAll(Acl::class)->removeEntitys();
-
-        $rTbEmails = $this->entityManager->getRepository(TbEmails::class);
-        /** @var TbDomains $value */
-        foreach ($rTbEmails->all() as $value) {
-            $acl = new Acl();
-            $acl->setType($value['type'])
-                ->setEmail($value['email'])
-                ->setDomain($this->entityManager->getReference(Domain::class, $value['id']));
-            $this->entityManager->persist($acl);
-        }
-        $this->entityManager->flush();
-
-        return [];
-    }
 //endregion Public
 
 //region SECTION: Private

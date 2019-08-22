@@ -14,6 +14,7 @@ use App\Dto\DomainDto;
 use App\Dto\FactoryDto;
 use App\Dto\ServerDto;
 use App\Dto\SettingsDto;
+use App\Manager\AclManager;
 use App\Manager\DashBoardManager;
 use App\Manager\JournalManager;
 use App\Manager\MailManager;
@@ -129,15 +130,46 @@ class ApiController extends AbstractController
     /**
      * @Rest\Put("/internal/acl/migrate", name="api_migrate_default_acl")
      * @SWG\Put(tags={"acl"})
-     * @SWG\Response(response=200,description="Returns the merge of domains")
+     * @SWG\Response(response=200,description="Returns the merge of acls")
      *
-     * @param MailManager $mailManager
+     * @param AclManager $aclManager
+     *
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     * @throws \Doctrine\ORM\ORMException
+     */
+    public function migrateAcls(AclManager $aclManager)
+    {
+        return $this->json(['domains' => $aclManager->setRestSuccessOk()->megrateAcls()], $aclManager->getRestStatus());
+    }
+
+    /**
+     * @Rest\Get("/internal/acl/acl", name="api_acl")
+     * @SWG\Get(tags={"acl"})
+     *
+     * @SWG\Response(response=200,description="Returns the acl list")
+     *
+     * @param AclManager $aclManager
      *
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
-    public function migrateAcls(MailManager $mailManager)
+    public function getAcl(AclManager $aclManager)
     {
-        return $this->json(['domains' => $mailManager->setRestSuccessOk()->megrateAcls()], $mailManager->getRestStatus());
+        return $this->json($aclManager->setRestSuccessOk()->getAcls()->getData(), $aclManager->getRestStatus());
+    }
+
+    /**
+     * @Rest\Get("/internal/acl/model", name="api_acl_model")
+     * @SWG\Get(tags={"acl"})
+     *
+     * @SWG\Response(response=200,description="Returns the acl model")
+     *
+     * @param AclManager $aclManager
+     *
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     */
+    public function getAclModel(AclManager $aclManager)
+    {
+        return $this->json($aclManager->setRestSuccessOk()->getAclModel()->getData(), $aclManager->getRestStatus());
     }
 
     /**
@@ -368,7 +400,7 @@ class ApiController extends AbstractController
      */
     public function getDomain(MailManager $mailManager)
     {
-        return $this->json($mailManager->setRestSuccessOk()->getDomains(), $mailManager->getRestStatus());
+        return $this->json($mailManager->setRestSuccessOk()->getDomains()->getData(), $mailManager->getRestStatus());
     }
 
     /**

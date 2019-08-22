@@ -2,6 +2,8 @@
 
 namespace App\Entity\Mail;
 
+use App\Entity\Model\AclModel;
+use App\Entity\Model\ActiveTrait;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -12,6 +14,8 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Acl
 {
+    use ActiveTrait;
+
 //region SECTION: Fields
     /**
      * @var int
@@ -27,7 +31,7 @@ class Acl
      *
      * @ORM\Column(name="type", type="string", length=50, nullable=false)
      */
-    private $type = '';
+    private $type = AclModel::WHITE;
 
     /**
      * @var string
@@ -54,11 +58,19 @@ class Acl
     }
 
     /**
-     * @return string
+     * @return bool
      */
-    public function getType(): string
+    public function isWhite()
     {
-        return $this->type;
+        return $this->type === AclModel::WHITE;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isBlack()
+    {
+        return $this->type === AclModel::BLACK;
     }
 
     /**
