@@ -12,7 +12,7 @@
                                     {{ _getDomain() }}
                                     <i class="dropdown icon"></i>
                                     <div class="menu">
-                                        <div class="item" v-for="(domain,index) in domains" :class="{ 'active blue' : _initDomain(domain)}" @click="_domainAction(index)">
+                                        <div class="item" v-for="(domain,index) in domains" :class="{ 'active blue' : _initDomain(index)}" @click="_domainAction(index)">
                                             {{domain.domain}}
                                         </div>
                                     </div>
@@ -92,13 +92,48 @@
                 <a class="item" :class="{ 'active' : _initTab(index)}" v-for="(selectValue, index) in acls" @click="_tabAction(index)">{{selectValue.type}}</a>
             </div>
             <table class="ui celled table">
-                <div class="ui bottom attached active tab" v-if="tabSelected === selectValue" v-for="selectValue in acls">
-                    <div class="ui grid" v-for="block in selectValue.items">
-                        <div class="three wide column">{{block.id}}</div>
-                        <div class="three wide column">{{block.email}}</div>
-                        <div class="three wide column"><span class="ui teal label"><i class="trash icon"></i>Delete</span></div>
+                <div class="ui bottom attached active tab" v-if="tabSelected === index" v-for="(selectValue, index) in acls">
+                    <div class="html ui top attached segment">-->
+                        <div class="ui top attached label">
+                            <b>List:</b>
+                            <div class="ui input focus">
+                                <input type="text" v-model="localSearchText" @input="localSearchAction" placeholder="Local search...">
+                            </div>
+                            <div class="ui vertical animated button" tabindex="0" @click="resetLocalSearch">
+                                <div class="hidden content">Reset</div>
+                                <div class="visible content">
+                                    <i class="shop x icon"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="ui block">
+                            <div class="ui grid" v-for="(block, key) in selectValue.items">
+                                <template v-if="block.visible">
+                                    <div class="three column">{{block.id}}</div>
+                                    <div class="three wide column">
+                                        <templat v-if="_isEditBlock(block.id)">
+                                            <div class="ui input focus small">
+                                                <input type="text" v-model="editText" placeholder="Edit...">
+                                            </div>
+                                        </templat>
+                                        <templat v-else>
+                                            {{block.email}}
+                                        </templat>
+                                    </div>
+                                    <div class="three wide column">
+                                        <templat v-if="_isEditBlock(block.id)">
+                                            <span class="ui teal label" @click="doEditSaveAction(index, key)"><i class="save outline icon"></i>Save</span>
+                                            <span class="ui teal label" @click="doEditCancelAction(block)"><i class="shop x icon"></i>Cancel</span>
+                                        </templat>
+                                        <templat v-else>
+                                            <span class="ui teal label" @click="doEditAction(block)"><i class="edit outline icon"></i>Edit</span>
+                                            <span class="ui teal label" @click="doDeleteAction(block)"><i class="trash icon"></i>Delete</span>
+                                        </templat>
+                                    </div>
+                                </template>
+                            </div>
+                        </div>
                     </div>
-
                 </div>
             </table>
         </div>
@@ -123,13 +158,20 @@
                 apiUrlAclModel: 'http://php72.tools/internal/acl/model',
                 apiUrlDomains: 'http://php72.tools/internal/domain/domain',
                 apiUrlAcl: 'http://php72.tools/internal/acl/acl',
+
+                apiUrlAclAdd: '',
+                apiUrlAclSave: '',
+                apiUrlAclDelete: '',
+
                 aclModel: null,
                 aclModelSelect: '',
                 domains: null,
                 domainSelect: null,
                 acls: [],
                 tabSelected: null,
-
+                localSearchText: '',
+                editText: '',
+                editBlock: null,
             }
         },
         mounted() {
@@ -154,6 +196,8 @@
                                 self.acls[count] = {items: [], type: value.type};
                                 keys[value.type] = count++;
                             }
+                            value.visible = true;
+
                             self.acls[keys[value.type]].items.push(value);
                         });
                         break;
@@ -171,52 +215,80 @@
             _listAction(select) {
                 this.aclModelSelect = select;
             },
-            _getDomain() {
-                return (this.domainSelect === null) ? 'Select Domain' : this.domainSelect.domain;
+            _isEditBlock(id) {
+                return (this.editBlock === id);
             },
-            _initDomain(domain) {
-                return (this.domainSelect !== null) ? (this.domainSelect.domain === domain.domain) : false;
+            _getDomain() {
+                return (this.domains === null || this.domains[this.domainSelect] === undefined) ? 'Select Domain' : this.domains[this.domainSelect].domain;
+            },
+            _initDomain(index) {
+                return (this.domainSelect !== null) ? (this.domainSelect === index) : false;
             },
             _domainAction(index) {
-                this.domainSelect = this.domains[index];
+                this.domainSelect = index;
                 this.showPreloadForm++;
                 this.acls = [];
+                this.resetLocalSearch();
                 this.tabSelected = null;
                 axios
-                    .get(this.apiUrlAcl, {params: {id: this.domainSelect.id}})
+                    .get(this.apiUrlAcl, {params: {id: this.domains[this.domainSelect].id}})
                     .then(response => (this._axiosResponse('acl-load-acl', response)));
 
             },
             _initTab(index) {
                 if (this.tabSelected === null) {
-                    this.tabSelected = this.acls[index];
+                    this.tabSelected = index;
                 }
-                return (this.tabSelected.type === this.acls[index].type);
+                return this.tabSelected === index;
             },
             _tabAction(index) {
-                this.tabSelected = this.acls[index];
+                this.tabSelected = index;
+                this._filterAcls();
             },
-
-
-            itemAction(active, group, index) {
-
+            localSearchAction() {
+                if (this.localSearchText.length && this.localSearchText.length % 3 === 0) {
+                    this._filterAcls();
+                }
             },
-            _highlight(string) {
-
-            },
-            _setSettings(response) {
-
-            },
-            _getAddData() {
-
-            },
-            doSave() {
-
+            _filterAcls() {
+                let self = this;
+                this.acls[this.tabSelected].items.some(function (value) {
+                    if (value.email.indexOf(self.localSearchText) !== -1) {
+                        value.visible = true;
+                    } else {
+                        value.visible = false;
+                    }
+                });
             },
             doAdd() {
+                console.log("doAdd");
+            },
+            doEditSaveAction(index, key) {
+                this.acls[index].items[key].email = this.editText;
+                this.doEditCancelAction();
+                console.log("doSave");
+            },
+            doEditCancelAction() {
+                this.editBlock = null;
+                this.editText = '';
+            },
+            doEditAction(block) {
+                this.editBlock = block.id;
+                this.editText = block.email;
+            },
+            doDeleteAction(block) {
+                console.log("doDelete");
             },
             resetRecord() {
                 this.recordText = '';
+            },
+            resetLocalSearch() {
+                this.localSearchText = '';
+                if (this.acls.length && this.acls[this.tabSelected] !== undefined) {
+                    this.acls[this.tabSelected].items.some(function (value) {
+                        value.visible = true;
+                    });
+                }
             },
             doLoad() {
                 axios
@@ -246,15 +318,25 @@
     }
 
     .ui.bottom.attached.active.tab {
+        overflow: hidden;
+        height: 400px;
+    }
+
+    .ui.block {
         overflow-x: hidden;
         overflow-y: auto;
-        height: 432px;
-        margin-left: 20px;
-        margin-top: 10px;
+        height: 336px;
     }
 
     .ui.bottom.attached.active.tab p {
         text-align: left;
     }
 
+    .ui.teal.label {
+        cursor: pointer;
+    }
+
+    .ui.input.focus.small {
+        height: 10px;
+    }
 </style>

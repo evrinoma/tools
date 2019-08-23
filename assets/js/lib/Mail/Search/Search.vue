@@ -230,7 +230,7 @@
 
     .ui.bottom.attached.active.tab {
         overflow: auto;
-        height: 453px;
+        height: 400px;
     }
 
     .ui.bottom.attached.active.tab p {
