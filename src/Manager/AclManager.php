@@ -36,7 +36,7 @@ class AclManager extends AbstractEntityManager
      */
     protected $repositoryClass = Acl::class;
 
-    private $mailManager;
+    private $domainManager;
 //endregion Fields
 
 //region SECTION: Constructor
@@ -44,13 +44,13 @@ class AclManager extends AbstractEntityManager
      * AclManager constructor.
      *
      * @param EntityManagerInterface $entityManager
-     * @param MailManager            $mailManager
+     * @param DomainManager          $domainManager
      */
-    public function __construct(EntityManagerInterface $entityManager, MailManager $mailManager)
+    public function __construct(EntityManagerInterface $entityManager, DomainManager $domainManager)
     {
         parent::__construct($entityManager);
 
-        $this->mailManager = $mailManager;
+        $this->domainManager = $domainManager;
     }
 //endregion Constructor
 
@@ -95,7 +95,7 @@ class AclManager extends AbstractEntityManager
                 $dto = $entity;
             } else {
                 if ($dto->isValidEmail()) {
-                    $domain = $this->mailManager->getDomain();
+                    $domain = $this->domainManager->getDomain();
                     $dto = $this->save(count($entity) ? reset($entity) : new Acl(), $dto);
                 } else {
                     $this->setRestClientErrorBadRequest();

@@ -19,12 +19,12 @@ use App\Rest\Core\RestTrait;
 use Doctrine\ORM\EntityManagerInterface;
 
 /**
- * Class MailManager
+ * Class DomainManager
  *
  * @package App\Manager
  * @property DomainRepository $repository
  */
-class MailManager extends AbstractEntityManager
+class DomainManager extends AbstractEntityManager
 {
     use RestTrait;
 
@@ -45,7 +45,7 @@ class MailManager extends AbstractEntityManager
 
 //region SECTION: Constructor
     /**
-     * MailManager constructor.
+     * DomainManager constructor.
      *
      * @param EntityManagerInterface $entityManager
      * @param ServerManager          $serverManager
@@ -188,7 +188,7 @@ class MailManager extends AbstractEntityManager
     /**
      * @param DomainDto[] $domainDto
      *
-     * @return MailManager
+     * @return DomainManager
      */
     public function getDomain($domainDto)
     {
@@ -231,7 +231,7 @@ class MailManager extends AbstractEntityManager
     /**
      * @param mixed $filter
      *
-     * @return MailManager
+     * @return DomainManager
      */
     public function setFilter($filter)
     {
@@ -243,7 +243,7 @@ class MailManager extends AbstractEntityManager
     /**
      * @param mixed $page
      *
-     * @return MailManager
+     * @return DomainManager
      */
     public function setPage($page)
     {
@@ -255,7 +255,7 @@ class MailManager extends AbstractEntityManager
     /**
      * @param mixed $perPage
      *
-     * @return MailManager
+     * @return DomainManager
      */
     public function setPerPage($perPage)
     {

@@ -18,7 +18,7 @@ use App\Dto\SettingsDto;
 use App\Manager\AclManager;
 use App\Manager\DashBoardManager;
 use App\Manager\JournalManager;
-use App\Manager\MailManager;
+use App\Manager\DomainManager;
 use App\Manager\MenuManager;
 use App\Manager\SearchManager;
 use App\Manager\ServerManager;
@@ -96,21 +96,21 @@ class ApiController extends AbstractController
      * )
      * @SWG\Response(response=400,description="set ip and name domain")
      *
-     * @param FactoryDto  $factoryDto
-     * @param MailManager $mailManager
+     * @param FactoryDto    $factoryDto
+     * @param DomainManager $domainManager
      *
-     * @param Request     $request
+     * @param Request       $request
      *
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      * @throws \Exception
      */
-    public function saveDomain(FactoryDto $factoryDto, MailManager $mailManager, Request $request)
+    public function saveDomain(FactoryDto $factoryDto, DomainManager $domainManager, Request $request)
     {
         $domainDto = $factoryDto->setRequest($request)->createDto(DomainDto::class);
 
         return $this->json(
-            ['domains' => $mailManager->setRestSuccessOk()->saveDomain($domainDto)],
-            $mailManager->getRestStatus()
+            ['domains' => $domainManager->setRestSuccessOk()->saveDomain($domainDto)],
+            $domainManager->getRestStatus()
         );
     }
 
@@ -119,13 +119,13 @@ class ApiController extends AbstractController
      * @SWG\Put(tags={"domain"})
      * @SWG\Response(response=200,description="Returns the merge of domains")
      *
-     * @param MailManager $mailManager
+     * @param DomainManager $domainManager
      *
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
-    public function migrateDomains(MailManager $mailManager)
+    public function migrateDomains(DomainManager $domainManager)
     {
-        return $this->json(['domains' => $mailManager->setRestSuccessOk()->megrateDomains()], $mailManager->getRestStatus());
+        return $this->json(['domains' => $domainManager->setRestSuccessOk()->megrateDomains()], $domainManager->getRestStatus());
     }
 
     /**
@@ -155,19 +155,19 @@ class ApiController extends AbstractController
      * )
      * @SWG\Response(response=200,description="Returns nothing")
      *
-     * @param FactoryDto  $factoryDto
-     * @param MailManager $mailManager
-     * @param Request     $request
+     * @param FactoryDto    $factoryDto
+     * @param DomainManager $domainManager
+     * @param Request       $request
      *
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
-    public function deleteDomain(FactoryDto $factoryDto, MailManager $mailManager, Request $request)
+    public function deleteDomain(FactoryDto $factoryDto, DomainManager $domainManager, Request $request)
     {
         $domainDto = $factoryDto->setRequest($request)->createDto(DomainDto::class);
 
-        $mailManager->setRestSuccessOk()->getDomain($domainDto)->lockEntitys();
+        $domainManager->setRestSuccessOk()->getDomain($domainDto)->lockEntitys();
 
-        return $this->json(['message' => 'the Domain was delete successFully'], $mailManager->getRestStatus());
+        return $this->json(['message' => 'the Domain was delete successFully'], $domainManager->getRestStatus());
     }
 
     /**
@@ -420,13 +420,13 @@ class ApiController extends AbstractController
      *
      * @SWG\Response(response=200,description="Returns the rewards of all generated domains")
      *
-     * @param MailManager $mailManager
+     * @param DomainManager $domainManager
      *
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
-    public function getDomain(MailManager $mailManager)
+    public function getDomain(DomainManager $domainManager)
     {
-        return $this->json($mailManager->setRestSuccessOk()->getDomains()->getData(), $mailManager->getRestStatus());
+        return $this->json($domainManager->setRestSuccessOk()->getDomains()->getData(), $domainManager->getRestStatus());
     }
 
     /**
@@ -456,23 +456,23 @@ class ApiController extends AbstractController
      *
      * @SWG\Response(response=200,description="Returns the rewards of all generated domains")
      *
-     * @param MailManager $mailManager
+     * @param DomainManager $domainManager
      *
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
-    public function getDomainByQuery(MailManager $mailManager, Request $request)
+    public function getDomainByQuery(DomainManager $domainManager, Request $request)
     {
-        $mailManager
+        $domainManager
             ->setPage($request->get('page'))
             ->setPerPage($request->get('per_page'))
             ->setFilter($request->get('filter'))
             ->getDomains();
 
-        $response = $this->toVuetable($mailManager, $mailManager->getPerPage(), $mailManager->getPage(), $mailManager->getData());
+        $response = $this->toVuetable($domainManager, $domainManager->getPerPage(), $domainManager->getPage(), $domainManager->getData());
 
-        $mailManager->setRestSuccessOk();
+        $domainManager->setRestSuccessOk();
 
-        return $this->json($response, $mailManager->getRestStatus());
+        return $this->json($response, $domainManager->getRestStatus());
     }
 
     /**
