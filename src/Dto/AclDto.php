@@ -23,9 +23,23 @@ class AclDto implements FactoryDtoInterface
 
 //region SECTION: Fields
     private $id;
+
+    private $type;
+
+    private $email;
+
+    private $domain;
 //endregion Fields
 
 //region SECTION: Public
+    /**
+     * @return bool
+     */
+    public function isValidEmail()
+    {
+        return $this->email && (preg_match("/[a-zA-Z0-9_\-.+*]+@[a-zA-Z0-9-]+.[a-zA-Z]+/", $this->email) === 1);
+    }
+
     /**
      * @param Acl $entity
      *
@@ -33,9 +47,17 @@ class AclDto implements FactoryDtoInterface
      */
     public function fillEntity($entity)
     {
-        //$entity->setDomain($this->getName())->addServer($this->getServers())->setActive();
+        $entity->setEmail($this->getEmail())->setType($this->getType())->setActive($this->getActive());
 
         return $entity;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function isEmail()
+    {
+        return mb_strpos($this->email, '*@') === false;
     }
 //endregion Public
 
@@ -47,13 +69,50 @@ class AclDto implements FactoryDtoInterface
      */
     public static function toDto(Request $request)
     {
-        $id = $request->get('id');
-
-        $result = [];
+        $catch   = false;
+        $result  = [];
+        $dto     = new self();
+        $id      = $request->get('id');
+        $active  = $request->get('active');
+        $deleted = $request->get('deleted');
+        $email   = $request->get('email');
+        $type    = $request->get('type');
+        $domain  = $request->get('domain');
 
         if ($id) {
-            $dto = new self();
+            $catch = true;
             $dto->setId($id);
+        }
+
+        if ($active) {
+            $catch = true;
+            if ($deleted) {
+                $dto->setActiveToDelete();
+            }
+        }
+
+        if ($email) {
+            $catch = true;
+            $dto->setEmail($email);
+        }
+
+        if ($type) {
+            $catch = true;
+            $dto->setType($type);
+        }
+
+        if ($domain) {
+            if (!is_array($domain)) {
+                $domain = json_decode($domain, true);
+            }
+
+            $catch = true;
+            if (isset($domain['domain'])) {
+                $dto->setDomain($domain['domain']);
+            }
+        }
+
+        if ($catch) {
             $result[] = $dto;
         }
 
@@ -62,6 +121,27 @@ class AclDto implements FactoryDtoInterface
 //endregion SECTION: Dto
 
 //region SECTION: Getters/Setters
+    /**
+     * @return mixed
+     */
+    public function getDomain()
+    {
+        return $this->domain;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getEmail()
+    {
+        return $this->email;
+    }
+
+    public function getEmailDomain()
+    {
+        return mb_strcut($this->email, mb_strpos($this->email, '@'), mb_strlen($this->email));
+    }
+
 
     /**
      * @param Request $request
@@ -73,13 +153,44 @@ class AclDto implements FactoryDtoInterface
         return $request;
     }
 
-
     /**
      * @return mixed
      */
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getType()
+    {
+        return $this->type;
+    }
+
+    /**
+     * @param mixed $domain
+     *
+     * @return AclDto
+     */
+    public function setDomain($domain)
+    {
+        $this->domain = $domain;
+
+        return $this;
+    }
+
+    /**
+     * @param mixed $email
+     *
+     * @return AclDto
+     */
+    public function setEmail($email)
+    {
+        $this->email = $email;
+
+        return $this;
     }
 
     /**
@@ -94,6 +205,16 @@ class AclDto implements FactoryDtoInterface
         return $this;
     }
 
+    /**
+     * @param mixed $type
+     *
+     * @return AclDto
+     */
+    public function setType($type)
+    {
+        $this->type = $type;
 
+        return $this;
+    }
 //endregion Getters/Setters
 }

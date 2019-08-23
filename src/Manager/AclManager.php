@@ -18,6 +18,7 @@ use App\Entity\Mail\Migrations\TbEmails;
 use App\Entity\Model\AclModel;
 use App\Repository\AclRepository;
 use App\Rest\Core\RestTrait;
+use Doctrine\ORM\EntityManagerInterface;
 
 /**
  * Class AclManager
@@ -34,10 +35,28 @@ class AclManager extends AbstractEntityManager
      * @var string
      */
     protected $repositoryClass = Acl::class;
+
+    private $mailManager;
 //endregion Fields
+
+//region SECTION: Constructor
+    /**
+     * AclManager constructor.
+     *
+     * @param EntityManagerInterface $entityManager
+     * @param MailManager            $mailManager
+     */
+    public function __construct(EntityManagerInterface $entityManager, MailManager $mailManager)
+    {
+        parent::__construct($entityManager);
+
+        $this->mailManager = $mailManager;
+    }
+//endregion Constructor
 
 
 //region SECTION: Public
+
     /**
      * @return array
      * @throws \Doctrine\ORM\ORMException
@@ -59,7 +78,55 @@ class AclManager extends AbstractEntityManager
 
         return [];
     }
+
+    /**
+     * @param AclDto[] $aclDto
+     *
+     * @return Acl
+     * @throws \Exception
+     */
+    public function saveAcl($aclDto)
+    {
+        $dto = reset($aclDto);
+        if ($dto) {
+            $entity = $this->repository->setDto($dto)->findAcl();
+            if (!$dto->getId() && count($entity)) {
+                $this->setRestClientErrorBadRequest();
+                $dto = $entity;
+            } else {
+                if ($dto->isValidEmail()) {
+                    $domain = $this->mailManager->getDomain();
+                    $dto = $this->save(count($entity) ? reset($entity) : new Acl(), $dto);
+                } else {
+                    $this->setRestClientErrorBadRequest();
+                    $dto = 'Не правильный формат адреса';
+                }
+            }
+        } else {
+            $this->setRestClientErrorBadRequest();
+            $dto = 'нет входных данных';
+        }
+
+        return $dto;
+    }
 //endregion Public
+
+//region SECTION: Private
+    /**
+     * @param Acl    $entity
+     * @param AclDto $aclDto
+     *
+     * @return Acl
+     */
+    private function save(Acl $entity, $aclDto)
+    {
+        $aclDto->fillEntity($entity);
+        $this->entityManager->persist($entity);
+        $this->entityManager->flush();
+
+        return $entity;
+    }
+//endregion Private
 
 //region SECTION: Getters/Setters
     /**
@@ -71,12 +138,7 @@ class AclManager extends AbstractEntityManager
     {
         $dto = reset($aclDto);
 
-        $this->repository
-            ->createCriteria()
-            ->setId($dto ? $dto->getId() : null);
-
-
-        $this->setData($this->repository->findAcl());
+        $this->setData($this->repository->setDto($dto)->findAcl());
 
         return $this;
     }
@@ -90,7 +152,6 @@ class AclManager extends AbstractEntityManager
 
         return $this;
     }
-
 
     public function getRestStatus(): int
     {

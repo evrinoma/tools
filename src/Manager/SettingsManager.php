@@ -13,7 +13,6 @@ use App\Core\AbstractEntityManager;
 use App\Entity\DescriptionService;
 use App\Entity\Settings;
 use App\Rest\Core\RestTrait;
-use Doctrine\Common\Collections\Criteria;
 
 /**
  * Class SettingsManager
@@ -31,23 +30,6 @@ class SettingsManager extends AbstractEntityManager
      */
     protected $repositoryClass = Settings::class;
 //endregion Fields
-
-//region SECTION: Public
-    public function save($settingsDto)
-    {
-//        $criteria = new Criteria();
-//        $criteria
-//            ->where(
-//                $criteria->expr()->in('id', $range)
-//            );
-//        $loadSettings = $this->repository->matching($criteria);
-//        /** @var Settings $item */
-//        foreach ($loadSettings as $item) {
-//            $item->setActive($settings[$item->getId()]['active']);
-//        }
-        $this->entityManager->flush();
-    }
-//endregion Public
 
 //region SECTION: Getters/Setters
     /**

@@ -79,6 +79,7 @@ class MailManager extends AbstractEntityManager
             $dto = $this->save($existDomain->count() ? $existDomain->first() : new Domain(), $dto);
         } else {
             $this->setRestClientErrorBadRequest();
+            $dto =null;
         }
 
         return $dto;
@@ -126,13 +127,13 @@ class MailManager extends AbstractEntityManager
 //region SECTION: Private
     /**
      * @param Domain    $entity
-     * @param DomainDto $serverDto
+     * @param DomainDto $domainDto
      *
      * @return Domain
      */
-    private function save(Domain $entity, $serverDto)
+    private function save(Domain $entity, $domainDto)
     {
-        $serverDto->fillEntity($entity);
+        $domainDto->fillEntity($entity);
         $this->entityManager->persist($entity);
         $this->entityManager->flush();
 

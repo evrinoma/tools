@@ -9,6 +9,7 @@
 namespace App\Repository;
 
 
+use App\Dto\AclDto;
 use Doctrine\ORM\EntityRepository;
 
 /**
@@ -18,42 +19,27 @@ use Doctrine\ORM\EntityRepository;
  */
 class AclRepository extends EntityRepository
 {
-    //region SECTION: Fields
-    private $criteria;
+//region SECTION: Fields
+    /**
+     * @var AclDto
+     */
+    private $aclDto;
 //endregion Fields
 
-//region SECTION: Public
+//region SECTION: Dto
     /**
-     * @return mixed
+     * @param AclDto $aclDto
+     *
+     * @return AclRepository
      */
-    public function createCriteria()
+    public function setDto($aclDto)
     {
-        return $this->criteria = new class()
-        {
-            private $id;
+        $this->aclDto = $aclDto;
 
-            /**
-             * @return mixed
-             */
-            public function getId()
-            {
-                return $this->id;
-            }
-
-            /**
-             * @param mixed $id
-             *
-             * @return self
-             */
-            public function setId($id)
-            {
-                $this->id = $id;
-
-                return $this;
-            }
-        };
+        return $this;
     }
-//endregion Public
+//endregion SECTION: Dto
+//endregion Fields
 
 //region SECTION: Find Filters Repository
     /**
@@ -66,14 +52,29 @@ class AclRepository extends EntityRepository
         $builder
             ->leftJoin('acl.domain', 'domain')
             ->where("acl.active = 'a'");
-        if ($this->criteria->getId()) {
-            $builder->andWhere('domain.id =  :id')
-                ->setParameter('id', $this->criteria->getId());
-        }
 
+        if ($this->aclDto && $this->aclDto->getId()) {
+            $builder->andWhere('acl.id =  :id')
+                ->setParameter('id', $this->aclDto->getId());
+        } else {
+            if ($this->aclDto && $this->aclDto->getDomain()) {
+                $builder->andWhere('domain.domain =  :domain')
+                    ->setParameter('domain', $this->aclDto->getDomain());
+            }
+
+            if ($this->aclDto && $this->aclDto->getEmail() && !$this->aclDto->getId()) {
+                if ($this->aclDto->isEmail()) {
+                    $builder->andWhere('acl.email = :email')
+                        ->setParameter('email', $this->aclDto->getEmail());
+                } else {
+                    $builder->andWhere('acl.email LIKE :email')
+                        ->setParameter('email', '%'.$this->aclDto->getEmailDomain().'%');
+                }
+            }
+        }
         $builder->orderBy('acl.type', 'desc');
 
-        return $builder->getQuery()->getResult();
+       return $builder->getQuery()->getResult();
     }
 //endregion Find Filters Repository
 }

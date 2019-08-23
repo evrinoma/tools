@@ -27,7 +27,7 @@
                                 <div class="ui animated button" tabindex="0" @click="doAdd">
                                     <div class="visible content">Add</div>
                                     <div class="hidden content">
-                                        <i class="right search icon"></i>
+                                        <i class="right save icon"></i>
                                     </div>
                                 </div>
                                 <div class="ui vertical animated button" tabindex="0" @click="resetRecord">
@@ -107,28 +107,26 @@
                             </div>
                         </div>
                         <div class="ui block">
-                            <div class="ui grid" v-for="(block, key) in selectValue.items">
+                            <div class="ui grid" v-for="(block, item) in selectValue.items">
                                 <template v-if="block.visible">
                                     <div class="three column">{{block.id}}</div>
                                     <div class="three wide column">
-                                        <templat v-if="_isEditBlock(block.id)">
+                                        <template v-if="_isEditBlock(block.id)">
                                             <div class="ui input focus small">
                                                 <input type="text" v-model="editText" placeholder="Edit...">
                                             </div>
-                                        </templat>
-                                        <templat v-else>
-                                            {{block.email}}
-                                        </templat>
+                                        </template>
+                                        <template v-else>{{block.email}}</template>
                                     </div>
                                     <div class="three wide column">
-                                        <templat v-if="_isEditBlock(block.id)">
-                                            <span class="ui teal label" @click="doEditSaveAction(index, key)"><i class="save outline icon"></i>Save</span>
+                                        <template v-if="_isEditBlock(block.id)">
+                                            <span class="ui teal label" @click="doEditSaveAction(index, item)"><i class="save outline icon"></i>Save</span>
                                             <span class="ui teal label" @click="doEditCancelAction(block)"><i class="shop x icon"></i>Cancel</span>
-                                        </templat>
-                                        <templat v-else>
+                                        </template>
+                                        <template v-else>
                                             <span class="ui teal label" @click="doEditAction(block)"><i class="edit outline icon"></i>Edit</span>
-                                            <span class="ui teal label" @click="doDeleteAction(block)"><i class="trash icon"></i>Delete</span>
-                                        </templat>
+                                            <span class="ui teal label" @click="doDeleteAction(index, item)"><i class="trash icon"></i>Delete</span>
+                                        </template>
                                     </div>
                                 </template>
                             </div>
@@ -158,10 +156,7 @@
                 apiUrlAclModel: 'http://php72.tools/internal/acl/model',
                 apiUrlDomains: 'http://php72.tools/internal/domain/domain',
                 apiUrlAcl: 'http://php72.tools/internal/acl/acl',
-
-                apiUrlAclAdd: '',
-                apiUrlAclSave: '',
-                apiUrlAclDelete: '',
+                apiUrlAclSave: 'http://php72.tools/internal/acl/save',
 
                 aclModel: null,
                 aclModelSelect: '',
@@ -202,7 +197,14 @@
                         });
                         break;
                     case 'acl-add':
+                        //push to
+                    case 'acl-save':
+                    case 'acl-delete':
+                        this.$forceUpdate();
+                        break;
                     case 'acl-error':
+                        break;
+
                     case 'search-filter':
                 }
             },
@@ -231,7 +233,7 @@
                 this.resetLocalSearch();
                 this.tabSelected = null;
                 axios
-                    .get(this.apiUrlAcl, {params: {id: this.domains[this.domainSelect].id}})
+                    .get(this.apiUrlAcl, {params: {domain: this.domains[this.domainSelect]}})
                     .then(response => (this._axiosResponse('acl-load-acl', response)));
 
             },
@@ -246,7 +248,7 @@
                 this._filterAcls();
             },
             localSearchAction() {
-                if (this.localSearchText.length && this.localSearchText.length % 3 === 0) {
+                if (this.localSearchText.length % 3 === 0) {
                     this._filterAcls();
                 }
             },
@@ -255,18 +257,30 @@
                 this.acls[this.tabSelected].items.some(function (value) {
                     if (value.email.indexOf(self.localSearchText) !== -1) {
                         value.visible = true;
+                        value.visible = !value.deleted;
                     } else {
                         value.visible = false;
                     }
                 });
             },
             doAdd() {
-                console.log("doAdd");
+                let data = {
+                    type: this.aclModelSelect,
+                    email: this.recordText,
+                    domain: this.domains[this.domainSelect]
+                };
+                axios
+                    .post(this.apiUrlAclSave, data)
+                    .then(response => (this._axiosResponse('acl-save', response)))
+                    .catch(error => (this._axiosResponse('acl-error', error)));
             },
-            doEditSaveAction(index, key) {
-                this.acls[index].items[key].email = this.editText;
+            doEditSaveAction(index, item) {
+                this.acls[index].items[item].email = this.editText;
                 this.doEditCancelAction();
-                console.log("doSave");
+                axios
+                    .post(this.apiUrlAclSave, this.acls[index].items[item])
+                    .then(response => (this._axiosResponse('acl-save', response)))
+                    .catch(error => (this._axiosResponse('acl-error', error)));
             },
             doEditCancelAction() {
                 this.editBlock = null;
@@ -276,8 +290,14 @@
                 this.editBlock = block.id;
                 this.editText = block.email;
             },
-            doDeleteAction(block) {
-                console.log("doDelete");
+            doDeleteAction(index, item) {
+                this.acls[index].items[item].active = 'd';
+                this.acls[index].items[item].deleted = true;
+                this.acls[index].items[item].visible = false;
+                axios
+                    .post(this.apiUrlAclSave, this.acls[index].items[item])
+                    .then(response => (this._axiosResponse('acl-delete', response)))
+                    .catch(error => (this._axiosResponse('acl-error', error)));
             },
             resetRecord() {
                 this.recordText = '';
@@ -287,6 +307,7 @@
                 if (this.acls.length && this.acls[this.tabSelected] !== undefined) {
                     this.acls[this.tabSelected].items.some(function (value) {
                         value.visible = true;
+                        value.visible = !value.deleted;
                     });
                 }
             },

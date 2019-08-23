@@ -140,7 +140,7 @@ class ApiController extends AbstractController
      */
     public function migrateAcls(AclManager $aclManager)
     {
-        return $this->json(['domains' => $aclManager->setRestSuccessOk()->megrateAcls()], $aclManager->getRestStatus());
+        return $this->json(['acls' => $aclManager->setRestSuccessOk()->megrateAcls()], $aclManager->getRestStatus());
     }
 
     /**
@@ -393,6 +393,25 @@ class ApiController extends AbstractController
     public function getAclModel(AclManager $aclManager)
     {
         return $this->json($aclManager->setRestSuccessOk()->getAclModel()->getData(), $aclManager->getRestStatus());
+    }
+
+    /**
+     * @Rest\Post("/internal/acl/save", name="api_acl_save")
+     * @SWG\Post(tags={"acl"})
+     *
+     * @SWG\Response(response=200,description="Returns nothing")
+     *
+     * @param FactoryDto $factoryDto
+     * @param AclManager $aclManager
+     *
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     * @throws \Exception
+     */
+    public function getAclSave(FactoryDto $factoryDto, AclManager $aclManager, Request $request)
+    {
+        $aclDto = $factoryDto->setRequest($request)->createDto(AclDto::class);
+
+        return $this->json(['acl' => $aclManager->setRestSuccessOk()->saveAcl($aclDto)], $aclManager->getRestStatus());
     }
 
     /**

@@ -59,6 +59,7 @@ class ServerManager extends AbstractEntityManager
             }
         } else {
             $this->setRestClientErrorBadRequest();
+            $dto =null;
         }
 
         return $dto;
