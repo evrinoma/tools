@@ -66,35 +66,8 @@ class ServerManager extends AbstractEntityManager
     }
 //endregion Public
 
-//region SECTION: Private
-//    /**
-//     * @param Server    $entity
-//     * @param ServerDto $serverDto
-//     *
-//     * @return Server
-//     */
-//    private function save(Server $entity, $serverDto)
-//    {
-//        $serverDto->fillEntity($entity);
-//        $this->entityManager->persist($entity);
-//        $this->entityManager->flush();
-//
-//        return $entity;
-//    }
-//endregion Private
 
 //region SECTION: Getters/Setters
-//    /**
-//     * @return Server[]
-//     */
-//    public function getServers()
-//    {
-//        $criteria = $this->getCriteria();
-//
-//        return $this->repository->matching($criteria)->toArray();
-//    }
-
-
     /**
      * @param ServerDto $serverDto
      *

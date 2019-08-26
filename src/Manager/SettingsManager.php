@@ -10,6 +10,7 @@ namespace App\Manager;
 
 
 use App\Core\AbstractEntityManager;
+use App\Dto\ApartDto\SettingsDto;
 use App\Entity\DescriptionService;
 use App\Entity\Settings;
 use App\Rest\Core\RestTrait;
@@ -66,18 +67,20 @@ class SettingsManager extends AbstractEntityManager
     }
 
     /**
-     * @param string $class
+     * @param SettingsDto $settingsDto
      *
      * @return mixed
      */
-    public function getSettings($class = '')
+    public function getSettings(SettingsDto $settingsDto)
     {
         $builder = $this->repository->createQueryBuilder('settings');
 
-        $builder
-            ->where('settings.active != \'d\'')
-            ->andWhere('settings.type = :classEntity')
-            ->setParameter('classEntity', $class);
+        $builder->where('settings.active != \'d\'');
+
+        if ($settingsDto->getClassEntity()) {
+            $builder->andWhere('settings.type = :classEntity')
+                ->setParameter('classEntity', $settingsDto->getClassEntity());
+        }
 
         return $builder->getQuery()->getResult();
     }

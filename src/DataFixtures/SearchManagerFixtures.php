@@ -8,9 +8,9 @@
 
 namespace App\DataFixtures;
 
-use App\Dto\FileDto;
+use App\Dto\ApartDto\FileDto;
+use App\Dto\LogSearchDto;
 use App\Entity\Settings;
-use App\Manager\SearchManager;
 use Doctrine\Common\Persistence\ObjectManager;
 
 /**
@@ -81,7 +81,7 @@ class SearchManagerFixtures extends AbstractFixtures
             $settingFile = new Settings();
             $settingFile
                 ->setData($file->setName($name)->setPath($filePath))
-                ->setType(SearchManager::class);
+                ->setType(LogSearchDto::class);
 
             $manager->persist($settingFile);
         }

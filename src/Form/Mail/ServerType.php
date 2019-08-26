@@ -8,6 +8,7 @@
 
 namespace App\Form\Mail;
 
+use App\Dto\FactoryDto;
 use App\Dto\ServerDto;
 use App\Manager\ServerManager;
 use App\Rest\Form\RestChoiceType;
@@ -29,15 +30,23 @@ class ServerType extends AbstractType
      * ServerManager.
      */
     private $serverManager;
+    /**
+     * @var FactoryDto
+     */
+    private $factoryDto;
 //endregion Fields
 
 //region SECTION: Constructor
     /**
      * ServerType constructor.
+     *
+     * @param FactoryDto    $factoryDto
+     * @param ServerManager $serverManager
      */
-    public function __construct(ServerManager $serverManager)
+    public function __construct(FactoryDto $factoryDto, ServerManager $serverManager)
     {
         $this->serverManager = $serverManager;
+        $this->factoryDto = $factoryDto;
     }
 
 //endregion Constructor
@@ -46,7 +55,7 @@ class ServerType extends AbstractType
     {
         $callback = function (Options $options) {
             $servers = [];
-            foreach ($this->serverManager->getServers() as $server) {
+            foreach ($this->serverManager->getServers($this->factoryDto->createDto(ServerDto::class))->getData() as $server) {
                 $servers[] = $server->getIp();
             }
 

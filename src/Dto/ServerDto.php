@@ -18,7 +18,7 @@ use Symfony\Component\HttpFoundation\Request;
  *
  * @package App\Dto
  */
-class ServerDto extends AbstractDto
+class ServerDto extends AbstractFactoryDto
 {
     use ActiveTrait;
 
@@ -108,14 +108,6 @@ class ServerDto extends AbstractDto
     public function getHostName()
     {
         return $this->hostName;
-    }
-
-    /**
-     * @return string
-     */
-    public function getClass()
-    {
-        return self::class;
     }
 
     /**

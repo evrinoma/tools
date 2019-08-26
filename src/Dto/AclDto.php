@@ -13,11 +13,11 @@ use App\Entity\Model\ActiveTrait;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * Class Acl
+ * Class AclDto
  *
  * @package App\Dto
  */
-class AclDto extends AbstractDto
+class AclDto extends AbstractFactoryDto
 {
     use ActiveTrait;
 
@@ -158,14 +158,6 @@ class AclDto extends AbstractDto
     public function getType()
     {
         return $this->type;
-    }
-
-    /**
-     * @return string
-     */
-    public function getClass()
-    {
-        return self::class;
     }
 
     /**

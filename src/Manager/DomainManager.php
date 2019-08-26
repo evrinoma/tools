@@ -119,24 +119,6 @@ class DomainManager extends AbstractEntityManager
     }
 
 //endregion Public
-//
-////region SECTION: Private
-//    /**
-//     * @param Domain    $entity
-//     * @param DomainDto $domainDto
-//     *
-//     * @return Domain
-//     */
-//    private function save(Domain $entity, $domainDto)
-//    {
-//        $domainDto->fillEntity($entity);
-//        $this->entityManager->persist($entity);
-//        $this->entityManager->flush();
-//
-//        return $entity;
-//    }
-//
-////endregion Private
 
 //region SECTION: Getters/Setters
     /**
@@ -155,24 +137,6 @@ class DomainManager extends AbstractEntityManager
         return $this;
     }
 
-//    /**
-//     * @param DomainDto $domainDto
-//     *
-//     * @return DomainManager
-//     */
-//    public function getDomain(?DomainDto $domainDto)
-//    {
-//        if ($domainDto) {
-//            $criteria = $this->getCriteria();
-//            $criteria->andWhere(
-//                $criteria->expr()->eq('id', $domainDto->getId())
-//            );
-//
-//            $this->setData($this->repository->matching($criteria)->getValues());
-//        }
-//
-//        return $this;
-//    }
 
     /**
      * если фильтр задан то возвращаем число всех найденных записей

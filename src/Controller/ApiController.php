@@ -13,8 +13,8 @@ use App\Core\AbstractEntityManager;
 use App\Dto\AclDto;
 use App\Dto\DomainDto;
 use App\Dto\FactoryDto;
+use App\Dto\LogSearchDto;
 use App\Dto\ServerDto;
-use App\Dto\SettingsDto;
 use App\Dto\VuetableInterface;
 use App\Manager\AclManager;
 use App\Manager\DashBoardManager;
@@ -271,13 +271,19 @@ class ApiController extends AbstractController
      *
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
-    public function logSearch(SearchManager $searchManager, Request $request)
+    public function logSearch(FactoryDto $factoryDto, SearchManager $searchManager, Request $request)
     {
-        $searchString = $request->get('searchString');
-        $searchFile   = $request->get('searchFile');
+        $logSearch = $factoryDto->setRequest($request)->createDto(LogSearchDto::class);
 
-
-        return $this->json(['search' => $searchManager->setRestSuccessOk()->setSearchString($searchString)->setSearchFile($searchFile)->getSearch()->getSearchResult()], $searchManager->getRestStatus());
+        return $this->json(
+            [
+                'search' => $searchManager->setRestSuccessOk()
+                    ->setDto($logSearch)
+                    ->getSearch()
+                    ->getSearchResult(),
+            ],
+            $searchManager->getRestStatus()
+        );
     }
 
     /**
@@ -290,9 +296,11 @@ class ApiController extends AbstractController
      *
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
-    public function logSearchSettings(SearchManager $searchManager)
+    public function logSearchSettings(FactoryDto $factoryDto, SearchManager $searchManager, Request $request)
     {
-        return $this->json(['settings' => $searchManager->setRestSuccessOk()->getSettings()], $searchManager->getRestStatus());
+        $logSearchDto = $factoryDto->setRequest($request)->createDto(LogSearchDto::class);
+
+        return $this->json(['settings' => $searchManager->setRestSuccessOk()->setDto($logSearchDto)->getSettings()], $searchManager->getRestStatus());
     }
 
     /**
@@ -325,9 +333,9 @@ class ApiController extends AbstractController
      */
     public function saveSearchSettings(FactoryDto $factoryDto, SearchManager $searchManager, Request $request)
     {
-        $settingsDto = $factoryDto->setRequest($request)->createDto(SettingsDto::class);
+        //  $settingsDto = $factoryDto->setRequest($request)->createDto(SettingsDto::class);
 
-        return $this->json(['settings' => $searchManager->setRestSuccessOk()->saveSettings($settingsDto)], $searchManager->getRestStatus());
+        return $this->json(['settings' => $searchManager->setRestSuccessOk()->saveSettings([])], $searchManager->getRestStatus());
     }
 //endregion Public
 

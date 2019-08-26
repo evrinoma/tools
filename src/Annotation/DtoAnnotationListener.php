@@ -19,7 +19,7 @@ use ReflectionProperty;
  *
  * @package App\Annotation
  */
-class AnnotationListener
+class DtoAnnotationListener
 {
 //region SECTION: Fields
     private $annotationReader;
@@ -46,9 +46,9 @@ class AnnotationListener
     private function handleAnnotation($dto): void
     {
         $reflectionObject    = new ReflectionObject($dto);
-        $reflectionPropertys = $reflectionObject->getProperties(ReflectionProperty::IS_PRIVATE);
+        $reflectionProperties = $reflectionObject->getProperties(ReflectionProperty::IS_PRIVATE);
 
-        foreach ($reflectionPropertys as $reflectionProperty) {
+        foreach ($reflectionProperties as $reflectionProperty) {
             $annotation = $this->annotationReader->getPropertyAnnotation($reflectionProperty, Dto::class);
             if ($annotation instanceof Dto) {
                 $annotationDto = $this->factoryDto->createDto($annotation->class);

@@ -11,17 +11,15 @@ namespace App\Dto;
 
 use App\Annotation\Dto;
 use App\Entity\Mail\Domain;
-use App\Entity\Mail\Server;
 use App\Entity\Model\ActiveTrait;
-use Doctrine\ORM\LazyCriteriaCollection;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * Class ServerDto
+ * Class DomainDto
  *
  * @package App\Dto
  */
-class DomainDto extends AbstractDto implements VuetableInterface
+class DomainDto extends AbstractFactoryDto implements VuetableInterface
 {
     use ActiveTrait;
 
@@ -38,10 +36,6 @@ class DomainDto extends AbstractDto implements VuetableInterface
      * @var ServerDto
      */
     private $server;
-    /**
-     * @var LazyCriteriaCollection
-     */
-    private $servers;
 //endregion Fields
 
 //region SECTION: Public
@@ -148,14 +142,6 @@ class DomainDto extends AbstractDto implements VuetableInterface
     }
 
     /**
-     * @return Server
-     */
-    public function getServers(): ?Server
-    {
-        return $this->servers->count() ? $this->servers->first() : null;
-    }
-
-    /**
      * @param Request $request
      *
      * @return mixed
@@ -187,14 +173,6 @@ class DomainDto extends AbstractDto implements VuetableInterface
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * @return string
-     */
-    public function getClass()
-    {
-        return self::class;
     }
 
     /**
@@ -242,18 +220,6 @@ class DomainDto extends AbstractDto implements VuetableInterface
     public function setFilter($filter)
     {
         $this->filter = $filter;
-
-        return $this;
-    }
-
-    /**
-     * @param LazyCriteriaCollection $servers
-     *
-     * @return DomainDto
-     */
-    public function setServers(LazyCriteriaCollection $servers)
-    {
-        $this->servers = $servers;
 
         return $this;
     }

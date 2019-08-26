@@ -13,48 +13,15 @@ namespace App\Dto;
  *
  * @package App\Dto
  */
-abstract class AbstractDto implements FactoryDtoInterface
+abstract class AbstractDto
 {
-//region SECTION: Fields
-    private $entitys;
-//endregion Fields
-
-//region SECTION: Public
-    /**
-     * @return \Generator|object
-     */
-    public function generatorEntity()
-    {
-        foreach ($this->entitys as $entity) {
-            yield $entity;
-        }
-    }
-//endregion Public
-
 //region SECTION: Getters/Setters
     /**
      * @return string
      */
-    abstract public function getClass();
-
-    /**
-     * @return object[]
-     */
-    public function getEntitys()
+    public function getClass()
     {
-        return $this->entitys;
+        return static::class;
     }
-
-    /**
-     * @param object[] $entitys
-     *
-     * @return FactoryDtoInterface
-     */
-    public function setEntitys($entitys)
-    {
-        $this->entitys = $entitys;
-
-        return $this;
-    }
-    //endregion Getters/Setters
+//endregion Getters/Setters
 }

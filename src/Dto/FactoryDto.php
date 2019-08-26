@@ -22,6 +22,7 @@ class FactoryDto
     private $request;
     private $eventDispatcher;
     private $pull = [];
+    private $factoryAdaptor;
 //endregion Fields
 
 //region SECTION: Constructor
@@ -29,9 +30,10 @@ class FactoryDto
     /**
      * FactoryDto constructor.
      */
-    public function __construct(EventDispatcherInterface $eventDispatcher)
+    public function __construct(EventDispatcherInterface $eventDispatcher, FactoryAdaptor $factoryAdaptor)
     {
         $this->eventDispatcher = $eventDispatcher;
+        $this->factoryAdaptor  = $factoryAdaptor;
     }
 //endregion Constructor
 
@@ -54,14 +56,14 @@ class FactoryDto
      */
     public function createDto($class)
     {
-        $dto = null;
-
-        if (class_exists($class) && $this->request) {
-            $dto = new $class;
-            if ($dto instanceof FactoryDtoInterface) {
+        $dto = new $class;
+        if ($dto instanceof FactoryDtoInterface) {
+            if ($this->request) {
                 if (!$this->hasDto($dto)) {
                     /** @var FactoryDtoInterface $class */
                     $dto = $class::toDto($this->request);
+                    /** @var AbstractFactoryDto $dto */
+                    $dto->setFactoryAdapter($this->factoryAdaptor);
                     $this->push($dto);
                     $event = new DtoEvent();
                     $event->setDto($dto);
@@ -70,10 +72,32 @@ class FactoryDto
                     $dto = $this->getDtoByClass($class);
                 }
             }
+        } else {
+            $dto = null;
         }
 
         return $dto;
     }
+
+    /**
+     * @param $class
+     *
+     * @return FactoryDtoInterface
+     */
+    public function cloneDto($class)
+    {
+        $dto = new $class;
+        if ($dto instanceof FactoryDtoInterface || $dto instanceof DtoApartInterface) {
+            if ($this->hasDto($dto)) {
+                $dto = clone $this->getDtoByClass($class);
+            }
+        } else {
+            $dto = null;
+        }
+
+        return $dto;
+    }
+
 
     /**
      * @param FactoryDtoInterface $dto

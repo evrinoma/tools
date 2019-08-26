@@ -24,8 +24,6 @@ class DtoEvent extends Event
      * @var FactoryDtoInterface
      */
     private $dto;
-
-    private $request;
 //endregion Fields
 
 //region SECTION: Dto

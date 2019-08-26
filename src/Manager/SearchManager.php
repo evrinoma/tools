@@ -11,8 +11,9 @@ namespace App\Manager;
 
 use App\Core\AbstractEntityManager;
 use App\Core\CoreShellTrait;
-use App\Dto\FileDto;
-use App\Dto\SettingsDto;
+use App\Dto\ApartDto\FileDto;
+use App\Dto\ApartDto\SettingsDto;
+use App\Dto\LogSearchDto;
 use App\Entity\Settings;
 use App\Rest\Core\RestTrait;
 use Doctrine\ORM\EntityManagerInterface;
@@ -37,9 +38,13 @@ class SearchManager extends AbstractEntityManager
      */
     private $settings;
     private $searchResult = [];
-    private $searchString = '';
-    private $searchFile   = '';
-    private $step         = 5;
+
+    /**
+     * @var LogSearchDto
+     */
+    private $dto;
+
+    private $step = 5;
 
     private $settingsManager;
 //endregion Fields
@@ -73,7 +78,7 @@ class SearchManager extends AbstractEntityManager
 
 //region SECTION: Public
     /**
-     * @param SettingsDto[] $settingsDto
+     * @param $settingsDto
      *
      * @return Settings[]
      */
@@ -95,7 +100,14 @@ class SearchManager extends AbstractEntityManager
      */
     private function loadSettings()
     {
-        $this->settings = $this->settingsManager->getSettings(SearchManager::class);
+        if ($this->dto) {
+
+         //   $dto = new SettingsDto();
+        //    $dto->setClassEntity($this->dto->getClass());
+            $settingsDto = $this->dto->getFactoryAdapter()->setFrom($this->dto)->setTo(SettingsDto::class)->adapter();
+
+            $this->settings = $this->settingsManager->getSettings($settingsDto);
+        }
 
         return $this;
     }
@@ -108,10 +120,10 @@ class SearchManager extends AbstractEntityManager
         foreach ($this->settings as $setting) {
             $fileDto = $setting->getData();
             if ($fileDto instanceof FileDto) {
-                if ($this->isFile($fileDto->getName())) {
+                if ($this->dto->hasFile($fileDto->getName())) {
                     $file = $fileDto->getFilePath();
                     $run  = $this->programs['cat'].' '.escapeshellarg($file).' | '.
-                        $this->programs['grep'].' -ni \''.escapeshellarg($this->searchString).'\' | '.
+                        $this->programs['grep'].' -ni \''.escapeshellarg($this->dto->getSearchString()).'\' | '.
                         $this->programs['sed'].' -n \'s/^\\([0-9]*\\)[:].*/\\1/p\'';
                     if ($this->setClean()->executeProgram($run)) {
                         $this->getLineMeet($this->getResult(), $file, $fileDto->getName());
@@ -121,11 +133,6 @@ class SearchManager extends AbstractEntityManager
         }
 
         return $this;
-    }
-
-    private function isFile($fileName)
-    {
-        return ($this->searchFile === '' || $this->searchFile === $fileName);
     }
 
     /**
@@ -139,12 +146,10 @@ class SearchManager extends AbstractEntityManager
      */
     private function getLineMeet(array $lines, $file, $name)
     {
-//        $name = mb_strcut(mb_strrchr($file, '/'), 1, mb_strlen($file));
         $message = [];
         foreach ($lines as $number) {
             $run = $this->programs['sed'].' -n \''.$number.','.($number + $this->step).'p;'.($number + $this->step + 1).'q\' '.$file;
             if ($this->setClean()->executeProgram($run)) {
-                // $message['_'.$number] = $this->getResult();
                 $message[] = $this->getResult();
             }
         }
@@ -171,15 +176,21 @@ class SearchManager extends AbstractEntityManager
 
         return true;
     }
-
-    /**
-     * @return int
-     */
-    private function isSearchStr()
-    {
-        return $this->searchString !== '';
-    }
 //endregion Private
+
+//region SECTION: Dto
+    /**
+     * @param LogSearchDto $logSearchDto
+     *
+     * @return $this
+     */
+    public function setDto(LogSearchDto $logSearchDto)
+    {
+        $this->dto = $logSearchDto;
+
+        return $this;
+    }
+//endregion SECTION: Dto
 
 //region SECTION: Getters/Setters
     /**
@@ -212,21 +223,14 @@ class SearchManager extends AbstractEntityManager
     }
 
     /**
-     * @return string
-     */
-    public function getSearchString(): string
-    {
-        return $this->searchString;
-    }
-
-    /**
      * @return $this
      */
     public function getSearch()
     {
-        if ($this->hasProgram() && $this->isSearchStr()) {
-
-            $this->loadSettings()->getNumberLineMeet();
+        if ($this->dto) {
+            if ($this->hasProgram() && $this->dto->isValidSearchStr()) {
+                $this->loadSettings()->getNumberLineMeet();
+            }
         }
 
         return $this;
@@ -238,42 +242,6 @@ class SearchManager extends AbstractEntityManager
     public function getRestStatus(): int
     {
         return $this->status;
-    }
-
-    /**
-     * @return string
-     */
-    public function getSearchFile(): string
-    {
-        return $this->searchFile;
-    }
-
-    /**
-     * @param string $searchString
-     *
-     * @return SearchManager
-     */
-    public function setSearchString($searchString)
-    {
-        if ($searchString) {
-            $this->searchString = $searchString;
-        }
-
-        return $this;
-    }
-
-    /**
-     * @param string $searchFile
-     *
-     * @return SearchManager
-     */
-    public function setSearchFile(string $searchFile)
-    {
-        if ($searchFile) {
-            $this->searchFile = $searchFile;
-        }
-
-        return $this;
     }
 
 

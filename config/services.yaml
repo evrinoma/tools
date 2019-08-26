@@ -48,6 +48,10 @@ services:
     tags:
       - { name: knp_menu.menu_builder, method: createMainMenu, alias: main }
 
-  App\Annotation\AnnotationListener:
+  App\Annotation\DtoAnnotationListener:
     tags:
       - { name: kernel.event_listener, event: custom.event.dto, method: onKernelDto }
+
+  App\Annotation\DtoAdapterAnnotationListener:
+    tags:
+      - { name: kernel.event_listener, event: custom.event.dto.adapter, method: onKernelDto }

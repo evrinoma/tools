@@ -6,10 +6,17 @@
  * Time: 5:25 PM
  */
 
-namespace App\Dto;
+namespace App\Dto\ApartDto;
 
+use App\Dto\AbstractDto;
+use App\Dto\DtoApartInterface;
 
-class FileDto
+/**
+ * Class FileDto
+ *
+ * @package App\Dto\ApartDto
+ */
+class FileDto extends AbstractDto implements DtoApartInterface
 {
 //region SECTION: Fields
     private $name;

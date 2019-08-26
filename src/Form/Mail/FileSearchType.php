@@ -8,7 +8,7 @@
 
 namespace App\Form\Mail;
 
-use App\Dto\FileDto;
+use App\Dto\ApartDto\FileDto;
 use App\Manager\SettingsManager;
 use App\Rest\Form\RestChoiceType;
 use Symfony\Component\Form\AbstractType;

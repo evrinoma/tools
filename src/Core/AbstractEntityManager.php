@@ -9,7 +9,7 @@
 namespace App\Core;
 
 
-use App\Dto\AbstractDto;
+use App\Dto\AbstractFactoryDto;
 use App\Entity\Model\ActiveTrait;
 use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\EntityManagerInterface;
@@ -86,8 +86,8 @@ abstract class AbstractEntityManager
     }
 
     /**
-     * @param Object      $entity
-     * @param AbstractDto $dto
+     * @param Object             $entity
+     * @param AbstractFactoryDto $dto
      *
      * @return Object
      */
