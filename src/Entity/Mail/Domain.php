@@ -33,7 +33,7 @@ class Domain
     /**
      * @var Server
      *
-     * @ORM\ManyToOne(targetEntity="App\Entity\Mail\Server", inversedBy="id")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Mail\Server", inversedBy="id", cascade={"all"})
      */
     private $server;
 //endregion Fields

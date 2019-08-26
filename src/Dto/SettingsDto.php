@@ -44,20 +44,20 @@ class SettingsDto implements FactoryDtoInterface
     /**
      * @param $request
      *
-     * @return array
+     * @return FactoryDtoInterface
      */
     public static function toDto(Request $request)
     {
-        $result = [];
-        foreach (self::getRequest($request) as $item) {
-            if (isset($item['id'], $item['active'])) {
+//        $result = [];
+//        foreach (self::getRequest($request) as $item) {
+//            if (isset($item['id'], $item['active'])) {
                 $dto = new self();
-                $dto->setId($item['id'])->setActive($item['active']);
-                $result[$dto->getId()] = $dto;
-            }
-        }
+//                $dto->setId($item['id'])->setActive($item['active']);
+//                $result[$dto->getId()] = $dto;
+//            }
+//        }
 
-        return $result;
+        return $dto;
     }
 //endregion SECTION: Dto
 
@@ -78,6 +78,14 @@ class SettingsDto implements FactoryDtoInterface
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * @return string
+     */
+    public function getClass()
+    {
+        return self::class;
     }
 
     /**

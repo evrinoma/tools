@@ -69,8 +69,6 @@ class AclDto implements FactoryDtoInterface
      */
     public static function toDto(Request $request)
     {
-        $catch   = false;
-        $result  = [];
         $dto     = new self();
         $id      = $request->get('id');
         $active  = $request->get('active');
@@ -80,24 +78,20 @@ class AclDto implements FactoryDtoInterface
         $domain  = $request->get('domain');
 
         if ($id) {
-            $catch = true;
             $dto->setId($id);
         }
 
         if ($active) {
-            $catch = true;
             if ($deleted) {
                 $dto->setActiveToDelete();
             }
         }
 
         if ($email) {
-            $catch = true;
             $dto->setEmail($email);
         }
 
         if ($type) {
-            $catch = true;
             $dto->setType($type);
         }
 
@@ -106,17 +100,14 @@ class AclDto implements FactoryDtoInterface
                 $domain = json_decode($domain, true);
             }
 
-            $catch = true;
+
             if (isset($domain['domain'])) {
                 $dto->setDomain($domain['domain']);
             }
         }
 
-        if ($catch) {
-            $result[] = $dto;
-        }
 
-        return $result;
+        return $dto;
     }
 //endregion SECTION: Dto
 
@@ -167,6 +158,14 @@ class AclDto implements FactoryDtoInterface
     public function getType()
     {
         return $this->type;
+    }
+
+    /**
+     * @return string
+     */
+    public function getClass()
+    {
+        return self::class;
     }
 
     /**

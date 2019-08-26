@@ -62,28 +62,24 @@ class ServerDto implements FactoryDtoInterface
     /**
      * @param $request
      *
-     * @return array
+     * @return FactoryDtoInterface
      */
     public static function toDto(Request $request)
     {
         $ip   = $request->get('ip');
         $name = $request->get('hostname');
 
-        $result = [];
+        $dto = new self();
 
-        if ($ip && $name) {
-            $dto = new self();
-            $dto->setIp($ip)->setHostName($name);
-            $result[] = $dto;
-        } else {
-            if ($ip) {
-                $dto = new self();
-                $dto->setIp($ip);
-                $result[] = $dto;
-            }
+        if ($name) {
+            $dto->setHostName($name);
         }
 
-        return $result;
+        if ($ip) {
+            $dto->setIp($ip);
+        }
+
+        return $dto;
     }
 //endregion SECTION: Dto
 
@@ -112,6 +108,14 @@ class ServerDto implements FactoryDtoInterface
     public function getHostName()
     {
         return $this->hostName;
+    }
+
+    /**
+     * @return string
+     */
+    public function getClass()
+    {
+        return self::class;
     }
 
     /**

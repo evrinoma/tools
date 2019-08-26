@@ -9,6 +9,7 @@
 namespace App\Repository;
 
 
+use App\Dto\DomainDto;
 use Doctrine\ORM\EntityRepository;
 
 /**
@@ -19,106 +20,25 @@ use Doctrine\ORM\EntityRepository;
 class DomainRepository extends EntityRepository
 {
 //region SECTION: Fields
-    private $criteria;
+    /**
+     * @var DomainDto
+     */
+    private $dto;
 //endregion Fields
 
-//region SECTION: Public
+//region SECTION: Dto
     /**
-     * @return mixed
+     * @param DomainDto $dto
+     *
+     * @return DomainRepository
      */
-    public function createCriteria()
+    public function setDto(DomainDto $dto)
     {
-        return $this->criteria = new class()
-        {
-            private $domain;
-            private $ip;
-            private $firstResult;
-            private $maxResults;
+        $this->dto = $dto;
 
-            /**
-             * @return mixed
-             */
-            public function getIp()
-            {
-                return $this->ip;
-            }
-
-            /**
-             * @param mixed $ip
-             *
-             * @return self
-             */
-            public function setIp($ip)
-            {
-                $this->ip = $ip;
-
-                return $this;
-            }
-
-            /**
-             * @return mixed
-             */
-            public function getMaxResults()
-            {
-                return $this->maxResults;
-            }
-
-            /**
-             * @param mixed $maxResults
-             *
-             * @return self
-             */
-            public function setMaxResults($maxResults)
-            {
-                $this->maxResults = $maxResults;
-
-                return $this;
-            }
-
-
-            /**
-             * @return mixed
-             */
-            public function getDomain()
-            {
-                return $this->domain;
-            }
-
-            /**
-             * @param mixed $domain
-             *
-             * @return self
-             */
-            public function setDomain($domain)
-            {
-                $this->domain = $domain;
-
-                return $this;
-            }
-
-            /**
-             * @return mixed
-             */
-            public function getFirstResult()
-            {
-                return $this->firstResult;
-            }
-
-            /**
-             * @param mixed $firstResult
-             *
-             * @return self
-             */
-            public function setFirstResult($firstResult)
-            {
-                $this->firstResult = $firstResult;
-
-                return $this;
-            }
-
-        };
+        return $this;
     }
-//endregion Public
+//endregion SECTION: Dto
 
 //region SECTION: Find Filters Repository
     public function findDomain()
@@ -129,16 +49,20 @@ class DomainRepository extends EntityRepository
             ->leftJoin('domain.server', 'server')
             ->where("domain.active = 'a'")
             ->andWhere("server.active = 'a'");
-        if ($this->criteria->getDomain()) {
+        if ($this->dto && $this->dto->getFilter()) {
             $builder->andWhere('domain.domain like :filter or server.hostname like :filter')
-                ->setParameter('filter', '%'.$this->criteria->getDomain().'%');
+                ->setParameter('filter', '%'.$this->dto->getFilter().'%');
         }
-        if ($this->criteria->getIp()) {
+        if ($this->dto && $this->dto->getIp()) {
             $builder->andWhere('server.ip like :filter')
-                ->setParameter('filter', $this->criteria->getIp());
+                ->setParameter('filter', $this->dto->getIp());
         }
-        $builder->setMaxResults($this->criteria->getMaxResults())
-            ->setFirstResult($this->criteria->getFirstResult());
+        if ($this->dto && $this->dto->getPerPage()) {
+            $builder->setMaxResults($this->dto->getPerPage());
+        }
+        if ($this->dto && $this->dto->getPage() && $this->dto->getPerPage()) {
+            $builder->setFirstResult($this->dto->getPage() * $this->dto->getPerPage() - $this->dto->getPerPage());
+        }
 
         return $builder->getQuery()->getResult();
     }

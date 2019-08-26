@@ -15,10 +15,11 @@ use App\Dto\DomainDto;
 use App\Dto\FactoryDto;
 use App\Dto\ServerDto;
 use App\Dto\SettingsDto;
+use App\Dto\VuetableInterface;
 use App\Manager\AclManager;
 use App\Manager\DashBoardManager;
-use App\Manager\JournalManager;
 use App\Manager\DomainManager;
+use App\Manager\JournalManager;
 use App\Manager\MenuManager;
 use App\Manager\SearchManager;
 use App\Manager\ServerManager;
@@ -333,27 +334,39 @@ class ApiController extends AbstractController
 //region SECTION: Private
     /**
      * @param AbstractEntityManager $manager
-     * @param                       $perPage
-     * @param                       $page
+     * @param VuetableInterface[]   $dtos
      * @param                       $data
      *
      * @return array
      */
-    private function toVuetable($manager, $perPage, $page, $data)
+    private function toVuetable($manager, $dtos, $data)
     {
-        $total = $manager->getCount();
+        $total = $manager->getCount($dtos);
+        $dto   = reset($dtos);
 
-        return [
+        $vuetableData = ($dto) ? [
             'total'         => $total,
-            'per_page'      => $perPage,
-            'current_page'  => $page,
-            'last_page'     => ($perPage !== 0) ? intdiv($total, $perPage) + (($total % $perPage) !== 0 ? 1 : 0) : 1,
+            'per_page'      => $dto->getPerPage(),
+            'current_page'  => $dto->getPage(),
+            'last_page'     => ($dto->getPerPage() !== 0) ? intdiv($total, $dto->getPerPage()) + (($total % $dto->getPerPage()) !== 0 ? 1 : 0) : 1,
             'next_page_url' => null,
             'prev_page_url' => null,
-            'from'          => $page * $perPage - $perPage + 1,
-            'to'            => $page * $perPage,
+            'from'          => $dto->getPage() * $dto->getPerPage() - $dto->getPerPage() + 1,
+            'to'            => $dto->getPage() * $dto->getPerPage(),
             'data'          => $data,
+        ] : [
+            'total'         => 0,
+            'per_page'      => 0,
+            'current_page'  => 0,
+            'last_page'     => 1,
+            'next_page_url' => null,
+            'prev_page_url' => null,
+            'from'          => 0,
+            'to'            => 0,
+            'data'          => 0,
         ];
+
+        return $vuetableData;
     }
 //endregion Private
 
@@ -456,19 +469,24 @@ class ApiController extends AbstractController
      *
      * @SWG\Response(response=200,description="Returns the rewards of all generated domains")
      *
+     * @param FactoryDto    $factoryDto
      * @param DomainManager $domainManager
+     *
+     * @param Request       $request
      *
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
-    public function getDomainByQuery(DomainManager $domainManager, Request $request)
+    public function getDomainByQuery(FactoryDto $factoryDto, DomainManager $domainManager, Request $request)
     {
-        $domainManager
-            ->setPage($request->get('page'))
-            ->setPerPage($request->get('per_page'))
-            ->setFilter($request->get('filter'))
-            ->getDomains();
+//        $domainManager
+//            ->setPage($request->get('page'))
+//            ->setPerPage($request->get('per_page'))
+//            ->setFilter($request->get('filter'))
+//            ->getDomains();
 
-        $response = $this->toVuetable($domainManager, $domainManager->getPerPage(), $domainManager->getPage(), $domainManager->getData());
+        $domainDto = $factoryDto->setRequest($request)->createDto(DomainDto::class);
+        $domainManager->getDomains($domainDto);
+        $response = $this->toVuetable($domainManager, $domainDto, $domainManager->getData());
 
         $domainManager->setRestSuccessOk();
 

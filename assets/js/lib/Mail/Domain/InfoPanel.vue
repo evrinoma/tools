@@ -139,7 +139,7 @@
             },
             _getAddData() {
                 return {
-                    name: this.domainText,
+                    hostname: this.domainText,
                     ip: this.relayAdrSelected,
                 }
             },

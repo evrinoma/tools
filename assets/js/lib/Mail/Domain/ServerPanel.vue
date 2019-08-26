@@ -151,7 +151,7 @@
             },
             _getAddData() {
                 return {
-                    name: this.mxText,
+                    hostname: this.mxText,
                     ip: this.ipText,
                 }
             },

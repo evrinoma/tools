@@ -18,6 +18,11 @@ use Symfony\Component\HttpFoundation\Request;
 interface FactoryDtoInterface
 {
 //region SECTION: Public
+    /**
+     * @param $entity
+     *
+     * @return mixed
+     */
     public function fillEntity($entity);
 //endregion Public
 
@@ -25,15 +30,21 @@ interface FactoryDtoInterface
     /**
      * @param $request
      *
-     * @return array
+     * @return FactoryDtoInterface
      */
     public static function toDto(Request $request);
+//endregion SECTION: Dto
 
+//region SECTION: Getters/Setters
     /**
      * @param Request $request
      *
      * @return mixed
      */
     public static function getRequest(Request $request);
-//endregion SECTION: Dto
+//endregion Getters/Setters
+    /**
+     * @return string
+     */
+    public function getClass();
 }

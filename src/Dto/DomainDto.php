@@ -9,6 +9,7 @@
 namespace App\Dto;
 
 
+use App\Annotation\Dto;
 use App\Entity\Mail\Domain;
 use App\Entity\Mail\Server;
 use App\Entity\Model\ActiveTrait;
@@ -20,7 +21,7 @@ use Symfony\Component\HttpFoundation\Request;
  *
  * @package App\Dto
  */
-class DomainDto implements FactoryDtoInterface
+class DomainDto implements FactoryDtoInterface, VuetableInterface
 {
     use ActiveTrait;
 
@@ -28,7 +29,15 @@ class DomainDto implements FactoryDtoInterface
     private $id;
     private $ip;
     private $name;
+    private $page;
+    private $perPage;
+    private $filter;
 
+    /**
+     * @Dto(class="App\Dto\ServerDto")
+     * @var ServerDto
+     */
+    private $server;
     /**
      * @var LazyCriteriaCollection
      */
@@ -69,33 +78,76 @@ class DomainDto implements FactoryDtoInterface
     /**
      * @param $request
      *
-     * @return array
+     * @return FactoryDtoInterface
      */
     public static function toDto(Request $request)
     {
-        $ip   = $request->get('ip');
-        $name = $request->get('name');
-        $id   = $request->get('id');
+        $catch   = false;
+        $page    = $request->get('page');
+        $perPage = $request->get('per_page');
+        $filter  = $request->get('filter');
+        $ip      = $request->get('ip');
+        $name    = $request->get('hostname');
+        $id      = $request->get('id');
 
-        $result = [];
+        $dto = new self();
 
-        if ($ip && $name) {
-            $dto    = new self();
-            $dto->setIp($ip)->setName($name);
-            $result[] = $dto;
-        } else {
-            if ($id) {
-                $dto    = new self();
-                $dto->setId($id);
-                $result[] = $dto;
-            }
+        if ($id) {
+            $dto->setId($id);
+        }
+        if ($ip) {
+            $dto->setIp($ip);
+        }
+        if ($name) {
+            $dto->setName($name);
+        }
+        if ($page) {
+            $dto->setPage($page);
+        }
+        if ($perPage) {
+            $dto->setPerPage($perPage);
+        }
+        if ($filter) {
+            $dto->setFilter($filter);
         }
 
-        return $result;
+        return $dto;
     }
 //endregion SECTION: Dto
 
 //region SECTION: Getters/Setters
+    /**
+     * @return mixed
+     */
+    public function getServer()
+    {
+        return $this->server;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPage()
+    {
+        return $this->page;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPerPage()
+    {
+        return $this->perPage;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getFilter()
+    {
+        return $this->filter;
+    }
+
     /**
      * @return Server
      */
@@ -131,6 +183,71 @@ class DomainDto implements FactoryDtoInterface
     }
 
     /**
+     * @return mixed
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * @return string
+     */
+    public function getClass()
+    {
+        return self::class;
+    }
+
+    /**
+     *
+     * @param FactoryDtoInterface $server
+     *
+     * @return DomainDto
+     */
+    public function setServer($server)
+    {
+        $this->server = $server;
+
+        return $this;
+    }
+
+    /**
+     * @param mixed $page
+     *
+     * @return DomainDto
+     */
+    public function setPage($page = null)
+    {
+        $this->page = $page;
+
+        return $this;
+    }
+
+    /**
+     * @param mixed $perPage
+     *
+     * @return DomainDto
+     */
+    public function setPerPage($perPage = null)
+    {
+        $this->perPage = $perPage;
+
+        return $this;
+    }
+
+    /**
+     * @param mixed $filter
+     *
+     * @return DomainDto
+     */
+    public function setFilter($filter)
+    {
+        $this->filter = $filter;
+
+        return $this;
+    }
+
+    /**
      * @param LazyCriteriaCollection $servers
      *
      * @return DomainDto
@@ -147,7 +264,7 @@ class DomainDto implements FactoryDtoInterface
      *
      * @return DomainDto
      */
-    public function setIp($ip)
+    public function setIp($ip = null)
     {
         $this->ip = $ip;
 
@@ -159,7 +276,7 @@ class DomainDto implements FactoryDtoInterface
      *
      * @return DomainDto
      */
-    public function setName($name)
+    public function setName($name = null)
     {
         $this->name = $name;
 
@@ -167,24 +284,15 @@ class DomainDto implements FactoryDtoInterface
     }
 
     /**
-     * @return mixed
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
-
-    /**
      * @param mixed $id
      *
      * @return DomainDto
      */
-    public function setId($id)
+    public function setId($id = null)
     {
         $this->id = $id;
+
         return $this;
     }
-
-
 //endregion Getters/Setters
 }

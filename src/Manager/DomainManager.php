@@ -79,7 +79,7 @@ class DomainManager extends AbstractEntityManager
             $dto = $this->save($existDomain->count() ? $existDomain->first() : new Domain(), $dto);
         } else {
             $this->setRestClientErrorBadRequest();
-            $dto =null;
+            $dto = null;
         }
 
         return $dto;
@@ -91,8 +91,8 @@ class DomainManager extends AbstractEntityManager
     public function megrateDomains()
     {
         $this
-            ->getRepositoryAll(Domain::class)->removeEntitys()
-            ->getRepositoryAll(Server::class)->removeEntitys();
+            ->getRepositoryAll(Server::class)->removeEntitys()
+            ->getRepositoryAll(Domain::class)->removeEntitys();
 
         $created    = [];
         $rTbDomains = $this->entityManager->getRepository(TbDomains::class);
@@ -168,19 +168,19 @@ class DomainManager extends AbstractEntityManager
     }
 
     /**
+     * @param DomainDto[] $domainDto
+     *
      * @return $this
      */
-    public function getDomains()
+    public function getDomains($domainDto)
     {
-        $firstResult = $this->page * $this->perPage - $this->perPage;
+        $dto = reset($domainDto);
 
-        $this->repository
-            ->createCriteria()
-            ->setDomain($this->filter)
-            ->setFirstResult($firstResult)
-            ->setMaxResults($this->perPage);
-
-        $this->setData($this->repository->findDomain());
+        if ($dto) {
+            $this->setData($this->repository->setDto($dto)->findDomain());
+        } else {
+            $this->setRestClientErrorBadRequest();
+        }
 
         return $this;
     }
@@ -209,15 +209,21 @@ class DomainManager extends AbstractEntityManager
     /**
      * если фильтр задан то возвращаем число всех найденных записей
      *
+     * @param DomainDto[]|null $domainDto
+     *
      * @return int
      */
-    public function getCount($criteria = null)
+    public function getCount($domainDto = null)
     {
-        $this->repository
-            ->createCriteria()
-            ->setDomain($this->filter);
+        $count = 0;
+        if ($domainDto) {
+            $dto   = reset($domainDto);
+            $dtoClone = clone $dto;
+            $dtoClone->setPerPage()->setPage();
+            $count = $dto ? count($this->repository->setDto($dtoClone)->findDomain()) : 0;
+        }
 
-        return count($this->repository->findDomain());
+        return $count;
     }
 
     /**

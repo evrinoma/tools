@@ -23,7 +23,7 @@ class AclRepository extends EntityRepository
     /**
      * @var AclDto
      */
-    private $aclDto;
+    private $dto;
 //endregion Fields
 
 //region SECTION: Dto
@@ -34,7 +34,7 @@ class AclRepository extends EntityRepository
      */
     public function setDto($aclDto)
     {
-        $this->aclDto = $aclDto;
+        $this->dto = $aclDto;
 
         return $this;
     }
@@ -53,22 +53,22 @@ class AclRepository extends EntityRepository
             ->leftJoin('acl.domain', 'domain')
             ->where("acl.active = 'a'");
 
-        if ($this->aclDto && $this->aclDto->getId()) {
+        if ($this->dto && $this->dto->getId()) {
             $builder->andWhere('acl.id =  :id')
-                ->setParameter('id', $this->aclDto->getId());
+                ->setParameter('id', $this->dto->getId());
         } else {
-            if ($this->aclDto && $this->aclDto->getDomain()) {
+            if ($this->dto && $this->dto->getDomain()) {
                 $builder->andWhere('domain.domain =  :domain')
-                    ->setParameter('domain', $this->aclDto->getDomain());
+                    ->setParameter('domain', $this->dto->getDomain());
             }
 
-            if ($this->aclDto && $this->aclDto->getEmail() && !$this->aclDto->getId()) {
-                if ($this->aclDto->isEmail()) {
+            if ($this->dto && $this->dto->getEmail() && !$this->dto->getId()) {
+                if ($this->dto->isEmail()) {
                     $builder->andWhere('acl.email = :email')
-                        ->setParameter('email', $this->aclDto->getEmail());
+                        ->setParameter('email', $this->dto->getEmail());
                 } else {
                     $builder->andWhere('acl.email LIKE :email')
-                        ->setParameter('email', '%'.$this->aclDto->getEmailDomain().'%');
+                        ->setParameter('email', '%'.$this->dto->getEmailDomain().'%');
                 }
             }
         }
