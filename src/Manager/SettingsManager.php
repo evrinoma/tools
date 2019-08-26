@@ -10,7 +10,7 @@ namespace App\Manager;
 
 
 use App\Core\AbstractEntityManager;
-use App\Dto\ApartDto\SettingsDto;
+use App\Dto\SettingsDto;
 use App\Entity\DescriptionService;
 use App\Entity\Settings;
 use App\Rest\Core\RestTrait;

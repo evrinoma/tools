@@ -17,6 +17,10 @@ abstract class AbstractFactoryDto extends AbstractDto implements FactoryDtoInter
 {
 //region SECTION: Fields
     /**
+     * @var AbstractFactoryDto[]
+     */
+    private $clones = [];
+    /**
      * @var
      */
     private $entitys;
@@ -27,6 +31,28 @@ abstract class AbstractFactoryDto extends AbstractDto implements FactoryDtoInter
 //endregion Fields
 
 //region SECTION: Public
+    /**
+     * @return \Generator|object
+     */
+    public function generatorClone()
+    {
+        foreach ($this->clones as $clone) {
+            yield $clone;
+        }
+    }
+
+    /**
+     * @return AbstractFactoryDto
+     */
+    public function clone()
+    {
+        $clone          = clone $this;
+        $clone->clones  = null;
+        $this->clones[] = &$clone;
+
+        return $clone;
+    }
+
     /**
      * @return \Generator|object
      */

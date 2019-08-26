@@ -55,7 +55,7 @@ class ServerType extends AbstractType
     {
         $callback = function (Options $options) {
             $servers = [];
-            foreach ($this->serverManager->getServers($this->factoryDto->createDto(ServerDto::class))->getData() as $server) {
+            foreach ($this->serverManager->getServers($this->factoryDto->cloneDto(ServerDto::class))->getData() as $server) {
                 $servers[] = $server->getIp();
             }
 

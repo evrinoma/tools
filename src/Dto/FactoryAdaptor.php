@@ -33,11 +33,17 @@ class FactoryAdaptor
 //region SECTION: Public
     public function adapter()
     {
-        $event = new DtoAdapterEvent();
-        $event->setClass($this->to)->setDtoFrom($this->from);
-        $this->eventDispatcher->dispatch(DtoAdapterEvent::NAME, $event);
+        if ($this->from->getClass() !== $this->to) {
+            $event = new DtoAdapterEvent();
+            $event->setClass($this->to)->setDtoFrom($this->from);
+            $this->eventDispatcher->dispatch(DtoAdapterEvent::NAME, $event);
 
-        return $event->getDtoTo();
+            $dtoTo = $event->getDtoTo();
+        } else {
+            $dtoTo = $this->from;
+        }
+
+        return $dtoTo;
     }
 //endregion Public
 

@@ -15,6 +15,7 @@ use App\Dto\DomainDto;
 use App\Dto\FactoryDto;
 use App\Dto\LogSearchDto;
 use App\Dto\ServerDto;
+use App\Dto\SettingsDto;
 use App\Dto\VuetableInterface;
 use App\Manager\AclManager;
 use App\Manager\DashBoardManager;
@@ -261,7 +262,7 @@ class ApiController extends AbstractController
      *     description="search there",
      *     items=@SWG\Items(
      *         type="string",
-     *         @Model(type=App\Form\Mail\FileSearchType::class, options={"rest_class_type":"App\Manager\SearchManager"})
+     *         @Model(type=App\Form\Mail\FileSearchType::class, options={"rest_class_entity":"App\Dto\LogSearchDto"})
      *     )
      * )
      * @SWG\Response(response=200,description="Returns nothing")
@@ -300,7 +301,7 @@ class ApiController extends AbstractController
     {
         $logSearchDto = $factoryDto->setRequest($request)->createDto(LogSearchDto::class);
 
-        return $this->json(['settings' => $searchManager->setRestSuccessOk()->setDto($logSearchDto)->getSettings()], $searchManager->getRestStatus());
+        return $this->json(['settings' => $searchManager->setRestSuccessOk()->setDto($logSearchDto)->getSettings(), 'classEntity' => LogSearchDto::class], $searchManager->getRestStatus());
     }
 
     /**
@@ -333,9 +334,9 @@ class ApiController extends AbstractController
      */
     public function saveSearchSettings(FactoryDto $factoryDto, SearchManager $searchManager, Request $request)
     {
-        //  $settingsDto = $factoryDto->setRequest($request)->createDto(SettingsDto::class);
+        $settingsDto = $factoryDto->setRequest($request)->createDto(SettingsDto::class);
 
-        return $this->json(['settings' => $searchManager->setRestSuccessOk()->saveSettings([])], $searchManager->getRestStatus());
+        return $this->json(['settings' => $searchManager->setRestSuccessOk()->setDto($settingsDto)->saveSettings()], $searchManager->getRestStatus());
     }
 //endregion Public
 

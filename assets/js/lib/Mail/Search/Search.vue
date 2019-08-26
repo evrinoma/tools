@@ -102,6 +102,7 @@
                 searchQueryText: '',
                 tabs: [],
                 settings: {},
+                classEntity: '',
                 tabSelected: '',
                 apiUrlSearch: 'http://php72.tools/internal/log/search',
                 apiUrlSettings: 'http://php72.tools/internal/log/settings',
@@ -167,6 +168,7 @@
                 });
 
                 this.settings = settings;
+                this.classEntity = response.data.classEntity;
             },
             _getAddData() {
                 let data = [];
@@ -176,7 +178,7 @@
                     });
                 });
 
-                return {settings: data};
+                return {settings: data, classEntity: this.classEntity};
             },
             doSave() {
                 this.showPreloadSettings = true;

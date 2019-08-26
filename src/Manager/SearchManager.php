@@ -12,8 +12,8 @@ namespace App\Manager;
 use App\Core\AbstractEntityManager;
 use App\Core\CoreShellTrait;
 use App\Dto\ApartDto\FileDto;
-use App\Dto\ApartDto\SettingsDto;
 use App\Dto\LogSearchDto;
+use App\Dto\SettingsDto;
 use App\Entity\Settings;
 use App\Rest\Core\RestTrait;
 use Doctrine\ORM\EntityManagerInterface;
@@ -78,15 +78,17 @@ class SearchManager extends AbstractEntityManager
 
 //region SECTION: Public
     /**
-     * @param $settingsDto
-     *
      * @return Settings[]
      */
-    public function saveSettings($settingsDto)
+    public function saveSettings()
     {
         foreach ($this->getSettings() as $entity) {
-            if ($settingsDto[$entity->getId()]) {
-                $settingsDto[$entity->getId()]->fillEntity($entity);
+            /** @var SettingsDto $item */
+            foreach ($this->dto->generatorClone() as $item) {
+                if ($item->getId() === $entity->getId()) {
+                    $item->fillEntity($entity);
+                    break;
+                }
             }
         }
 
@@ -176,13 +178,13 @@ class SearchManager extends AbstractEntityManager
 
 //region SECTION: Dto
     /**
-     * @param LogSearchDto $logSearchDto
+     * @param LogSearchDto|SettingsDto $dto
      *
      * @return $this
      */
-    public function setDto(LogSearchDto $logSearchDto)
+    public function setDto($dto)
     {
-        $this->dto = $logSearchDto;
+        $this->dto = $dto;
 
         return $this;
     }

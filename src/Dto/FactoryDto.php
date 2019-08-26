@@ -87,11 +87,14 @@ class FactoryDto
     public function cloneDto($class)
     {
         $dto = new $class;
-        if ($dto instanceof FactoryDtoInterface || $dto instanceof DtoApartInterface) {
+        if ($dto instanceof FactoryDtoInterface) {
             if ($this->hasDto($dto)) {
                 $dto = clone $this->getDtoByClass($class);
             }
-        } else {
+            /** @var AbstractFactoryDto $dto */
+            $dto->setFactoryAdapter($this->factoryAdaptor);
+
+        } elseif (!($dto instanceof DtoApartInterface)) {
             $dto = null;
         }
 

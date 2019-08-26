@@ -9,6 +9,8 @@
 namespace App\Form\Mail;
 
 use App\Dto\ApartDto\FileDto;
+use App\Dto\FactoryDto;
+use App\Dto\SettingsDto;
 use App\Manager\SettingsManager;
 use App\Rest\Form\RestChoiceType;
 use Symfony\Component\Form\AbstractType;
@@ -24,7 +26,7 @@ class FileSearchType extends AbstractType
 {
 
     //region SECTION: Fields
-    public const REST_CLASS_TYPE = 'rest_class_type';
+    public const REST_CLASS_ENTITY = 'rest_class_entity';
     /**
      * SettingsManager
      */
@@ -35,9 +37,10 @@ class FileSearchType extends AbstractType
     /**
      * ServerType constructor.
      */
-    public function __construct(SettingsManager $settingsManager)
+    public function __construct(FactoryDto $factoryDto, SettingsManager $settingsManager)
     {
         $this->settingsManager = $settingsManager;
+        $this->factoryDto      = $factoryDto;
     }
 
 //endregion Constructor
@@ -46,9 +49,12 @@ class FileSearchType extends AbstractType
     {
         $callback = function (Options $options) {
             $fileList = [];
-            $class    = $options->offsetGet(self::REST_CLASS_TYPE);
+            $class    = $options->offsetGet(self::REST_CLASS_ENTITY);
             if ($class) {
-                foreach ($this->settingsManager->getSettings($class) as $file) {
+                $dto         = $this->factoryDto->cloneDto($class);
+                $settingsDto = $dto->getFactoryAdapter()->setFrom($dto)->setTo(SettingsDto::class)->adapter();
+
+                foreach ($this->settingsManager->getSettings($settingsDto) as $file) {
                     $data = $file->getData();
                     if ($data instanceof FileDto) {
                         /** @var $data FileDto */
@@ -61,7 +67,7 @@ class FileSearchType extends AbstractType
         };
         $resolver->setDefault(RestChoiceType::REST_COMPONENT_NAME, 'fileSearch');
         $resolver->setDefault(RestChoiceType::REST_DESCRIPTION, 'fileSearchList');
-        $resolver->setDefault(self::REST_CLASS_TYPE, null);
+        $resolver->setDefault(self::REST_CLASS_ENTITY, null);
         $resolver->setDefault(RestChoiceType::REST_CHOICES, $callback);
     }
 //endregion Public

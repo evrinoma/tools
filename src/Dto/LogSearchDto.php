@@ -42,7 +42,7 @@ class LogSearchDto extends AbstractFactoryDto
 
     /**
      * @DtoAdapter(adaptors={
-     *     @DtoAdapterItem(class="App\Dto\ApartDto\SettingsDto",method="setClassEntity")
+     *     @DtoAdapterItem(class="App\Dto\SettingsDto",method="setClassEntity")
      * })
      */
     public function getClass()
