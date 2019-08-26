@@ -101,11 +101,7 @@ class SearchManager extends AbstractEntityManager
     private function loadSettings()
     {
         if ($this->dto) {
-
-         //   $dto = new SettingsDto();
-        //    $dto->setClassEntity($this->dto->getClass());
             $settingsDto = $this->dto->getFactoryAdapter()->setFrom($this->dto)->setTo(SettingsDto::class)->adapter();
-
             $this->settings = $this->settingsManager->getSettings($settingsDto);
         }
 
