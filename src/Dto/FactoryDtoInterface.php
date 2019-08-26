@@ -24,6 +24,11 @@ interface FactoryDtoInterface
      * @return mixed
      */
     public function fillEntity($entity);
+
+    /**
+     * @return \Generator|object
+     */
+    public function generatorEntity();
 //endregion Public
 
 //region SECTION: Dto
@@ -42,9 +47,22 @@ interface FactoryDtoInterface
      * @return mixed
      */
     public static function getRequest(Request $request);
-//endregion Getters/Setters
+
     /**
      * @return string
      */
     public function getClass();
+
+    /**
+     * @return object[]
+     */
+    public function getEntitys();
+
+    /**
+     * @param object[] $entitys
+     *
+     * @return FactoryDtoInterface
+     */
+    public function setEntitys($entitys);
+//endregion Getters/Setters
 }

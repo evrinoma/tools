@@ -83,7 +83,7 @@ class ApiController extends AbstractController
      *     )
      * )
      * @SWG\Parameter(
-     *     name="name",
+     *     name="hostname",
      *     in="query",
      *     type="string",
      *     default="ite-ng.ru",
@@ -197,7 +197,7 @@ class ApiController extends AbstractController
     {
         $serverDto = $factoryDto->setRequest($request)->createDto(ServerDto::class);
 
-        $serverManger->setRestSuccessOk()->getServer($serverDto)->lockEntitys();
+        $serverManger->setRestSuccessOk()->getServers($serverDto)->lockEntitys();
 
         return $this->json(['message' => 'the Domain was delete successFully'], $serverManger->getRestStatus());
     }
@@ -334,17 +334,16 @@ class ApiController extends AbstractController
 //region SECTION: Private
     /**
      * @param AbstractEntityManager $manager
-     * @param VuetableInterface[]   $dtos
+     * @param VuetableInterface     $dto
      * @param                       $data
      *
      * @return array
      */
-    private function toVuetable($manager, $dtos, $data)
+    private function toVuetable($manager, $dto, $data)
     {
-        $total = $manager->getCount($dtos);
-        $dto   = reset($dtos);
+        $total = $manager->getCount($dto);
 
-        $vuetableData = ($dto) ? [
+        $vuetableData = $dto ? [
             'total'         => $total,
             'per_page'      => $dto->getPerPage(),
             'current_page'  => $dto->getPage(),
@@ -433,13 +432,18 @@ class ApiController extends AbstractController
      *
      * @SWG\Response(response=200,description="Returns the rewards of all generated domains")
      *
+     * @param FactoryDto    $factoryDto
      * @param DomainManager $domainManager
+     *
+     * @param Request       $request
      *
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
-    public function getDomain(DomainManager $domainManager)
+    public function getDomain(FactoryDto $factoryDto, DomainManager $domainManager, Request $request)
     {
-        return $this->json($domainManager->setRestSuccessOk()->getDomains()->getData(), $domainManager->getRestStatus());
+        $domainDto = $factoryDto->setRequest($request)->createDto(DomainDto::class);
+
+        return $this->json($domainManager->setRestSuccessOk()->getDomains($domainDto)->getData(), $domainManager->getRestStatus());
     }
 
     /**
@@ -498,13 +502,18 @@ class ApiController extends AbstractController
      * @SWG\Get(tags={"server"})
      * @SWG\Response(response=200,description="Returns the rewards of all servers")
      *
+     * @param FactoryDto    $factoryDto
      * @param ServerManager $serverManger
+     * @param Request       $request
      *
      * @return \Symfony\Component\HttpFoundation\JsonResponse
+     * @throws \Exception
      */
-    public function getServer(ServerManager $serverManger)
+    public function getServer(FactoryDto $factoryDto, ServerManager $serverManger, Request $request)
     {
-        return $this->json(['servers' => $serverManger->setRestSuccessOk()->getServers()], $serverManger->getRestStatus());
+        $serverDto = $factoryDto->setRequest($request)->createDto(ServerDto::class);
+
+        return $this->json(['servers' => $serverManger->setRestSuccessOk()->getServers($serverDto)->getData()], $serverManger->getRestStatus());
     }
 
     /**

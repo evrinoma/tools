@@ -112,20 +112,20 @@ class AclManager extends AbstractEntityManager
 //endregion Public
 
 //region SECTION: Private
-    /**
-     * @param Acl    $entity
-     * @param AclDto $aclDto
-     *
-     * @return Acl
-     */
-    private function save(Acl $entity, $aclDto)
-    {
-        $aclDto->fillEntity($entity);
-        $this->entityManager->persist($entity);
-        $this->entityManager->flush();
-
-        return $entity;
-    }
+//    /**
+//     * @param Acl    $entity
+//     * @param AclDto $aclDto
+//     *
+//     * @return Acl
+//     */
+//    private function save(Acl $entity, $aclDto)
+//    {
+//        $aclDto->fillEntity($entity);
+//        $this->entityManager->persist($entity);
+//        $this->entityManager->flush();
+//
+//        return $entity;
+//    }
 //endregion Private
 
 //region SECTION: Getters/Setters

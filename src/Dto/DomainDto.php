@@ -21,7 +21,7 @@ use Symfony\Component\HttpFoundation\Request;
  *
  * @package App\Dto
  */
-class DomainDto implements FactoryDtoInterface, VuetableInterface
+class DomainDto extends AbstractDto implements VuetableInterface
 {
     use ActiveTrait;
 
@@ -52,7 +52,7 @@ class DomainDto implements FactoryDtoInterface, VuetableInterface
      */
     public function fillEntity($entity)
     {
-        $entity->setDomain($this->getName())->addServer($this->getServers())->setActive();
+        $entity->setDomain($this->getName())->setServer($this->getServer()->generatorEntity()->current())->setActive();
 
         return $entity;
     }
@@ -82,7 +82,6 @@ class DomainDto implements FactoryDtoInterface, VuetableInterface
      */
     public static function toDto(Request $request)
     {
-        $catch   = false;
         $page    = $request->get('page');
         $perPage = $request->get('per_page');
         $filter  = $request->get('filter');
@@ -117,7 +116,7 @@ class DomainDto implements FactoryDtoInterface, VuetableInterface
 
 //region SECTION: Getters/Setters
     /**
-     * @return mixed
+     * @return ServerDto
      */
     public function getServer()
     {

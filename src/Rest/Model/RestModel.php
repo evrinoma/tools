@@ -20,7 +20,7 @@ abstract class RestModel
     public const SUCCESS_CREATED = 201;
 
     public const CLIENT_ERROR_BAD_REQUEST = 400;
-    public const CLIENT_ERROR_CONFLICT        = 409;
+    public const CLIENT_ERROR_CONFLICT    = 409;
     public const CLIENT_ERROR_GONE        = 410;
 
 

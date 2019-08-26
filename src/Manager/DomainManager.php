@@ -35,12 +35,6 @@ class DomainManager extends AbstractEntityManager
     protected $repositoryClass = Domain::class;
 
     private $serverManager;
-
-    private $page;
-
-    private $perPage;
-
-    private $filter;
 //endregion Fields
 
 //region SECTION: Constructor
@@ -60,29 +54,31 @@ class DomainManager extends AbstractEntityManager
 
 //region SECTION: Public
     /**
-     * @param DomainDto[] $domainDto
+     * @param DomainDto $domainDto
      *
      * @return Domain
      * @throws \Exception
      */
     public function saveDomain($domainDto)
     {
-        $dto = reset($domainDto);
-        if ($dto->isValidName() && $dto->isValidIp()) {
+        $entity = null;
+
+        if ($domainDto->isValidName() && $domainDto->isValidIp()) {
             $criteria = $this->getCriteria();
             $criteria->andWhere(
-                $criteria->expr()->eq('domain', $dto->getName())
+                $criteria->expr()->eq('domain', $domainDto->getName())
             );
 
             $existDomain = $this->repository->matching($criteria);
-            $dto->setServers($this->serverManager->getServer($dto->getIp())->getData());
-            $dto = $this->save($existDomain->count() ? $existDomain->first() : new Domain(), $dto);
+            if ($domainDto->getServer()->getEntitys() === null) {
+                $domainDto->getServer()->setEntitys($this->serverManager->getServers($domainDto->getServer())->getData());
+            }
+            $entity = $this->save($existDomain->count() ? $existDomain->first() : new Domain(), $domainDto);
         } else {
             $this->setRestClientErrorBadRequest();
-            $dto = null;
         }
 
-        return $dto;
+        return $entity;
     }
 
     /**
@@ -112,7 +108,7 @@ class DomainManager extends AbstractEntityManager
 
             $domain = new Domain();
             $domain
-                ->addServer($server)
+                ->setServer($server)
                 ->setDomain($value->getDomain())
                 ->setActive();
             $this->entityManager->persist($domain);
@@ -123,61 +119,35 @@ class DomainManager extends AbstractEntityManager
     }
 
 //endregion Public
-
-//region SECTION: Private
-    /**
-     * @param Domain    $entity
-     * @param DomainDto $domainDto
-     *
-     * @return Domain
-     */
-    private function save(Domain $entity, $domainDto)
-    {
-        $domainDto->fillEntity($entity);
-        $this->entityManager->persist($entity);
-        $this->entityManager->flush();
-
-        return $entity;
-    }
-
-//endregion Private
+//
+////region SECTION: Private
+//    /**
+//     * @param Domain    $entity
+//     * @param DomainDto $domainDto
+//     *
+//     * @return Domain
+//     */
+//    private function save(Domain $entity, $domainDto)
+//    {
+//        $domainDto->fillEntity($entity);
+//        $this->entityManager->persist($entity);
+//        $this->entityManager->flush();
+//
+//        return $entity;
+//    }
+//
+////endregion Private
 
 //region SECTION: Getters/Setters
     /**
-     * @return mixed
-     */
-    public function getFilter()
-    {
-        return $this->filter;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getPage()
-    {
-        return $this->page;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getPerPage()
-    {
-        return $this->perPage;
-    }
-
-    /**
-     * @param DomainDto[] $domainDto
+     * @param DomainDto $domainDto
      *
      * @return $this
      */
-    public function getDomains($domainDto)
+    public function getDomains(?DomainDto $domainDto)
     {
-        $dto = reset($domainDto);
-
-        if ($dto) {
-            $this->setData($this->repository->setDto($dto)->findDomain());
+        if ($domainDto) {
+            $this->setData($this->repository->setDto($domainDto)->findDomain());
         } else {
             $this->setRestClientErrorBadRequest();
         }
@@ -185,31 +155,29 @@ class DomainManager extends AbstractEntityManager
         return $this;
     }
 
-    /**
-     * @param DomainDto[] $domainDto
-     *
-     * @return DomainManager
-     */
-    public function getDomain($domainDto)
-    {
-        $dto = reset($domainDto);
-
-        if ($dto->getId()) {
-            $criteria = $this->getCriteria();
-            $criteria->andWhere(
-                $criteria->expr()->eq('id', $dto->getId())
-            );
-
-            $this->setData($this->repository->matching($criteria)->getValues());
-        }
-
-        return $this;
-    }
+//    /**
+//     * @param DomainDto $domainDto
+//     *
+//     * @return DomainManager
+//     */
+//    public function getDomain(?DomainDto $domainDto)
+//    {
+//        if ($domainDto) {
+//            $criteria = $this->getCriteria();
+//            $criteria->andWhere(
+//                $criteria->expr()->eq('id', $domainDto->getId())
+//            );
+//
+//            $this->setData($this->repository->matching($criteria)->getValues());
+//        }
+//
+//        return $this;
+//    }
 
     /**
      * если фильтр задан то возвращаем число всех найденных записей
      *
-     * @param DomainDto[]|null $domainDto
+     * @param DomainDto|null $domainDto
      *
      * @return int
      */
@@ -217,10 +185,9 @@ class DomainManager extends AbstractEntityManager
     {
         $count = 0;
         if ($domainDto) {
-            $dto   = reset($domainDto);
-            $dtoClone = clone $dto;
+            $dtoClone = clone $domainDto;
             $dtoClone->setPerPage()->setPage();
-            $count = $dto ? count($this->repository->setDto($dtoClone)->findDomain()) : 0;
+            $count = $domainDto ? count($this->repository->setDto($dtoClone)->findDomain()) : 0;
         }
 
         return $count;
@@ -232,42 +199,6 @@ class DomainManager extends AbstractEntityManager
     public function getRestStatus(): int
     {
         return $this->status;
-    }
-
-    /**
-     * @param mixed $filter
-     *
-     * @return DomainManager
-     */
-    public function setFilter($filter)
-    {
-        $this->filter = $filter;
-
-        return $this;
-    }
-
-    /**
-     * @param mixed $page
-     *
-     * @return DomainManager
-     */
-    public function setPage($page)
-    {
-        $this->page = (int)$page;
-
-        return $this;
-    }
-
-    /**
-     * @param mixed $perPage
-     *
-     * @return DomainManager
-     */
-    public function setPerPage($perPage)
-    {
-        $this->perPage = (int)$perPage;
-
-        return $this;
     }
 //endregion Getters/Setters
 }

@@ -9,6 +9,7 @@
 namespace App\Core;
 
 
+use App\Dto\AbstractDto;
 use App\Entity\Model\ActiveTrait;
 use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\EntityManagerInterface;
@@ -83,6 +84,21 @@ abstract class AbstractEntityManager
 
         return $this;
     }
+
+    /**
+     * @param Object      $entity
+     * @param AbstractDto $dto
+     *
+     * @return Object
+     */
+    protected function save($entity, $dto)
+    {
+        $dto->fillEntity($entity);
+        $this->entityManager->persist($entity);
+        $this->entityManager->flush();
+
+        return $entity;
+    }
 //endregion Protected
 
 //region SECTION: Public
@@ -113,6 +129,8 @@ abstract class AbstractEntityManager
         return $this;
     }
 //endregion Public
+//region SECTION: Private
+//endregion Private
 
 //region SECTION: Getters/Setters
     /**

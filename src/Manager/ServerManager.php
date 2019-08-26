@@ -34,89 +34,84 @@ class ServerManager extends AbstractEntityManager
 
 //region SECTION: Public
     /**
-     * @param ServerDto[] $serverDto
+     * @param ServerDto $serverDto
      *
      * @return Server|array
      */
     public function saveServer($serverDto)
     {
-        $dto = reset($serverDto);
-        if ($dto->isValidHostName() && $dto->isValidIp()) {
+        $entity = null;
+
+        if ($serverDto->isValidHostName() && $serverDto->isValidIp()) {
             $criteria = $this->getCriteria();
             $criteria
                 ->andWhere(
-                    $criteria->expr()->orX(
-                        $criteria->expr()->eq('ip', $dto->getIp()),
-                        $criteria->expr()->eq('hostname', $dto->getHostName())
+                    $criteria->expr()->andX(
+                        $criteria->expr()->eq('ip', $serverDto->getIp()),
+                        $criteria->expr()->eq('hostname', $serverDto->getHostName())
                     )
                 );
 
             $existServer = $this->repository->matching($criteria);
-            if ($existServer->count() > 1) {
+            if ($existServer->count() >= 1) {
                 $this->setRestServerErrorUnknownError();
             } else {
-                $dto = $this->save($existServer->count() ? $existServer->first() : new Server(), $dto);
+                $entity = $this->save($existServer->count() ? $existServer->first() : new Server(), $serverDto);
             }
         } else {
             $this->setRestClientErrorBadRequest();
-            $dto =null;
         }
 
-        return $dto;
+        return $entity;
     }
 //endregion Public
 
 //region SECTION: Private
-    /**
-     * @param Server    $entity
-     * @param ServerDto $serverDto
-     *
-     * @return Server
-     */
-    private function save(Server $entity, $serverDto)
-    {
-        $serverDto->fillEntity($entity);
-        $this->entityManager->persist($entity);
-        $this->entityManager->flush();
-
-        return $entity;
-    }
+//    /**
+//     * @param Server    $entity
+//     * @param ServerDto $serverDto
+//     *
+//     * @return Server
+//     */
+//    private function save(Server $entity, $serverDto)
+//    {
+//        $serverDto->fillEntity($entity);
+//        $this->entityManager->persist($entity);
+//        $this->entityManager->flush();
+//
+//        return $entity;
+//    }
 //endregion Private
 
 //region SECTION: Getters/Setters
+//    /**
+//     * @return Server[]
+//     */
+//    public function getServers()
+//    {
+//        $criteria = $this->getCriteria();
+//
+//        return $this->repository->matching($criteria)->toArray();
+//    }
+
+
     /**
-     * @return Server[]
-     */
-    public function getServers()
-    {
-        $criteria = $this->getCriteria();
-
-        return $this->repository->matching($criteria)->toArray();
-    }
-
-
-    /**
-     * @param ServerDto[] $serverDto
+     * @param ServerDto $serverDto
      *
      * @return $this
      * @throws \Exception
      */
-    public function getServer($serverDto)
+    public function getServers($serverDto)
     {
-        $dto = reset($serverDto);
-
         $criteria = new Criteria();
-        $criteria->where(
-            $criteria->expr()->eq('ip', $dto->getIp())
-        );
-
+        if ($serverDto->getIp()) {
+            $criteria->where(
+                $criteria->expr()->eq('ip', $serverDto->getIp())
+            );
+        }
         $value = $this->repository->matching($criteria);
 
-        if ($value->count() > 1) {
-            throw new \Exception(__METHOD__);
-        }
-
-        $this->setData($value);
+        $this->setData($value->count() ? $value->toArray() : null);
 
         return $this;
     }

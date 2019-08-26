@@ -44,7 +44,7 @@ class Domain
      *
      * @return $this
      */
-    public function addServer($server)
+    public function setServer($server)
     {
         if ($server) {
             $this->server = $server;

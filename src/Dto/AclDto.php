@@ -17,7 +17,7 @@ use Symfony\Component\HttpFoundation\Request;
  *
  * @package App\Dto
  */
-class AclDto implements FactoryDtoInterface
+class AclDto extends AbstractDto
 {
     use ActiveTrait;
 
