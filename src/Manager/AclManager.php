@@ -80,34 +80,36 @@ class AclManager extends AbstractEntityManager
     }
 
     /**
-     * @param AclDto[] $aclDto
+     * @param AclDto $aclDto
      *
      * @return Acl
      * @throws \Exception
      */
     public function saveAcl($aclDto)
     {
-        $dto = reset($aclDto);
-        if ($dto) {
-            $entity = $this->repository->setDto($dto)->findAcl();
-            if (!$dto->getId() && count($entity)) {
+        $entity = null;
+
+        if ($aclDto->isValidEmail()) {
+            $entity = $this->repository->setDto($aclDto)->findAcl();
+            $aclDto->setEntitys($entity);
+            if (!$aclDto->getId() && count($entity)) {
                 $this->setRestClientErrorBadRequest();
-                $dto = $entity;
+                $entity = 'уже существует';
             } else {
-                if ($dto->isValidEmail()) {
-                    $domain = $this->domainManager->getDomain();
-                    $dto = $this->save(count($entity) ? reset($entity) : new Acl(), $dto);
+                $aclDto->getDomain()->setEntitys($this->domainManager->getDomains($aclDto->getDomain())->getData());
+                if ($aclDto->getDomain()->hasSingleEntity()) {
+                    $entity = $this->save(count($entity) ? reset($entity) : new Acl(), $aclDto);
                 } else {
                     $this->setRestClientErrorBadRequest();
-                    $dto = 'Не правильный формат адреса';
+                    $entity = 'нет домена или их несколько';
                 }
             }
         } else {
             $this->setRestClientErrorBadRequest();
-            $dto = 'нет входных данных';
+            $entity = 'нет входных данных';
         }
 
-        return $dto;
+        return $entity;
     }
 //endregion Public
 
@@ -130,15 +132,13 @@ class AclManager extends AbstractEntityManager
 
 //region SECTION: Getters/Setters
     /**
-     * @param AclDto[] $aclDto
+     * @param AclDto $aclDto
      *
      * @return $this
      */
     public function getAcls($aclDto)
     {
-        $dto = reset($aclDto);
-
-        $this->setData($this->repository->setDto($dto)->findAcl());
+        $this->setData($this->repository->setDto($aclDto)->findAcl());
 
         return $this;
     }

@@ -66,11 +66,11 @@ class LogSearchDto extends AbstractFactoryDto
 
 //region SECTION: Dto
     /**
-     * @param $request
+     * @param Request $request
      *
      * @return FactoryDtoInterface
      */
-    public static function toDto(Request $request)
+    public static function toDto(&$request)
     {
         $searchString = $request->get('searchString');
         $searchFile   = $request->get('searchFile');

@@ -13,12 +13,12 @@
                                     <i class="dropdown icon"></i>
                                     <div class="menu">
                                         <div class="item" v-for="(domain,index) in domains" :class="{ 'active blue' : _initDomain(index)}" @click="_domainAction(index)">
-                                            {{domain.domain}}
+                                            {{domain.domainName}}
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="inline field">
+                            <div class="inline field" v-bind:class="{ 'error': hasError }">
                                 <b><label>Record:</label></b>
                                 <div class="ui icon input">
                                     <i class="bug icon"></i>
@@ -44,6 +44,16 @@
                                     <div class="or" v-if="index < (aclModel.length-1)"></div>
                                 </div>
                             </div>
+                        </div>
+                    </div>
+                    <div v-if="showError" id="hide">
+                        <div class="ui negative message">
+                            <i class="close icon" @click="messageError"></i>
+                            <div class="header">
+                                Ошибка
+                            </div>
+                            <p>{{errorText}}
+                            </p>
                         </div>
                     </div>
                     <!--<div class="column">-->
@@ -87,7 +97,6 @@
                 </div>
             </div>
             <h3 class="ui header">Results</h3>
-
             <div class="ui tabular menu">
                 <a class="item" :class="{ 'active' : _initTab(index)}" v-for="(selectValue, index) in acls" @click="_tabAction(index)">{{selectValue.type}}</a>
             </div>
@@ -109,9 +118,9 @@
                         <div class="ui block">
                             <div class="ui grid" v-for="(block, item) in selectValue.items">
                                 <template v-if="block.visible">
-                                    <div class="three column">{{block.id}}</div>
+                                    <div class="three column">{{block.aclId}}</div>
                                     <div class="three wide column">
-                                        <template v-if="_isEditBlock(block.id)">
+                                        <template v-if="_isEditBlock(block.aclId)">
                                             <div class="ui input focus small">
                                                 <input type="text" v-model="editText" placeholder="Edit...">
                                             </div>
@@ -167,6 +176,10 @@
                 localSearchText: '',
                 editText: '',
                 editBlock: null,
+
+                hasError: false,
+                showError: false,
+                errorText: ''
             }
         },
         mounted() {
@@ -196,17 +209,35 @@
                             self.acls[keys[value.type]].items.push(value);
                         });
                         break;
-                    case 'acl-add':
-                        //push to
                     case 'acl-save':
+                        this._add(response.data);
+                        this.resetRecord();
                     case 'acl-delete':
                         this.$forceUpdate();
                         break;
                     case 'acl-error':
+                        this.hasError = true;
+                        this.showError = true;
+                        setTimeout(this._resetError, 2000);
+                        this.errorText = 'Запись [' + response.response.data + '] невозможно сохранить.';
                         break;
-
-                    case 'search-filter':
                 }
+            },
+            _resetError() {
+                this.hasError = false;
+            },
+            messageError() {
+                this.showError = false;
+                this.errorText = '';
+            },
+            _add(acl) {
+                acl.visible = true;
+                this.acls.some(function (value) {
+                    if (value.type === acl.type) {
+                        value.items.push(acl);
+                        return true;
+                    }
+                });
             },
             _initList(select) {
                 if (this.aclModelSelect === '') {
@@ -221,7 +252,7 @@
                 return (this.editBlock === id);
             },
             _getDomain() {
-                return (this.domains === null || this.domains[this.domainSelect] === undefined) ? 'Select Domain' : this.domains[this.domainSelect].domain;
+                return (this.domains === null || this.domains[this.domainSelect] === undefined) ? 'Select Domain' : this.domains[this.domainSelect].domainName;
             },
             _initDomain(index) {
                 return (this.domainSelect !== null) ? (this.domainSelect === index) : false;
@@ -233,7 +264,7 @@
                 this.resetLocalSearch();
                 this.tabSelected = null;
                 axios
-                    .get(this.apiUrlAcl, {params: {domain: this.domains[this.domainSelect]}})
+                    .get(this.apiUrlAcl, {params: this.domains[this.domainSelect]})
                     .then(response => (this._axiosResponse('acl-load-acl', response)));
 
             },

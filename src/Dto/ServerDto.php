@@ -82,11 +82,11 @@ class ServerDto extends AbstractFactoryDto
 
 //region SECTION: Dto
     /**
-     * @param $request
+     * @param Request $request
      *
      * @return FactoryDtoInterface
      */
-    public static function toDto(Request $request)
+    public static function toDto(&$request)
     {
         $ip   = $request->get('ipServer');
         $name = $request->get('hostNameServer');

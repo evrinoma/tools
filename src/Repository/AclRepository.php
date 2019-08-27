@@ -57,24 +57,25 @@ class AclRepository extends EntityRepository
             $builder->andWhere('acl.id =  :id')
                 ->setParameter('id', $this->dto->getId());
         } else {
-            if ($this->dto && $this->dto->getDomain()) {
+            if ($this->dto && $this->dto->getDomain()->getDomainName()) {
                 $builder->andWhere('domain.domain =  :domain')
-                    ->setParameter('domain', $this->dto->getDomain());
+                    ->setParameter('domain', $this->dto->getDomain()->getDomainName());
             }
 
             if ($this->dto && $this->dto->getEmail() && !$this->dto->getId()) {
                 if ($this->dto->isEmail()) {
-                    $builder->andWhere('acl.email = :email')
+                    $builder->andWhere('acl.email LIKE :emailDomain or acl.email = :email')
+                        ->setParameter('emailDomain', '*'.$this->dto->getEmailDomain().'%')
                         ->setParameter('email', $this->dto->getEmail());
                 } else {
-                    $builder->andWhere('acl.email LIKE :email')
-                        ->setParameter('email', '%'.$this->dto->getEmailDomain().'%');
+                    $builder->andWhere('acl.email LIKE :emailDomain')
+                        ->setParameter('emailDomain', '%'.$this->dto->getEmailDomain().'%');
                 }
             }
         }
         $builder->orderBy('acl.type', 'desc');
 
-       return $builder->getQuery()->getResult();
+        return $builder->getQuery()->getResult();
     }
 //endregion Find Filters Repository
 }

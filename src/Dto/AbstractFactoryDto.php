@@ -62,6 +62,30 @@ abstract class AbstractFactoryDto extends AbstractDto implements FactoryDtoInter
             yield $entity;
         }
     }
+
+    /**
+     * @return int
+     */
+    public function countEntity()
+    {
+        return count($this->entitys);
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasSingleEntity()
+    {
+        return $this->countEntity()===1;
+    }
+
+    /**
+     * @return int
+     */
+    public function countClone()
+    {
+        return count($this->clones);
+    }
 //endregion Public
 
 //region SECTION: Getters/Setters

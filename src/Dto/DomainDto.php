@@ -70,11 +70,11 @@ class DomainDto extends AbstractFactoryDto implements VuetableInterface
 
 //region SECTION: Dto
     /**
-     * @param $request
+     * @param Request $request
      *
      * @return FactoryDtoInterface
      */
-    public static function toDto(Request $request)
+    public static function toDto(&$request)
     {
         $page    = $request->get('page');
         $perPage = $request->get('per_page');

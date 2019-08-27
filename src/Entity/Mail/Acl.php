@@ -58,6 +58,15 @@ class Acl
     }
 
     /**
+     * @return int
+     */
+    public function getAclId(): int
+    {
+        return $this->getId();
+    }
+
+
+    /**
      * @return bool
      */
     public function isWhite()

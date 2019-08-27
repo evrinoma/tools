@@ -45,11 +45,11 @@ class SettingsDto extends AbstractFactoryDto
 
 //region SECTION: Dto
     /**
-     * @param $request
+     * @param Request $request
      *
      * @return FactoryDtoInterface
      */
-    public static function toDto(Request $request)
+    public static function toDto(&$request)
     {
         $settings    = $request->get('settings');
         $classEntity = $request->get('classEntity');

@@ -390,7 +390,7 @@ class ApiController extends AbstractController
      * @Rest\Get("/internal/acl/acl", name="api_acl")
      * @SWG\Get(tags={"acl"})
      * @SWG\Parameter(
-     *     name="id",
+     *     name="aclId",
      *     in="query",
      *     type="string",
      *     description="id record"
@@ -439,7 +439,7 @@ class ApiController extends AbstractController
     {
         $aclDto = $factoryDto->setRequest($request)->createDto(AclDto::class);
 
-        return $this->json(['acl' => $aclManager->setRestSuccessOk()->saveAcl($aclDto)], $aclManager->getRestStatus());
+        return $this->json($aclManager->setRestSuccessOk()->saveAcl($aclDto), $aclManager->getRestStatus());
     }
 
     /**

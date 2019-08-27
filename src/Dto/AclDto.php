@@ -8,6 +8,7 @@
 
 namespace App\Dto;
 
+use App\Annotation\Dto;
 use App\Entity\Mail\Acl;
 use App\Entity\Model\ActiveTrait;
 use Symfony\Component\HttpFoundation\Request;
@@ -28,6 +29,10 @@ class AclDto extends AbstractFactoryDto
 
     private $email;
 
+    /**
+     * @Dto(class="App\Dto\DomainDto")
+     * @var DomainDto
+     */
     private $domain;
 //endregion Fields
 
@@ -47,7 +52,11 @@ class AclDto extends AbstractFactoryDto
      */
     public function fillEntity($entity)
     {
-        $entity->setEmail($this->getEmail())->setType($this->getType())->setActive($this->getActive());
+        $entity
+            ->setEmail($this->getEmail())
+            ->setType($this->getType())
+            ->setActive($this->getActive())
+            ->setDomain($this->getDomain()->generatorEntity()->current());
 
         return $entity;
     }
@@ -63,22 +72,22 @@ class AclDto extends AbstractFactoryDto
 
 //region SECTION: Dto
     /**
-     * @param $request
+     * @param Request $request
      *
-     * @return array
+     * @return FactoryDtoInterface
      */
-    public static function toDto(Request $request)
+    public static function toDto(&$request)
     {
         $dto     = new self();
-        $id      = $request->get('id');
+        $aclId   = $request->get('aclId');
         $active  = $request->get('active');
         $deleted = $request->get('deleted');
         $email   = $request->get('email');
         $type    = $request->get('type');
         $domain  = $request->get('domain');
 
-        if ($id) {
-            $dto->setId($id);
+        if ($aclId) {
+            $dto->setId($aclId);
         }
 
         if ($active) {
@@ -96,16 +105,9 @@ class AclDto extends AbstractFactoryDto
         }
 
         if ($domain) {
-            if (!is_array($domain)) {
-                $domain = json_decode($domain, true);
-            }
-
-
-            if (isset($domain['domain'])) {
-                $dto->setDomain($domain['domain']);
-            }
+            $request = new Request();
+            $request->request->add($domain);
         }
-
 
         return $dto;
     }
@@ -113,9 +115,9 @@ class AclDto extends AbstractFactoryDto
 
 //region SECTION: Getters/Setters
     /**
-     * @return mixed
+     * @return DomainDto
      */
-    public function getDomain()
+    public function getDomain(): DomainDto
     {
         return $this->domain;
     }
@@ -132,7 +134,6 @@ class AclDto extends AbstractFactoryDto
     {
         return mb_strcut($this->email, mb_strpos($this->email, '@'), mb_strlen($this->email));
     }
-
 
     /**
      * @param Request $request
@@ -161,11 +162,11 @@ class AclDto extends AbstractFactoryDto
     }
 
     /**
-     * @param mixed $domain
+     * @param DomainDto $domain
      *
      * @return AclDto
      */
-    public function setDomain($domain)
+    public function setDomain(DomainDto $domain)
     {
         $this->domain = $domain;
 
