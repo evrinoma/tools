@@ -248,8 +248,9 @@
                             self.acls[keys[value.type]].items.push(value);
                         });
                         break;
-                    case 'acl-save':
+                    case 'acl-add':
                         this._add(response.data);
+                    case 'acl-save':
                         this.resetRecord();
                     case 'acl-delete':
                         this.$forceUpdate();
@@ -341,7 +342,7 @@
                 };
                 axios
                     .post(this.apiUrlAclSave, data)
-                    .then(response => (this._axiosResponse('acl-save', response)))
+                    .then(response => (this._axiosResponse('acl-add', response)))
                     .catch(error => (this._axiosResponse('acl-error', error)));
             },
             doEditSaveAction(index, item) {
