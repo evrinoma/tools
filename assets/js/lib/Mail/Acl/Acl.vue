@@ -1,11 +1,11 @@
 <template>
     <div>
         <div class="ui segment block">
-            <h3 class="ui header">Acl Editor</h3>
             <div class="ui segment">
                 <div class="ui two column very relaxed grid">
                     <div class="column">
-                        <div class="ui form" :class="{ 'loading' : showPreloadForm !== 0}">
+                        <h3 class="ui header">Acl Editor</h3>
+                        <div class="ui form" :class="{ 'loading' : showPreloadAclForm !== 0}">
                             <div class="inline field">
                                 <b><label>Domain:</label></b>
                                 <div class="ui simple dropdown item">
@@ -45,6 +45,7 @@
                                 </div>
                             </div>
                         </div>
+
                         <div v-if="showError" id="hide">
                             <div class="ui negative message">
                                 <i class="close icon" @click="messageError"></i>
@@ -57,56 +58,42 @@
                         </div>
                     </div>
                     <div class="column">
-                        <div class="html ui top attached segment">
-                            <div class="ui top attached label">Block SPAM activity</div>
-                            <div class="ui form">
-                                <div class="inline fields">
-                                    <!--<div v-for="(section, group) in settings" class="field">-->
-                                    <!--<div class="ui compact menu">-->
-                                    <!--<div class="ui simple dropdown item">-->
-                                    <!--{{section.key}}-->
-                                    <!--<i class="dropdown icon"></i>-->
-                                    <!--<div class="menu">-->
-                                    <!--<div class="item">-->
-                                    <!--<div class="ui slider checkbox">-->
-                                    <!--<input type="checkbox" name="public" :checked="section.active === 'a'" @click="itemAction(section.active, group, undefined)">-->
-                                    <!--<label>All</label>-->
-                                    <!--</div>-->
-                                    <!--</div>-->
-                                    <!--<div v-for="(selectValue, index) in section.items" class="item">-->
-                                    <!--<div class="ui slider checkbox">-->
-                                    <!--<input type="checkbox" name="public" :checked="selectValue.active === 'a'" @click="itemAction(selectValue.active, group, index)">-->
-                                    <!--<label>{{selectValue.data.name}}</label>-->
-                                    <!--</div>-->
-                                    <!--</div>-->
-                                    <!--</div>-->
-                                    <!--</div>-->
-                                    <!--</div>-->
-                                    <!--</div>-->
-                                    <div class="inline field">
-                                        <b><label>Record:</label></b>
-                                        <div class="ui icon input">
-                                            <i class="bug icon"></i>
-                                            <input type="text" placeholder="Email or Domain name">
-                                        </div>
-                                        <div class="ui animated button" tabindex="0">
-                                            <div class="visible content">Add</div>
-                                            <div class="hidden content">
-                                                <i class="right save icon"></i>
-                                            </div>
-                                        </div>
-                                        <div class="ui vertical animated button" tabindex="0">
-                                            <div class="hidden content">Reset</div>
-                                            <div class="visible content">
-                                                <i class="shop x icon"></i>
+                        <h3 class="ui header">Block SPAM activity</h3>
+                        <div class="ui form" :class="{ 'loading' : showPreloadSpamForm !== 0}">
+                            <div class="inline fields">
+                                <div class="inline field">
+                                    <b><label>Filter Type:</label></b>
+                                    <div class="ui simple dropdown item">
+                                        {{ _getRule() }}
+                                        <i class="dropdown icon"></i>
+                                        <div class="menu">
+                                            <div class="item" v-for="(rule,index) in rulesType" :class="{ 'active blue' : _initRule(index)}" @click="_ruleAction(index)">
+                                                {{rule.type}}
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
+                            <div class="inline field" v-bind:class="{ 'error': hasErrorSpam }">
+                                <b><label>Record:</label></b>
+                                <div class="ui icon input">
+                                    <i class="bug icon"></i>
+                                    <input type="text" v-model="recordSpamText" placeholder="Email or Domain name">
+                                </div>
+                                <div class="ui animated button" tabindex="0" @click="doBan">
+                                    <div class="visible content">Ban</div>
+                                    <div class="hidden content">
+                                        <i class="right ban icon"></i>
+                                    </div>
+                                </div>
+                                <div class="ui vertical animated button" tabindex="0" @click="resetRecordSpam">
+                                    <div class="hidden content">Reset</div>
+                                    <div class="visible content">
+                                        <i class="shop x icon"></i>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-
-
                     </div>
                 </div>
             </div>
@@ -171,7 +158,8 @@
                     <table class="ui celled table">
                         <div class="ui bottom attached active tab">
                             <div class="html ui top attached segment">
-
+                                <div class="ui spliter">
+                                </div>
                                 <div class="ui block">
 
                                 </div>
@@ -199,12 +187,15 @@
         components: {},
         data() {
             return {
-                showPreloadForm: 0,
+                showPreloadAclForm: 0,
                 recordText: '',
+
                 apiUrlAclModel: 'http://php72.tools/internal/acl/model',
                 apiUrlDomains: 'http://php72.tools/internal/domain/domain',
                 apiUrlAcl: 'http://php72.tools/internal/acl/acl',
                 apiUrlAclSave: 'http://php72.tools/internal/acl/save',
+
+                apiUrlSpamType: 'http://php72.tools/internal/spam/rules_type',
 
                 aclModel: null,
                 aclModelSelect: '',
@@ -218,7 +209,15 @@
 
                 hasError: false,
                 showError: false,
-                errorText: ''
+                errorText: '',
+
+                rulesType: null,
+                ruleTypeSelect: null,
+                showPreloadSpamForm: 0,
+                hasErrorSpam: false,
+                recordSpamText: '',
+
+
             }
         },
         mounted() {
@@ -234,7 +233,7 @@
                         this.domains = response.data;
                         break;
                     case 'acl-load-acl':
-                        this.showPreloadForm--;
+                        this.showPreloadAclForm--;
                         let self = this;
                         let keys = [];
                         let count = 0;
@@ -261,6 +260,9 @@
                         setTimeout(this._resetError, 2000);
                         this.errorText = 'Запись [' + response.response.data + '] невозможно сохранить.';
                         break;
+                    case 'acl-load-spam-type':
+                        this.rulesType = response.data;
+                        break;
                 }
             },
             _resetError() {
@@ -278,6 +280,21 @@
                         return true;
                     }
                 });
+            },
+            _getRule() {
+                return (this.rulesType === null || this.rulesType[this.ruleTypeSelect] === undefined) ? 'Select Rule' : this.rulesType[this.ruleTypeSelect].type;
+            },
+            _initRule(index) {
+                return (this.ruleTypeSelect !== null) ? (this.ruleTypeSelect === index) : false;
+            },
+            _ruleAction(index) {
+                this.ruleTypeSelect = index;
+                //this.showPreloadSpamForm++;
+
+                //axios
+                // .get(this.apiUrlAcl, {params: this.domains[this.domainSelect]})
+                // .then(response => (this._axiosResponse('acl-load-acl', response)));
+
             },
             _initList(select) {
                 if (this.aclModelSelect === '') {
@@ -299,7 +316,7 @@
             },
             _domainAction(index) {
                 this.domainSelect = index;
-                this.showPreloadForm++;
+                this.showPreloadAclForm++;
                 this.acls = [];
                 this.resetLocalSearch();
                 this.tabSelected = null;
@@ -333,6 +350,9 @@
                         value.visible = false;
                     }
                 });
+            },
+            doBan() {
+
             },
             doAdd() {
                 let data = {
@@ -373,6 +393,9 @@
             resetRecord() {
                 this.recordText = '';
             },
+            resetRecordSpam() {
+                this.recordSpamText = '';
+            },
             resetLocalSearch() {
                 this.localSearchText = '';
                 if (this.acls.length && this.acls[this.tabSelected] !== undefined) {
@@ -389,6 +412,9 @@
                 axios
                     .get(this.apiUrlDomains)
                     .then(response => (this._axiosResponse('acl-load-domain', response)));
+                axios
+                    .get(this.apiUrlSpamType)
+                    .then(response => (this._axiosResponse('acl-load-spam-type', response)));
             },
         }
     }
