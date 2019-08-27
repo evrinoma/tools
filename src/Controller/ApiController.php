@@ -24,6 +24,7 @@ use App\Manager\JournalManager;
 use App\Manager\MenuManager;
 use App\Manager\SearchManager;
 use App\Manager\ServerManager;
+use App\Manager\SpamManager;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use Nelmio\ApiDocBundle\Annotation\Model;
 use Swagger\Annotations as SWG;
@@ -119,7 +120,7 @@ class ApiController extends AbstractController
     /**
      * @Rest\Put("/internal/domain/migrate", name="api_migrate_default_domain")
      * @SWG\Put(tags={"domain"})
-     * @SWG\Response(response=200,description="Returns the merge of domains")
+     * @SWG\Response(response=200,description="Returns the migrate of domains")
      *
      * @param DomainManager $domainManager
      *
@@ -129,6 +130,23 @@ class ApiController extends AbstractController
     {
         return $this->json(['domains' => $domainManager->setRestSuccessOk()->megrateDomains()], $domainManager->getRestStatus());
     }
+
+
+
+    /**
+     * @Rest\Put("/internal/spam/migrate", name="api_migrate_default_spam")
+     * @SWG\Put(tags={"spam"})
+     * @SWG\Response(response=200,description="Returns the migrate of spam rules")
+     *
+     * @param DomainManager $domainManager
+     *
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     */
+    public function migrateSpamRules(SpamManager $spamManager)
+    {
+        return $this->json(['spam' => $spamManager->setRestSuccessOk()->megrateSpamRules()], $spamManager->getRestStatus());
+    }
+
 
     /**
      * @Rest\Put("/internal/acl/migrate", name="api_migrate_default_acl")
