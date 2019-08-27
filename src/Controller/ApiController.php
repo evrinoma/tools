@@ -132,13 +132,12 @@ class ApiController extends AbstractController
     }
 
 
-
     /**
      * @Rest\Put("/internal/spam/migrate", name="api_migrate_default_spam")
      * @SWG\Put(tags={"spam"})
      * @SWG\Response(response=200,description="Returns the migrate of spam rules")
      *
-     * @param DomainManager $domainManager
+     * @param SpamManager $spamManager
      *
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
@@ -146,7 +145,6 @@ class ApiController extends AbstractController
     {
         return $this->json(['spam' => $spamManager->setRestSuccessOk()->megrateSpamRules()], $spamManager->getRestStatus());
     }
-
 
     /**
      * @Rest\Put("/internal/acl/migrate", name="api_migrate_default_acl")
@@ -454,6 +452,20 @@ class ApiController extends AbstractController
 //endregion Private
 
 //region SECTION: Getters/Setters
+    /**
+     * @Rest\Get("/internal/spam/rules_type", name="api_spam_rules_type")
+     * @SWG\Get(tags={"spam"})
+     * @SWG\Response(response=200,description="Returns the spam rules types")
+     *
+     * @param SpamManager $spamManager
+     *
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     */
+    public function getSpamRulesType(SpamManager $spamManager)
+    {
+        return $this->json($spamManager->setRestSuccessOk()->getSpamRuleType()->getData(), $spamManager->getRestStatus());
+    }
+
     /**
      * @Rest\Get("/internal/acl/acl", name="api_acl")
      * @SWG\Get(tags={"acl"})

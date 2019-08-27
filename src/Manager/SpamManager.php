@@ -29,7 +29,6 @@ class SpamManager extends AbstractEntityManager
      * @var string
      */
     protected $repositoryClass = Spam::class;
-
 //endregion Fields
 
 //region SECTION: Public
@@ -90,6 +89,20 @@ class SpamManager extends AbstractEntityManager
 //endregion Public
 
 //region SECTION: Getters/Setters
+    /**
+     * @return $this
+     */
+    public function getSpamRuleType()
+    {
+        $builder = $this->entityManager->getRepository(FilterType::class)->createQueryBuilder('filterType');
+
+        $builder->where("filterType.active = 'a'");
+
+        $this->setData($builder->getQuery()->getResult());
+
+        return $this;
+    }
+
     /**
      * @return int
      */
