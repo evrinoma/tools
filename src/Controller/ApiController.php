@@ -176,7 +176,7 @@ class ApiController extends AbstractController
      * @Rest\Delete("/internal/server/delete", name="api_delete_server")
      * @SWG\Delete(tags={"server"})
      * @SWG\Parameter(
-     *  name="ipServer",
+     *  name="hostNameServer",
      *     in="query",
      *     type="array",
      *     description="This is a parameter",
