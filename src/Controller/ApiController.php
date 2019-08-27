@@ -207,6 +207,13 @@ class ApiController extends AbstractController
      * @Rest\Post("/internal/server/save", name="api_save_server")
      * @SWG\Post(tags={"server"})
      * @SWG\Parameter(
+     *     name="idServer",
+     *     in="query",
+     *     type="string",
+     *     default=null,
+     *     description="id server"
+     * )
+     * @SWG\Parameter(
      *     name="ipServer",
      *     in="query",
      *     type="string",

@@ -7,7 +7,7 @@
                 <label>Mx:</label>
                 <div class="ui right labeled left icon input">
                     <i class="linkify icon "></i>
-                    <input type="text" v-model="mxText"  @input="_cheangeIpTextAction" class="three wide column" placeholder="MX name">
+                    <input type="text" v-model="mxText" class="three wide column" placeholder="MX name">
                     <a class="ui tag label">
                         ID[{{ idServerSelected }}]
                     </a>
@@ -21,7 +21,7 @@
             </div>
             <div class="field">
                 <label>Server Address:</label>
-                <select class="form-control" @change="relayAdrHandleChange">
+                <select class="form-control" @change="hostNameHandleChange">
                     <option v-if="hostnameSelected === false" selected>
                         Select Relay Address
                     </option>
@@ -105,7 +105,7 @@
             this.doMount();
         },
         methods: {
-            relayAdrHandleChange(e) {
+            hostNameHandleChange(e) {
                 const select = e.target;
                 const selectedIndex = select.options[select.selectedIndex].attributes.index.value;
                 this.mxText = this.servers[selectedIndex].hostname;
@@ -154,9 +154,6 @@
                 this.mxText = '';
                 this.ipText = '';
                 this.hostnameSelected = false;
-                this._cheangeIpTextAction();
-            },
-            _cheangeIpTextAction() {
                 this.idServerSelected = '';
             },
             _updateData() {

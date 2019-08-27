@@ -43,13 +43,28 @@ class ServerManager extends AbstractEntityManager
 
         if ($serverDto->isValidHostName() && $serverDto->isValidIp()) {
             $criteria = $this->getCriteria();
-            $criteria->andWhere($criteria->expr()->eq('hostname', $serverDto->getHostName()));
-            $criteria->andWhere($criteria->expr()->eq('id', $serverDto->getId()));
+            if ($serverDto->getId()) {
+                $criteria->andWhere(
+                    $criteria->expr()->orX(
+                        $criteria->expr()->eq('hostname', $serverDto->getHostName()),
+                        $criteria->expr()->eq('id', $serverDto->getId())
+                    )
+                );
+            } else {
+                $criteria->andWhere($criteria->expr()->eq('hostname', $serverDto->getHostName()));
+                if ($serverDto->getHostName()) {
+                    $criteria->andWhere($criteria->expr()->eq('ip', $serverDto->getIp()));
+                }
+            }
             $existServer = $this->repository->matching($criteria);
             if (!$serverDto->getId() && $existServer->count() >= 1) {
                 $this->setRestServerErrorUnknownError();
             } else {
-                $entity = $this->save($existServer->count() ? $existServer->first() : new Server(), $serverDto);
+                if ($existServer->count() > 1) {
+                    $this->setRestServerErrorUnknownError();
+                } else {
+                    $entity = $this->save($existServer->count() ? $existServer->first() : new Server(), $serverDto);
+                }
             }
         } else {
             $this->setRestClientErrorBadRequest();

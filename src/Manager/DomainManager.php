@@ -65,10 +65,13 @@ class DomainManager extends AbstractEntityManager
 
         if ($domainDto->isValidDomainName() && $domainDto->isValidHostNameServer()) {
             $criteria = $this->getCriteria();
-            $criteria->andWhere(
-                $criteria->expr()->eq('domain', $domainDto->getDomainName())
-            );
-
+            if ($domainDto->getId()) {
+                $criteria->andWhere($criteria->expr()->eq('id', $domainDto->getId()));
+            } else {
+                $criteria->andWhere(
+                    $criteria->expr()->eq('domain', $domainDto->getDomainName())
+                );
+            }
             $existDomain = $this->repository->matching($criteria);
             if ($domainDto->getServer()->getEntitys() === null) {
                 $domainDto->getServer()->setEntitys($this->serverManager->getServers($domainDto->getServer())->getData());

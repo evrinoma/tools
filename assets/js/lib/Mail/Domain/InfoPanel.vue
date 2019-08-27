@@ -7,29 +7,29 @@
                 <label>Domain Name:</label>
                 <div class="ui right labeled left icon input">
                     <i class="linkify icon "></i>
-                    <input type="text" v-model="domainText" class="three wide column" placeholder="Domain name">
+                    <input type="text" v-model="domainNameText" class="three wide column" placeholder="Domain name">
                     <a class="ui tag label">
-                        ID[{{ id }}]
+                        ID[{{ domainId }}]
                     </a>
                 </div>
             </div>
             <div class="field">
-                <label>Relay Address:</label>
-                <select class="form-control" @change="relayAdrHandleChange">
-                    <option v-if="relayAdrSelected === false" selected>
-                        Select Relay Address
+                <label>Mx:</label>
+                <select class="form-control" @change="mxHandleChange">
+                    <option v-if="hostNameServerSelected === false" selected>
+                        Select Mx
                     </option>
                     <option v-else>
-                        Select Relay Address
+                        Select Mx
                     </option>
-                    <option v-for="(selectValue, index) in servers" :index="index" :param="selectValue.id" :value="selectValue.ip" :selected="relayAdrSelected === selectValue.ip">{{ selectValue.ip }}</option>
+                    <option v-for="(selectValue, index) in servers" :index="index" :param="selectValue.id" :value="selectValue.hostname" :selected="hostNameServerSelected === selectValue.hostname">{{ selectValue.hostname }}</option>
 
                 </select>
             </div>
             <div class="field">
-                <label>Mx:</label>
+                <label>Relay Address:</label>
                 <div class="ui disabled input">
-                    <input type="text" v-model="mxText" class="three wide column" placeholder="MX name">
+                    <input type="text" v-model="ipServerText" class="three wide column" placeholder="IP address">
                 </div>
             </div>
             <br>
@@ -81,11 +81,11 @@
         },
         data() {
             return {
-                domainText: '',
-                mxText: '',
-                id: '',
+                domainNameText: '',
+                ipServerText: '',
+                domainId: '',
                 servers: {},
-                relayAdrSelected: false,
+                hostNameServerSelected: false,
                 hasError: false,
                 showError: false,
                 errorText: ''
@@ -97,13 +97,11 @@
             this.doLoad();
         },
         methods: {
-            relayAdrHandleChange(e) {
+            mxHandleChange(e) {
                 const select = e.target;
-                const selectedIp = select.value;
-                const selectedId = select.options[select.selectedIndex].attributes.param.value;
                 const selectedIndex = select.options[select.selectedIndex].attributes.index.value;
-                this.mxText = this.servers[selectedIndex].hostname;
-                this.relayAdrSelected = this.servers[selectedIndex].ip;
+                this.ipServerText = this.servers[selectedIndex].ip;
+                this.hostNameServerSelected = this.servers[selectedIndex].hostname;
             },
             _axiosResponse(type, response) {
                 switch (type) {
@@ -131,24 +129,17 @@
             },
             _getData() {
                 return {
-                    domainName: this.domainText,
-                    ipServer: this.relayAdrSelected,
-                    hostNameServer: this.mxText,
-                    domainId: this.id
-                }
-            },
-            _getAddData() {
-                return {
-                    domainName: this.domainText,
-                    hostNameServer: this.mxText,
-                    ipServer: this.relayAdrSelected,
+                    domainName: this.domainNameText,
+                    ipServer: this.ipServerText,
+                    hostNameServer: this.hostNameServerSelected,
+                    domainId: this.domainId
                 }
             },
             onSet(eventData) {
-                this.domainText = eventData.domain;
-                this.mxText = eventData.mx;
-                this.id = eventData.id;
-                this.relayAdrSelected = eventData.relayAdr;
+                this.domainNameText = eventData.domainName;
+                this.ipServerText = eventData.ipServer;
+                this.hostNameServerSelected = eventData.hostNameServer;
+                this.domainId = eventData.domainId;
             },
             doLoad() {
                 this.resetEdit();
@@ -158,14 +149,15 @@
             },
             doSave() {
                 axios
-                    .post(this.apiUrlSave, this._getAddData())
+                    .post(this.apiUrlSave, this._getData())
                     .then(response => (this._axiosResponse('info-save', response)))
                     .catch(error => (this._axiosResponse('info-save-error', error)));
             },
             resetEdit() {
-                this.domainText = '';
-                this.relayAdrSelected = false;
-                this.mxText = '';
+                this.domainNameText = '';
+                this.hostNameServerSelected = false;
+                this.ipServerText = '';
+                this.domainId = '';
             }
         }
     }
