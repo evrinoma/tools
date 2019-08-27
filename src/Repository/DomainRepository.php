@@ -57,6 +57,10 @@ class DomainRepository extends EntityRepository
             $builder->andWhere('domain.domain like :filter or server.hostname like :filter')
                 ->setParameter('filter', '%'.$this->dto->getFilter().'%');
         }
+        if ($this->dto && $this->dto->getDomainName()) {
+            $builder->andWhere('domain.domain = :filter')
+                ->setParameter('filter', $this->dto->getDomainName());
+        }
         if ($this->dto && $this->dto->getHostNameServer()) {
             $builder->andWhere('server.hostname like :hostNameServer')
                 ->setParameter('hostNameServer', $this->dto->getHostNameServer());

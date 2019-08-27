@@ -345,6 +345,56 @@ class ApiController extends AbstractController
 
         return $this->json(['settings' => $searchManager->setRestSuccessOk()->setDto($settingsDto)->saveSettings()], $searchManager->getRestStatus());
     }
+
+    /**
+     * @Rest\Post("/internal/acl/save", name="api_acl_save")
+     * @SWG\Post(tags={"acl"})
+     * @SWG\Parameter(
+     *     name="aclId",
+     *     in="query",
+     *     type="string",
+     *     description="id record"
+     * )
+     * @SWG\Parameter(
+     *     name="email",
+     *     in="query",
+     *     type="string",
+     *     description="email or domain record"
+     * )
+     * @SWG\Parameter(
+     *     name="type",
+     *     in="query",
+     *     type="array",
+     *     description="black or white",
+     *     items=@SWG\Items(
+     *         type="string",
+     *         @Model(type=App\Form\Mail\TypeAclType::class)
+     *     )
+     * )
+     * @SWG\Parameter(
+     *     name="domainName",
+     *     in="query",
+     *     type="array",
+     *     description="select domain",
+     *     items=@SWG\Items(
+     *         type="string",
+     *         @Model(type=App\Form\Mail\DomainType::class)
+     *     )
+     * )
+     * @SWG\Response(response=200,description="Returns nothing")
+     *
+     * @param FactoryDto $factoryDto
+     * @param AclManager $aclManager
+     *
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     * @throws \Exception
+     */
+    public function saveAcl(FactoryDto $factoryDto, AclManager $aclManager, Request $request)
+    {
+        $aclDto = $factoryDto->setRequest($request)->createDto(AclDto::class);
+
+        return $this->json($aclManager->setRestSuccessOk()->saveAcl($aclDto), $aclManager->getRestStatus());
+    }
 //endregion Public
 
 //region SECTION: Private
@@ -421,25 +471,6 @@ class ApiController extends AbstractController
     public function getAclModel(AclManager $aclManager)
     {
         return $this->json($aclManager->setRestSuccessOk()->getAclModel()->getData(), $aclManager->getRestStatus());
-    }
-
-    /**
-     * @Rest\Post("/internal/acl/save", name="api_acl_save")
-     * @SWG\Post(tags={"acl"})
-     *
-     * @SWG\Response(response=200,description="Returns nothing")
-     *
-     * @param FactoryDto $factoryDto
-     * @param AclManager $aclManager
-     *
-     * @return \Symfony\Component\HttpFoundation\JsonResponse
-     * @throws \Exception
-     */
-    public function getAclSave(FactoryDto $factoryDto, AclManager $aclManager, Request $request)
-    {
-        $aclDto = $factoryDto->setRequest($request)->createDto(AclDto::class);
-
-        return $this->json($aclManager->setRestSuccessOk()->saveAcl($aclDto), $aclManager->getRestStatus());
     }
 
     /**
