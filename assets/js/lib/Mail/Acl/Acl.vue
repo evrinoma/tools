@@ -45,104 +45,143 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div v-if="showError" id="hide">
-                        <div class="ui negative message">
-                            <i class="close icon" @click="messageError"></i>
-                            <div class="header">
-                                Ошибка
+                        <div v-if="showError" id="hide">
+                            <div class="ui negative message">
+                                <i class="close icon" @click="messageError"></i>
+                                <div class="header">
+                                    Ошибка
+                                </div>
+                                <p>{{errorText}}
+                                </p>
                             </div>
-                            <p>{{errorText}}
-                            </p>
                         </div>
                     </div>
-                    <!--<div class="column">-->
-                    <!--<div class="html ui top attached segment">-->
-                    <!--<div class="ui top attached label">Settings</div>-->
-                    <!--<div class="ui form" :class="{ 'loading' : showPreloadSettings === true}">-->
-                    <!--<div class="inline fields">-->
-                    <!--<label>Files:</label>-->
-                    <!--<div v-for="(section, group) in settings" class="field">-->
-                    <!--<div class="ui compact menu">-->
-                    <!--<div class="ui simple dropdown item">-->
-                    <!--{{section.key}}-->
-                    <!--<i class="dropdown icon"></i>-->
-                    <!--<div class="menu">-->
-                    <!--<div class="item">-->
-                    <!--<div class="ui slider checkbox">-->
-                    <!--<input type="checkbox" name="public" :checked="section.active === 'a'" @click="itemAction(section.active, group, undefined)">-->
-                    <!--<label>All</label>-->
-                    <!--</div>-->
-                    <!--</div>-->
-                    <!--<div v-for="(selectValue, index) in section.items" class="item">-->
-                    <!--<div class="ui slider checkbox">-->
-                    <!--<input type="checkbox" name="public" :checked="selectValue.active === 'a'" @click="itemAction(selectValue.active, group, index)">-->
-                    <!--<label>{{selectValue.data.name}}</label>-->
-                    <!--</div>-->
-                    <!--</div>-->
-                    <!--</div>-->
-                    <!--</div>-->
-                    <!--</div>-->
-                    <!--</div>-->
-                    <!--<div class="ui vertical animated button" tabindex="0" @click="doSave">-->
-                    <!--<div class="hidden content">Save</div>-->
-                    <!--<div class="visible content">-->
-                    <!--<i class="shop save icon"></i>-->
-                    <!--</div>-->
-                    <!--</div>-->
-                    <!--</div>-->
-                    <!--</div>-->
-                    <!--</div>-->
-                    <!--</div>-->
-                </div>
-            </div>
-            <h3 class="ui header">Results</h3>
-            <div class="ui tabular menu">
-                <a class="item" :class="{ 'active' : _initTab(index)}" v-for="(selectValue, index) in acls" @click="_tabAction(index)">{{selectValue.type}}</a>
-            </div>
-            <table class="ui celled table">
-                <div class="ui bottom attached active tab" v-if="tabSelected === index" v-for="(selectValue, index) in acls">
-                    <div class="html ui top attached segment">-->
-                        <div class="ui top attached label">
-                            <b>List:</b>
-                            <div class="ui input focus">
-                                <input type="text" v-model="localSearchText" @input="localSearchAction" placeholder="Local search...">
-                            </div>
-                            <div class="ui vertical animated button" tabindex="0" @click="resetLocalSearch">
-                                <div class="hidden content">Reset</div>
-                                <div class="visible content">
-                                    <i class="shop x icon"></i>
+                    <div class="column">
+                        <div class="html ui top attached segment">
+                            <div class="ui top attached label">Block SPAM activity</div>
+                            <div class="ui form">
+                                <div class="inline fields">
+                                    <!--<div v-for="(section, group) in settings" class="field">-->
+                                    <!--<div class="ui compact menu">-->
+                                    <!--<div class="ui simple dropdown item">-->
+                                    <!--{{section.key}}-->
+                                    <!--<i class="dropdown icon"></i>-->
+                                    <!--<div class="menu">-->
+                                    <!--<div class="item">-->
+                                    <!--<div class="ui slider checkbox">-->
+                                    <!--<input type="checkbox" name="public" :checked="section.active === 'a'" @click="itemAction(section.active, group, undefined)">-->
+                                    <!--<label>All</label>-->
+                                    <!--</div>-->
+                                    <!--</div>-->
+                                    <!--<div v-for="(selectValue, index) in section.items" class="item">-->
+                                    <!--<div class="ui slider checkbox">-->
+                                    <!--<input type="checkbox" name="public" :checked="selectValue.active === 'a'" @click="itemAction(selectValue.active, group, index)">-->
+                                    <!--<label>{{selectValue.data.name}}</label>-->
+                                    <!--</div>-->
+                                    <!--</div>-->
+                                    <!--</div>-->
+                                    <!--</div>-->
+                                    <!--</div>-->
+                                    <!--</div>-->
+                                    <div class="inline field">
+                                        <b><label>Record:</label></b>
+                                        <div class="ui icon input">
+                                            <i class="bug icon"></i>
+                                            <input type="text" placeholder="Email or Domain name">
+                                        </div>
+                                        <div class="ui animated button" tabindex="0">
+                                            <div class="visible content">Add</div>
+                                            <div class="hidden content">
+                                                <i class="right save icon"></i>
+                                            </div>
+                                        </div>
+                                        <div class="ui vertical animated button" tabindex="0">
+                                            <div class="hidden content">Reset</div>
+                                            <div class="visible content">
+                                                <i class="shop x icon"></i>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="ui block">
-                            <div class="ui grid" v-for="(block, item) in selectValue.items">
-                                <template v-if="block.visible">
-                                    <div class="three column">{{block.aclId}}</div>
-                                    <div class="three wide column">
-                                        <template v-if="_isEditBlock(block.aclId)">
-                                            <div class="ui input focus small">
-                                                <input type="text" v-model="editText" placeholder="Edit...">
-                                            </div>
-                                        </template>
-                                        <template v-else>{{block.email}}</template>
-                                    </div>
-                                    <div class="three wide column">
-                                        <template v-if="_isEditBlock(block.id)">
-                                            <span class="ui teal label" @click="doEditSaveAction(index, item)"><i class="save outline icon"></i>Save</span>
-                                            <span class="ui teal label" @click="doEditCancelAction(block)"><i class="shop x icon"></i>Cancel</span>
-                                        </template>
-                                        <template v-else>
-                                            <span class="ui teal label" @click="doEditAction(block)"><i class="edit outline icon"></i>Edit</span>
-                                            <span class="ui teal label" @click="doDeleteAction(index, item)"><i class="trash icon"></i>Delete</span>
-                                        </template>
-                                    </div>
-                                </template>
-                            </div>
-                        </div>
+
+
                     </div>
                 </div>
-            </table>
+            </div>
+            <h3 class="ui header">Results</h3>
+            <div class="ui two column very relaxed grid">
+                <div class="column">
+                    <div class="ui tabular menu">
+                        <a class="item" :class="{ 'active' : _initTab(index)}" v-for="(selectValue, index) in acls" @click="_tabAction(index)">{{selectValue.type}}</a>
+                    </div>
+                    <table class="ui celled table">
+                        <div class="ui bottom attached active tab" v-if="tabSelected === index" v-for="(selectValue, index) in acls">
+                            <div class="html ui top attached segment">
+                                <div class="ui top attached label">
+                                    <b>List:</b>
+                                    <div class="ui input focus">
+                                        <input type="text" v-model="localSearchText" @input="localSearchAction" placeholder="Local search...">
+                                    </div>
+                                    <div class="ui vertical animated button" tabindex="0" @click="resetLocalSearch">
+                                        <div class="hidden content">Reset</div>
+                                        <div class="visible content">
+                                            <i class="shop x icon"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="ui spliter">
+                                </div>
+                                <div class="ui block">
+                                    <div class="ui grid" v-for="(block, item) in selectValue.items">
+                                        <template v-if="block.visible">
+                                            <div class="three column">{{block.aclId}}</div>
+                                            <div class="three wide column">
+                                                <template v-if="_isEditBlock(block.aclId)">
+                                                    <div class="ui input focus small">
+                                                        <input type="text" v-model="editText" placeholder="Edit...">
+                                                    </div>
+                                                </template>
+                                                <template v-else>{{block.email}}</template>
+                                            </div>
+                                            <div class="three wide column">
+                                                <template v-if="_isEditBlock(block.id)">
+                                                    <span class="ui teal label" @click="doEditSaveAction(index, item)"><i class="save outline icon"></i>Save</span>
+                                                    <span class="ui teal label" @click="doEditCancelAction(block)"><i class="shop x icon"></i>Cancel</span>
+                                                </template>
+                                                <template v-else>
+                                                    <span class="ui teal label" @click="doEditAction(block)"><i class="edit outline icon"></i>Edit</span>
+                                                    <span class="ui teal label" @click="doDeleteAction(index, item)"><i class="trash icon"></i>Delete</span>
+                                                </template>
+                                            </div>
+                                        </template>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </table>
+                </div>
+
+
+                <div class="column">
+                    <div class="ui tabular menu">
+                        <a class="item">Spam</a>
+                    </div>
+                    <table class="ui celled table">
+                        <div class="ui bottom attached active tab">
+                            <div class="html ui top attached segment">
+
+                                <div class="ui block">
+
+                                </div>
+                            </div>
+                        </div>
+                    </table>
+                </div>
+
+
+            </div>
         </div>
     </div>
 </template>
@@ -371,13 +410,13 @@
 
     .ui.bottom.attached.active.tab {
         overflow: hidden;
-        height: 400px;
+        height: 410px;
     }
 
     .ui.block {
         overflow-x: hidden;
         overflow-y: auto;
-        height: 336px;
+        height: 353px;
     }
 
     .ui.bottom.attached.active.tab p {
@@ -390,5 +429,14 @@
 
     .ui.input.focus.small {
         height: 10px;
+    }
+
+    .ui.grid > [class*="three wide"].column {
+        width: 25.75% !important;
+    }
+
+
+    div.ui.spliter {
+        height: 20px;
     }
 </style>
