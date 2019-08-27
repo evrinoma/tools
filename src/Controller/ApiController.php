@@ -74,7 +74,7 @@ class ApiController extends AbstractController
      * @Rest\Post("/internal/domain/save", name="api_save_domain")
      * @SWG\Post(tags={"domain"})
      * @SWG\Parameter(
-     *  name="ip",
+     *  name="hostNameServer",
      *     in="query",
      *     type="array",
      *     description="This is a parameter",
@@ -84,7 +84,7 @@ class ApiController extends AbstractController
      *     )
      * )
      * @SWG\Parameter(
-     *     name="hostname",
+     *     name="domainName",
      *     in="query",
      *     type="string",
      *     default="ite-ng.ru",
@@ -93,7 +93,7 @@ class ApiController extends AbstractController
      * @SWG\Response(response=200,description="Returns the rewards of default generated domain",
      *     @SWG\Schema(
      *        type="object",
-     *        example={"name": "ite-ng.ru", "ip": "172.20.1.4"}
+     *        example={"domainName": "ite29.ite-ng.ru", "ip": "172.20.1.4"}
      *     )
      * )
      * @SWG\Response(response=400,description="set ip and name domain")
@@ -149,7 +149,7 @@ class ApiController extends AbstractController
      * @Rest\Delete("/internal/domain/delete", name="api_delete_domain")
      * @SWG\Delete(tags={"domain"})
      * @SWG\Parameter(
-     *     name="id",
+     *     name="domainId",
      *     in="query",
      *     type="string",
      *     default="-1",
@@ -167,7 +167,7 @@ class ApiController extends AbstractController
     {
         $domainDto = $factoryDto->setRequest($request)->createDto(DomainDto::class);
 
-        $domainManager->setRestSuccessOk()->getDomain($domainDto)->lockEntitys();
+        $domainManager->setRestSuccessOk()->getDomains($domainDto)->lockEntitys();
 
         return $this->json(['message' => 'the Domain was delete successFully'], $domainManager->getRestStatus());
     }
@@ -176,7 +176,7 @@ class ApiController extends AbstractController
      * @Rest\Delete("/internal/server/delete", name="api_delete_server")
      * @SWG\Delete(tags={"server"})
      * @SWG\Parameter(
-     *  name="ip",
+     *  name="ipServer",
      *     in="query",
      *     type="array",
      *     description="This is a parameter",
@@ -207,7 +207,7 @@ class ApiController extends AbstractController
      * @Rest\Post("/internal/server/save", name="api_save_server")
      * @SWG\Post(tags={"server"})
      * @SWG\Parameter(
-     *     name="ip",
+     *     name="ipServer",
      *     in="query",
      *     type="string",
      *     pattern="\d{1,3}.\d{1,3}.\d{1,3}.\d{1,3}",
@@ -215,7 +215,7 @@ class ApiController extends AbstractController
      *     description="ip server"
      * )
      * @SWG\Parameter(
-     *     name="hostname",
+     *     name="hostNameServer",
      *     in="query",
      *     type="string",
      *     default="mail.ite-ng.ru",
@@ -224,7 +224,7 @@ class ApiController extends AbstractController
      * @SWG\Response(response=200,description="Returns the rewards of default generated domain",
      *     @SWG\Schema(
      *        type="object",
-     *        example={"name": "ite-ng.ru", "ip": "172.20.1.4"}
+     *        example={"hostNameServer": "ite-ng.ru", "ipServer": "172.20.1.4"}
      *     )
      * )
      * @SWG\Response(response=400,description="set ip and name domain")
@@ -246,7 +246,7 @@ class ApiController extends AbstractController
     }
 
     /**
-     * @Rest\GET("/internal/log/search", name="api_log_search")
+     * @Rest\Get("/internal/log/search", name="api_log_search")
      * @SWG\Get(tags={"log"})
      * @SWG\Parameter(
      *     name="searchString",
@@ -288,7 +288,7 @@ class ApiController extends AbstractController
     }
 
     /**
-     * @Rest\GET("/internal/log/settings", name="api_log_settings")
+     * @Rest\Get("/internal/log/settings", name="api_log_settings")
      * @SWG\Get(tags={"log"})
      *
      * @SWG\Response(response=200,description="Returns nothing")
@@ -491,12 +491,6 @@ class ApiController extends AbstractController
      */
     public function getDomainByQuery(FactoryDto $factoryDto, DomainManager $domainManager, Request $request)
     {
-//        $domainManager
-//            ->setPage($request->get('page'))
-//            ->setPerPage($request->get('per_page'))
-//            ->setFilter($request->get('filter'))
-//            ->getDomains();
-
         $domainDto = $factoryDto->setRequest($request)->createDto(DomainDto::class);
         $domainManager->getDomains($domainDto);
         $response = $this->toVuetable($domainManager, $domainDto, $domainManager->getData());

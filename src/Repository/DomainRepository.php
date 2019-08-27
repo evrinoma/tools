@@ -49,13 +49,17 @@ class DomainRepository extends EntityRepository
             ->leftJoin('domain.server', 'server')
             ->where("domain.active = 'a'")
             ->andWhere("server.active = 'a'");
+        if ($this->dto && $this->dto->getId()) {
+            $builder->andWhere('domain.id = :domainId')
+                ->setParameter('domainId', $this->dto->getId());
+        }
         if ($this->dto && $this->dto->getFilter()) {
             $builder->andWhere('domain.domain like :filter or server.hostname like :filter')
                 ->setParameter('filter', '%'.$this->dto->getFilter().'%');
         }
-        if ($this->dto && $this->dto->getIp()) {
-            $builder->andWhere('server.ip like :filter')
-                ->setParameter('filter', $this->dto->getIp());
+        if ($this->dto && $this->dto->getHostNameServer()) {
+            $builder->andWhere('server.hostname like :hostNameServer')
+                ->setParameter('hostNameServer', $this->dto->getHostNameServer());
         }
         if ($this->dto && $this->dto->getPerPage()) {
             $builder->setMaxResults($this->dto->getPerPage());

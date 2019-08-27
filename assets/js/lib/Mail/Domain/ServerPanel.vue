@@ -5,8 +5,12 @@
         <div class="ui form">
             <div class="field" v-bind:class="{ 'error': hasError }">
                 <label>Mx:</label>
-                <div class="ui input">
-                    <input type="text" v-model="mxText" class="three wide column" placeholder="MX name">
+                <div class="ui right labeled left icon input">
+                    <i class="linkify icon "></i>
+                    <input type="text" v-model="mxText"  @input="_cheangeIpTextAction" class="three wide column" placeholder="MX name">
+                    <a class="ui tag label">
+                        ID[{{ idServerSelected }}]
+                    </a>
                 </div>
             </div>
             <div class="field" v-bind:class="{ 'error': hasError }">
@@ -18,13 +22,13 @@
             <div class="field">
                 <label>Server Address:</label>
                 <select class="form-control" @change="relayAdrHandleChange">
-                    <option v-if="relayAdrSelected === false" selected>
+                    <option v-if="hostnameSelected === false" selected>
                         Select Relay Address
                     </option>
                     <option v-else>
                         Select Relay Address
                     </option>
-                    <option v-for="(selectValue, index) in servers" :index="index" :param="selectValue.id" :value="selectValue.ip" :selected="relayAdrSelected === selectValue.ip">{{ selectValue.ip }}</option>
+                    <option v-for="(selectValue, index) in servers" :index="index" :param="selectValue.id" :value="selectValue.hostname" :selected="hostnameSelected === selectValue.hostname">{{ selectValue.hostname }}</option>
 
                 </select>
             </div>
@@ -39,6 +43,12 @@
                 <div class="hidden content">Delete</div>
                 <div class="visible content">
                     <i class="shop trash icon"></i>
+                </div>
+            </div>
+            <div class="ui vertical animated button" tabindex="0" @click="_resetEdit">
+                <div class="hidden content">Reset</div>
+                <div class="visible content">
+                    <i class="shop x icon"></i>
                 </div>
             </div>
         </div>
@@ -81,15 +91,14 @@
         },
         data() {
             return {
-                domainText: '',
                 mxText: '',
                 ipText: '',
-                id: '',
                 servers: {},
-                relayAdrSelected: false,
+                hostnameSelected: false,
+                idServerSelected: '',
                 hasError: false,
                 showError: false,
-                errorText: ''
+                errorText: '',
             }
         },
         mounted() {
@@ -98,12 +107,11 @@
         methods: {
             relayAdrHandleChange(e) {
                 const select = e.target;
-                const selectedIp = select.value;
-                const selectedId = select.options[select.selectedIndex].attributes.param.value;
                 const selectedIndex = select.options[select.selectedIndex].attributes.index.value;
                 this.mxText = this.servers[selectedIndex].hostname;
                 this.ipText = this.servers[selectedIndex].ip;
-                this.relayAdrSelected = this.servers[selectedIndex].ip;
+                this.hostnameSelected = this.servers[selectedIndex].hostname;
+                this.idServerSelected = this.servers[selectedIndex].id;
             },
             _axiosResponse(type, response) {
                 switch (type) {
@@ -120,50 +128,57 @@
                         setTimeout(this._resetError, 2000);
                         break;
                     case 'server-save':
-                        this.$events.fire('table-save', this._getData());
-                        this.relayAdrSelected = response.data.servers.ip;
+                        this.$events.fire('table-save', this._updateData());
+                        this.hostnameSelected = response.data.servers.hostname;
                         this.doMount();
                         break;
                     case 'server-save-error':
                         this.hasError = true;
                         this.showError = true;
-                        this.errorText = 'Запись [' + response.response.data.servers.name + '] невозможно сохранить.';
+                        let errorMessage = (response.response.data.servers) ? '[' + response.response.data.servers.name + '] ' : '';
+                        this.errorText = 'Запись ' + errorMessage + 'невозможно сохранить.';
                         setTimeout(this._resetError, 2000);
-                        this.$events.fire('info-add', this._getData());
+                        this.$events.fire('info-add', this._updateData());
                         break;
                 }
             },
             _resetError() {
                 this.hasError = false;
+                this.showError = false;
             },
             messageError() {
                 this.showError = false;
                 this.errorText = '';
             },
-            _getData() {
+            _resetEdit() {
+                this.mxText = '';
+                this.ipText = '';
+                this.hostnameSelected = false;
+                this._cheangeIpTextAction();
+            },
+            _cheangeIpTextAction() {
+                this.idServerSelected = '';
+            },
+            _updateData() {
                 return {
-                    domain: this.domainText,
-                    relayAdr: this.relayAdrSelected,
-                    mx: this.mxText,
-                    ip: this.ipText,
-                    id: this.id
+                    hostNameServer: this.mxText,
+                    ipServer: this.ipText,
+                    idServer: this.idServerSelected
                 }
             },
             _getAddData() {
                 return {
-                    hostname: this.mxText,
-                    ip: this.ipText,
+                    hostNameServer: this.mxText,
+                    ipServer: this.ipText,
+                    idServer: this.idServerSelected,
                 }
             },
-            onSet(eventData) {
-                this.domainText = eventData.domain;
-                this.mxText = eventData.mx;
-                this.id = eventData.id;
-                this.relayAdrSelected = eventData.relayAdr;
-            },
+            // onSet(eventData) {
+            //     this.mxText = eventData.mx;
+            //     this.hostnameSelected = eventData.relayAdr;
+            // },
             doMount() {
                 this.$events.fire('info-reload');
-                this.$events.fire('table-save', this._getData());
                 axios
                     .get(this.apiUrlServers)
                     .then(response => (this._axiosResponse('server-mount', response)));
@@ -179,10 +194,7 @@
                     .delete(this.apiUrlDelete, {data: this._getAddData()})
                     .then(response => (this._axiosResponse('server-delete', response)))
                     .catch(error => (this._axiosResponse('server-delete-error', error)));
-                this.domainText = '';
-                this.relayAdrSelected = false;
-                this.mxText = '';
-                this.ipText = '';
+                this._resetEdit();
             }
         }
     }

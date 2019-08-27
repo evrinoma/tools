@@ -131,16 +131,17 @@
             },
             _getData() {
                 return {
-                    domain: this.domainText,
-                    relayAdr: this.relayAdrSelected,
-                    mx: this.mxText,
-                    id: this.id
+                    domainName: this.domainText,
+                    ipServer: this.relayAdrSelected,
+                    hostNameServer: this.mxText,
+                    domainId: this.id
                 }
             },
             _getAddData() {
                 return {
-                    hostname: this.domainText,
-                    ip: this.relayAdrSelected,
+                    domainName: this.domainText,
+                    hostNameServer: this.mxText,
+                    ipServer: this.relayAdrSelected,
                 }
             },
             onSet(eventData) {

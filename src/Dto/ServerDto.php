@@ -25,6 +25,28 @@ class ServerDto extends AbstractFactoryDto
 //region SECTION: Fields
     private $ip;
     private $hostName;
+    private $id;
+
+    /**
+     * @return mixed
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * @param mixed $id
+     *
+     * @return ServerDto
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+
+        return $this;
+    }
+
 //endregion Fields
 
 //region SECTION: Public
@@ -66,8 +88,9 @@ class ServerDto extends AbstractFactoryDto
      */
     public static function toDto(Request $request)
     {
-        $ip   = $request->get('ip');
-        $name = $request->get('hostname');
+        $ip   = $request->get('ipServer');
+        $name = $request->get('hostNameServer');
+        $idServer = $request->get('idServer');
 
         $dto = new self();
 
@@ -77,6 +100,10 @@ class ServerDto extends AbstractFactoryDto
 
         if ($ip) {
             $dto->setIp($ip);
+        }
+
+        if ($idServer) {
+            $dto->setId($idServer);
         }
 
         return $dto;

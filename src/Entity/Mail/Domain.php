@@ -39,19 +39,6 @@ class Domain
 //endregion Fields
 
 //region SECTION: Public
-    /**
-     * @param $server
-     *
-     * @return $this
-     */
-    public function setServer($server)
-    {
-        if ($server) {
-            $this->server = $server;
-        }
-
-        return $this;
-    }
 //endregion Public
 
 //region SECTION: Getters/Setters
@@ -64,9 +51,17 @@ class Domain
     }
 
     /**
+     * @return int
+     */
+    public function getDomainId(): int
+    {
+        return $this->getId();
+    }
+
+    /**
      * @return string
      */
-    public function getDomain(): string
+    public function getDomainName(): string
     {
         return $this->domain;
     }
@@ -74,7 +69,7 @@ class Domain
     /**
      * @return string
      */
-    public function getRelayAdr(): string
+    public function getIpServer(): string
     {
         return $this->server->getIp();
     }
@@ -82,9 +77,23 @@ class Domain
     /**
      * @return string|null
      */
-    public function getMx(): ?string
+    public function getHostNameServer(): ?string
     {
         return $this->server->getHostname();
+    }
+
+    /**
+     * @param $server
+     *
+     * @return $this
+     */
+    public function setServer($server)
+    {
+        if ($server) {
+            $this->server = $server;
+        }
+
+        return $this;
     }
 
     /**

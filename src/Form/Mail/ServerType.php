@@ -10,6 +10,7 @@ namespace App\Form\Mail;
 
 use App\Dto\FactoryDto;
 use App\Dto\ServerDto;
+use App\Entity\Mail\Server;
 use App\Manager\ServerManager;
 use App\Rest\Form\RestChoiceType;
 use Symfony\Component\Form\AbstractType;
@@ -55,8 +56,9 @@ class ServerType extends AbstractType
     {
         $callback = function (Options $options) {
             $servers = [];
+            /** @var Server $server */
             foreach ($this->serverManager->getServers($this->factoryDto->cloneDto(ServerDto::class))->getData() as $server) {
-                $servers[] = $server->getIp();
+                $servers[] = $server->getHostname();
             }
 
             return $servers;

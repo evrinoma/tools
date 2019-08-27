@@ -6,15 +6,17 @@ export default [
         dataClass: 'right aligned'
     },
     {
-        name: 'domain',
-        sortField: 'domain'
+        name: 'domainName',
+        sortField: 'domainName'
     },
     {
-        name: 'relayAdr',
+        title: 'relayAdr',
+        name: 'ipServer',
         dataClass: 'center aligned'
     },
     {
-        name: 'mx',
+        title: 'mx',
+        name: 'hostNameServer',
     },
     {
         name: 'active',

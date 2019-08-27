@@ -13,7 +13,6 @@ use App\Core\AbstractEntityManager;
 use App\Dto\ServerDto;
 use App\Entity\Mail\Server;
 use App\Rest\Core\RestTrait;
-use Doctrine\Common\Collections\Criteria;
 
 /**
  * Class ServerManger
@@ -44,16 +43,10 @@ class ServerManager extends AbstractEntityManager
 
         if ($serverDto->isValidHostName() && $serverDto->isValidIp()) {
             $criteria = $this->getCriteria();
-            $criteria
-                ->andWhere(
-                    $criteria->expr()->andX(
-                        $criteria->expr()->eq('ip', $serverDto->getIp()),
-                        $criteria->expr()->eq('hostname', $serverDto->getHostName())
-                    )
-                );
-
+            $criteria->andWhere($criteria->expr()->eq('hostname', $serverDto->getHostName()));
+            $criteria->andWhere($criteria->expr()->eq('id', $serverDto->getId()));
             $existServer = $this->repository->matching($criteria);
-            if ($existServer->count() >= 1) {
+            if (!$serverDto->getId() && $existServer->count() >= 1) {
                 $this->setRestServerErrorUnknownError();
             } else {
                 $entity = $this->save($existServer->count() ? $existServer->first() : new Server(), $serverDto);
@@ -76,10 +69,15 @@ class ServerManager extends AbstractEntityManager
      */
     public function getServers($serverDto)
     {
-        $criteria = new Criteria();
+        $criteria = $this->getCriteria();
         if ($serverDto->getIp()) {
-            $criteria->where(
+            $criteria->andWhere(
                 $criteria->expr()->eq('ip', $serverDto->getIp())
+            );
+        }
+        if ($serverDto->getHostName()) {
+            $criteria->andWhere(
+                $criteria->expr()->eq('hostname', $serverDto->getHostName())
             );
         }
         $value = $this->repository->matching($criteria);

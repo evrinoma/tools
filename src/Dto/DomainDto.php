@@ -25,8 +25,8 @@ class DomainDto extends AbstractFactoryDto implements VuetableInterface
 
 //region SECTION: Fields
     private $id;
-    private $ip;
-    private $name;
+    private $hostNameServer;
+    private $domainName;
     private $page;
     private $perPage;
     private $filter;
@@ -46,7 +46,7 @@ class DomainDto extends AbstractFactoryDto implements VuetableInterface
      */
     public function fillEntity($entity)
     {
-        $entity->setDomain($this->getName())->setServer($this->getServer()->generatorEntity()->current())->setActive();
+        $entity->setDomain($this->getDomainName())->setServer($this->getServer()->generatorEntity()->current())->setActive();
 
         return $entity;
     }
@@ -54,17 +54,17 @@ class DomainDto extends AbstractFactoryDto implements VuetableInterface
     /**
      * @return bool
      */
-    public function isValidName()
+    public function isValidDomainName()
     {
-        return $this->name && (preg_match("/(?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\.)+[a-z0-9][a-z0-9-]{0,61}[a-z0-9]/", $this->name) === 1);
+        return $this->domainName && (preg_match("/(?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\.)+[a-z0-9][a-z0-9-]{0,61}[a-z0-9]/", $this->domainName) === 1);
     }
 
     /**
      * @return bool
      */
-    public function isValidIp()
+    public function isValidHostNameServer()
     {
-        return $this->ip && (preg_match("/^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$/", $this->ip) === 1);
+        return $this->hostNameServer &&  (preg_match("/(?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\.)+[a-z0-9][a-z0-9-]{0,61}[a-z0-9]/", $this->hostNameServer) === 1);
     }
 //endregion Public
 
@@ -79,28 +79,28 @@ class DomainDto extends AbstractFactoryDto implements VuetableInterface
         $page    = $request->get('page');
         $perPage = $request->get('per_page');
         $filter  = $request->get('filter');
-        $ip      = $request->get('ip');
-        $name    = $request->get('hostname');
-        $id      = $request->get('id');
+        $hostNameServer      = $request->get('hostNameServer');
+        $domainName    = $request->get('domainName');
+        $id      = $request->get('domainId');
 
         $dto = new self();
 
-        if ($id) {
+        if ($id!==null) {
             $dto->setId($id);
         }
-        if ($ip) {
-            $dto->setIp($ip);
+        if ($hostNameServer!==null) {
+            $dto->setHostNameServer($hostNameServer);
         }
-        if ($name) {
-            $dto->setName($name);
+        if ($domainName!==null) {
+            $dto->setDomainName($domainName);
         }
-        if ($page) {
+        if ($page!==null) {
             $dto->setPage($page);
         }
-        if ($perPage) {
+        if ($perPage!==null) {
             $dto->setPerPage($perPage);
         }
-        if ($filter) {
+        if ($filter!==null) {
             $dto->setFilter($filter);
         }
 
@@ -154,17 +154,17 @@ class DomainDto extends AbstractFactoryDto implements VuetableInterface
     /**
      * @return mixed
      */
-    public function getIp()
+    public function getHostNameServer()
     {
-        return $this->ip;
+        return $this->hostNameServer;
     }
 
     /**
      * @return mixed
      */
-    public function getName()
+    public function getDomainName()
     {
-        return $this->name;
+        return $this->domainName;
     }
 
     /**
@@ -195,7 +195,7 @@ class DomainDto extends AbstractFactoryDto implements VuetableInterface
      */
     public function setPage($page = null)
     {
-        $this->page = $page;
+        $this->page = (int) $page;
 
         return $this;
     }
@@ -207,7 +207,7 @@ class DomainDto extends AbstractFactoryDto implements VuetableInterface
      */
     public function setPerPage($perPage = null)
     {
-        $this->perPage = $perPage;
+        $this->perPage = (int) $perPage;
 
         return $this;
     }
@@ -225,25 +225,25 @@ class DomainDto extends AbstractFactoryDto implements VuetableInterface
     }
 
     /**
-     * @param mixed $ip
+     * @param mixed $hostNameServer
      *
      * @return DomainDto
      */
-    public function setIp($ip = null)
+    public function setHostNameServer($hostNameServer = null)
     {
-        $this->ip = $ip;
+        $this->hostNameServer = $hostNameServer;
 
         return $this;
     }
 
     /**
-     * @param mixed $name
+     * @param mixed $domainName
      *
      * @return DomainDto
      */
-    public function setName($name = null)
+    public function setDomainName($domainName = null)
     {
-        $this->name = $name;
+        $this->domainName = $domainName;
 
         return $this;
     }
