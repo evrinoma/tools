@@ -39,42 +39,222 @@ use Symfony\Component\HttpFoundation\Request;
 class ApiController extends AbstractController
 {
 
+
+
+
 //region SECTION: Public
     /**
-     * @Rest\Put("/internal/menu/create_default", name="api_create_default_menu")
-     * @SWG\Put(tags={"menu"})
-     * @SWG\Response(response=200,description="Returns the rewards of default generated menu")
+     * @Rest\Get("/internal/acl/acl", name="api_acl")
+     * @SWG\Get(tags={"acl"})
+     * @SWG\Parameter(
+     *     name="aclId",
+     *     in="query",
+     *     type="string",
+     *     description="id record"
+     * )
+     * @SWG\Response(response=200,description="Returns the acl list")
      *
-     * @param MenuManager $menuManager
+     * @param AclManager $aclManager
      *
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
-    public function menuCreateDefaultAction(MenuManager $menuManager)
+    public function aclAction(FactoryDto $factoryDto, AclManager $aclManager, Request $request)
     {
-        $menuManager->createDefaultMenu();
+        $aclDto = $factoryDto->setRequest($request)->createDto(AclDto::class);
 
-        return $this->json(['message' => 'the Menu was generate successFully']);
+        return $this->json($aclManager->setRestSuccessOk()->getAcls($aclDto)->getData(), $aclManager->getRestStatus());
     }
 
     /**
-     * @Rest\Delete("/internal/menu/delete", name="api_delete_menu")
-     * @SWG\Delete(tags={"menu"})
+     * @Rest\Put("/internal/acl/import", name="api_import_default_acl")
+     * @SWG\Put(tags={"acl"})
+     * @SWG\Response(response=200,description="Returns the import of acls")
+     *
+     * @param AclManager $aclManager
+     *
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     * @throws \Doctrine\ORM\ORMException
+     */
+    public function aclImport(AclManager $aclManager)
+    {
+        return $this->json(['acls' => $aclManager->setRestSuccessOk()->megrateAcls()], $aclManager->getRestStatus());
+    }
+
+
+    /**
+     * @Rest\Get("/internal/acl/model", name="api_acl_model")
+     * @SWG\Get(tags={"acl"})
+     *
+     * @SWG\Response(response=200,description="Returns the acl model")
+     *
+     * @param AclManager $aclManager
+     *
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     */
+    public function aclModelAction(AclManager $aclManager)
+    {
+        return $this->json($aclManager->setRestSuccessOk()->getAclModel()->getData(), $aclManager->getRestStatus());
+    }
+
+    /**
+     * @Rest\Post("/internal/acl/save", name="api_acl_save")
+     * @SWG\Post(tags={"acl"})
+     * @SWG\Parameter(
+     *     name="aclId",
+     *     in="query",
+     *     type="string",
+     *     description="id record"
+     * )
+     * @SWG\Parameter(
+     *     name="email",
+     *     in="query",
+     *     type="string",
+     *     description="email or domain record"
+     * )
+     * @SWG\Parameter(
+     *     name="type",
+     *     in="query",
+     *     type="array",
+     *     description="black or white",
+     *     items=@SWG\Items(
+     *         type="string",
+     *         @Model(type=App\Form\Mail\TypeAclType::class)
+     *     )
+     * )
+     * @SWG\Parameter(
+     *     name="domainName",
+     *     in="query",
+     *     type="array",
+     *     description="select domain",
+     *     items=@SWG\Items(
+     *         type="string",
+     *         @Model(type=App\Form\Mail\DomainType::class)
+     *     )
+     * )
      * @SWG\Response(response=200,description="Returns nothing")
      *
-     * @param MenuManager $menuManager
+     * @param FactoryDto $factoryDto
+     * @param AclManager $aclManager
      *
      * @return \Symfony\Component\HttpFoundation\JsonResponse
+     * @throws \Exception
      */
-    public function menuDeleteAction(MenuManager $menuManager)
+    public function aclSaveAction(FactoryDto $factoryDto, AclManager $aclManager, Request $request)
     {
-        $menuManager->deleteDefaultMenu();
+        $aclDto = $factoryDto->setRequest($request)->createDto(AclDto::class);
 
-        return $this->json(['message' => 'the Menu was delete successFully']);
+        return $this->json($aclManager->setRestSuccessOk()->saveAcl($aclDto), $aclManager->getRestStatus());
     }
 
     /**
-     * @Rest\Delete("/internal/server/delete", name="api_delete_server")
-     * @SWG\Delete(tags={"server"})
+     * @Rest\Get("/internal/domain/domain", name="api_domain")
+     * @SWG\Get(tags={"domain"})
+     *
+     * @SWG\Response(response=200,description="Returns the rewards of all generated domains")
+     *
+     * @param FactoryDto    $factoryDto
+     * @param DomainManager $domainManager
+     *
+     * @param Request       $request
+     *
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     */
+    public function domainAction(FactoryDto $factoryDto, DomainManager $domainManager, Request $request)
+    {
+        $domainDto = $factoryDto->setRequest($request)->createDto(DomainDto::class);
+
+        return $this->json($domainManager->setRestSuccessOk()->getDomains($domainDto)->getData(), $domainManager->getRestStatus());
+    }
+
+    /**
+     * @Rest\Get("/internal/domain/query", name="api_query_domain")
+     * @SWG\Get(tags={"domain"})
+     * @SWG\Parameter(
+     *     name="page",
+     *     in="query",
+     *     type="integer",
+     *     default="1",
+     *     description="page number"
+     * )
+     * @SWG\Parameter(
+     *     name="per_page",
+     *     in="query",
+     *     type="integer",
+     *     default="0",
+     *     description="per page records"
+     * )
+     * @SWG\Parameter(
+     *     name="filter",
+     *     in="query",
+     *     type="string",
+     *     default="",
+     *     description="filter by domain or mx"
+     * )
+     *
+     * @SWG\Response(response=200,description="Returns the rewards of all generated domains")
+     *
+     * @param FactoryDto    $factoryDto
+     * @param DomainManager $domainManager
+     *
+     * @param Request       $request
+     *
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     */
+    public function domainByQueryAction(FactoryDto $factoryDto, DomainManager $domainManager, Request $request)
+    {
+        $domainDto = $factoryDto->setRequest($request)->createDto(DomainDto::class);
+        $domainManager->getDomains($domainDto);
+        $response = $this->toVuetable($domainManager, $domainDto, $domainManager->getData());
+
+        $domainManager->setRestSuccessOk();
+
+        return $this->json($response, $domainManager->getRestStatus());
+    }
+
+    /**
+     * @Rest\Delete("/internal/domain/delete", name="api_delete_domain")
+     * @SWG\Delete(tags={"domain"})
+     * @SWG\Parameter(
+     *     name="domainId",
+     *     in="query",
+     *     type="string",
+     *     default="-1",
+     *     description="id record"
+     * )
+     * @SWG\Response(response=200,description="Returns nothing")
+     *
+     * @param FactoryDto    $factoryDto
+     * @param DomainManager $domainManager
+     * @param Request       $request
+     *
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     */
+    public function domainDeleteAction(FactoryDto $factoryDto, DomainManager $domainManager, Request $request)
+    {
+        $domainDto = $factoryDto->setRequest($request)->createDto(DomainDto::class);
+
+        $domainManager->setRestSuccessOk()->getDomains($domainDto)->lockEntitys();
+
+        return $this->json(['message' => 'the Domain was delete successFully'], $domainManager->getRestStatus());
+    }
+
+    /**
+     * @Rest\Put("/internal/domain/import", name="api_import_default_domain")
+     * @SWG\Put(tags={"domain"})
+     * @SWG\Response(response=200,description="Returns the import of domains")
+     *
+     * @param DomainManager $domainManager
+     *
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     */
+    public function domainImportAction(DomainManager $domainManager)
+    {
+        return $this->json(['domains' => $domainManager->setRestSuccessOk()->megrateDomains()], $domainManager->getRestStatus());
+    }
+
+    /**
+     * @Rest\Post("/internal/domain/save", name="api_save_domain")
+     * @SWG\Post(tags={"domain"})
      * @SWG\Parameter(
      *  name="hostNameServer",
      *     in="query",
@@ -85,91 +265,78 @@ class ApiController extends AbstractController
      *         @Model(type=App\Form\Mail\ServerType::class)
      *     )
      * )
-     * @SWG\Response(response=200,description="Returns nothing")
-     *
-     * @param FactoryDto    $factoryDto
-     * @param ServerManager $serverManger
-     * @param Request       $request
-     *
-     * @return \Symfony\Component\HttpFoundation\JsonResponse
-     * @throws \Exception
-     */
-    public function serverDeleteAction(FactoryDto $factoryDto, ServerManager $serverManger, Request $request)
-    {
-        $serverDto = $factoryDto->setRequest($request)->createDto(ServerDto::class);
-
-        $serverManger->setRestSuccessOk()->getServers($serverDto)->lockEntitys();
-
-        return $this->json(['message' => 'the Domain was delete successFully'], $serverManger->getRestStatus());
-    }
-
-    /**
-     * @Rest\Post("/internal/server/save", name="api_save_server")
-     * @SWG\Post(tags={"server"})
      * @SWG\Parameter(
-     *     name="idServer",
+     *     name="domainName",
      *     in="query",
      *     type="string",
-     *     default=null,
-     *     description="id server"
-     * )
-     * @SWG\Parameter(
-     *     name="ipServer",
-     *     in="query",
-     *     type="string",
-     *     pattern="\d{1,3}.\d{1,3}.\d{1,3}.\d{1,3}",
-     *     default="172.20.1.4",
-     *     description="ip server"
-     * )
-     * @SWG\Parameter(
-     *     name="hostNameServer",
-     *     in="query",
-     *     type="string",
-     *     default="mail.ite-ng.ru",
-     *     description="hostname server"
+     *     default="ite-ng.ru",
+     *     description="Mail name server"
      * )
      * @SWG\Response(response=200,description="Returns the rewards of default generated domain",
      *     @SWG\Schema(
      *        type="object",
-     *        example={"hostNameServer": "ite-ng.ru", "ipServer": "172.20.1.4"}
+     *        example={"domainName": "ite29.ite-ng.ru", "ip": "172.20.1.4"}
      *     )
      * )
      * @SWG\Response(response=400,description="set ip and name domain")
      *
      * @param FactoryDto    $factoryDto
-     * @param ServerManager $serverManager
-     * @param Request       $request
+     * @param DomainManager $domainManager
      *
-     * @return \Symfony\Component\HttpFoundation\JsonResponse
-     */
-    public function serverSaveAction(FactoryDto $factoryDto, ServerManager $serverManager, Request $request)
-    {
-        $serverDto = $factoryDto->setRequest($request)->createDto(ServerDto::class);
-
-        return $this->json(
-            ['servers' => $serverManager->setRestSuccessOk()->saveServer($serverDto)],
-            $serverManager->getRestStatus()
-        );
-    }
-
-
-    /**
-     * @Rest\Get("/internal/server/server", name="api_server")
-     * @SWG\Get(tags={"server"})
-     * @SWG\Response(response=200,description="Returns the rewards of all servers")
-     *
-     * @param FactoryDto    $factoryDto
-     * @param ServerManager $serverManger
      * @param Request       $request
      *
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      * @throws \Exception
      */
-    public function serverAction(FactoryDto $factoryDto, ServerManager $serverManger, Request $request)
+    public function domainSaveAction(FactoryDto $factoryDto, DomainManager $domainManager, Request $request)
     {
-        $serverDto = $factoryDto->setRequest($request)->createDto(ServerDto::class);
+        $domainDto = $factoryDto->setRequest($request)->createDto(DomainDto::class);
 
-        return $this->json(['servers' => $serverManger->setRestSuccessOk()->getServers($serverDto)->getData()], $serverManger->getRestStatus());
+        return $this->json(
+            ['domains' => $domainManager->setRestSuccessOk()->saveDomain($domainDto)],
+            $domainManager->getRestStatus()
+        );
+    }
+
+    /**
+     * @Rest\Get("/api/doc/journal", options={"expose"=true}, name="api_delta_journal")
+     * @SWG\Get(tags={"delta"})
+     * @SWG\Parameter(
+     *      name="dataFlow",
+     *      in="query",
+     *      type="array",
+     *      description="Select data by date value",
+     *      items=@SWG\Items(
+     *         type="string",
+     *         @Model(type=App\Form\Delta\DataFlowType::class)
+     *     )
+     * )
+     * @SWG\Parameter(
+     *     name="date",
+     *     in="query",
+     *     type="string",
+     *     format="date",
+     *     pattern="\d{1,2}-\d{1,2}-\d{4}",
+     *     default="13-05-2019",
+     *     description="Select data by date value"
+     * )
+     * @SWG\Response(response=200,description="Returns journal delta")
+     *
+     * @param JournalManager $journalManager
+     * @param Request        $request
+     *
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     */
+    public function journalAction(JournalManager $journalManager, Request $request)
+    {
+
+        $date     = $request->get('date');
+        $dataFlow = $request->get('dataFlow');
+
+        $data = $journalManager->validate($dataFlow, $date)->findParams()->findDiscretInfo()->getData();
+
+
+        return $this->json(['delta_data' => $data]);
     }
 
     /**
@@ -267,123 +434,135 @@ class ApiController extends AbstractController
     }
 
     /**
-     * @Rest\Get("/internal/acl/acl", name="api_acl")
-     * @SWG\Get(tags={"acl"})
-     * @SWG\Parameter(
-     *     name="aclId",
-     *     in="query",
-     *     type="string",
-     *     description="id record"
-     * )
-     * @SWG\Response(response=200,description="Returns the acl list")
+     * @Rest\Put("/internal/menu/create_default", name="api_create_default_menu")
+     * @SWG\Put(tags={"menu"})
+     * @SWG\Response(response=200,description="Returns the rewards of default generated menu")
      *
-     * @param AclManager $aclManager
+     * @param MenuManager $menuManager
      *
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
-    public function aclAction(FactoryDto $factoryDto, AclManager $aclManager, Request $request)
+    public function menuCreateDefaultAction(MenuManager $menuManager)
     {
-        $aclDto = $factoryDto->setRequest($request)->createDto(AclDto::class);
+        $menuManager->createDefaultMenu();
 
-        return $this->json($aclManager->setRestSuccessOk()->getAcls($aclDto)->getData(), $aclManager->getRestStatus());
+        return $this->json(['message' => 'the Menu was generate successFully']);
     }
 
     /**
-     * @Rest\Get("/internal/acl/model", name="api_acl_model")
-     * @SWG\Get(tags={"acl"})
-     *
-     * @SWG\Response(response=200,description="Returns the acl model")
-     *
-     * @param AclManager $aclManager
-     *
-     * @return \Symfony\Component\HttpFoundation\JsonResponse
-     */
-    public function aclModelAction(AclManager $aclManager)
-    {
-        return $this->json($aclManager->setRestSuccessOk()->getAclModel()->getData(), $aclManager->getRestStatus());
-    }
-
-
-    /**
-     * @Rest\Put("/internal/acl/import", name="api_import_default_acl")
-     * @SWG\Put(tags={"acl"})
-     * @SWG\Response(response=200,description="Returns the import of acls")
-     *
-     * @param AclManager $aclManager
-     *
-     * @return \Symfony\Component\HttpFoundation\JsonResponse
-     * @throws \Doctrine\ORM\ORMException
-     */
-    public function aclImport(AclManager $aclManager)
-    {
-        return $this->json(['acls' => $aclManager->setRestSuccessOk()->megrateAcls()], $aclManager->getRestStatus());
-    }
-
-
-    /**
-     * @Rest\Post("/internal/acl/save", name="api_acl_save")
-     * @SWG\Post(tags={"acl"})
-     * @SWG\Parameter(
-     *     name="aclId",
-     *     in="query",
-     *     type="string",
-     *     description="id record"
-     * )
-     * @SWG\Parameter(
-     *     name="email",
-     *     in="query",
-     *     type="string",
-     *     description="email or domain record"
-     * )
-     * @SWG\Parameter(
-     *     name="type",
-     *     in="query",
-     *     type="array",
-     *     description="black or white",
-     *     items=@SWG\Items(
-     *         type="string",
-     *         @Model(type=App\Form\Mail\TypeAclType::class)
-     *     )
-     * )
-     * @SWG\Parameter(
-     *     name="domainName",
-     *     in="query",
-     *     type="array",
-     *     description="select domain",
-     *     items=@SWG\Items(
-     *         type="string",
-     *         @Model(type=App\Form\Mail\DomainType::class)
-     *     )
-     * )
+     * @Rest\Delete("/internal/menu/delete", name="api_delete_menu")
+     * @SWG\Delete(tags={"menu"})
      * @SWG\Response(response=200,description="Returns nothing")
      *
-     * @param FactoryDto $factoryDto
-     * @param AclManager $aclManager
+     * @param MenuManager $menuManager
+     *
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     */
+    public function menuDeleteAction(MenuManager $menuManager)
+    {
+        $menuManager->deleteDefaultMenu();
+
+        return $this->json(['message' => 'the Menu was delete successFully']);
+    }
+
+    /**
+     * @Rest\Get("/internal/server/server", name="api_server")
+     * @SWG\Get(tags={"server"})
+     * @SWG\Response(response=200,description="Returns the rewards of all servers")
+     *
+     * @param FactoryDto    $factoryDto
+     * @param ServerManager $serverManger
+     * @param Request       $request
      *
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      * @throws \Exception
      */
-    public function aclSaveAction(FactoryDto $factoryDto, AclManager $aclManager, Request $request)
+    public function serverAction(FactoryDto $factoryDto, ServerManager $serverManger, Request $request)
     {
-        $aclDto = $factoryDto->setRequest($request)->createDto(AclDto::class);
+        $serverDto = $factoryDto->setRequest($request)->createDto(ServerDto::class);
 
-        return $this->json($aclManager->setRestSuccessOk()->saveAcl($aclDto), $aclManager->getRestStatus());
+        return $this->json(['servers' => $serverManger->setRestSuccessOk()->getServers($serverDto)->getData()], $serverManger->getRestStatus());
     }
 
     /**
-     * @Rest\Get("/internal/spam/rules_type", name="api_spam_rules_type")
-     * @SWG\Get(tags={"spam"})
-     * @SWG\Response(response=200,description="Returns the spam rules types")
+     * @Rest\Delete("/internal/server/delete", name="api_delete_server")
+     * @SWG\Delete(tags={"server"})
+     * @SWG\Parameter(
+     *  name="hostNameServer",
+     *     in="query",
+     *     type="array",
+     *     description="This is a parameter",
+     *     items=@SWG\Items(
+     *         type="string",
+     *         @Model(type=App\Form\Mail\ServerType::class)
+     *     )
+     * )
+     * @SWG\Response(response=200,description="Returns nothing")
      *
-     * @param SpamManager $spamManager
+     * @param FactoryDto    $factoryDto
+     * @param ServerManager $serverManger
+     * @param Request       $request
+     *
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     * @throws \Exception
+     */
+    public function serverDeleteAction(FactoryDto $factoryDto, ServerManager $serverManger, Request $request)
+    {
+        $serverDto = $factoryDto->setRequest($request)->createDto(ServerDto::class);
+
+        $serverManger->setRestSuccessOk()->getServers($serverDto)->lockEntitys();
+
+        return $this->json(['message' => 'the Domain was delete successFully'], $serverManger->getRestStatus());
+    }
+
+    /**
+     * @Rest\Post("/internal/server/save", name="api_save_server")
+     * @SWG\Post(tags={"server"})
+     * @SWG\Parameter(
+     *     name="idServer",
+     *     in="query",
+     *     type="string",
+     *     default=null,
+     *     description="id server"
+     * )
+     * @SWG\Parameter(
+     *     name="ipServer",
+     *     in="query",
+     *     type="string",
+     *     pattern="\d{1,3}.\d{1,3}.\d{1,3}.\d{1,3}",
+     *     default="172.20.1.4",
+     *     description="ip server"
+     * )
+     * @SWG\Parameter(
+     *     name="hostNameServer",
+     *     in="query",
+     *     type="string",
+     *     default="mail.ite-ng.ru",
+     *     description="hostname server"
+     * )
+     * @SWG\Response(response=200,description="Returns the rewards of default generated domain",
+     *     @SWG\Schema(
+     *        type="object",
+     *        example={"hostNameServer": "ite-ng.ru", "ipServer": "172.20.1.4"}
+     *     )
+     * )
+     * @SWG\Response(response=400,description="set ip and name domain")
+     *
+     * @param FactoryDto    $factoryDto
+     * @param ServerManager $serverManager
+     * @param Request       $request
      *
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
-    public function spamRulesTypeAction(SpamManager $spamManager)
+    public function serverSaveAction(FactoryDto $factoryDto, ServerManager $serverManager, Request $request)
     {
-        return $this->json($spamManager->setRestSuccessOk()->getSpamRuleType()->getData(), $spamManager->getRestStatus());
-    }
+        $serverDto = $factoryDto->setRequest($request)->createDto(ServerDto::class);
 
+        return $this->json(
+            ['servers' => $serverManager->setRestSuccessOk()->saveServer($serverDto)],
+            $serverManager->getRestStatus()
+        );
+    }
 
     /**
      * @Rest\Put("/internal/spam/import", name="api_import_default_spam")
@@ -400,155 +579,17 @@ class ApiController extends AbstractController
     }
 
     /**
-     * @Rest\Get("/internal/domain/domain", name="api_domain")
-     * @SWG\Get(tags={"domain"})
+     * @Rest\Get("/internal/spam/rules_type", name="api_spam_rules_type")
+     * @SWG\Get(tags={"spam"})
+     * @SWG\Response(response=200,description="Returns the spam rules types")
      *
-     * @SWG\Response(response=200,description="Returns the rewards of all generated domains")
-     *
-     * @param FactoryDto    $factoryDto
-     * @param DomainManager $domainManager
-     *
-     * @param Request       $request
+     * @param SpamManager $spamManager
      *
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
-    public function domainAction(FactoryDto $factoryDto, DomainManager $domainManager, Request $request)
+    public function spamRulesTypeAction(SpamManager $spamManager)
     {
-        $domainDto = $factoryDto->setRequest($request)->createDto(DomainDto::class);
-
-        return $this->json($domainManager->setRestSuccessOk()->getDomains($domainDto)->getData(), $domainManager->getRestStatus());
-    }
-
-    /**
-     * @Rest\Get("/internal/domain/query", name="api_query_domain")
-     * @SWG\Get(tags={"domain"})
-     * @SWG\Parameter(
-     *     name="page",
-     *     in="query",
-     *     type="integer",
-     *     default="1",
-     *     description="page number"
-     * )
-     * @SWG\Parameter(
-     *     name="per_page",
-     *     in="query",
-     *     type="integer",
-     *     default="0",
-     *     description="per page records"
-     * )
-     * @SWG\Parameter(
-     *     name="filter",
-     *     in="query",
-     *     type="string",
-     *     default="",
-     *     description="filter by domain or mx"
-     * )
-     *
-     * @SWG\Response(response=200,description="Returns the rewards of all generated domains")
-     *
-     * @param FactoryDto    $factoryDto
-     * @param DomainManager $domainManager
-     *
-     * @param Request       $request
-     *
-     * @return \Symfony\Component\HttpFoundation\JsonResponse
-     */
-    public function domainByQueryAction(FactoryDto $factoryDto, DomainManager $domainManager, Request $request)
-    {
-        $domainDto = $factoryDto->setRequest($request)->createDto(DomainDto::class);
-        $domainManager->getDomains($domainDto);
-        $response = $this->toVuetable($domainManager, $domainDto, $domainManager->getData());
-
-        $domainManager->setRestSuccessOk();
-
-        return $this->json($response, $domainManager->getRestStatus());
-    }
-
-    /**
-     * @Rest\Delete("/internal/domain/delete", name="api_delete_domain")
-     * @SWG\Delete(tags={"domain"})
-     * @SWG\Parameter(
-     *     name="domainId",
-     *     in="query",
-     *     type="string",
-     *     default="-1",
-     *     description="id record"
-     * )
-     * @SWG\Response(response=200,description="Returns nothing")
-     *
-     * @param FactoryDto    $factoryDto
-     * @param DomainManager $domainManager
-     * @param Request       $request
-     *
-     * @return \Symfony\Component\HttpFoundation\JsonResponse
-     */
-    public function domainDeleteAction(FactoryDto $factoryDto, DomainManager $domainManager, Request $request)
-    {
-        $domainDto = $factoryDto->setRequest($request)->createDto(DomainDto::class);
-
-        $domainManager->setRestSuccessOk()->getDomains($domainDto)->lockEntitys();
-
-        return $this->json(['message' => 'the Domain was delete successFully'], $domainManager->getRestStatus());
-    }
-
-    /**
-     * @Rest\Post("/internal/domain/save", name="api_save_domain")
-     * @SWG\Post(tags={"domain"})
-     * @SWG\Parameter(
-     *  name="hostNameServer",
-     *     in="query",
-     *     type="array",
-     *     description="This is a parameter",
-     *     items=@SWG\Items(
-     *         type="string",
-     *         @Model(type=App\Form\Mail\ServerType::class)
-     *     )
-     * )
-     * @SWG\Parameter(
-     *     name="domainName",
-     *     in="query",
-     *     type="string",
-     *     default="ite-ng.ru",
-     *     description="Mail name server"
-     * )
-     * @SWG\Response(response=200,description="Returns the rewards of default generated domain",
-     *     @SWG\Schema(
-     *        type="object",
-     *        example={"domainName": "ite29.ite-ng.ru", "ip": "172.20.1.4"}
-     *     )
-     * )
-     * @SWG\Response(response=400,description="set ip and name domain")
-     *
-     * @param FactoryDto    $factoryDto
-     * @param DomainManager $domainManager
-     *
-     * @param Request       $request
-     *
-     * @return \Symfony\Component\HttpFoundation\JsonResponse
-     * @throws \Exception
-     */
-    public function domainSaveAction(FactoryDto $factoryDto, DomainManager $domainManager, Request $request)
-    {
-        $domainDto = $factoryDto->setRequest($request)->createDto(DomainDto::class);
-
-        return $this->json(
-            ['domains' => $domainManager->setRestSuccessOk()->saveDomain($domainDto)],
-            $domainManager->getRestStatus()
-        );
-    }
-
-    /**
-     * @Rest\Put("/internal/domain/import", name="api_import_default_domain")
-     * @SWG\Put(tags={"domain"})
-     * @SWG\Response(response=200,description="Returns the import of domains")
-     *
-     * @param DomainManager $domainManager
-     *
-     * @return \Symfony\Component\HttpFoundation\JsonResponse
-     */
-    public function domainImportAction(DomainManager $domainManager)
-    {
-        return $this->json(['domains' => $domainManager->setRestSuccessOk()->megrateDomains()], $domainManager->getRestStatus());
+        return $this->json($spamManager->setRestSuccessOk()->getSpamRuleType()->getData(), $spamManager->getRestStatus());
     }
 
     /**
@@ -565,46 +606,7 @@ class ApiController extends AbstractController
         return $this->json(['system' => $dashBoardManager->getDashBoard()]);
     }
 
-    /**
-     * @Rest\Get("/api/doc/journal", options={"expose"=true}, name="api_delta_journal")
-     * @SWG\Get(tags={"delta"})
-     * @SWG\Parameter(
-     *      name="dataFlow",
-     *      in="query",
-     *      type="array",
-     *      description="Select data by date value",
-     *      items=@SWG\Items(
-     *         type="string",
-     *         @Model(type=App\Form\Delta\DataFlowType::class)
-     *     )
-     * )
-     * @SWG\Parameter(
-     *     name="date",
-     *     in="query",
-     *     type="string",
-     *     format="date",
-     *     pattern="\d{1,2}-\d{1,2}-\d{4}",
-     *     default="13-05-2019",
-     *     description="Select data by date value"
-     * )
-     * @SWG\Response(response=200,description="Returns journal delta")
-     *
-     * @param JournalManager $journalManager
-     * @param Request        $request
-     *
-     * @return \Symfony\Component\HttpFoundation\JsonResponse
-     */
-    public function journalAction(JournalManager $journalManager, Request $request)
-    {
 
-        $date     = $request->get('date');
-        $dataFlow = $request->get('dataFlow');
-
-        $data = $journalManager->validate($dataFlow, $date)->findParams()->findDiscretInfo()->getData();
-
-
-        return $this->json(['delta_data' => $data]);
-    }
 //endregion Public
 
 //region SECTION: Private
