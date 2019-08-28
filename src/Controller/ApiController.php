@@ -636,6 +636,35 @@ class ApiController extends AbstractController
     }
 
     /**
+     * @Rest\Post("/internal/spam/save", name="api_save_spam")
+     * @SWG\Post(tags={"spam"})
+     * @SWG\Parameter(
+     *     name="spamId",
+     *     in="query",
+     *     type="string",
+     *     default=null,
+     *     description="id spam"
+     * )
+     * @SWG\Response(response=400,description="set ip and name domain")
+     *
+     * @param Request       $request
+     * @param FactoryDto    $factoryDto
+     * @param ServerManager $serverManager
+     *
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     */
+    public function spamRulesTypeSaveAction(Request $request, FactoryDto $factoryDto, ServerManager $serverManager)
+    {
+        $spamDto = $factoryDto->setRequest($request)->createDto(SpamDto::class);
+
+        return $this->json(
+            ['spam' => $serverManager->setRestSuccessOk()],
+            $serverManager->getRestStatus()
+        );
+    }
+
+
+    /**
      * @Rest\Get("/internal/spam/rules_type", name="api_spam_rules_type")
      * @SWG\Get(tags={"spam"})
      * @SWG\Response(response=200,description="Returns the spam rules types")

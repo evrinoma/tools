@@ -78,6 +78,15 @@ class Spam
     }
 
     /**
+     * @return int
+     */
+    public function getSpamId(): int
+    {
+        return $this->getId();
+    }
+
+
+    /**
      * @return Filter
      */
     public function getType()

@@ -40,7 +40,7 @@
                             <div class="inline field">
                                 <b><label>List:</label></b>
                                 <div class="ui buttons" v-for="(section, index) in aclModel">
-                                    <button class="ui button" :class="{ 'active blue' : _initList(section)}" @click="_listAction(section)">{{section}}</button>
+                                    <button class="ui button" :class="{ 'active blue' : _initAclList(section)}" @click="_listAclAction(section)">{{section}}</button>
                                     <div class="or" v-if="index < (aclModel.length-1)"></div>
                                 </div>
                             </div>
@@ -93,6 +93,13 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="inline field">
+                                <b><label>Conformity:</label></b>
+                                <div class="ui buttons" v-for="(section, index) in conformityModel">
+                                    <button class="ui button" :class="{ 'active red' : _initConformityList(index)}" @click="_listConformityAction(index)">{{section.type}}</button>
+                                    <div class="or" v-if="index < (conformityModel.length-1)"></div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -101,17 +108,17 @@
             <div class="ui two column very relaxed grid">
                 <div class="column">
                     <div class="ui tabular menu">
-                        <a class="item" :class="{ 'active' : _initTab(index)}" v-for="(selectValue, index) in acls" @click="_tabAction(index)">{{selectValue.type}}</a>
+                        <a class="item" :class="{ 'active' : _initAclTab(index)}" v-for="(selectValue, index) in acls" @click="_tabAclAction(index)">{{selectValue.type}}</a>
                     </div>
                     <table class="ui celled table">
-                        <div class="ui bottom attached active tab" v-if="tabSelected === index" v-for="(selectValue, index) in acls">
+                        <div class="ui bottom attached active tab" v-if="aclTabSelected === index" v-for="(selectValue, index) in acls">
                             <div class="html ui top attached segment">
                                 <div class="ui top attached label">
                                     <b>List:</b>
                                     <div class="ui input focus">
-                                        <input type="text" v-model="localSearchText" @input="localSearchAction" placeholder="Local search...">
+                                        <input type="text" v-model="aclSearchText" @input="aclSearchAction" placeholder="Local search...">
                                     </div>
-                                    <div class="ui vertical animated button" tabindex="0" @click="resetLocalSearch">
+                                    <div class="ui vertical animated button" tabindex="0" @click="resetAclSearchAction">
                                         <div class="hidden content">Reset</div>
                                         <div class="visible content">
                                             <i class="shop x icon"></i>
@@ -120,7 +127,7 @@
                                 </div>
                                 <div class="ui spliter">
                                 </div>
-                                <div class="ui block">
+                                <div class="ui block acl">
                                     <div class="ui grid" v-for="(block, item) in selectValue.items">
                                         <template v-if="block.visible">
                                             <div class="three column">{{block.aclId}}</div>
@@ -149,26 +156,48 @@
                         </div>
                     </table>
                 </div>
-
-
                 <div class="column">
                     <div class="ui tabular menu">
-                        <a class="item">Spam</a>
+                        <a class="item" :class="{ 'active' : _initSpamTab(index)}" v-for="(selectValue, index) in spams" @click="_tabSpamAction(index)">{{selectValue.type}}</a>
                     </div>
                     <table class="ui celled table">
-                        <div class="ui bottom attached active tab">
+                        <div class="ui bottom attached active tab" v-if="spamTabSelected === index" v-for="(selectValue, index) in spams">
                             <div class="html ui top attached segment">
+                                <div class="ui top attached label">
+                                    <div class="ui grid">
+                                        <div class="four column">ID</div>
+                                        <div class="four wide column">
+                                            <div class="ui icon input focus">
+                                                <i class="close icon resetRecordSpam" @click="resetRecordSpam"></i>
+                                                <input type="text" v-model="factorSearchText" @input="factorSearchAction" placeholder="Factor">
+                                            </div>
+                                        </div>
+                                        <div class="four wide column">Conformity</div>
+                                        <div class="four wide column">Action</div>
+                                    </div>
+                                </div>
                                 <div class="ui spliter">
                                 </div>
-                                <div class="ui block">
-
+                                <div class="ui block spam">
+                                    <div class="ui grid" v-for="(block, item) in selectValue.items">
+                                        <template v-if="block.visible">
+                                            <div class="four column">{{block.spamId}}</div>
+                                            <div class="four wide column">
+                                                {{block.domain}}
+                                            </div>
+                                            <div class="four wide column">
+                                                {{block.conformity.type}}
+                                            </div>
+                                            <div class="four wide column">
+                                                <span class="ui teal label" @click="doSpamDeleteAction(index, item)"><i class="trash icon"></i>Delete</span>
+                                            </div>
+                                        </template>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </table>
                 </div>
-
-
             </div>
         </div>
     </div>
@@ -195,15 +224,18 @@
                 apiUrlAcl: 'http://php72.tools/internal/acl/acl',
                 apiUrlAclSave: 'http://php72.tools/internal/acl/save',
 
+                apiUrlSpam: 'http://php72.tools/internal/spam/rules',
                 apiUrlSpamType: 'http://php72.tools/internal/spam/rules_type',
+                apiUrlConformityModel: 'http://php72.tools/internal/spam/conformity',
+                apiUrlSpamSave: 'http://php72.tools/internal/spam/save',
 
                 aclModel: null,
                 aclModelSelect: '',
                 domains: null,
                 domainSelect: null,
                 acls: [],
-                tabSelected: null,
-                localSearchText: '',
+                aclTabSelected: null,
+                aclSearchText: '',
                 editText: '',
                 editBlock: null,
 
@@ -216,7 +248,11 @@
                 showPreloadSpamForm: 0,
                 hasErrorSpam: false,
                 recordSpamText: '',
-
+                conformityModel: null,
+                conformityModelSelect: '',
+                spams: [],
+                spamTabSelected: null,
+                factorSearchText: '',
 
             }
         },
@@ -229,10 +265,29 @@
                     case 'acl-load-model':
                         this.aclModel = response.data.model;
                         break;
+                    case 'conformity-load-model':
+                        this.conformityModel = response.data.model;
+                        break;
+                    case 'conformity-load-spam': {
+                        this.showPreloadSpamForm--;
+                        let self = this;
+                        let keys = [];
+                        let count = 0;
+                        response.data.some(function (value) {
+                            if (keys[value.type.type] === undefined) {
+                                self.spams[count] = {items: [], type: value.type.type};
+                                keys[value.type.type] = count++;
+                            }
+                            value.visible = true;
+
+                            self.spams[keys[value.type.type]].items.push(value);
+                        });
+                    }
+                        break;
                     case 'acl-load-domain':
                         this.domains = response.data;
                         break;
-                    case 'acl-load-acl':
+                    case 'acl-load-acl': {
                         this.showPreloadAclForm--;
                         let self = this;
                         let keys = [];
@@ -246,6 +301,7 @@
 
                             self.acls[keys[value.type]].items.push(value);
                         });
+                    }
                         break;
                     case 'acl-add':
                         this._add(response.data);
@@ -289,21 +345,24 @@
             },
             _ruleAction(index) {
                 this.ruleTypeSelect = index;
-                //this.showPreloadSpamForm++;
-
-                //axios
-                // .get(this.apiUrlAcl, {params: this.domains[this.domainSelect]})
-                // .then(response => (this._axiosResponse('acl-load-acl', response)));
-
             },
-            _initList(select) {
+            _initAclList(select) {
                 if (this.aclModelSelect === '') {
                     this.aclModelSelect = select;
                 }
                 return this.aclModelSelect === select;
             },
-            _listAction(select) {
+            _listAclAction(select) {
                 this.aclModelSelect = select;
+            },
+            _initConformityList(index) {
+                if (this.conformityModelSelect === '') {
+                    this.conformityModelSelect = index;
+                }
+                return this.conformityModelSelect === index;
+            },
+            _listConformityAction(select) {
+                this.conformityModelSelect = select;
             },
             _isEditBlock(id) {
                 return (this.editBlock === id);
@@ -318,32 +377,58 @@
                 this.domainSelect = index;
                 this.showPreloadAclForm++;
                 this.acls = [];
-                this.resetLocalSearch();
-                this.tabSelected = null;
+                this.resetAclSearchAction();
+                this.aclTabSelected = null;
                 axios
                     .get(this.apiUrlAcl, {params: this.domains[this.domainSelect]})
                     .then(response => (this._axiosResponse('acl-load-acl', response)));
 
             },
-            _initTab(index) {
-                if (this.tabSelected === null) {
-                    this.tabSelected = index;
+            _initAclTab(index) {
+                if (this.aclTabSelected === null) {
+                    this.aclTabSelected = index;
                 }
-                return this.tabSelected === index;
+                return this.aclTabSelected === index;
             },
-            _tabAction(index) {
-                this.tabSelected = index;
+            _tabAclAction(index) {
+                this.aclTabSelected = index;
                 this._filterAcls();
             },
-            localSearchAction() {
-                if (this.localSearchText.length % 2 === 0) {
+            _initSpamTab(index) {
+                if (this.spamTabSelected === null) {
+                    this.spamTabSelected = index;
+                }
+                return this.spamTabSelected === index;
+            },
+            _tabSpamAction(index) {
+                this.spamTabSelected = index;
+                this._filterFactors();
+            },
+            factorSearchAction() {
+                if (this.factorSearchText.length % 2 === 0) {
+                    this._filterFactors();
+                }
+            },
+            aclSearchAction() {
+                if (this.aclSearchText.length % 2 === 0) {
                     this._filterAcls();
                 }
             },
+            _filterFactors() {
+                let self = this;
+                this.spams[this.spamTabSelected].items.some(function (value) {
+                    if (value.domain.indexOf(self.factorSearchText) !== -1) {
+                        value.visible = true;
+                        value.visible = !value.deleted;
+                    } else {
+                        value.visible = false;
+                    }
+                });
+            },
             _filterAcls() {
                 let self = this;
-                this.acls[this.tabSelected].items.some(function (value) {
-                    if (value.email.indexOf(self.localSearchText) !== -1) {
+                this.acls[this.aclTabSelected].items.some(function (value) {
+                    if (value.email.indexOf(self.aclSearchText) !== -1) {
                         value.visible = true;
                         value.visible = !value.deleted;
                     } else {
@@ -390,22 +475,32 @@
                     .then(response => (this._axiosResponse('acl-delete', response)))
                     .catch(error => (this._axiosResponse('acl-error', error)));
             },
+            doSpamDeleteAction(index, item) {
+                this.spams[index].items[item].active = 'd';
+                this.spams[index].items[item].deleted = true;
+                this.spams[index].items[item].visible = false;
+                axios
+                    .post(this.apiUrlSpamSave, this.spams[index].items[item])
+                    .then(response => (this._axiosResponse('acl-delete', response)))
+                    .catch(error => (this._axiosResponse('acl-error', error)));
+            },
             resetRecord() {
                 this.recordText = '';
             },
             resetRecordSpam() {
                 this.recordSpamText = '';
             },
-            resetLocalSearch() {
-                this.localSearchText = '';
-                if (this.acls.length && this.acls[this.tabSelected] !== undefined) {
-                    this.acls[this.tabSelected].items.some(function (value) {
+            resetAclSearchAction() {
+                this.aclSearchText = '';
+                if (this.acls.length && this.acls[this.aclTabSelected] !== undefined) {
+                    this.acls[this.aclTabSelected].items.some(function (value) {
                         value.visible = true;
                         value.visible = !value.deleted;
                     });
                 }
             },
             doLoad() {
+                this.showPreloadSpamForm++;
                 axios
                     .get(this.apiUrlAclModel)
                     .then(response => (this._axiosResponse('acl-load-model', response)));
@@ -415,6 +510,12 @@
                 axios
                     .get(this.apiUrlSpamType)
                     .then(response => (this._axiosResponse('acl-load-spam-type', response)));
+                axios
+                    .get(this.apiUrlConformityModel)
+                    .then(response => (this._axiosResponse('conformity-load-model', response)));
+                axios
+                    .get(this.apiUrlSpam)
+                    .then(response => (this._axiosResponse('conformity-load-spam', response)));
             },
         }
     }
@@ -465,5 +566,9 @@
 
     div.ui.spliter {
         height: 20px;
+    }
+
+    .resetRecordSpam {
+        cursor: pointer;
     }
 </style>

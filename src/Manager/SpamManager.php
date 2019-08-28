@@ -189,7 +189,7 @@ class SpamManager extends AbstractEntityManager
                 ->setParameter('conformity', $spamDto->getConformity());
         }
 
-        $this->setData($builder->getQuery()->getResult());
+        $this->setData(['class' => Conformity::class, 'model' => $builder->getQuery()->getResult()]);
 
         return $this;
     }
