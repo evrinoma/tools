@@ -570,7 +570,6 @@ class ApiController extends AbstractController
      * @Rest\Get("/internal/spam/rules", name="api_spam_rules")
      * @SWG\Get(tags={"spam"})
      * @SWG\Response(response=200,description="Returns the spam rules")
-     *
      * @SWG\Parameter(
      *     name="filterType",
      *     in="query",
@@ -579,6 +578,16 @@ class ApiController extends AbstractController
      *     items=@SWG\Items(
      *         type="string",
      *         @Model(type=App\Form\Mail\FilterType::class)
+     *     )
+     * )
+     * @SWG\Parameter(
+     *     name="conformityType",
+     *     in="query",
+     *     type="array",
+     *     description="select spam conformity type",
+     *     items=@SWG\Items(
+     *         type="string",
+     *         @Model(type=App\Form\Mail\ConformityType::class)
      *     )
      * )
      * @param Request     $request

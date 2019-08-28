@@ -52,7 +52,7 @@ class SpamDto extends AbstractFactoryDto
     public static function toDto(&$request)
     {
         $filterType = $request->get('filterType');
-        $conformity = $request->get('conformity');
+        $conformity = $request->get('conformityType');
 
         $dto = new self();
 

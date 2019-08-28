@@ -133,13 +133,13 @@ class SpamManager extends AbstractEntityManager
 
         if ($spamDto->getFilterType()) {
             $builder->leftJoin('spam.type', 'filterType')
-                ->andWhere('filterType.type = :type')
-                ->setParameter('type', $spamDto->getFilterType());
+                ->andWhere('filterType.type = :filter')
+                ->setParameter('filter', $spamDto->getFilterType());
         }
 
         if ($spamDto->getConformity()) {
-            $builder
-                ->andWhere('spam.conformity = :conformity')
+            $builder->leftJoin('spam.conformity', 'conformityType')
+                ->andWhere('conformityType.type = :conformity')
                 ->setParameter('conformity', $spamDto->getConformity());
         }
 
