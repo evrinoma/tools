@@ -336,7 +336,7 @@
                 this._filterAcls();
             },
             localSearchAction() {
-                if (this.localSearchText.length % 3 === 0) {
+                if (this.localSearchText.length % 2 === 0) {
                     this._filterAcls();
                 }
             },
