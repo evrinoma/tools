@@ -15,7 +15,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Class Spam
  *
  * @package App\Entity\Mail
- * @ORM\Table(name="mail_spam_rule", indexes={@ORM\Index(name="domain", columns={"domain"}), @ORM\Index(name="conformity", columns={"conformity"})})
+ * @ORM\Table(name="mail_spam_rule")
  * @ORM\Entity()
  */
 class Spam
@@ -33,16 +33,16 @@ class Spam
     private $id;
 
     /**
-     * @var FilterType
+     * @var Filter
      *
-     * @ORM\ManyToOne(targetEntity="App\Entity\Mail\FilterType", inversedBy="id", cascade={"all"})
+     * @ORM\ManyToOne(targetEntity="Filter", inversedBy="id", cascade={"all"})
      */
     private $type;
 
     /**
-     * @var string|null
+     * @var Conformity
      *
-     * @ORM\Column(name="conformity", type="string", length=255, nullable=true)
+     * @ORM\ManyToOne(targetEntity="Conformity", inversedBy="id", cascade={"all"})
      */
     private $conformity;
 
@@ -78,7 +78,7 @@ class Spam
     }
 
     /**
-     * @return FilterType
+     * @return Filter
      */
     public function getType()
     {
@@ -86,9 +86,9 @@ class Spam
     }
 
     /**
-     * @return string|null
+     * @return Conformity
      */
-    public function getConformity(): ?string
+    public function getConformity()
     {
         return $this->conformity;
     }
@@ -118,7 +118,7 @@ class Spam
     }
 
     /**
-     * @param FilterType $type
+     * @param Filter $type
      *
      * @return Spam
      */
@@ -130,11 +130,11 @@ class Spam
     }
 
     /**
-     * @param string|null $conformity
+     * @param Conformity $conformity
      *
      * @return Spam
      */
-    public function setConformity(?string $conformity)
+    public function setConformity($conformity)
     {
         $this->conformity = $conformity;
 

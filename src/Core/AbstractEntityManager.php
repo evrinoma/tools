@@ -24,6 +24,9 @@ abstract class AbstractEntityManager
 {
 
 //region SECTION: Fields
+    /**
+     * @var EntityManagerInterface
+     */
     protected $entityManager;
 
     /**

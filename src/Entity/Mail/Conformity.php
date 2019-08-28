@@ -2,23 +2,24 @@
 /**
  * Created by PhpStorm.
  * User: nikolns
- * Date: 8/27/19
- * Time: 6:09 PM
+ * Date: 8/28/19
+ * Time: 10:26 AM
  */
 
 namespace App\Entity\Mail;
+
 
 use App\Entity\Model\ActiveTrait;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Class Spam
+ * Class Conformity
  *
  * @package App\Entity\Mail
- * @ORM\Table(name="mail_filter", indexes={@ORM\Index(name="type", columns={"type"})})
+ * @ORM\Table(name="mail_conformity")
  * @ORM\Entity()
  */
-class FilterType
+class Conformity
 {
     use ActiveTrait;
 
@@ -60,7 +61,7 @@ class FilterType
     /**
      * @param string|null $type
      *
-     * @return FilterType
+     * @return $this
      */
     public function setType(?string $type)
     {
@@ -69,6 +70,4 @@ class FilterType
         return $this;
     }
 //endregion Getters/Setters
-
-
 }

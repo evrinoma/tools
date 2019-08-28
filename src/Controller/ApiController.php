@@ -16,6 +16,7 @@ use App\Dto\FactoryDto;
 use App\Dto\LogSearchDto;
 use App\Dto\ServerDto;
 use App\Dto\SettingsDto;
+use App\Dto\SpamDto;
 use App\Dto\VuetableInterface;
 use App\Manager\AclManager;
 use App\Manager\DashBoardManager;
@@ -40,8 +41,6 @@ class ApiController extends AbstractController
 {
 
 
-
-
 //region SECTION: Public
     /**
      * @Rest\Get("/internal/acl/acl", name="api_acl")
@@ -54,11 +53,13 @@ class ApiController extends AbstractController
      * )
      * @SWG\Response(response=200,description="Returns the acl list")
      *
+     * @param Request    $request
+     * @param FactoryDto $factoryDto
      * @param AclManager $aclManager
      *
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
-    public function aclAction(FactoryDto $factoryDto, AclManager $aclManager, Request $request)
+    public function aclAction(Request $request, FactoryDto $factoryDto, AclManager $aclManager)
     {
         $aclDto = $factoryDto->setRequest($request)->createDto(AclDto::class);
 
@@ -133,13 +134,14 @@ class ApiController extends AbstractController
      * )
      * @SWG\Response(response=200,description="Returns nothing")
      *
+     * @param Request    $request
      * @param FactoryDto $factoryDto
      * @param AclManager $aclManager
      *
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      * @throws \Exception
      */
-    public function aclSaveAction(FactoryDto $factoryDto, AclManager $aclManager, Request $request)
+    public function aclSaveAction(Request $request, FactoryDto $factoryDto, AclManager $aclManager)
     {
         $aclDto = $factoryDto->setRequest($request)->createDto(AclDto::class);
 
@@ -152,14 +154,13 @@ class ApiController extends AbstractController
      *
      * @SWG\Response(response=200,description="Returns the rewards of all generated domains")
      *
+     * @param Request       $request
      * @param FactoryDto    $factoryDto
      * @param DomainManager $domainManager
      *
-     * @param Request       $request
-     *
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
-    public function domainAction(FactoryDto $factoryDto, DomainManager $domainManager, Request $request)
+    public function domainAction(Request $request, FactoryDto $factoryDto, DomainManager $domainManager)
     {
         $domainDto = $factoryDto->setRequest($request)->createDto(DomainDto::class);
 
@@ -193,14 +194,13 @@ class ApiController extends AbstractController
      *
      * @SWG\Response(response=200,description="Returns the rewards of all generated domains")
      *
+     * @param Request       $request
      * @param FactoryDto    $factoryDto
      * @param DomainManager $domainManager
      *
-     * @param Request       $request
-     *
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
-    public function domainByQueryAction(FactoryDto $factoryDto, DomainManager $domainManager, Request $request)
+    public function domainByQueryAction(Request $request, FactoryDto $factoryDto, DomainManager $domainManager)
     {
         $domainDto = $factoryDto->setRequest($request)->createDto(DomainDto::class);
         $domainManager->getDomains($domainDto);
@@ -223,13 +223,13 @@ class ApiController extends AbstractController
      * )
      * @SWG\Response(response=200,description="Returns nothing")
      *
+     * @param Request       $request
      * @param FactoryDto    $factoryDto
      * @param DomainManager $domainManager
-     * @param Request       $request
      *
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
-    public function domainDeleteAction(FactoryDto $factoryDto, DomainManager $domainManager, Request $request)
+    public function domainDeleteAction(Request $request, FactoryDto $factoryDto, DomainManager $domainManager)
     {
         $domainDto = $factoryDto->setRequest($request)->createDto(DomainDto::class);
 
@@ -280,15 +280,14 @@ class ApiController extends AbstractController
      * )
      * @SWG\Response(response=400,description="set ip and name domain")
      *
+     * @param Request       $request
      * @param FactoryDto    $factoryDto
      * @param DomainManager $domainManager
-     *
-     * @param Request       $request
      *
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      * @throws \Exception
      */
-    public function domainSaveAction(FactoryDto $factoryDto, DomainManager $domainManager, Request $request)
+    public function domainSaveAction(Request $request, FactoryDto $factoryDto, DomainManager $domainManager)
     {
         $domainDto = $factoryDto->setRequest($request)->createDto(DomainDto::class);
 
@@ -322,12 +321,12 @@ class ApiController extends AbstractController
      * )
      * @SWG\Response(response=200,description="Returns journal delta")
      *
-     * @param JournalManager $journalManager
      * @param Request        $request
+     * @param JournalManager $journalManager
      *
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
-    public function journalAction(JournalManager $journalManager, Request $request)
+    public function journalAction(Request $request, JournalManager $journalManager)
     {
 
         $date     = $request->get('date');
@@ -361,12 +360,13 @@ class ApiController extends AbstractController
      * )
      * @SWG\Response(response=200,description="Returns nothing")
      *
-     * @param SearchManager $searchManager
      * @param Request       $request
+     * @param FactoryDto    $factoryDto
+     * @param SearchManager $searchManager
      *
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
-    public function logSearchAction(FactoryDto $factoryDto, SearchManager $searchManager, Request $request)
+    public function logSearchAction(Request $request, FactoryDto $factoryDto, SearchManager $searchManager)
     {
         $logSearch = $factoryDto->setRequest($request)->createDto(LogSearchDto::class);
 
@@ -387,11 +387,13 @@ class ApiController extends AbstractController
      *
      * @SWG\Response(response=200,description="Returns nothing")
      *
+     * @param Request       $request
+     * @param FactoryDto    $factoryDto
      * @param SearchManager $searchManager
      *
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
-    public function logSearchSettingsAction(FactoryDto $factoryDto, SearchManager $searchManager, Request $request)
+    public function logSearchSettingsAction(Request $request, FactoryDto $factoryDto, SearchManager $searchManager)
     {
         $logSearchDto = $factoryDto->setRequest($request)->createDto(LogSearchDto::class);
 
@@ -420,13 +422,13 @@ class ApiController extends AbstractController
      *
      * @SWG\Response(response=200,description="Returns nothing")
      *
+     * @param Request       $request
      * @param FactoryDto    $factoryDto
      * @param SearchManager $searchManager
-     * @param Request       $request
      *
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
-    public function logSearchSettingsSaveAction(FactoryDto $factoryDto, SearchManager $searchManager, Request $request)
+    public function logSearchSettingsSaveAction(Request $request, FactoryDto $factoryDto, SearchManager $searchManager)
     {
         $settingsDto = $factoryDto->setRequest($request)->createDto(SettingsDto::class);
 
@@ -470,14 +472,14 @@ class ApiController extends AbstractController
      * @SWG\Get(tags={"server"})
      * @SWG\Response(response=200,description="Returns the rewards of all servers")
      *
+     * @param Request       $request
      * @param FactoryDto    $factoryDto
      * @param ServerManager $serverManger
-     * @param Request       $request
      *
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      * @throws \Exception
      */
-    public function serverAction(FactoryDto $factoryDto, ServerManager $serverManger, Request $request)
+    public function serverAction(Request $request, FactoryDto $factoryDto, ServerManager $serverManger)
     {
         $serverDto = $factoryDto->setRequest($request)->createDto(ServerDto::class);
 
@@ -499,14 +501,14 @@ class ApiController extends AbstractController
      * )
      * @SWG\Response(response=200,description="Returns nothing")
      *
+     * @param Request       $request
      * @param FactoryDto    $factoryDto
      * @param ServerManager $serverManger
-     * @param Request       $request
      *
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      * @throws \Exception
      */
-    public function serverDeleteAction(FactoryDto $factoryDto, ServerManager $serverManger, Request $request)
+    public function serverDeleteAction(Request $request, FactoryDto $factoryDto, ServerManager $serverManger)
     {
         $serverDto = $factoryDto->setRequest($request)->createDto(ServerDto::class);
 
@@ -548,13 +550,13 @@ class ApiController extends AbstractController
      * )
      * @SWG\Response(response=400,description="set ip and name domain")
      *
+     * @param Request       $request
      * @param FactoryDto    $factoryDto
      * @param ServerManager $serverManager
-     * @param Request       $request
      *
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
-    public function serverSaveAction(FactoryDto $factoryDto, ServerManager $serverManager, Request $request)
+    public function serverSaveAction(Request $request, FactoryDto $factoryDto, ServerManager $serverManager)
     {
         $serverDto = $factoryDto->setRequest($request)->createDto(ServerDto::class);
 
@@ -562,6 +564,52 @@ class ApiController extends AbstractController
             ['servers' => $serverManager->setRestSuccessOk()->saveServer($serverDto)],
             $serverManager->getRestStatus()
         );
+    }
+
+    /**
+     * @Rest\Get("/internal/spam/rules", name="api_spam_rules")
+     * @SWG\Get(tags={"spam"})
+     * @SWG\Response(response=200,description="Returns the spam rules")
+     *
+     * @SWG\Parameter(
+     *     name="filterType",
+     *     in="query",
+     *     type="array",
+     *     description="select spam filter type",
+     *     items=@SWG\Items(
+     *         type="string",
+     *         @Model(type=App\Form\Mail\FilterType::class)
+     *     )
+     * )
+     * @param Request     $request
+     * @param FactoryDto  $factoryDto
+     * @param SpamManager $spamManager
+     *
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     */
+    public function spamRulesAction(Request $request, FactoryDto $factoryDto, SpamManager $spamManager)
+    {
+        $spamDto = $factoryDto->setRequest($request)->createDto(SpamDto::class);
+
+        return $this->json($spamManager->setRestSuccessOk()->getSpamRules($spamDto)->getData(), $spamManager->getRestStatus());
+    }
+
+    /**
+     * @Rest\Get("/internal/spam/conformity", name="api_spam_rules_conformity")
+     * @SWG\Get(tags={"spam"})
+     * @SWG\Response(response=200,description="Returns the spam rules conformity")
+     *
+     * @param Request     $request
+     * @param FactoryDto  $factoryDto
+     * @param SpamManager $spamManager
+     *
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     */
+    public function spamRulesConformityAction(Request $request, FactoryDto $factoryDto, SpamManager $spamManager)
+    {
+        $spamDto = $factoryDto->setRequest($request)->createDto(SpamDto::class);
+
+        return $this->json($spamManager->setRestSuccessOk()->getSpamRuleConformity($spamDto)->getData(), $spamManager->getRestStatus());
     }
 
     /**
@@ -583,13 +631,17 @@ class ApiController extends AbstractController
      * @SWG\Get(tags={"spam"})
      * @SWG\Response(response=200,description="Returns the spam rules types")
      *
+     * @param Request     $request
+     * @param FactoryDto  $factoryDto
      * @param SpamManager $spamManager
      *
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
-    public function spamRulesTypeAction(SpamManager $spamManager)
+    public function spamRulesTypeAction(Request $request, FactoryDto $factoryDto, SpamManager $spamManager)
     {
-        return $this->json($spamManager->setRestSuccessOk()->getSpamRuleType()->getData(), $spamManager->getRestStatus());
+        $spamDto = $factoryDto->setRequest($request)->createDto(SpamDto::class);
+
+        return $this->json($spamManager->setRestSuccessOk()->getSpamRuleType($spamDto)->getData(), $spamManager->getRestStatus());
     }
 
     /**
