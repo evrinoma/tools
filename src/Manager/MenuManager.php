@@ -185,6 +185,52 @@ class MenuManager extends AbstractEntityManager
             ->addChild($mailAcl);
 
         $this->entityManager->persist($mail);
+
+
+        $iparkVideo = new MenuItem();
+        $iparkVideo
+            ->setRole(['ROLE_SUPER_ADMIN', 'ROLE_IPARK_VIDEO'])
+            ->setName('ipark45')
+            ->setRoute('live_ipark45');
+
+        $this->entityManager->persist($iparkVideo);
+
+        $kzktVideo = new MenuItem();
+        $kzktVideo
+            ->setRole(['ROLE_SUPER_ADMIN', 'ROLE_KZKT_VIDEO'])
+            ->setName('kzkt45')
+            ->setRoute('live_kzkt45');
+
+        $this->entityManager->persist($kzktVideo);
+
+        $ishimVideo = new MenuItem();
+        $ishimVideo
+            ->setRole(['ROLE_SUPER_ADMIN', 'ROLE_ISHIM_VIDEO'])
+            ->setName('Ишим')
+            ->setRoute('live_ishim');
+
+        $this->entityManager->persist($ishimVideo);
+
+        $tobolskVideo = new MenuItem();
+        $tobolskVideo
+            ->setRole(['ROLE_SUPER_ADMIN', 'ROLE_TOBOLSK_VIDEO'])
+            ->setName('Тобольск')
+            ->setRoute('live_tobolsk');
+
+        $this->entityManager->persist($tobolskVideo);
+
+        $video = new MenuItem();
+        $video
+            ->setRole(['ROLE_SUPER_ADMIN', 'ROLE_VIDEO'])
+            ->setName('Live Cam')
+            ->setUri('#')
+            ->addChild($iparkVideo)
+            ->addChild($kzktVideo)
+            ->addChild($ishimVideo)
+            ->addChild($tobolskVideo);
+
+        $this->entityManager->persist($video);
+
         $this->entityManager->flush();
     }
 //endregion Public
