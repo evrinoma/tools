@@ -58,7 +58,7 @@ class ConformityType extends AbstractType
             $conformists   = [];
             $spamDto = $this->factoryDto->cloneDto(SpamDto::class);
             /** @var \App\Entity\Mail\Filter $rule */
-            foreach ($this->spamManager->getSpamRuleConformity($spamDto)->getData() as $rule) {
+            foreach ($this->spamManager->getSpamRuleConformity($spamDto)->getData()['model'] as $rule) {
                 $conformists[] = $rule->getType();
             }
 

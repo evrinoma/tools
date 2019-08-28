@@ -90,10 +90,8 @@ class AclDto extends AbstractFactoryDto
             $dto->setId($aclId);
         }
 
-        if ($active) {
-            if ($deleted) {
-                $dto->setActiveToDelete();
-            }
+        if ($active && $deleted) {
+            $dto->setActiveToDelete();
         }
 
         if ($email) {

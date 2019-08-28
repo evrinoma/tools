@@ -16,7 +16,7 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @package App\Entity\Mail
  * @ORM\Table(name="mail_spam_rule")
- * @ORM\Entity()
+ * @ORM\Entity(repositoryClass="App\Repository\SpamRepository")
  */
 class Spam
 {

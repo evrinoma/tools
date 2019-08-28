@@ -78,7 +78,7 @@
                                 <b><label>Record:</label></b>
                                 <div class="ui icon input">
                                     <i class="bug icon"></i>
-                                    <input type="text" v-model="recordSpamText" placeholder="Email or Domain name">
+                                    <input type="text" v-model="recordSpamText" placeholder="Factor">
                                 </div>
                                 <div class="ui animated button" tabindex="0" @click="doBan">
                                     <div class="visible content">Ban</div>

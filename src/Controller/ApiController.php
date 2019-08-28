@@ -571,7 +571,7 @@ class ApiController extends AbstractController
      * @SWG\Get(tags={"spam"})
      * @SWG\Response(response=200,description="Returns the spam rules")
      * @SWG\Parameter(
-     *     name="filterType",
+     *     name="type",
      *     in="query",
      *     type="array",
      *     description="select spam filter type",
@@ -581,7 +581,7 @@ class ApiController extends AbstractController
      *     )
      * )
      * @SWG\Parameter(
-     *     name="conformityType",
+     *     name="conformity",
      *     in="query",
      *     type="array",
      *     description="select spam conformity type",
@@ -649,18 +649,15 @@ class ApiController extends AbstractController
      *
      * @param Request       $request
      * @param FactoryDto    $factoryDto
-     * @param ServerManager $serverManager
+     * @param SpamManager $spamManager
      *
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
-    public function spamRulesTypeSaveAction(Request $request, FactoryDto $factoryDto, ServerManager $serverManager)
+    public function spamRulesSaveAction(Request $request, FactoryDto $factoryDto, SpamManager $spamManager)
     {
         $spamDto = $factoryDto->setRequest($request)->createDto(SpamDto::class);
 
-        return $this->json(
-            ['spam' => $serverManager->setRestSuccessOk()],
-            $serverManager->getRestStatus()
-        );
+        return $this->json($spamManager->setRestSuccessOk()->saveSpam($spamDto), $spamManager->getRestStatus());
     }
 
 

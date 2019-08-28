@@ -15,6 +15,7 @@ use App\Entity\Mail\Conformity;
 use App\Entity\Mail\Filter;
 use App\Entity\Mail\Migrations\TbSpamRules;
 use App\Entity\Mail\Spam;
+use App\Repository\SpamRepository;
 use App\Rest\Core\RestTrait;
 use Doctrine\ORM\QueryBuilder;
 
@@ -22,6 +23,7 @@ use Doctrine\ORM\QueryBuilder;
  * Class SpamRuleManager
  *
  * @package App\Manager
+ * @property SpamRepository $repository
  */
 class SpamManager extends AbstractEntityManager
 {
@@ -116,6 +118,38 @@ class SpamManager extends AbstractEntityManager
 
         return [];
     }
+
+    /**
+     * @param SpamDto $spamDto
+     *
+     * @return string|null
+     */
+    public function saveSpam($spamDto)
+    {
+        $entity = null;
+        $spamDto->getRuleType()->setEntitys($this->getSpamRuleType($spamDto)->getData());
+
+        if ($spamDto->isValid()) {
+            $entity = $this->repository->setDto($spamDto)->findSpam();
+            $spamDto->setEntitys($entity);
+            if (!$spamDto->getId() && count($entity)) {
+                $this->setRestClientErrorBadRequest();
+                $entity = 'уже существует';
+            } else {
+                if ($spamDto->hasSingleEntity()) {
+                    $entity = $this->save(count($entity) ? reset($entity) : new Spam(), $spamDto);
+                } else {
+                    $this->setRestClientErrorBadRequest();
+                    $entity = 'нет домена или их несколько';
+                }
+            }
+        } else {
+            $this->setRestClientErrorBadRequest();
+            $entity = 'нет входных данных';
+        }
+
+        return $entity;
+    }
 //endregion Public
 
 //region SECTION: Getters/Setters
@@ -126,24 +160,7 @@ class SpamManager extends AbstractEntityManager
      */
     public function getSpamRules($spamDto)
     {
-        /** @var QueryBuilder $builder */
-        $builder = $this->repository->createQueryBuilder('spam');
-
-        $builder->where("spam.active = 'a'");
-
-        if ($spamDto->getFilterType()) {
-            $builder->leftJoin('spam.type', 'filterType')
-                ->andWhere('filterType.type = :filter')
-                ->setParameter('filter', $spamDto->getFilterType());
-        }
-
-        if ($spamDto->getConformity()) {
-            $builder->leftJoin('spam.conformity', 'conformityType')
-                ->andWhere('conformityType.type = :conformity')
-                ->setParameter('conformity', $spamDto->getConformity());
-        }
-
-        $this->setData($builder->getQuery()->getResult());
+        $this->setData($this->repository->setDto($spamDto)->findSpam());
 
         return $this;
     }
@@ -160,10 +177,10 @@ class SpamManager extends AbstractEntityManager
 
         $builder->where("filterType.active = 'a'");
 
-        if ($spamDto->getFilterType()) {
+        if ($spamDto->getRuleType()->getFilterType()) {
             $builder
                 ->andWhere('filterType.type = :filterType')
-                ->setParameter('filterType', $spamDto->getFilterType());
+                ->setParameter('filterType', $spamDto->getRuleType()->getFilterType());
         }
 
         $this->setData($builder->getQuery()->getResult());
@@ -183,7 +200,7 @@ class SpamManager extends AbstractEntityManager
 
         $builder->where("conformity.active = 'a'");
 
-        if ($spamDto->getFilterType()) {
+        if ($spamDto->getConformity()) {
             $builder
                 ->andWhere('conformity.type = :conformity')
                 ->setParameter('conformity', $spamDto->getConformity());

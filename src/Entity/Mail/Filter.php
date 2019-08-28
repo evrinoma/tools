@@ -38,7 +38,33 @@ class Filter
      * @ORM\Column(name="type", type="string", length=255, nullable=true)
      */
     private $type;
+
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="pattern", type="string")
+     */
+    private $pattern;
 //endregion Fields
+
+//region SECTION: Public
+    /**
+     * @return bool
+     */
+    public function isPatternBurn(): bool
+    {
+        return $this->pattern === 'burn';
+    }
+
+    /**
+     * @return bool
+     */
+    public function isPatternIP(): bool
+    {
+        return $this->pattern === 'ip';
+    }
+//endregion Public
 
 //region SECTION: Getters/Setters
     /**
@@ -55,6 +81,18 @@ class Filter
     public function getType(): ?string
     {
         return $this->type;
+    }
+
+    /**
+     * @param bool $pattern
+     *
+     * @return Filter
+     */
+    public function setPattern(bool $pattern)
+    {
+        $this->pattern = $pattern;
+
+        return $this;
     }
 
     /**

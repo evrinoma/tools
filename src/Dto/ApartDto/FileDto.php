@@ -9,14 +9,12 @@
 namespace App\Dto\ApartDto;
 
 use App\Dto\AbstractDto;
-use App\Dto\DtoApartInterface;
-
 /**
  * Class FileDto
  *
  * @package App\Dto\ApartDto
  */
-class FileDto extends AbstractDto implements DtoApartInterface
+class FileDto extends AbstractDto
 {
 //region SECTION: Fields
     private $name;
