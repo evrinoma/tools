@@ -94,7 +94,7 @@ class MenuManager extends AbstractEntityManager
 
         $journal = new MenuItem();
         $journal
-            ->setRole(['ROLE_USER'])
+            ->setRole(['ROLE_USER_DELTA8'])
             ->setName('Journal')
             ->setRoute('delta_journal');
 
@@ -102,7 +102,7 @@ class MenuManager extends AbstractEntityManager
 
         $journalRtt = new MenuItem();
         $journalRtt
-            ->setRole(['ROLE_USER'])
+            ->setRole(['ROLE_USER_DELTA8'])
             ->setName('Rtt')
             ->setRoute('delta_rtt');
 
@@ -110,7 +110,7 @@ class MenuManager extends AbstractEntityManager
 
         $menuDelta = new MenuItem();
         $menuDelta
-            ->setRole(['ROLE_USER'])
+            ->setRole(['ROLE_USER_DELTA8'])
             ->setName('Delta8')
             ->setUri('#')
             ->addChild($journal)
@@ -189,7 +189,7 @@ class MenuManager extends AbstractEntityManager
 
         $iparkVideo = new MenuItem();
         $iparkVideo
-            ->setRole(['ROLE_SUPER_ADMIN', 'ROLE_IPARK_VIDEO'])
+            ->setRole(['ROLE_SUPER_ADMIN', 'ROLE_IPARK_VIDEO', 'ROLE_VIDEO_ALL'])
             ->setName('ipark45')
             ->setRoute('live_ipark45');
 
@@ -197,7 +197,7 @@ class MenuManager extends AbstractEntityManager
 
         $kzktVideo = new MenuItem();
         $kzktVideo
-            ->setRole(['ROLE_SUPER_ADMIN', 'ROLE_KZKT_VIDEO'])
+            ->setRole(['ROLE_SUPER_ADMIN', 'ROLE_KZKT_VIDEO', 'ROLE_VIDEO_ALL'])
             ->setName('kzkt45')
             ->setRoute('live_kzkt45');
 
@@ -205,7 +205,7 @@ class MenuManager extends AbstractEntityManager
 
         $ishimVideo = new MenuItem();
         $ishimVideo
-            ->setRole(['ROLE_SUPER_ADMIN', 'ROLE_ISHIM_VIDEO'])
+            ->setRole(['ROLE_SUPER_ADMIN', 'ROLE_ISHIM_VIDEO', 'ROLE_VIDEO_ALL'])
             ->setName('Ишим')
             ->setRoute('live_ishim');
 
@@ -213,7 +213,7 @@ class MenuManager extends AbstractEntityManager
 
         $tobolskVideo = new MenuItem();
         $tobolskVideo
-            ->setRole(['ROLE_SUPER_ADMIN', 'ROLE_TOBOLSK_VIDEO'])
+            ->setRole(['ROLE_SUPER_ADMIN', 'ROLE_TOBOLSK_VIDEO', 'ROLE_VIDEO_ALL'])
             ->setName('Тобольск')
             ->setRoute('live_tobolsk');
 
@@ -221,7 +221,7 @@ class MenuManager extends AbstractEntityManager
 
         $video = new MenuItem();
         $video
-            ->setRole(['ROLE_SUPER_ADMIN', 'ROLE_VIDEO'])
+            ->setRole(['ROLE_SUPER_ADMIN', 'ROLE_VIDEO', 'ROLE_VIDEO_ALL'])
             ->setName('Live Cam')
             ->setUri('#')
             ->addChild($iparkVideo)
