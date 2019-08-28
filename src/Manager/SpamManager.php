@@ -128,6 +128,7 @@ class SpamManager extends AbstractEntityManager
     {
         $entity = null;
         $spamDto->getRuleType()->setEntitys($this->getSpamRuleType($spamDto)->getData());
+        $spamDto->getConformity()->setEntitys($this->getSpamRuleConformity($spamDto)->getData());
 
         if ($spamDto->isValid()) {
             $entity = $this->repository->setDto($spamDto)->findSpam();
@@ -136,12 +137,7 @@ class SpamManager extends AbstractEntityManager
                 $this->setRestClientErrorBadRequest();
                 $entity = 'уже существует';
             } else {
-                if ($spamDto->hasSingleEntity()) {
-                    $entity = $this->save(count($entity) ? reset($entity) : new Spam(), $spamDto);
-                } else {
-                    $this->setRestClientErrorBadRequest();
-                    $entity = 'нет домена или их несколько';
-                }
+                $entity = $this->save(count($entity) ? reset($entity) : new Spam(), $spamDto);
             }
         } else {
             $this->setRestClientErrorBadRequest();
@@ -177,10 +173,10 @@ class SpamManager extends AbstractEntityManager
 
         $builder->where("filterType.active = 'a'");
 
-        if ($spamDto->getRuleType()->getFilterType()) {
+        if ($spamDto->getRuleType() && $spamDto->getRuleType()->getType()) {
             $builder
                 ->andWhere('filterType.type = :filterType')
-                ->setParameter('filterType', $spamDto->getRuleType()->getFilterType());
+                ->setParameter('filterType', $spamDto->getRuleType()->getType());
         }
 
         $this->setData($builder->getQuery()->getResult());
@@ -200,13 +196,13 @@ class SpamManager extends AbstractEntityManager
 
         $builder->where("conformity.active = 'a'");
 
-        if ($spamDto->getConformity()) {
+        if ($spamDto->getConformity() && $spamDto->getConformity()->getType()) {
             $builder
                 ->andWhere('conformity.type = :conformity')
-                ->setParameter('conformity', $spamDto->getConformity());
+                ->setParameter('conformity', $spamDto->getConformity()->getType());
         }
 
-        $this->setData(['class' => Conformity::class, 'model' => $builder->getQuery()->getResult()]);
+        $this->setClassModel(Conformity::class)->setData($builder->getQuery()->getResult());
 
         return $this;
     }

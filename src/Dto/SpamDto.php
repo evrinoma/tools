@@ -26,7 +26,8 @@ class SpamDto extends AbstractFactoryDto
 //region SECTION: Fields
     private $id;
     /**
-     * @var string
+     * @Dto(class="App\Dto\ConformityDto")
+     * @var ConformityDto
      */
     private $conformity;
     /**
@@ -46,17 +47,37 @@ class SpamDto extends AbstractFactoryDto
      * @var string
      */
     private $spamRecord;
+
+    /**
+     * @var bool
+     */
+    private $isConformity = true;
 //endregion Fields
 
 //region SECTION: Public
     /**
+     * @return bool
+     */
+    public function isConformity(): bool
+    {
+        return $this->isConformity;
+    }
+
+    /**
      * @param Spam $entity
      *
      * @return mixed
+     * @throws \Exception
      */
     public function fillEntity($entity)
     {
-        $entity->setActive($this->getActive());
+        $entity
+            ->setConformity($this->getConformity()->generatorEntity()->current())
+            ->setType($this->getRuleType()->generatorEntity()->current())
+            ->setDomain($this->getSpamRecord())
+            //->setUpdateAt(date('Y-m-d G:i:s'))
+            ->setUpdateAt(new \DateTime('now'))
+            ->setActive($this->getActive());
 
         return $entity;
     }
@@ -76,6 +97,10 @@ class SpamDto extends AbstractFactoryDto
                 }
                 if ($entity->isPatternIP()) {
                     $valid = $this->isRange();
+                    if ($valid) {
+                        $this->setSpamRecord($this->range);
+                        $this->isConformity = false;
+                    }
                 }
                 if ($entity->isPattern()) {
                     $valid = $this->isHostName();
@@ -161,11 +186,13 @@ class SpamDto extends AbstractFactoryDto
      */
     public static function toDto(&$request)
     {
-        $conformity = $request->get('conformity');
+
         $spamId     = $request->get('spamId');
         $active     = $request->get('active');
         $deleted    = $request->get('deleted');
         $domainName = $request->get('domain');
+        $spamRecord = $request->get('spamRecord');
+
 
         $dto = new self();
 
@@ -177,14 +204,8 @@ class SpamDto extends AbstractFactoryDto
             $dto->setActiveToDelete();
         }
 
-        if ($conformity) {
-            if (is_array($conformity)) {
-                if ($conformity['type']) {
-                    $dto->setConformity($conformity['type']);
-                }
-            } else {
-                $dto->setConformity($conformity);
-            }
+        if ($spamRecord) {
+            $dto->setSpamRecord($spamRecord);
         }
 
         if ($domainName) {
@@ -199,7 +220,15 @@ class SpamDto extends AbstractFactoryDto
     /**
      * @return string
      */
-    public function getDomainName(): string
+    public function getSpamRecord()
+    {
+        return $this->spamRecord;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDomainName()
     {
         return $this->domainName;
     }
@@ -213,13 +242,12 @@ class SpamDto extends AbstractFactoryDto
     }
 
     /**
-     * @return string
+     * @return ConformityDto
      */
     public function getConformity()
     {
         return $this->conformity;
     }
-
 
     /**
      * @param Request $request
@@ -237,6 +265,18 @@ class SpamDto extends AbstractFactoryDto
     public function getRuleType()
     {
         return $this->ruleType;
+    }
+
+    /**
+     * @param string $spamRecord
+     *
+     * @return SpamDto
+     */
+    public function setSpamRecord(string $spamRecord)
+    {
+        $this->spamRecord = $spamRecord;
+
+        return $this;
     }
 
     /**
@@ -264,7 +304,7 @@ class SpamDto extends AbstractFactoryDto
     }
 
     /**
-     * @param string $conformity
+     * @param ConformityDto $conformity
      *
      * @return SpamDto
      */
@@ -280,7 +320,7 @@ class SpamDto extends AbstractFactoryDto
      *
      * @return SpamDto
      */
-    public function setRuleType(RuleTypeDto $ruleType)
+    public function setRuleType($ruleType)
     {
         $this->ruleType = $ruleType;
 

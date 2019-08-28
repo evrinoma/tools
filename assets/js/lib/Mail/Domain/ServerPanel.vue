@@ -124,7 +124,7 @@
                     case 'server-delete-error':
                         this.hasError = true;
                         this.showError = true;
-                        this.errorText = 'Запись [' + response.response.data.servers.name + '] невозможно удалить.';
+                        this.errorText = 'Запись [' + response.response.data.servers.name + '] не возможно удалить.';
                         setTimeout(this._resetError, 2000);
                         break;
                     case 'server-save':
@@ -136,7 +136,7 @@
                         this.hasError = true;
                         this.showError = true;
                         let errorMessage = (response.response.data.servers) ? '[' + response.response.data.servers.name + '] ' : '';
-                        this.errorText = 'Запись ' + errorMessage + 'невозможно сохранить.';
+                        this.errorText = 'Запись ' + errorMessage + 'не возможно сохранить.';
                         setTimeout(this._resetError, 2000);
                         this.$events.fire('info-add', this._updateData());
                         break;

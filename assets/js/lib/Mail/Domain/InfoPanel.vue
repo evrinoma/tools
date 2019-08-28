@@ -114,7 +114,7 @@
                     case 'info-save-error':
                         this.hasError = true;
                         this.showError = true;
-                        this.errorText = 'Запись [' + response.response.data.domains.name + '] невозможно сохранить.';
+                        this.errorText = 'Запись [' + response.response.data.domains.name + '] не возможно сохранить.';
                         setTimeout(this._resetError, 2000);
                         this.$events.fire('info-add', this._getData());
                         break;

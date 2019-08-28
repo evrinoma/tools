@@ -94,7 +94,7 @@ class ApiController extends AbstractController
      */
     public function aclModelAction(AclManager $aclManager)
     {
-        return $this->json($aclManager->setRestSuccessOk()->getAclModel()->getData(), $aclManager->getRestStatus());
+        return $this->json($aclManager->setRestSuccessOk()->getAclModel()->toModel(), $aclManager->getRestStatus());
     }
 
     /**
@@ -618,7 +618,7 @@ class ApiController extends AbstractController
     {
         $spamDto = $factoryDto->setRequest($request)->createDto(SpamDto::class);
 
-        return $this->json($spamManager->setRestSuccessOk()->getSpamRuleConformity($spamDto)->getData(), $spamManager->getRestStatus());
+        return $this->json($spamManager->setRestSuccessOk()->getSpamRuleConformity($spamDto)->toModel(), $spamManager->getRestStatus());
     }
 
     /**
@@ -639,16 +639,43 @@ class ApiController extends AbstractController
      * @Rest\Post("/internal/spam/save", name="api_save_spam")
      * @SWG\Post(tags={"spam"})
      * @SWG\Parameter(
+     *     name="spamRecord",
+     *     in="query",
+     *     type="string",
+     *     default=null,
+     *     description="spam Record"
+     * )
+     * @SWG\Parameter(
      *     name="spamId",
      *     in="query",
      *     type="string",
      *     default=null,
      *     description="id spam"
      * )
+     * @SWG\Parameter(
+     *     name="type",
+     *     in="query",
+     *     type="array",
+     *     description="select spam filter type",
+     *     items=@SWG\Items(
+     *         type="string",
+     *         @Model(type=App\Form\Mail\FilterType::class)
+     *     )
+     * )
+     * @SWG\Parameter(
+     *     name="conformity",
+     *     in="query",
+     *     type="array",
+     *     description="select spam conformity type",
+     *     items=@SWG\Items(
+     *         type="string",
+     *         @Model(type=App\Form\Mail\ConformityType::class)
+     *     )
+     * )
      * @SWG\Response(response=400,description="set ip and name domain")
      *
-     * @param Request       $request
-     * @param FactoryDto    $factoryDto
+     * @param Request     $request
+     * @param FactoryDto  $factoryDto
      * @param SpamManager $spamManager
      *
      * @return \Symfony\Component\HttpFoundation\JsonResponse

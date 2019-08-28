@@ -11,7 +11,6 @@ namespace App\Form\Mail;
 
 use App\Dto\FactoryDto;
 use App\Dto\SpamDto;
-use App\Entity\Mail\Conformity;
 use App\Manager\SpamManager;
 use App\Rest\Form\RestChoiceType;
 use Symfony\Component\Form\AbstractType;
@@ -55,10 +54,10 @@ class ConformityType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $callback = function (Options $options) {
-            $conformists   = [];
-            $spamDto = $this->factoryDto->cloneDto(SpamDto::class);
+            $conformists = [];
+            $spamDto     = $this->factoryDto->cloneDto(SpamDto::class);
             /** @var \App\Entity\Mail\Filter $rule */
-            foreach ($this->spamManager->getSpamRuleConformity($spamDto)->getData()['model'] as $rule) {
+            foreach ($this->spamManager->getSpamRuleConformity($spamDto)->getData() as $rule) {
                 $conformists[] = $rule->getType();
             }
 

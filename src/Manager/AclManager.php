@@ -131,7 +131,7 @@ class AclManager extends AbstractEntityManager
      */
     public function getAclModel()
     {
-        $this->setData(['class' => AclModel::class, 'model' => [AclModel::WHITE, AclModel::BLACK]]);
+        $this->setClassModel(AclModel::class)->setData([AclModel::WHITE, AclModel::BLACK]);
 
         return $this;
     }

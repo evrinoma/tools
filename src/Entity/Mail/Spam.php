@@ -65,7 +65,7 @@ class Spam
      *
      * @ORM\Column(name="update_at", type="datetime", nullable=true, options={"default"="CURRENT_TIMESTAMP"})
      */
-    private $updateAt = 'CURRENT_TIMESTAMP';
+    private $updateAt;
 //endregion Fields
 
 //region SECTION: Getters/Setters

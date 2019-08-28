@@ -167,9 +167,11 @@
                                     <div class="ui grid">
                                         <div class="four column">ID</div>
                                         <div class="four wide column">
-                                            <div class="ui icon input focus">
-                                                <i class="close icon resetRecordSpam" @click="resetRecordSpam"></i>
+                                            <div class="ui action input">
                                                 <input type="text" v-model="factorSearchText" @input="factorSearchAction" placeholder="Factor">
+                                                <button class="ui icon button" @click="resetFactorSearch">
+                                                    <i class="close icon"></i>
+                                                </button>
                                             </div>
                                         </div>
                                         <div class="four wide column">Conformity</div>
@@ -303,18 +305,24 @@
                         });
                     }
                         break;
+                    case 'spam-add':
+                        this._spamAdd(response.data);
+                        this.resetRecordSpam();
+                        break;
                     case 'acl-add':
-                        this._add(response.data);
+                        this._aclAdd(response.data);
                     case 'acl-save':
                         this.resetRecord();
+                    case 'spam-delete':
                     case 'acl-delete':
                         this.$forceUpdate();
                         break;
+                    case 'spam-error':
                     case 'acl-error':
                         this.hasError = true;
                         this.showError = true;
                         setTimeout(this._resetError, 2000);
-                        this.errorText = 'Запись [' + response.response.data + '] невозможно сохранить.';
+                        this.errorText = 'Запись [' + response.response.data + '] не возможно сохранить.';
                         break;
                     case 'acl-load-spam-type':
                         this.rulesType = response.data;
@@ -328,11 +336,20 @@
                 this.showError = false;
                 this.errorText = '';
             },
-            _add(acl) {
+            _aclAdd(acl) {
                 acl.visible = true;
                 this.acls.some(function (value) {
                     if (value.type === acl.type) {
                         value.items.push(acl);
+                        return true;
+                    }
+                });
+            },
+            _spamAdd(spam) {
+                spam.visible = true;
+                this.spams.some(function (value) {
+                    if (value.type === spam.type.type) {
+                        value.items.push(spam);
                         return true;
                     }
                 });
@@ -383,6 +400,10 @@
                     .get(this.apiUrlAcl, {params: this.domains[this.domainSelect]})
                     .then(response => (this._axiosResponse('acl-load-acl', response)));
 
+            },
+            resetFactorSearch() {
+                this.factorSearchText = '';
+                this._filterFactors();
             },
             _initAclTab(index) {
                 if (this.aclTabSelected === null) {
@@ -437,7 +458,16 @@
                 });
             },
             doBan() {
+                let data = {
+                    spamRecord: this.recordSpamText,
+                    conformity: this.conformityModel[this.conformityModelSelect],
+                    type: this.rulesType[this.ruleTypeSelect]
+                };
 
+                axios
+                    .post(this.apiUrlSpamSave, data)
+                    .then(response => (this._axiosResponse('spam-add', response)))
+                    .catch(error => (this._axiosResponse('spam-error', error)));
             },
             doAdd() {
                 let data = {
@@ -481,8 +511,8 @@
                 this.spams[index].items[item].visible = false;
                 axios
                     .post(this.apiUrlSpamSave, this.spams[index].items[item])
-                    .then(response => (this._axiosResponse('acl-delete', response)))
-                    .catch(error => (this._axiosResponse('acl-error', error)));
+                    .then(response => (this._axiosResponse('spam-delete', response)))
+                    .catch(error => (this._axiosResponse('spam-error', error)));
             },
             resetRecord() {
                 this.recordText = '';
@@ -566,9 +596,5 @@
 
     div.ui.spliter {
         height: 20px;
-    }
-
-    .resetRecordSpam {
-        cursor: pointer;
     }
 </style>

@@ -43,6 +43,11 @@ abstract class AbstractEntityManager
      * @var mixed
      */
     private $data = [];
+
+    /**
+     * @var string
+     */
+    private $classModel;
 //endregion Fields
 
 //region SECTION: Constructor
@@ -131,8 +136,18 @@ abstract class AbstractEntityManager
 
         return $this;
     }
+
+    public function toModel()
+    {
+        return ['class' => $this->getClassModel(), 'model' => $this->getData()];
+    }
 //endregion Public
+
 //region SECTION: Private
+    private function getClassModel()
+    {
+        return $this->classModel;
+    }
 //endregion Private
 
 //region SECTION: Getters/Setters
@@ -154,6 +169,13 @@ abstract class AbstractEntityManager
         }
 
         return $this->repository->matching($criteria)->count();
+    }
+
+    public function setClassModel($class)
+    {
+        $this->classModel = $class;
+
+        return $this;
     }
 
     /**

@@ -3,25 +3,29 @@
  * Created by PhpStorm.
  * User: nikolns
  * Date: 8/28/19
- * Time: 3:50 PM
+ * Time: 6:35 PM
  */
 
 namespace App\Dto;
 
+
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * Class RuleTypeDto
+ * Class ConformityDto
  *
- * @package App\Dto\ApartDto
+ * @package App\Dto
  */
-class RuleTypeDto extends AbstractFactoryDto
+class ConformityDto extends AbstractFactoryDto
 {
+//region SECTION: Fields
     /**
      * @var string
      */
     private $type;
+//endregion Fields
 
+//region SECTION: Public
     /**
      * @param $entity
      *
@@ -31,7 +35,9 @@ class RuleTypeDto extends AbstractFactoryDto
     {
         return $entity;
     }
+//endregion Public
 
+//region SECTION: Dto
     /**
      * @param Request $request
      *
@@ -39,23 +45,25 @@ class RuleTypeDto extends AbstractFactoryDto
      */
     public static function toDto(&$request)
     {
-        $filterType = $request->get('type');
+        $conformity = $request->get('conformity');
 
         $dto = new self();
 
-        if ($filterType) {
-            if (is_array($filterType)) {
-                if ($filterType['type']) {
-                    $dto->setType($filterType['type']);
+        if ($conformity) {
+            if (is_array($conformity)) {
+                if ($conformity['type']) {
+                    $dto->setType($conformity['type']);
                 }
             } else {
-                $dto->setType($filterType);
+                $dto->setType($conformity);
             }
         }
 
         return $dto;
     }
+//endregion SECTION: Dto
 
+//region SECTION: Getters/Setters
     /**
      * @param Request $request
      *
@@ -77,7 +85,7 @@ class RuleTypeDto extends AbstractFactoryDto
     /**
      * @param mixed $type
      *
-     * @return RuleTypeDto
+     * @return ConformityDto
      */
     public function setType($type)
     {
@@ -85,4 +93,5 @@ class RuleTypeDto extends AbstractFactoryDto
 
         return $this;
     }
+//endregion Getters/Setters
 }

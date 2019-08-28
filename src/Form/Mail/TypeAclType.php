@@ -44,7 +44,7 @@ class TypeAclType extends AbstractType
     {
         $callback = function (Options $options) {
             $type = [];
-            foreach ($this->aclManager->getAclModel()->getData()['model'] as $name) {
+            foreach ($this->aclManager->getAclModel()->getData() as $name) {
                 $type[] = $name;
             }
 

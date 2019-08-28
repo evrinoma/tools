@@ -64,6 +64,14 @@ class Filter
     {
         return $this->pattern === 'ip';
     }
+
+    /**
+     * @return bool
+     */
+    public function isPattern(): bool
+    {
+        return $this->pattern === '';
+    }
 //endregion Public
 
 //region SECTION: Getters/Setters
