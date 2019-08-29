@@ -22,7 +22,7 @@ class VideoController extends AbstractController
 //region SECTION: Public
     /**
      * @Route("/video/live_ipark45", options={"expose"=true}, name="live_ipark45")
-     * @Template("base.html.twig")
+     * @Template("video/display.html.twig")
      *
      * @return array
      */
@@ -33,7 +33,7 @@ class VideoController extends AbstractController
 
     /**
      * @Route("/video/live_kzkt45", options={"expose"=true}, name="live_kzkt45")
-     * @Template("base.html.twig")
+     * @Template("video/display.html.twig")
      *
      * @return array
      */
@@ -44,7 +44,7 @@ class VideoController extends AbstractController
 
     /**
      * @Route("/video/live_ishim", options={"expose"=true}, name="live_ishim")
-     * @Template("base.html.twig")
+     * @Template("video/display.html.twig")
      *
      * @return array
      */
@@ -55,7 +55,7 @@ class VideoController extends AbstractController
 
     /**
      * @Route("/video/live_tobolsk", options={"expose"=true}, name="live_tobolsk")
-     * @Template("base.html.twig")
+     * @Template("video/display.html.twig")
      *
      * @return array
      */
