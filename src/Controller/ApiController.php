@@ -13,6 +13,7 @@ use App\Core\AbstractEntityManager;
 use App\Dto\AclDto;
 use App\Dto\DomainDto;
 use App\Dto\FactoryDto;
+use App\Dto\LiveVideoDto;
 use App\Dto\LogSearchDto;
 use App\Dto\ServerDto;
 use App\Dto\SettingsDto;
@@ -22,6 +23,7 @@ use App\Manager\AclManager;
 use App\Manager\DashBoardManager;
 use App\Manager\DomainManager;
 use App\Manager\JournalManager;
+use App\Manager\LiveVideoManager;
 use App\Manager\MenuManager;
 use App\Manager\SearchManager;
 use App\Manager\ServerManager;
@@ -336,6 +338,34 @@ class ApiController extends AbstractController
 
 
         return $this->json(['delta_data' => $data]);
+    }
+
+    /**
+     * @Rest\Get("/internal/live_video", name="api_live_video_cam")
+     * @SWG\Get(tags={"live_video"})
+     * @SWG\Parameter(
+     *     name="alias",
+     *     in="query",
+     *     type="array",
+     *     description="search there",
+     *     items=@SWG\Items(
+     *         type="string",
+     *         @Model(type=App\Form\LiveVideo\GroupType::class)
+     *     )
+     * )
+     * @SWG\Response(response=200,description="Returns Live Video Settings")
+     *
+     * @param Request          $request
+     * @param FactoryDto       $factoryDto
+     * @param LiveVideoManager $liveVideoManager
+     *
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     */
+    public function liveVideoAction(Request $request, FactoryDto $factoryDto, LiveVideoManager $liveVideoManager)
+    {
+        $liveVideoDto = $factoryDto->setRequest($request)->createDto(LiveVideoDto::class);
+
+        return $this->json($liveVideoManager->setRestSuccessOk()->getLiveVideo($liveVideoDto)->getData(), $liveVideoManager->getRestStatus());
     }
 
     /**
