@@ -7,4 +7,3 @@ new Vue({
     template: '<domain/>',
     components: { domain }
 });
-

@@ -7,29 +7,29 @@
                 <label>Domain Name:</label>
                 <div class="ui right labeled left icon input">
                     <i class="linkify icon "></i>
-                    <input type="text" v-model="domainNameText" class="three wide column" placeholder="Domain name">
+                    <input type="text" v-model="domainText" class="three wide column" placeholder="Domain name">
                     <a class="ui tag label">
-                        ID[{{ domainId }}]
+                        ID[{{ id }}]
                     </a>
                 </div>
             </div>
             <div class="field">
                 <label>Mx:</label>
                 <select class="form-control" @change="mxHandleChange">
-                    <option v-if="hostNameServerSelected === false" selected>
+                    <option v-if="hostNameSelected === false" selected>
                         Select Mx
                     </option>
                     <option v-else>
                         Select Mx
                     </option>
-                    <option v-for="(selectValue, index) in servers" :index="index" :param="selectValue.id" :value="selectValue.hostname" :selected="hostNameServerSelected === selectValue.hostname">{{ selectValue.hostname }}</option>
+                    <option v-for="(selectValue, index) in servers" :index="index" :param="selectValue.id" :value="selectValue.hostname" :selected="hostNameSelected === selectValue.hostname">{{ selectValue.hostname }}</option>
 
                 </select>
             </div>
             <div class="field">
                 <label>Relay Address:</label>
                 <div class="ui disabled input">
-                    <input type="text" v-model="ipServerText" class="three wide column" placeholder="IP address">
+                    <input type="text" v-model="ipText" class="three wide column" placeholder="IP address">
                 </div>
             </div>
             <br>
@@ -78,17 +78,23 @@
                 type: String,
                 required: true
             },
+            domainClass: {
+                type: String,
+                required: true
+            },
         },
         data() {
             return {
-                domainNameText: '',
-                ipServerText: '',
-                domainId: '',
+                domainText: '',
+                ipText: '',
+                id: '',
                 servers: {},
-                hostNameServerSelected: false,
+                hostNameSelected: false,
+                hostNameIndex: false,
                 hasError: false,
                 showError: false,
-                errorText: ''
+                errorText: '',
+                domain: null,
             }
         },
         mounted() {
@@ -100,8 +106,9 @@
             mxHandleChange(e) {
                 const select = e.target;
                 const selectedIndex = select.options[select.selectedIndex].attributes.index.value;
-                this.ipServerText = this.servers[selectedIndex].ip;
-                this.hostNameServerSelected = this.servers[selectedIndex].hostname;
+                this.ipText = this.servers[selectedIndex].ip;
+                this.hostNameSelected = this.servers[selectedIndex].hostname;
+                this.hostNameIndex = selectedIndex;
             },
             _axiosResponse(type, response) {
                 switch (type) {
@@ -129,17 +136,24 @@
             },
             _getData() {
                 return {
-                    domainName: this.domainNameText,
-                    ipServer: this.ipServerText,
-                    hostNameServer: this.hostNameServerSelected,
-                    domainId: this.domainId
+                    domain: this.domainText,
+                    server: this.servers[this.hostNameIndex],
+                    id: this.id,
+                    class: this.domainClass,
                 }
             },
             onSet(eventData) {
-                this.domainNameText = eventData.domainName;
-                this.ipServerText = eventData.ipServer;
-                this.hostNameServerSelected = eventData.hostNameServer;
-                this.domainId = eventData.domainId;
+                this.domainText = eventData.domain;
+                this.ipText = eventData.server.ip;
+                this.hostNameSelected = eventData.server.hostname;
+                this.id = eventData.id;
+                let self = this;
+                this.servers.some(function (value, key) {
+                    if (value.hostname === self.hostNameSelected) {
+                        self.hostNameIndex = key;
+                        return true;
+                    }
+                });
             },
             doLoad() {
                 this.resetEdit();
@@ -154,10 +168,11 @@
                     .catch(error => (this._axiosResponse('info-save-error', error)));
             },
             resetEdit() {
-                this.domainNameText = '';
-                this.hostNameServerSelected = false;
-                this.ipServerText = '';
-                this.domainId = '';
+                this.domainText = '';
+                this.hostNameSelected = false;
+                this.hostNameIndex = false;
+                this.ipText = '';
+                this.id = '';
             }
         }
     }

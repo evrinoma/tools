@@ -39,7 +39,7 @@
     Vue.component('custom-actions', CustomActions);
     Vue.component('filter-bar', FilterBar)
 
-    export default {
+    let component = {
         components: {
             Vuetable,
             VuetablePagination,
@@ -58,6 +58,10 @@
                 type: String,
                 required: true
             },
+            domainClass: {
+                type: String,
+                required: true
+            },
             sortOrder: {
                 type: Array,
                 default() {
@@ -67,7 +71,9 @@
         },
         data() {
             return {
-                moreParams: {},
+                moreParams: {
+                    class: this.domainClass,
+                },
             }
         },
         mounted() {
@@ -111,5 +117,8 @@
                 }
             }
         }
-    }
+    };
+
+
+    export default component
 </script>

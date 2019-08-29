@@ -207,6 +207,22 @@ class ApiController extends AbstractController
     }
 
     /**
+     * @Rest\Get("/internal/domain/class", name="api_domain_class")
+     * @SWG\Get(tags={"domain"})
+     *
+     * @SWG\Response(response=200,description="Returns the class domain")
+     *
+     * @param DomainManager $domainManager
+     *
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     */
+    public function domainClassAction(DomainManager $domainManager)
+    {
+        return $this->json($domainManager->setRestSuccessOk()->getRepositoryClass(), $domainManager->getRestStatus());
+    }
+
+
+    /**
      * @Rest\Get("/internal/domain/query", name="api_query_domain")
      * @SWG\Get(tags={"domain"})
      * @SWG\Parameter(
@@ -559,6 +575,22 @@ class ApiController extends AbstractController
 
         return $this->json(['servers' => $serverManger->setRestSuccessOk()->getServers($serverDto)->getData()], $serverManger->getRestStatus());
     }
+
+    /**
+     * @Rest\Get("/internal/server/class", name="api_server_class")
+     * @SWG\Get(tags={"server"})
+     *
+     * @SWG\Response(response=200,description="Returns the class domain")
+     *
+     * @param ServerManager $serverManger
+     *
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     */
+    public function serverClassAction(ServerManager $serverManger)
+    {
+        return $this->json($serverManger->setRestSuccessOk()->getRepositoryClass(), $serverManger->getRestStatus());
+    }
+
 
     /**
      * @Rest\Delete("/internal/server/delete", name="api_delete_server")

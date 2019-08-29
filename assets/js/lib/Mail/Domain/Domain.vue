@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div v-if="domainClass && serverClass">
         <div class="ui segment block">
             <div class="ui two column very relaxed grid">
                 <div class="column">
@@ -8,6 +8,7 @@
                             :sort-order="sortOrder"
                             :api-url="apiUrl"
                             :api-url-delete="apiUrlDelete"
+                            :domain-class="domainClass"
                     ></vuetable>
                 </div>
                 <div class="column">
@@ -20,11 +21,13 @@
                     <info-panel
                             :api-url-servers="apiUrlServers"
                             :api-url-save="apiUrlSave"
+                            :domain-class="domainClass"
                     ></info-panel>
                     <server-panel
                             :api-url-servers="apiUrlServers"
                             :api-url-save="apiUrlServerSave"
                             :api-url-delete="apiUrlServerDelete"
+                            :server-class="serverClass"
                     ></server-panel>
                 </div>
             </div>
@@ -41,9 +44,11 @@
     import InfoPanel from './InfoPanel';
     import ServerPanel from './ServerPanel';
     import Vuetable from '../../../components/VueTables2/VueTables2';
+    import axios from 'axios';
 
     Vue.component('info-panel', InfoPanel);
     Vue.component('server-panel', ServerPanel);
+    Vue.use(axios);
 
     export default {
         name: 'domain',
@@ -64,9 +69,37 @@
                 apiUrlDelete: 'http://php72.tools/internal/domain/delete',
                 apiUrlServers: 'http://php72.tools/internal/server/server',
                 apiUrlSave: 'http://php72.tools/internal/domain/save',
-                apiUrlServerDelete:'http://php72.tools/internal/server/delete',
-                apiUrlServerSave:'http://php72.tools/internal/server/save',
+                apiUrlServerDelete: 'http://php72.tools/internal/server/delete',
+                apiUrlServerSave: 'http://php72.tools/internal/server/save',
+                apiUrlClass: 'http://php72.tools/internal/domain/class',
+                domainClass: null,
+                serverClass: null,
+                apiUrlDomainClass: 'http://php72.tools/internal/domain/class',
+                apiUrlServerClass: 'http://php72.tools/internal/server/class',
             }
+        },
+        mounted() {
+            this.doMount();
+        },
+        methods: {
+            doMount() {
+                axios
+                    .get(this.apiUrlDomainClass)
+                    .then(response => (this._axiosResponse('load-domain-class', response)));
+                axios
+                    .get(this.apiUrlServerClass)
+                    .then(response => (this._axiosResponse('load-server-class', response)));
+            },
+            _axiosResponse(type, response) {
+                switch (type) {
+                    case 'load-domain-class':
+                        this.domainClass = response.data;
+                        break;
+                    case 'load-server-class':
+                        this.serverClass = response.data;
+                        break;
+                }
+            },
         }
     }
 </script>

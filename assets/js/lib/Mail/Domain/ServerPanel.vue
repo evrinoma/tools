@@ -9,7 +9,7 @@
                     <i class="linkify icon "></i>
                     <input type="text" v-model="mxText" class="three wide column" placeholder="MX name">
                     <a class="ui tag label">
-                        ID[{{ idServerSelected }}]
+                        ID[{{ idSelected }}]
                     </a>
                 </div>
             </div>
@@ -88,6 +88,10 @@
                 type: String,
                 required: true
             },
+            serverClass: {
+                type: String,
+                required: true
+            },
         },
         data() {
             return {
@@ -95,7 +99,7 @@
                 ipText: '',
                 servers: {},
                 hostnameSelected: false,
-                idServerSelected: '',
+                idSelected: '',
                 hasError: false,
                 showError: false,
                 errorText: '',
@@ -111,7 +115,7 @@
                 this.mxText = this.servers[selectedIndex].hostname;
                 this.ipText = this.servers[selectedIndex].ip;
                 this.hostnameSelected = this.servers[selectedIndex].hostname;
-                this.idServerSelected = this.servers[selectedIndex].id;
+                this.idSelected = this.servers[selectedIndex].id;
             },
             _axiosResponse(type, response) {
                 switch (type) {
@@ -154,26 +158,24 @@
                 this.mxText = '';
                 this.ipText = '';
                 this.hostnameSelected = false;
-                this.idServerSelected = '';
+                this.idSelected = '';
             },
             _updateData() {
                 return {
-                    hostNameServer: this.mxText,
-                    ipServer: this.ipText,
-                    idServer: this.idServerSelected
+                    hostname: this.mxText,
+                    ip: this.ipText,
+                    id: this.idSelected,
+                    class: this.serverClass
                 }
             },
             _getAddData() {
                 return {
-                    hostNameServer: this.mxText,
-                    ipServer: this.ipText,
-                    idServer: this.idServerSelected,
+                    hostname: this.mxText,
+                    ip: this.ipText,
+                    id: this.idSelected,
+                    class: this.serverClass,
                 }
             },
-            // onSet(eventData) {
-            //     this.mxText = eventData.mx;
-            //     this.hostnameSelected = eventData.relayAdr;
-            // },
             doMount() {
                 this.$events.fire('info-reload');
                 axios

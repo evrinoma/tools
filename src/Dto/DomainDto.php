@@ -25,7 +25,6 @@ class DomainDto extends AbstractFactoryDto implements VuetableInterface
 
 //region SECTION: Fields
     private $id;
-    private $hostNameServer;
     private $domainName;
     private $page;
     private $perPage;
@@ -68,14 +67,6 @@ class DomainDto extends AbstractFactoryDto implements VuetableInterface
     {
         return $this->domainName && (preg_match("/(?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\.)+[a-z0-9][a-z0-9-]{0,61}[a-z0-9]/", $this->domainName) === 1);
     }
-
-    /**
-     * @return bool
-     */
-    public function isValidHostNameServer()
-    {
-        return $this->hostNameServer && (preg_match("/(?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\.)+[a-z0-9][a-z0-9-]{0,61}[a-z0-9]/", $this->hostNameServer) === 1);
-    }
 //endregion Public
 
 //region SECTION: Dto
@@ -94,15 +85,11 @@ class DomainDto extends AbstractFactoryDto implements VuetableInterface
             $page           = $request->get('page');
             $perPage        = $request->get('per_page');
             $filter         = $request->get('filter');
-            $hostNameServer = $request->get('hostNameServer');
             $domainName     = $request->get('domain');
             $id             = $request->get('id');
 
             if ($id !== null) {
                 $dto->setId($id);
-            }
-            if ($hostNameServer !== null) {
-                $dto->setHostNameServer($hostNameServer);
             }
             if ($domainName !== null) {
                 $dto->setDomainName($domainName);
@@ -165,14 +152,6 @@ class DomainDto extends AbstractFactoryDto implements VuetableInterface
         self::regeneratRequest($request, self::getClassEntity(), 'domain');
 
         return $request;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getHostNameServer()
-    {
-        return $this->hostNameServer;
     }
 
     /**
