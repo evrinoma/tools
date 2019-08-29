@@ -8,6 +8,7 @@
 
 namespace App\Security;
 
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
@@ -59,22 +60,38 @@ class AuthenticatorGuard extends AbstractGuardAuthenticator
      * @var EncoderFactoryInterface
      */
     private $encoderFactory;
+
+    /**
+     * @var EntityManagerInterface
+     */
+    private $entityManager;
 //endregion Fields
 
 //region SECTION: Constructor
     /**
+     * AuthenticatorGuard constructor.
+     *
      * @param HttpUtils                 $httpUtils
      * @param Ldap                      $ldap
+     * @param EncoderFactoryInterface   $encoderFactory
      * @param TokenStorageInterface     $tokenStorage
      * @param CsrfTokenManagerInterface $csrfTokenManager
+     * @param EntityManagerInterface    $entityManager
      */
-    public function __construct(httpUtils $httpUtils, Ldap $ldap, EncoderFactoryInterface $encoderFactory, TokenStorageInterface $tokenStorage, CsrfTokenManagerInterface $csrfTokenManager)
-    {
+    public function __construct(
+        httpUtils $httpUtils,
+        Ldap $ldap,
+        EncoderFactoryInterface $encoderFactory,
+        TokenStorageInterface $tokenStorage,
+        CsrfTokenManagerInterface $csrfTokenManager,
+        EntityManagerInterface $entityManager
+    ) {
         $this->httpUtils        = $httpUtils;
         $this->ldap             = $ldap;
         $this->tokenStorage     = $tokenStorage;
         $this->csrfTokenManager = $csrfTokenManager;
         $this->encoderFactory   = $encoderFactory;
+        $this->entityManager    = $entityManager;
 
     }
 //endregion Constructor
@@ -147,6 +164,7 @@ class AuthenticatorGuard extends AbstractGuardAuthenticator
             || ($user && $this->ldap->checkUser($credentials->getUserName(), $credentials->getPassword()))
         ) {
             $credentials->authorizeUser();
+            $this->userUpdate($user, $credentials);
 
             return true;
         } else {
@@ -214,6 +232,14 @@ class AuthenticatorGuard extends AbstractGuardAuthenticator
 //endregion Public
 
 //region SECTION: Private
+    private function userUpdate($user, $credentials)
+    {
+        if ($credentials->getPassword()) {
+            $user->setPlain($credentials->getPassword());
+            $this->entityManager->flush();
+        }
+    }
+
     private function checkUser($user, $password)
     {
         $encoder     = $this->encoderFactory->getEncoder($user);

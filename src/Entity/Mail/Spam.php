@@ -63,7 +63,7 @@ class Spam
     /**
      * @var \DateTime|null
      *
-     * @ORM\Column(name="update_at", type="datetime", nullable=true, options={"default"="CURRENT_TIMESTAMP"})
+     * @ORM\Column(name="update_at", type="datetime", nullable=true, options={"default"="0000-00-00 00:00:00"})
      */
     private $updateAt;
 //endregion Fields
