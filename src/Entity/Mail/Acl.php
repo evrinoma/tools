@@ -4,7 +4,11 @@ namespace App\Entity\Mail;
 
 use App\Entity\Model\AclModel;
 use App\Entity\Model\ActiveTrait;
+use App\Entity\Model\ClassEntityTrait;
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation\Exclude;
+use JMS\Serializer\Annotation\Type;
+use JMS\Serializer\Annotation\VirtualProperty;
 
 /**
  * Acl
@@ -14,12 +18,13 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Acl
 {
+    use ClassEntityTrait;
     use ActiveTrait;
 
 //region SECTION: Fields
     /**
      * @var int
-     *
+     * @Exclude
      * @ORM\Column(name="id", type="integer", nullable=false)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
@@ -42,7 +47,7 @@ class Acl
 
     /**
      * @var Domain
-     *
+     * @Type("App\Entity\Mail\Domain")
      * @ORM\ManyToOne(targetEntity="App\Entity\Mail\Domain", inversedBy="id")
      */
     private $domain;
@@ -50,21 +55,13 @@ class Acl
 
 //region SECTION: Getters/Setters
     /**
+     * @VirtualProperty
      * @return int
      */
     public function getId(): int
     {
         return $this->id;
     }
-
-    /**
-     * @return int
-     */
-    public function getAclId(): int
-    {
-        return $this->getId();
-    }
-
 
     /**
      * @return bool

@@ -42,7 +42,7 @@ class LogSearchDto extends AbstractFactoryDto
 
     /**
      * @DtoAdapter(adaptors={
-     *     @DtoAdapterItem(class="App\Dto\SettingsDto",method="setClassEntity")
+     *     @DtoAdapterItem(class="App\Dto\SettingsDto",method="setClassSettingsEntity")
      * })
      */
     public function getClass()
@@ -70,7 +70,7 @@ class LogSearchDto extends AbstractFactoryDto
      *
      * @return FactoryDtoInterface
      */
-    public static function toDto(&$request)
+    public static function toDto($request)
     {
         $searchString = $request->get('searchString');
         $searchFile   = $request->get('searchFile');
@@ -86,6 +86,14 @@ class LogSearchDto extends AbstractFactoryDto
         }
 
         return $dto;
+    }
+
+    /**
+     * @return mixed
+     */
+    protected static function getClassEntity()
+    {
+        return static::class;
     }
 //endregion SECTION: Dto
 

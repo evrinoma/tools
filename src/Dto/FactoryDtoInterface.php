@@ -37,7 +37,7 @@ interface FactoryDtoInterface
      *
      * @return FactoryDtoInterface
      */
-    public static function toDto(&$request);
+    public static function toDto($request);
 //endregion SECTION: Dto
 
 //region SECTION: Getters/Setters

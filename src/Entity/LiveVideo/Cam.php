@@ -11,7 +11,7 @@ namespace App\Entity\LiveVideo;
 
 use App\Entity\Model\ActiveTrait;
 use Doctrine\ORM\Mapping as ORM;
-use JMS\Serializer\Annotation as Serializer;
+use JMS\Serializer\Annotation\Exclude;
 
 /**
  * Class Cam
@@ -97,7 +97,7 @@ class Cam
     private $control = false;
 
     /**
-     * @Serializer\Exclude()
+     * @Exclude()
      * @var Group
      * @ORM\ManyToOne(targetEntity="App\Entity\LiveVideo\Group", inversedBy="id")
      */

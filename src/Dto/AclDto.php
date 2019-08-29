@@ -36,6 +36,16 @@ class AclDto extends AbstractFactoryDto
     private $domain;
 //endregion Fields
 
+//region SECTION: Protected
+    /**
+     * @return mixed
+     */
+    protected static function getClassEntity()
+    {
+        return Acl::class;
+    }
+//endregion Protected
+
 //region SECTION: Public
     /**
      * @return bool
@@ -76,35 +86,38 @@ class AclDto extends AbstractFactoryDto
      *
      * @return FactoryDtoInterface
      */
-    public static function toDto(&$request)
+    public static function toDto($request)
     {
-        $dto     = new self();
-        $aclId   = $request->get('aclId');
-        $active  = $request->get('active');
-        $deleted = $request->get('deleted');
-        $email   = $request->get('email');
-        $type    = $request->get('type');
-        $domain  = $request->get('domain');
+        $dto   = new self();
+        $class = $request->get('class');
 
-        if ($aclId) {
-            $dto->setId($aclId);
-        }
+        if ($class === self::getClassEntity()) {
+            $id      = $request->get('id');
+            $active  = $request->get('active');
+            $deleted = $request->get('is_deleted');
+            $email   = $request->get('email');
+            $type    = $request->get('type');
 
-        if ($active && $deleted) {
-            $dto->setActiveToDelete();
-        }
+            if ($id) {
+                $dto->setId($id);
+            }
 
-        if ($email) {
-            $dto->setEmail($email);
-        }
+            if ($active && $deleted) {
+                $dto->setActiveToDelete();
+            }
 
-        if ($type) {
-            $dto->setType($type);
-        }
+            if ($email) {
+                $dto->setEmail($email);
+            }
 
-        if ($domain) {
-            $request = new Request();
-            $request->request->add($domain);
+            if ($type) {
+                $dto->setType($type);
+            }
+
+//        if ($domain) {
+//            $request = new Request();
+//            $request->request->add($domain);
+//        }
         }
 
         return $dto;

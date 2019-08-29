@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Entity;
+namespace App\Entity\Mail\Migrations;
 
 use Doctrine\ORM\Mapping as ORM;
 

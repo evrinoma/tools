@@ -8,6 +8,7 @@
 
 namespace App\Dto;
 
+use App\Entity\LiveVideo\Group;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -21,6 +22,16 @@ class LiveVideoDto extends AbstractFactoryDto
 //region SECTION: Fields
     private $alias;
 //endregion Fields
+
+//region SECTION: Protected
+    /**
+     * @return mixed
+     */
+    protected static function getClassEntity()
+    {
+        return Group::class;
+    }
+//endregion Protected
 
 //region SECTION: Public
     /**
@@ -40,7 +51,7 @@ class LiveVideoDto extends AbstractFactoryDto
      *
      * @return FactoryDtoInterface
      */
-    public static function toDto(&$request)
+    public static function toDto($request)
     {
         $alias = $request->get('alias');
 

@@ -77,9 +77,9 @@ class SettingsManager extends AbstractEntityManager
 
         $builder->where('settings.active != \'d\'');
 
-        if ($settingsDto->getClassEntity()) {
+        if ($settingsDto->getClassSettingsEntity()) {
             $builder->andWhere('settings.type = :classEntity')
-                ->setParameter('classEntity', $settingsDto->getClassEntity());
+                ->setParameter('classEntity', $settingsDto->getClassSettingsEntity());
         }
 
         return $builder->getQuery()->getResult();

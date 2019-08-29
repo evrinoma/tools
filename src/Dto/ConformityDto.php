@@ -9,6 +9,7 @@
 namespace App\Dto;
 
 
+use App\Entity\Mail\Conformity;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -24,6 +25,16 @@ class ConformityDto extends AbstractFactoryDto
      */
     private $type;
 //endregion Fields
+
+//region SECTION: Protected
+    /**
+     * @return mixed
+     */
+    protected static function getClassEntity()
+    {
+        return Conformity::class;
+    }
+//endregion Protected
 
 //region SECTION: Public
     /**
@@ -43,20 +54,14 @@ class ConformityDto extends AbstractFactoryDto
      *
      * @return FactoryDtoInterface
      */
-    public static function toDto(&$request)
+    public static function toDto($request)
     {
-        $conformity = $request->get('conformity');
+        $dto   = new self();
+        $class = $request->get('class');
 
-        $dto = new self();
-
-        if ($conformity) {
-            if (is_array($conformity)) {
-                if ($conformity['type']) {
-                    $dto->setType($conformity['type']);
-                }
-            } else {
-                $dto->setType($conformity);
-            }
+        if ($class === self::getClassEntity()) {
+            $type = $request->get('type');
+            $dto->setType($type);
         }
 
         return $dto;
@@ -71,6 +76,8 @@ class ConformityDto extends AbstractFactoryDto
      */
     public static function getRequest(Request $request)
     {
+        self::regeneratRequest($request, self::getClassEntity(), 'conformity');
+
         return $request;
     }
 

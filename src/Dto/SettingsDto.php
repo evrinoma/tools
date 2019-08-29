@@ -20,14 +20,24 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class SettingsDto extends AbstractFactoryDto
 {
-    use ActiveTrait;
 
 //region SECTION: Fields
-    private $id;
-    private $classEntity;
 
+    use ActiveTrait;
+    private $id;
+    private $classSettingsEntity;
     private $files;
 //endregion Fields
+
+//region SECTION: Protected
+    /**
+     * @return mixed
+     */
+    protected static function getClassEntity()
+    {
+        return Settings::class;
+    }
+//endregion Protected
 
 //region SECTION: Public
     /**
@@ -49,11 +59,11 @@ class SettingsDto extends AbstractFactoryDto
      *
      * @return FactoryDtoInterface
      */
-    public static function toDto(&$request)
+    public static function toDto($request)
     {
-        $settings    = $request->get('settings');
-        $classEntity = $request->get('classEntity');
-        $dto         = new self();
+        $settings            = $request->get('settings');
+        $classSettingsEntity = $request->get('classEntity');
+        $dto                 = new self();
 
         if ($settings) {
             if (is_array($settings)) {
@@ -69,8 +79,8 @@ class SettingsDto extends AbstractFactoryDto
             }
         }
 
-        if ($classEntity) {
-           $dto->setClassEntity($classEntity);
+        if ($classSettingsEntity) {
+            $dto->setClassSettingsEntity($classSettingsEntity);
         }
 
         return $dto;
@@ -82,9 +92,9 @@ class SettingsDto extends AbstractFactoryDto
     /**
      * @return mixed
      */
-    public function getClassEntity()
+    public function getClassSettingsEntity()
     {
-        return $this->classEntity;
+        return $this->classSettingsEntity;
     }
 
     /**
@@ -106,13 +116,13 @@ class SettingsDto extends AbstractFactoryDto
     }
 
     /**
-     * @param mixed $classEntity
+     * @param mixed $classSettingsEntity
      *
      * @return SettingsDto
      */
-    public function setClassEntity($classEntity)
+    public function setClassSettingsEntity($classSettingsEntity)
     {
-        $this->classEntity = $classEntity;
+        $this->classSettingsEntity = $classSettingsEntity;
 
         return $this;
     }

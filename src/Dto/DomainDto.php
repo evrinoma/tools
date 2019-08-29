@@ -38,6 +38,16 @@ class DomainDto extends AbstractFactoryDto implements VuetableInterface
     private $server;
 //endregion Fields
 
+//region SECTION: Protected
+    /**
+     * @return mixed
+     */
+    protected static function getClassEntity()
+    {
+        return Domain::class;
+    }
+//endregion Protected
+
 //region SECTION: Public
     /**
      * @param Domain $entity
@@ -64,7 +74,7 @@ class DomainDto extends AbstractFactoryDto implements VuetableInterface
      */
     public function isValidHostNameServer()
     {
-        return $this->hostNameServer &&  (preg_match("/(?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\.)+[a-z0-9][a-z0-9-]{0,61}[a-z0-9]/", $this->hostNameServer) === 1);
+        return $this->hostNameServer && (preg_match("/(?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\.)+[a-z0-9][a-z0-9-]{0,61}[a-z0-9]/", $this->hostNameServer) === 1);
     }
 //endregion Public
 
@@ -74,34 +84,38 @@ class DomainDto extends AbstractFactoryDto implements VuetableInterface
      *
      * @return FactoryDtoInterface
      */
-    public static function toDto(&$request)
+    public static function toDto($request)
     {
-        $page    = $request->get('page');
-        $perPage = $request->get('per_page');
-        $filter  = $request->get('filter');
-        $hostNameServer      = $request->get('hostNameServer');
-        $domainName    = $request->get('domainName');
-        $id      = $request->get('domainId');
+        $dto   = new self();
+        $class = $request->get('class');
 
-        $dto = new self();
+        if ($class === self::getClassEntity()) {
 
-        if ($id!==null) {
-            $dto->setId($id);
-        }
-        if ($hostNameServer!==null) {
-            $dto->setHostNameServer($hostNameServer);
-        }
-        if ($domainName!==null) {
-            $dto->setDomainName($domainName);
-        }
-        if ($page!==null) {
-            $dto->setPage($page);
-        }
-        if ($perPage!==null) {
-            $dto->setPerPage($perPage);
-        }
-        if ($filter!==null) {
-            $dto->setFilter($filter);
+            $page           = $request->get('page');
+            $perPage        = $request->get('per_page');
+            $filter         = $request->get('filter');
+            $hostNameServer = $request->get('hostNameServer');
+            $domainName     = $request->get('domain');
+            $id             = $request->get('id');
+
+            if ($id !== null) {
+                $dto->setId($id);
+            }
+            if ($hostNameServer !== null) {
+                $dto->setHostNameServer($hostNameServer);
+            }
+            if ($domainName !== null) {
+                $dto->setDomainName($domainName);
+            }
+            if ($page !== null) {
+                $dto->setPage($page);
+            }
+            if ($perPage !== null) {
+                $dto->setPerPage($perPage);
+            }
+            if ($filter !== null) {
+                $dto->setFilter($filter);
+            }
         }
 
         return $dto;
@@ -148,6 +162,8 @@ class DomainDto extends AbstractFactoryDto implements VuetableInterface
      */
     public static function getRequest(Request $request)
     {
+        self::regeneratRequest($request, self::getClassEntity(), 'domain');
+
         return $request;
     }
 
@@ -195,7 +211,7 @@ class DomainDto extends AbstractFactoryDto implements VuetableInterface
      */
     public function setPage($page = null)
     {
-        $this->page = (int) $page;
+        $this->page = (int)$page;
 
         return $this;
     }
@@ -207,7 +223,7 @@ class DomainDto extends AbstractFactoryDto implements VuetableInterface
      */
     public function setPerPage($perPage = null)
     {
-        $this->perPage = (int) $perPage;
+        $this->perPage = (int)$perPage;
 
         return $this;
     }

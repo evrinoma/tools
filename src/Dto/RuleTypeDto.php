@@ -8,6 +8,7 @@
 
 namespace App\Dto;
 
+use App\Entity\Mail\Filter;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -17,11 +18,24 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class RuleTypeDto extends AbstractFactoryDto
 {
+//region SECTION: Fields
     /**
      * @var string
      */
     private $type;
+//endregion Fields
 
+//region SECTION: Protected
+    /**
+     * @return mixed
+     */
+    protected static function getClassEntity()
+    {
+        return Filter::class;
+    }
+//endregion Protected
+
+//region SECTION: Public
     /**
      * @param $entity
      *
@@ -31,31 +45,29 @@ class RuleTypeDto extends AbstractFactoryDto
     {
         return $entity;
     }
+//endregion Public
 
+//region SECTION: Dto
     /**
      * @param Request $request
      *
      * @return FactoryDtoInterface
      */
-    public static function toDto(&$request)
+    public static function toDto($request)
     {
-        $filterType = $request->get('type');
+        $dto   = new self();
+        $class = $request->get('class');
 
-        $dto = new self();
-
-        if ($filterType) {
-            if (is_array($filterType)) {
-                if ($filterType['type']) {
-                    $dto->setType($filterType['type']);
-                }
-            } else {
-                $dto->setType($filterType);
-            }
+        if ($class === self::getClassEntity()) {
+            $filterType = $request->get('type');
+            $dto->setType($filterType);
         }
 
         return $dto;
     }
+//endregion SECTION: Dto
 
+//region SECTION: Getters/Setters
     /**
      * @param Request $request
      *
@@ -63,6 +75,8 @@ class RuleTypeDto extends AbstractFactoryDto
      */
     public static function getRequest(Request $request)
     {
+        self::regeneratRequest($request, self::getClassEntity(), 'type');
+
         return $request;
     }
 
@@ -85,4 +99,5 @@ class RuleTypeDto extends AbstractFactoryDto
 
         return $this;
     }
+//endregion Getters/Setters
 }

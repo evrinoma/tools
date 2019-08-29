@@ -10,6 +10,7 @@ namespace App\Entity\Mail;
 
 
 use App\Entity\Model\ActiveTrait;
+use App\Entity\Model\ClassEntityTrait;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -21,6 +22,7 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Conformity
 {
+    use ClassEntityTrait;
     use ActiveTrait;
 
 //region SECTION: Fields

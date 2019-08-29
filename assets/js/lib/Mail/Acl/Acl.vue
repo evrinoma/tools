@@ -13,7 +13,7 @@
                                     <i class="dropdown icon"></i>
                                     <div class="menu">
                                         <div class="item" v-for="(domain,index) in domains" :class="{ 'active blue' : _initDomain(index)}" @click="_domainAction(index)">
-                                            {{domain.domainName}}
+                                            {{domain.domain}}
                                         </div>
                                     </div>
                                 </div>
@@ -130,9 +130,9 @@
                                 <div class="ui block acl">
                                     <div class="ui grid" v-for="(block, item) in selectValue.items">
                                         <template v-if="block.visible">
-                                            <div class="three column">{{block.aclId}}</div>
+                                            <div class="three column">{{block.id}}</div>
                                             <div class="three wide column">
-                                                <template v-if="_isEditBlock(block.aclId)">
+                                                <template v-if="_isEditBlock(block.id)">
                                                     <div class="ui input focus small">
                                                         <input type="text" v-model="editText" placeholder="Edit...">
                                                     </div>
@@ -183,7 +183,7 @@
                                 <div class="ui block spam">
                                     <div class="ui grid" v-for="(block, item) in selectValue.items">
                                         <template v-if="block.visible">
-                                            <div class="four column">{{block.spamId}}</div>
+                                            <div class="four column">{{block.id}}</div>
                                             <div class="four wide column">
                                                 {{block.domain}}
                                             </div>
@@ -225,12 +225,15 @@
                 apiUrlDomains: 'http://php72.tools/internal/domain/domain',
                 apiUrlAcl: 'http://php72.tools/internal/acl/acl',
                 apiUrlAclSave: 'http://php72.tools/internal/acl/save',
+                apiUrlAclClass: 'http://php72.tools/internal/acl/class',
 
                 apiUrlSpam: 'http://php72.tools/internal/spam/rules',
                 apiUrlSpamType: 'http://php72.tools/internal/spam/rules_type',
                 apiUrlConformityModel: 'http://php72.tools/internal/spam/conformity',
                 apiUrlSpamSave: 'http://php72.tools/internal/spam/save',
+                apiUrlSpamClass: 'http://php72.tools/internal/spam/class',
 
+                aclClass: '',
                 aclModel: null,
                 aclModelSelect: '',
                 domains: null,
@@ -245,6 +248,7 @@
                 showError: false,
                 errorText: '',
 
+                spamClass: '',
                 rulesType: null,
                 ruleTypeSelect: null,
                 showPreloadSpamForm: 0,
@@ -256,6 +260,7 @@
                 spamTabSelected: null,
                 factorSearchText: '',
 
+
             }
         },
         mounted() {
@@ -264,6 +269,12 @@
         methods: {
             _axiosResponse(type, response) {
                 switch (type) {
+                    case 'acl-load-class':
+                        this.aclClass = response.data;
+                        break;
+                    case 'spam-load-class':
+                        this.spamClass = response.data;
+                        break;
                     case 'acl-load-model':
                         this.aclModel = response.data.model;
                         break;
@@ -385,7 +396,7 @@
                 return (this.editBlock === id);
             },
             _getDomain() {
-                return (this.domains === null || this.domains[this.domainSelect] === undefined) ? 'Select Domain' : this.domains[this.domainSelect].domainName;
+                return (this.domains === null || this.domains[this.domainSelect] === undefined) ? 'Select Domain' : this.domains[this.domainSelect].domain;
             },
             _initDomain(index) {
                 return (this.domainSelect !== null) ? (this.domainSelect === index) : false;
@@ -440,7 +451,7 @@
                 this.spams[this.spamTabSelected].items.some(function (value) {
                     if (value.domain.indexOf(self.factorSearchText) !== -1) {
                         value.visible = true;
-                        value.visible = !value.deleted;
+                        value.visible = !value.is_deleted;
                     } else {
                         value.visible = false;
                     }
@@ -451,7 +462,7 @@
                 this.acls[this.aclTabSelected].items.some(function (value) {
                     if (value.email.indexOf(self.aclSearchText) !== -1) {
                         value.visible = true;
-                        value.visible = !value.deleted;
+                        value.visible = !value.is_deleted;
                     } else {
                         value.visible = false;
                     }
@@ -461,7 +472,8 @@
                 let data = {
                     spamRecord: this.recordSpamText,
                     conformity: this.conformityModel[this.conformityModelSelect],
-                    type: this.rulesType[this.ruleTypeSelect]
+                    type: this.rulesType[this.ruleTypeSelect],
+                    class: this.spamClass
                 };
 
                 axios
@@ -473,7 +485,8 @@
                 let data = {
                     type: this.aclModelSelect,
                     email: this.recordText,
-                    domain: this.domains[this.domainSelect]
+                    domain: this.domains[this.domainSelect],
+                    class: this.aclClass
                 };
                 axios
                     .post(this.apiUrlAclSave, data)
@@ -498,7 +511,7 @@
             },
             doDeleteAction(index, item) {
                 this.acls[index].items[item].active = 'd';
-                this.acls[index].items[item].deleted = true;
+                this.acls[index].items[item].is_deleted = true;
                 this.acls[index].items[item].visible = false;
                 axios
                     .post(this.apiUrlAclSave, this.acls[index].items[item])
@@ -507,7 +520,7 @@
             },
             doSpamDeleteAction(index, item) {
                 this.spams[index].items[item].active = 'd';
-                this.spams[index].items[item].deleted = true;
+                this.spams[index].items[item].is_deleted = true;
                 this.spams[index].items[item].visible = false;
                 axios
                     .post(this.apiUrlSpamSave, this.spams[index].items[item])
@@ -525,12 +538,18 @@
                 if (this.acls.length && this.acls[this.aclTabSelected] !== undefined) {
                     this.acls[this.aclTabSelected].items.some(function (value) {
                         value.visible = true;
-                        value.visible = !value.deleted;
+                        value.visible = !value.is_deleted;
                     });
                 }
             },
             doLoad() {
                 this.showPreloadSpamForm++;
+                axios
+                    .get(this.apiUrlAclClass)
+                    .then(response => (this._axiosResponse('acl-load-class', response)));
+                axios
+                    .get(this.apiUrlSpamClass)
+                    .then(response => (this._axiosResponse('spam-load-class', response)));
                 axios
                     .get(this.apiUrlAclModel)
                     .then(response => (this._axiosResponse('acl-load-model', response)));

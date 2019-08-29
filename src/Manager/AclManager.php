@@ -29,7 +29,6 @@ use Doctrine\ORM\EntityManagerInterface;
 class AclManager extends AbstractEntityManager
 {
     use RestTrait;
-
 //region SECTION: Fields
     /**
      * @var string

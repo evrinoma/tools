@@ -9,7 +9,13 @@
 namespace App\Entity\Model;
 
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation\VirtualProperty;
 
+/**
+ * Trait ActiveTrait
+ *
+ * @package App\Entity\Model
+ */
 trait ActiveTrait
 {
 //region SECTION: Fields
@@ -23,6 +29,7 @@ trait ActiveTrait
 
 //region SECTION: Public
     /**
+     *
      * @return bool
      */
     public function isActive()
@@ -31,6 +38,7 @@ trait ActiveTrait
     }
 
     /**
+     * @VirtualProperty
      * @return bool
      */
     public function isBlocked()
@@ -39,6 +47,7 @@ trait ActiveTrait
     }
 
     /**
+     * @VirtualProperty
      * @return bool
      */
     public function isDeleted()

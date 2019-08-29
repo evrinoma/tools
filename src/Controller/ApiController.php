@@ -29,9 +29,12 @@ use App\Manager\SearchManager;
 use App\Manager\ServerManager;
 use App\Manager\SpamManager;
 use FOS\RestBundle\Controller\Annotations as Rest;
+use JMS\Serializer\Serializer;
+use JMS\Serializer\SerializerInterface;
 use Nelmio\ApiDocBundle\Annotation\Model;
 use Swagger\Annotations as SWG;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -42,6 +45,26 @@ use Symfony\Component\HttpFoundation\Request;
 class ApiController extends AbstractController
 {
 
+
+//region SECTION: Fields
+    /**
+     * @var Serializer
+     */
+    private $serializer;
+//endregion Fields
+
+//region SECTION: Protected
+    protected function json($data, int $status = 200, array $headers = [], array $context = []): JsonResponse
+    {
+        if ($this->serializer) {
+            $json = $this->serializer->serialize($data, 'json');
+
+            return new JsonResponse($json, $status, $headers, true);
+        }
+
+        return new JsonResponse($data, $status, $headers);
+    }
+//endregion Protected
 
 //region SECTION: Public
     /**
@@ -69,6 +92,21 @@ class ApiController extends AbstractController
     }
 
     /**
+     * @Rest\Get("/internal/acl/class", name="api_acl_class")
+     * @SWG\Get(tags={"acl"})
+     * @SWG\Response(response=200,description="Returns class acl entity")
+     *
+     * @param AclManager $aclManager
+     *
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     * @throws \Exception
+     */
+    public function aclClassAction(AclManager $aclManager)
+    {
+        return $this->json($aclManager->setRestSuccessOk()->getRepositoryClass(), $aclManager->getRestStatus());
+    }
+
+    /**
      * @Rest\Put("/internal/acl/import", name="api_import_default_acl")
      * @SWG\Put(tags={"acl"})
      * @SWG\Response(response=200,description="Returns the import of acls")
@@ -82,7 +120,6 @@ class ApiController extends AbstractController
     {
         return $this->json(['acls' => $aclManager->setRestSuccessOk()->megrateAcls()], $aclManager->getRestStatus());
     }
-
 
     /**
      * @Rest\Get("/internal/acl/model", name="api_acl_model")
@@ -361,11 +398,18 @@ class ApiController extends AbstractController
      *
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
-    public function liveVideoAction(Request $request, FactoryDto $factoryDto, LiveVideoManager $liveVideoManager)
+    public function liveVideoAction(Request $request, FactoryDto $factoryDto, LiveVideoManager $liveVideoManager, SerializerInterface $ser)
     {
         $liveVideoDto = $factoryDto->setRequest($request)->createDto(LiveVideoDto::class);
 
-        return $this->json($liveVideoManager->setRestSuccessOk()->getLiveVideo($liveVideoDto)->getData(), $liveVideoManager->getRestStatus());
+
+        $data = $liveVideoManager->setRestSuccessOk()->getLiveVideo($liveVideoDto)->getData();
+
+        $status = $liveVideoManager->getRestStatus();
+
+        $result = $this->jsonJms($data, $status);
+
+        return $this->json($data, $status);
     }
 
     /**
@@ -633,6 +677,20 @@ class ApiController extends AbstractController
         return $this->json($spamManager->setRestSuccessOk()->getSpamRules($spamDto)->getData(), $spamManager->getRestStatus());
     }
 
+
+    /**
+     * @Rest\Get("/internal/spam/class", name="api_spam_rules_class")
+     * @SWG\Get(tags={"spam"})
+     * @SWG\Response(response=200,description="Returns the spam rules class")
+     * @param SpamManager $spamManager
+     *
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     */
+    public function spamRulesClassAction(SpamManager $spamManager)
+    {
+        return $this->json($spamManager->setRestSuccessOk()->getRepositoryClass(), $spamManager->getRestStatus());
+    }
+
     /**
      * @Rest\Get("/internal/spam/conformity", name="api_spam_rules_conformity")
      * @SWG\Get(tags={"spam"})
@@ -717,7 +775,6 @@ class ApiController extends AbstractController
         return $this->json($spamManager->setRestSuccessOk()->saveSpam($spamDto), $spamManager->getRestStatus());
     }
 
-
     /**
      * @Rest\Get("/internal/spam/rules_type", name="api_spam_rules_type")
      * @SWG\Get(tags={"spam"})
@@ -749,8 +806,6 @@ class ApiController extends AbstractController
     {
         return $this->json(['system' => $dashBoardManager->getDashBoard()]);
     }
-
-
 //endregion Public
 
 //region SECTION: Private
@@ -790,4 +845,16 @@ class ApiController extends AbstractController
         return $vuetableData;
     }
 //endregion Private
+
+//region SECTION: Getters/Setters
+    /**
+     * @param SerializerInterface $serializer
+     *
+     * @required
+     */
+    public function setSerializer(SerializerInterface $serializer)
+    {
+        $this->serializer = $serializer;
+    }
+//endregion Getters/Setters
 }

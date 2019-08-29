@@ -148,6 +148,11 @@ abstract class AbstractEntityManager
     {
         return $this->classModel;
     }
+
+    public function getRepositoryClass()
+    {
+        return $this->repositoryClass;
+    }
 //endregion Private
 
 //region SECTION: Getters/Setters

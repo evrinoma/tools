@@ -8,6 +8,9 @@
 
 namespace App\Dto;
 
+
+use Symfony\Component\HttpFoundation\Request;
+
 /**
  * Class AbstractDto
  *
@@ -29,6 +32,32 @@ abstract class AbstractFactoryDto extends AbstractDto implements FactoryDtoInter
      */
     private $factoryAdapter;
 //endregion Fields
+
+//region SECTION: Protected
+    /**
+     * @return mixed
+     */
+    abstract protected static function getClassEntity();
+
+    /**
+     * @param Request $request
+     * @param string  $classEntity
+     * @param string  $searchTarget
+     */
+    protected static function regeneratRequest(Request $request, $classEntity, $searchTarget)
+    {
+        $target = $request->get($searchTarget);
+        $class  = $request->get('class');
+        if ($class !== $classEntity && $target) {
+            if (is_string($target)) {
+                $target = json_decode($target, true);
+            }
+            if ($target && is_array($target) && count($target) > 0) {
+                $request->isMethod('GET') ? $request->query->add($target) : $request->request->add($target);
+            }
+        }
+    }
+//endregion Protected
 
 //region SECTION: Public
     /**
@@ -76,7 +105,7 @@ abstract class AbstractFactoryDto extends AbstractDto implements FactoryDtoInter
      */
     public function hasSingleEntity()
     {
-        return $this->countEntity()===1;
+        return $this->countEntity() === 1;
     }
 
     /**

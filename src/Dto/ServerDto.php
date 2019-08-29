@@ -26,31 +26,19 @@ class ServerDto extends AbstractFactoryDto
     private $ip;
     private $hostName;
     private $id;
+//endregion Fields
 
+//region SECTION: Protected
     /**
      * @return mixed
      */
-    public function getId()
+    protected static function getClassEntity()
     {
-        return $this->id;
+        return Server::class;
     }
-
-    /**
-     * @param mixed $id
-     *
-     * @return ServerDto
-     */
-    public function setId($id)
-    {
-        $this->id = $id;
-
-        return $this;
-    }
-
-//endregion Fields
+//endregion Protected
 
 //region SECTION: Public
-
     /**
      * @param Server $entity
      *
@@ -86,24 +74,29 @@ class ServerDto extends AbstractFactoryDto
      *
      * @return FactoryDtoInterface
      */
-    public static function toDto(&$request)
+    public static function toDto($request)
     {
-        $ip   = $request->get('ipServer');
-        $name = $request->get('hostNameServer');
-        $idServer = $request->get('idServer');
+        $dto   = new self();
+        $class = $request->get('class');
 
-        $dto = new self();
+        if ($class === self::getClassEntity()) {
 
-        if ($name) {
-            $dto->setHostName($name);
-        }
+            $ip   = $request->get('ip');
+            $name = $request->get('hostname');
+            $id   = $request->get('id');
 
-        if ($ip) {
-            $dto->setIp($ip);
-        }
+            if ($name) {
+                $dto->setHostName($name);
+            }
 
-        if ($idServer) {
-            $dto->setId($idServer);
+            if ($ip) {
+                $dto->setIp($ip);
+            }
+
+            if ($id) {
+                $dto->setId($id);
+            }
+
         }
 
         return $dto;
@@ -112,12 +105,22 @@ class ServerDto extends AbstractFactoryDto
 
 //region SECTION: Getters/Setters
     /**
+     * @return mixed
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
      * @param Request $request
      *
      * @return mixed
      */
     public static function getRequest(Request $request)
     {
+        self::regeneratRequest($request, self::getClassEntity(), 'server');
+
         return $request;
     }
 
@@ -135,6 +138,18 @@ class ServerDto extends AbstractFactoryDto
     public function getHostName()
     {
         return $this->hostName;
+    }
+
+    /**
+     * @param mixed $id
+     *
+     * @return ServerDto
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+
+        return $this;
     }
 
     /**

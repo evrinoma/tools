@@ -3,7 +3,11 @@
 namespace App\Entity\Mail;
 
 use App\Entity\Model\ActiveTrait;
+use App\Entity\Model\ClassEntityTrait;
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation\SerializedName;
+use JMS\Serializer\Annotation\Type;
+use JMS\Serializer\Annotation\VirtualProperty;
 
 /**
  * Domains
@@ -13,6 +17,7 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Domain
 {
+    use ClassEntityTrait;
     use ActiveTrait;
 
 //region SECTION: Fields
@@ -32,7 +37,7 @@ class Domain
     private $domain = '';
     /**
      * @var Server
-     *
+     * @Type("App\Entity\Mail\Server")
      * @ORM\ManyToOne(targetEntity="App\Entity\Mail\Server", inversedBy="id", cascade={"all"})
      */
     private $server;
@@ -43,6 +48,8 @@ class Domain
 
 //region SECTION: Getters/Setters
     /**
+     * @VirtualProperty
+     * @SerializedName("domainId")
      * @return int
      */
     public function getId(): int
@@ -50,13 +57,13 @@ class Domain
         return $this->id;
     }
 
-    /**
-     * @return int
-     */
-    public function getDomainId(): int
-    {
-        return $this->getId();
-    }
+//    /**
+//     * @return int
+//     */
+//    public function getDomainId(): int
+//    {
+//        return $this->getId();
+//    }
 
     /**
      * @return string

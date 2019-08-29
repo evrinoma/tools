@@ -22,18 +22,16 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class SpamDto extends AbstractFactoryDto
 {
-    use ActiveTrait;
 //region SECTION: Fields
+
+    use ActiveTrait;
+
     private $id;
     /**
      * @Dto(class="App\Dto\ConformityDto")
      * @var ConformityDto
      */
     private $conformity;
-    /**
-     * @var string
-     */
-    private $domainName;
     /**
      * @var string
      */
@@ -47,12 +45,21 @@ class SpamDto extends AbstractFactoryDto
      * @var string
      */
     private $spamRecord;
-
     /**
      * @var bool
      */
     private $isConformity = true;
 //endregion Fields
+
+//region SECTION: Protected
+    /**
+     * @return mixed
+     */
+    protected static function getClassEntity()
+    {
+        return Spam::class;
+    }
+//endregion Protected
 
 //region SECTION: Public
     /**
@@ -75,7 +82,6 @@ class SpamDto extends AbstractFactoryDto
             ->setConformity($this->getConformity()->generatorEntity()->current())
             ->setType($this->getRuleType()->generatorEntity()->current())
             ->setDomain($this->getSpamRecord())
-            //->setUpdateAt(date('Y-m-d G:i:s'))
             ->setUpdateAt(new \DateTime('now'))
             ->setActive($this->getActive());
 
@@ -88,7 +94,7 @@ class SpamDto extends AbstractFactoryDto
     public function isValid()
     {
         $valid = false;
-        if (!$this->domainName) {
+        if (!$this->spamRecord) {
             if ($this->getRuleType()->hasSingleEntity()) {
                 /** @var Filter $entity */
                 $entity = $this->getRuleType()->generatorEntity()->current();
@@ -184,32 +190,36 @@ class SpamDto extends AbstractFactoryDto
      *
      * @return FactoryDtoInterface
      */
-    public static function toDto(&$request)
+    public static function toDto($request)
     {
 
-        $spamId     = $request->get('spamId');
-        $active     = $request->get('active');
-        $deleted    = $request->get('deleted');
-        $domainName = $request->get('domain');
-        $spamRecord = $request->get('spamRecord');
+        $dto   = new self();
+        $class = $request->get('class');
 
+        if ($class === self::getClassEntity()) {
 
-        $dto = new self();
+            $spamId     = $request->get('id');
+            $active     = $request->get('active');
+            $deleted    = $request->get('is_deleted');
+            $domainName = $request->get('domain');
+            $spamRecord = $request->get('spamRecord');
 
-        if ($spamId) {
-            $dto->setId($spamId);
-        }
+            if ($spamId) {
+                $dto->setId($spamId);
+            }
 
-        if ($active && $deleted) {
-            $dto->setActiveToDelete();
-        }
+            if ($active && $deleted) {
+                $dto->setActiveToDelete();
+            }
 
-        if ($spamRecord) {
-            $dto->setSpamRecord($spamRecord);
-        }
+            if ($domainName) {
+                $dto->setSpamRecord($domainName);
+            }
 
-        if ($domainName) {
-            $dto->setDomainName($domainName);
+            if ($spamRecord) {
+                $dto->setSpamRecord($spamRecord);
+            }
+
         }
 
         return $dto;
@@ -223,14 +233,6 @@ class SpamDto extends AbstractFactoryDto
     public function getSpamRecord()
     {
         return $this->spamRecord;
-    }
-
-    /**
-     * @return string
-     */
-    public function getDomainName()
-    {
-        return $this->domainName;
     }
 
     /**
@@ -275,18 +277,6 @@ class SpamDto extends AbstractFactoryDto
     public function setSpamRecord(string $spamRecord)
     {
         $this->spamRecord = $spamRecord;
-
-        return $this;
-    }
-
-    /**
-     * @param string $domainName
-     *
-     * @return SpamDto
-     */
-    public function setDomainName(string $domainName)
-    {
-        $this->domainName = $domainName;
 
         return $this;
     }
