@@ -406,6 +406,14 @@ class ApiController extends AbstractController
      *         @Model(type=App\Form\LiveVideo\GroupType::class)
      *     )
      * )
+     * @SWG\Parameter(
+     *    name="App\Dto\LiveVideoDto[isEmptyResult]",
+     *    in="query",
+     *    type="boolean",
+     *    default= "true",
+     *    description="if true then return all values then group unselected",
+     *    enum={"true","false"}
+     * )
      * @SWG\Response(response=200,description="Returns Live Video Settings")
      *
      * @param Request          $request
@@ -418,7 +426,7 @@ class ApiController extends AbstractController
     {
         $liveVideoDto = $factoryDto->setRequest($request)->createDto(LiveVideoDto::class);
 
-        $data = $liveVideoManager->setRestSuccessOk()->getLiveVideo($liveVideoDto)->getData();
+        $data = $liveVideoManager->setRestSuccessOk()->getLiveVideo($liveVideoDto)->getData($liveVideoDto);
 
         $status = $liveVideoManager->getRestStatus();
 

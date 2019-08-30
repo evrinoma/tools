@@ -27,6 +27,9 @@ class LiveVideoManager extends AbstractEntityManager
 //endregion Fields
 
 //region SECTION: Getters/Setters
+    /**
+     * @return int
+     */
     public function getRestStatus(): int
     {
         return $this->status;
@@ -64,5 +67,21 @@ class LiveVideoManager extends AbstractEntityManager
 
         return $this;
     }
+
+    /**
+     * @param LiveVideoDto|null $dto
+     *
+     * @return mixed
+     */
+    public function getData($dto = null)
+    {
+        if ($dto && $dto->isEmptyResult() && !$this->hasSingleData()) {
+            return [];
+        } else {
+            return parent::getData();
+        }
+    }
+
+
 //endregion Getters/Setters
 }

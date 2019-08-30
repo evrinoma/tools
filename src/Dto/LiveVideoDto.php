@@ -20,6 +20,7 @@ class LiveVideoDto extends AbstractFactoryDto
 {
 
 //region SECTION: Fields
+    private $isEmptyResult = true;
     private $alias;
 //endregion Fields
 
@@ -34,6 +35,14 @@ class LiveVideoDto extends AbstractFactoryDto
 //endregion Protected
 
 //region SECTION: Public
+    /**
+     * @return bool
+     */
+    public function isEmptyResult()
+    {
+        return $this->isEmptyResult;
+    }
+
     /**
      * @param $entity
      *
@@ -64,10 +73,15 @@ class LiveVideoDto extends AbstractFactoryDto
         $class = $request->get('class');
 
         if ($class === $this->getClassEntity()) {
-            $alias = $request->get('alias');
+            $alias         = $request->get('alias');
+            $isEmptyResult = $request->get('isEmptyResult');
 
             if ($alias) {
                 $this->setAlias($alias);
+            }
+
+            if ($isEmptyResult) {
+                $this->setIsEmptyResult($isEmptyResult);
             }
         }
 
@@ -82,6 +96,18 @@ class LiveVideoDto extends AbstractFactoryDto
     public function getAlias()
     {
         return $this->alias;
+    }
+
+    /**
+     * @param bool $isEmptyResult
+     *
+     * @return LiveVideoDto
+     */
+    public function setIsEmptyResult($isEmptyResult)
+    {
+        $this->isEmptyResult = $isEmptyResult === 'true';
+
+        return $this;
     }
 
     /**

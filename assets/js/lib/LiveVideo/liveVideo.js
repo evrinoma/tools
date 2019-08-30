@@ -1,4 +1,3 @@
-import Wowza from '../../components/Wowza/wowzaplayer.min';
 import Vue from 'vue';
 import LiveVideo from './LiveVideo';
 
@@ -6,5 +5,5 @@ import LiveVideo from './LiveVideo';
 new Vue({
     el: '#app',
     template: '<LiveVideo/>',
-    components: { LiveVideo }
+    components: {LiveVideo}
 });

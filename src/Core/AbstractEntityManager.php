@@ -42,7 +42,7 @@ abstract class AbstractEntityManager
     /**
      * @var mixed
      */
-    private $data = [];
+    protected $data = [];
 
     /**
      * @var string
@@ -141,6 +141,14 @@ abstract class AbstractEntityManager
     {
         return ['class' => $this->getClassModel(), 'model' => $this->getData()];
     }
+
+    /**
+     * @return mixed
+     */
+    public function hasSingleData()
+    {
+        return count($this->data) === 1;
+    }
 //endregion Public
 
 //region SECTION: Private
@@ -148,12 +156,14 @@ abstract class AbstractEntityManager
     {
         return $this->classModel;
     }
+//endregion Private
 
+//region SECTION: Find Filters Repository
     public function getRepositoryClass()
     {
         return $this->repositoryClass;
     }
-//endregion Private
+//endregion Find Filters Repository
 
 //region SECTION: Getters/Setters
     /**
