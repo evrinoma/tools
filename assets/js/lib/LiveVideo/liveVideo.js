@@ -1,3 +1,4 @@
+import Wowza from '../../components/Wowza/wowzaplayer.min';
 import Vue from 'vue';
 import LiveVideo from './LiveVideo';
 

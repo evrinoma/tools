@@ -1,13 +1,17 @@
 let Application = function () {
-    this.Routing;
+    this.routing;
     this.objects = [];
 
-    this.setRouting = function (Routing) {
-        this.Routing = Routing;
+    this.setRouting = function (routing) {
+        this.routing = routing;
     };
 
     this.getRouting = function () {
-       return this.Routing;
+        return this.routing;
+    };
+
+    this.getRouting = function () {
+        return this.routing;
     };
 
     this.showSpinner = function () {

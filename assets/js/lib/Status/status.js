@@ -13,13 +13,6 @@ let Status = function () {
                 App.hideSpinner();
             }
         });
-        // $.ajax({
-        //     url: App.getRouting().generate('system_status'),
-        //     type: 'GET',
-        //     success: function (html) {
-        //         console.log(html);
-        //     }
-        // });
     };
 
     this.init = function () {
