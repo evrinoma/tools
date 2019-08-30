@@ -397,7 +397,7 @@ class ApiController extends AbstractController
      * @Rest\Get("/internal/live_video", name="api_live_video_cam")
      * @SWG\Get(tags={"live_video"})
      * @SWG\Parameter(
-     *     name="alias",
+     *     name="App\Dto\LiveVideoDto[alias]",
      *     in="query",
      *     type="array",
      *     description="search there",
@@ -418,12 +418,9 @@ class ApiController extends AbstractController
     {
         $liveVideoDto = $factoryDto->setRequest($request)->createDto(LiveVideoDto::class);
 
-
         $data = $liveVideoManager->setRestSuccessOk()->getLiveVideo($liveVideoDto)->getData();
 
         $status = $liveVideoManager->getRestStatus();
-
-        $result = $this->jsonJms($data, $status);
 
         return $this->json($data, $status);
     }

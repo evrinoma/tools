@@ -43,6 +43,14 @@ class LiveVideoDto extends AbstractFactoryDto
     {
         return $entity;
     }
+
+    /**
+     * @return string|null
+     */
+    public function lookingForRequest()
+    {
+        return null;
+    }
 //endregion Public
 
 //region SECTION: Dto
@@ -53,10 +61,14 @@ class LiveVideoDto extends AbstractFactoryDto
      */
     public function toDto($request)
     {
-        $alias = $request->get('alias');
+        $class = $request->get('class');
 
-        if ($alias) {
-            $this->setAlias($alias);
+        if ($class === $this->getClassEntity()) {
+            $alias = $request->get('alias');
+
+            if ($alias) {
+                $this->setAlias($alias);
+            }
         }
 
         return $this;
@@ -70,14 +82,6 @@ class LiveVideoDto extends AbstractFactoryDto
     public function getAlias()
     {
         return $this->alias;
-    }
-
-    /**
-     * @return string|null
-     */
-    public function lookingForRequest()
-    {
-        return null;
     }
 
     /**
