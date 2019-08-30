@@ -13,7 +13,7 @@
                                         <td class="camera" :identity="cam.id" :class="item.resolution">
                                             <div class="name" :class="'font_'+item.resolution">{{cam.title}}</div>
                                             <div class="liveWowza">
-                                                <div :id="wowzaLink+cam.id" :class="item.resolution">{{loadStreamWowza(wowzaLink+cam.id, cam.stream, cam.start_play)}}</div>
+                                                <div :id="wowzaLink+cam.id" :class="item.resolution">{{loadStreamWowza(cam.id, cam.stream, cam.start_play)}}</div>
                                             </div>
                                         </td>
                                         <td class="splitter">
@@ -73,7 +73,7 @@
             getResolution(maxColumn) {
                 return this.resolution[maxColumn] !== undefined ? this.resolution[maxColumn] : this.resolution[this.resolution.length];
             },
-            _axiosResponse(type, response) {
+            _axiosResponse(type, response, query) {
                 switch (type) {
                     case 'group-load':
                         let group = response.data;
@@ -114,11 +114,16 @@
                         this.steamEngine = response.data;
                         this.doLoadLiveVideo();
                         break;
+                    case 'wowza-error-stream':
+                        let t = response;
+                        let q = query;
+                        break;
                 }
             },
-            loadStreamWowza(wowzaLive, stream, start_play) {
-                axios.get(this.steamEngine.host + "/" + stream + "/" + this.steamEngine.list)
-                    .then(response => (this.initWowzaPlayer(wowzaLive, stream, start_play)));
+            loadStreamWowza(id, stream, start_play) {
+                axios.get(this.steamEngine.host + "/" + stream + "/" + this.steamEngine.list, {errorHandle: false})
+                    .then(response => (this.initWowzaPlayer(this.wowzaLink + id, stream, start_play)))
+                    .catch(error => (this._axiosResponse('wowza-error-stream', error, {wowzaLive: id, stream: stream, start_play: start_play})));
             },
             initWowzaPlayer(wowzaLive, stream, start_play) {
                 WowzaPlayer.create(wowzaLive,

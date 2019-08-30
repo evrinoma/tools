@@ -46,7 +46,7 @@ class LiveCamFixtures extends AbstractFixtures
             ->createLivePrimorsky($manager)
             ->createLiveSovetsk($manager)
             ->createLiveTobolsk($manager)
-            ->createLiveЕumen($manager);
+            ->createLiveTumen($manager);
 
         $manager->flush();
     }
@@ -85,6 +85,7 @@ class LiveCamFixtures extends AbstractFixtures
             ->setPassword('Qve12345')
             ->setTitle('Восточная сторона производственного цеха')
             ->setStream('cam_172.16.39.14_LQ.stream')
+            ->setControl(true)
             ->setType($this->hikvisionType)
             ->setGroup($group);
         $manager->persist($camOne);
@@ -341,6 +342,7 @@ class LiveCamFixtures extends AbstractFixtures
             ->setPassword('N.vtym2017')
             ->setTitle('Камера №1')
             ->setStream('cam_172.16.47.243_LQ.stream')
+            ->setControl(true)
             ->setType($this->hikvisionType)
             ->setGroup($group);
         $manager->persist($camOne);
@@ -366,6 +368,7 @@ class LiveCamFixtures extends AbstractFixtures
             ->setPassword('video2014')
             ->setTitle('Kurgan KZKT CAM1')
             ->setStream('cam_172.16.39.10_HD.stream')
+            ->setControl(true)
             ->setType($this->axisType)
             ->setGroup($group);
         $manager->persist($camOne);
@@ -378,6 +381,7 @@ class LiveCamFixtures extends AbstractFixtures
             ->setPassword('video2014')
             ->setTitle('Kurgan KZKT CAM2')
             ->setStream('cam_172.16.39.11_HD.stream')
+            ->setControl(true)
             ->setType($this->hikvisionType)
             ->setGroup($group);
         $manager->persist($camTwo);
@@ -390,6 +394,7 @@ class LiveCamFixtures extends AbstractFixtures
             ->setPassword('video2014')
             ->setTitle('Kurgan KZKT CAM3')
             ->setStream('cam_172.16.39.12_HD.stream')
+            ->setControl(true)
             ->setType($this->hikvisionType)
             ->setGroup($group);
         $manager->persist($camThree);
@@ -402,6 +407,7 @@ class LiveCamFixtures extends AbstractFixtures
             ->setPassword('video2014')
             ->setTitle('Kurgan KZKT CAM4')
             ->setStream('cam_172.16.39.36_LQ.stream')
+            ->setControl(true)
             ->setType($this->hikvisionType)
             ->setGroup($group);
         $manager->persist($camFour);
@@ -414,6 +420,7 @@ class LiveCamFixtures extends AbstractFixtures
             ->setPassword('video2014')
             ->setTitle('Kurgan KZKT CAM5')
             ->setStream('cam_172.16.39.38_LQ.stream')
+            ->setControl(true)
             ->setType($this->hikvisionType)
             ->setGroup($group);
         $manager->persist($camFive);
@@ -663,6 +670,7 @@ class LiveCamFixtures extends AbstractFixtures
             ->setPassword('N.vtym2017')
             ->setTitle('Камера №1')
             ->setStream('cam_172.16.48.244_LQ.stream')
+            ->setControl(true)
             ->setType($this->axisType)
             ->setGroup($group);
         $manager->persist($camOne);
@@ -675,6 +683,7 @@ class LiveCamFixtures extends AbstractFixtures
             ->setPassword('N.vtym2017')
             ->setTitle('Камера №2')
             ->setStream('cam_172.16.48.245_LQ.stream')
+            ->setControl(true)
             ->setType($this->hikvisionType)
             ->setGroup($group);
         $manager->persist($camTwo);
@@ -682,7 +691,7 @@ class LiveCamFixtures extends AbstractFixtures
         return $this;
     }
 
-    private function createLiveЕumen(ObjectManager $manager)
+    private function createLiveTumen(ObjectManager $manager)
     {
         $group = new Group();
         $group
