@@ -97,6 +97,12 @@ class Cam
     private $control = false;
 
     /**
+     * @var bool
+     *
+     * @ORM\Column(type="boolean", nullable=false)
+     */
+    private $startPlay = false;
+    /**
      * @Exclude()
      * @var Group
      * @ORM\ManyToOne(targetEntity="App\Entity\LiveVideo\Group", inversedBy="id")
@@ -105,6 +111,14 @@ class Cam
 //endregion Fields
 
 //region SECTION: Public
+    /**
+     * @return bool
+     */
+    public function isStartPlay(): bool
+    {
+        return $this->startPlay;
+    }
+
     /**
      * @return bool
      */
@@ -193,6 +207,18 @@ class Cam
     public function getType()
     {
         return $this->type;
+    }
+
+    /**
+     * @param bool $startPlay
+     *
+     * @return Cam
+     */
+    public function setStartPlay($startPlay)
+    {
+        $this->startPlay = $startPlay;
+
+        return $this;
     }
 
     /**

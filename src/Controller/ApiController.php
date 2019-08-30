@@ -394,7 +394,7 @@ class ApiController extends AbstractController
     }
 
     /**
-     * @Rest\Get("/internal/live_video", name="api_live_video_cam")
+     * @Rest\Get("/internal/live_video", name="api_live_video_group")
      * @SWG\Get(tags={"live_video"})
      * @SWG\Parameter(
      *     name="App\Dto\LiveVideoDto[alias]",
@@ -414,7 +414,7 @@ class ApiController extends AbstractController
      *
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
-    public function liveVideoAction(Request $request, FactoryDto $factoryDto, LiveVideoManager $liveVideoManager, SerializerInterface $ser)
+    public function liveVideoAction(Request $request, FactoryDto $factoryDto, LiveVideoManager $liveVideoManager)
     {
         $liveVideoDto = $factoryDto->setRequest($request)->createDto(LiveVideoDto::class);
 
@@ -423,6 +423,34 @@ class ApiController extends AbstractController
         $status = $liveVideoManager->getRestStatus();
 
         return $this->json($data, $status);
+    }
+
+    /**
+     * @Rest\Get("/internal/live_video/class", name="api_live_video_class")
+     * @SWG\Get(tags={"live_video"})
+     * @SWG\Response(response=200,description="Returns class acl entity")
+     *
+     * @param LiveVideoManager $liveVideoManager
+     *
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     */
+    public function liveVideoClassAction(LiveVideoManager $liveVideoManager)
+    {
+        return $this->json($liveVideoManager->setRestSuccessOk()->getRepositoryClass(), $liveVideoManager->getRestStatus());
+    }
+
+    /**
+     * @Rest\Get("/internal/live_video/streaming_engine", name="api_live_video_streaming_engine")
+     * @SWG\Get(tags={"live_video"})
+     * @SWG\Response(response=200,description="Returns class acl entity")
+     *
+     * @param LiveVideoManager $liveVideoManager
+     *
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     */
+    public function liveVideoWowzaStreamingEngineAction(LiveVideoManager $liveVideoManager)
+    {
+        return $this->json(['host' => 'http://cam.ite-ng.ru:1935/liveHLS', 'list' => 'playlist.m3u8'], $liveVideoManager->setRestSuccessOk()->getRestStatus());
     }
 
     /**
