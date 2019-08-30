@@ -41,7 +41,7 @@ class DomainDto extends AbstractFactoryDto implements VuetableInterface
     /**
      * @return mixed
      */
-    protected static function getClassEntity()
+    protected function getClassEntity()
     {
         return Domain::class;
     }
@@ -73,14 +73,13 @@ class DomainDto extends AbstractFactoryDto implements VuetableInterface
     /**
      * @param Request $request
      *
-     * @return FactoryDtoInterface
+     * @return AbstractFactoryDto
      */
-    public static function toDto($request)
+    public function toDto($request)
     {
-        $dto   = new self();
         $class = $request->get('class');
 
-        if ($class === self::getClassEntity()) {
+        if ($class === $this->getClassEntity()) {
 
             $page           = $request->get('page');
             $perPage        = $request->get('per_page');
@@ -89,23 +88,23 @@ class DomainDto extends AbstractFactoryDto implements VuetableInterface
             $id             = $request->get('id');
 
             if ($id !== null) {
-                $dto->setId($id);
+                $this->setId($id);
             }
             if ($domainName !== null) {
-                $dto->setDomainName($domainName);
+                $this->setDomainName($domainName);
             }
             if ($page !== null) {
-                $dto->setPage($page);
+                $this->setPage($page);
             }
             if ($perPage !== null) {
-                $dto->setPerPage($perPage);
+                $this->setPerPage($perPage);
             }
             if ($filter !== null) {
-                $dto->setFilter($filter);
+                $this->setFilter($filter);
             }
         }
 
-        return $dto;
+        return $this;
     }
 //endregion SECTION: Dto
 
@@ -143,15 +142,11 @@ class DomainDto extends AbstractFactoryDto implements VuetableInterface
     }
 
     /**
-     * @param Request $request
-     *
-     * @return mixed
+     * @return string|null
      */
-    public static function getRequest(Request $request)
+    public function lookingForRequest()
     {
-        self::regeneratRequest($request, self::getClassEntity(), 'domain');
-
-        return $request;
+        return 'domain';
     }
 
     /**

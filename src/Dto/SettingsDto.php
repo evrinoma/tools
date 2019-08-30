@@ -33,7 +33,7 @@ class SettingsDto extends AbstractFactoryDto
     /**
      * @return mixed
      */
-    protected static function getClassEntity()
+    protected function getClassEntity()
     {
         return Settings::class;
     }
@@ -57,13 +57,12 @@ class SettingsDto extends AbstractFactoryDto
     /**
      * @param Request $request
      *
-     * @return FactoryDtoInterface
+     * @return AbstractFactoryDto
      */
-    public static function toDto($request)
+    public function toDto($request)
     {
         $settings            = $request->get('settings');
         $classSettingsEntity = $request->get('classEntity');
-        $dto                 = new self();
 
         if ($settings) {
             if (is_array($settings)) {
@@ -71,7 +70,7 @@ class SettingsDto extends AbstractFactoryDto
                 /** @var SettingsDto $clone */
                 foreach ($settings as $item) {
                     if (isset($item['id'], $item['active'])) {
-                        $clone = $dto->clone();
+                        $clone = $this->clone();
                         $clone->setId($item['id']);
                         $clone->setActive($item['active']);
                     }
@@ -80,11 +79,10 @@ class SettingsDto extends AbstractFactoryDto
         }
 
         if ($classSettingsEntity) {
-            $dto->setClassSettingsEntity($classSettingsEntity);
+            $this->setClassSettingsEntity($classSettingsEntity);
         }
 
-        return $dto;
-
+        return $this;
     }
 //endregion SECTION: Dto
 
@@ -106,13 +104,11 @@ class SettingsDto extends AbstractFactoryDto
     }
 
     /**
-     * @param Request $request
-     *
-     * @return mixed
+     * @return string|null
      */
-    public static function getRequest(Request $request)
+    public function lookingForRequest()
     {
-        return $request;
+        return null;
     }
 
     /**

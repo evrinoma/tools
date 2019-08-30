@@ -27,7 +27,7 @@ class LiveVideoDto extends AbstractFactoryDto
     /**
      * @return mixed
      */
-    protected static function getClassEntity()
+    protected function getClassEntity()
     {
         return Group::class;
     }
@@ -49,19 +49,17 @@ class LiveVideoDto extends AbstractFactoryDto
     /**
      * @param Request $request
      *
-     * @return FactoryDtoInterface
+     * @return AbstractFactoryDto
      */
-    public static function toDto($request)
+    public function toDto($request)
     {
         $alias = $request->get('alias');
 
-        $dto = new self();
-
         if ($alias) {
-            $dto->setAlias($alias);
+            $this->setAlias($alias);
         }
 
-        return $dto;
+        return $this;
     }
 //endregion SECTION: Dto
 
@@ -75,13 +73,11 @@ class LiveVideoDto extends AbstractFactoryDto
     }
 
     /**
-     * @param Request $request
-     *
-     * @return mixed
+     * @return string|null
      */
-    public static function getRequest(Request $request)
+    public function lookingForRequest()
     {
-        return $request;
+        return null;
     }
 
     /**

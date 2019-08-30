@@ -37,25 +37,33 @@ abstract class AbstractFactoryDto extends AbstractDto implements FactoryDtoInter
     /**
      * @return mixed
      */
-    abstract protected static function getClassEntity();
+    abstract protected function getClassEntity();
 
     /**
      * @param Request $request
-     * @param string  $classEntity
-     * @param string  $searchTarget
+     *
+     * @return Request
      */
-    protected static function regeneratRequest(Request $request, $classEntity, $searchTarget)
+    protected function regenerateRequest(Request $request)
     {
-        $target = $request->get($searchTarget);
+        $target = $request->get($this->lookingForRequest());
         $class  = $request->get('class');
-        if ($class !== $classEntity && $target) {
+        if ($class !== $this->getClassEntity() && $target) {
             if (is_string($target)) {
                 $target = json_decode($target, true);
             }
             if ($target && is_array($target) && count($target) > 0) {
-                $request->isMethod('GET') ? $request->query->add($target) : $request->request->add($target);
+                $request->isMethod('POST') ? $request->request->add($target):$request->query->add($target) ;
+            }
+        } else {
+            $restApi = $request->get($this->getClass());
+            if (is_array($restApi)) {
+                $restApi+=['class'=>$this->getClassEntity()];
+                $request->isMethod('POST') ? $request->request->add($restApi):$request->query->add($restApi);
             }
         }
+
+        return $request;
     }
 //endregion Protected
 
@@ -116,6 +124,21 @@ abstract class AbstractFactoryDto extends AbstractDto implements FactoryDtoInter
         return count($this->clones);
     }
 //endregion Public
+
+//region SECTION: Dto
+    /**
+     * @param Request $request
+     *
+     * @return FactoryDtoInterface
+     */
+    public static function initDto($request)
+    {
+        $dto = new static();
+        $dto->regenerateRequest($request);
+
+        return $dto;
+    }
+//endregion SECTION: Dto
 
 //region SECTION: Getters/Setters
     /**

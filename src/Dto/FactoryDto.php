@@ -62,10 +62,11 @@ class FactoryDto
                 if (!$this->hasDto($dto)) {
                     /** @var FactoryDtoInterface $class */
                     $request = clone $this->request;
-                    $request = $class::getRequest($request);
-                    $dto     = $class::toDto($request);
                     /** @var AbstractFactoryDto $dto */
-                    $dto->setFactoryAdapter($this->factoryAdaptor);
+                    $dto     = $class::initDto($request);
+                    $dto
+                        ->toDto($request)
+                        ->setFactoryAdapter($this->factoryAdaptor);
                     $this->push($dto);
                     $event = new DtoEvent();
                     $event->setDto($dto);

@@ -24,8 +24,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class FileSearchType extends AbstractType
 {
-
-    //region SECTION: Fields
+//region SECTION: Fields
     public const REST_CLASS_ENTITY = 'rest_class_entity';
     /**
      * SettingsManager
@@ -70,7 +69,6 @@ class FileSearchType extends AbstractType
         $resolver->setDefault(self::REST_CLASS_ENTITY, null);
         $resolver->setDefault(RestChoiceType::REST_CHOICES, $callback);
     }
-//endregion Public
 //endregion Public
 
 //region SECTION: Getters/Setters

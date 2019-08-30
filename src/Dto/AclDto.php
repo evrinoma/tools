@@ -40,7 +40,7 @@ class AclDto extends AbstractFactoryDto
     /**
      * @return mixed
      */
-    protected static function getClassEntity()
+    protected function getClassEntity()
     {
         return Acl::class;
     }
@@ -78,20 +78,27 @@ class AclDto extends AbstractFactoryDto
     {
         return mb_strpos($this->email, '*@') === false;
     }
+
+    /**
+     * @return string|null
+     */
+    public function lookingForRequest()
+    {
+        return null;
+    }
 //endregion Public
 
 //region SECTION: Dto
     /**
      * @param Request $request
      *
-     * @return FactoryDtoInterface
+     * @return AbstractFactoryDto
      */
-    public static function toDto($request)
+    public function toDto($request)
     {
-        $dto   = new self();
         $class = $request->get('class');
 
-        if ($class === self::getClassEntity()) {
+        if ($class === $this->getClassEntity()) {
             $id      = $request->get('id');
             $active  = $request->get('active');
             $deleted = $request->get('is_deleted');
@@ -99,28 +106,23 @@ class AclDto extends AbstractFactoryDto
             $type    = $request->get('type');
 
             if ($id) {
-                $dto->setId($id);
+                $this->setId($id);
             }
 
             if ($active && $deleted) {
-                $dto->setActiveToDelete();
+                $this->setActiveToDelete();
             }
 
             if ($email) {
-                $dto->setEmail($email);
+                $this->setEmail($email);
             }
 
             if ($type) {
-                $dto->setType($type);
+                $this->setType($type);
             }
-
-//        if ($domain) {
-//            $request = new Request();
-//            $request->request->add($domain);
-//        }
         }
 
-        return $dto;
+        return $this;
     }
 //endregion SECTION: Dto
 
@@ -144,16 +146,6 @@ class AclDto extends AbstractFactoryDto
     public function getEmailDomain()
     {
         return mb_strcut($this->email, mb_strpos($this->email, '@'), mb_strlen($this->email));
-    }
-
-    /**
-     * @param Request $request
-     *
-     * @return mixed
-     */
-    public static function getRequest(Request $request)
-    {
-        return $request;
     }
 
     /**

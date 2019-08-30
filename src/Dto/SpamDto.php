@@ -55,7 +55,7 @@ class SpamDto extends AbstractFactoryDto
     /**
      * @return mixed
      */
-    protected static function getClassEntity()
+    protected function getClassEntity()
     {
         return Spam::class;
     }
@@ -134,6 +134,14 @@ class SpamDto extends AbstractFactoryDto
     {
         return $this->spamRecord && (preg_match("/(?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\.)+[a-z0-9][a-z0-9-]{0,61}[a-z0-9]/", $this->spamRecord) === 1);
     }
+
+    /**
+     * @return string|null
+     */
+    public function lookingForRequest()
+    {
+        return null;
+    }
 //endregion Public
 
 //region SECTION: Private
@@ -188,15 +196,13 @@ class SpamDto extends AbstractFactoryDto
     /**
      * @param Request $request
      *
-     * @return FactoryDtoInterface
+     * @return AbstractFactoryDto
      */
-    public static function toDto($request)
+    public function toDto($request)
     {
-
-        $dto   = new self();
         $class = $request->get('class');
 
-        if ($class === self::getClassEntity()) {
+        if ($class === $this->getClassEntity()) {
 
             $spamId     = $request->get('id');
             $active     = $request->get('active');
@@ -205,24 +211,23 @@ class SpamDto extends AbstractFactoryDto
             $spamRecord = $request->get('spamRecord');
 
             if ($spamId) {
-                $dto->setId($spamId);
+                $this->setId($spamId);
             }
 
             if ($active && $deleted) {
-                $dto->setActiveToDelete();
+                $this->setActiveToDelete();
             }
 
             if ($domainName) {
-                $dto->setSpamRecord($domainName);
+                $this->setSpamRecord($domainName);
             }
 
             if ($spamRecord) {
-                $dto->setSpamRecord($spamRecord);
+                $this->setSpamRecord($spamRecord);
             }
-
         }
 
-        return $dto;
+        return $this;
     }
 //endregion SECTION: Dto
 
@@ -249,16 +254,6 @@ class SpamDto extends AbstractFactoryDto
     public function getConformity()
     {
         return $this->conformity;
-    }
-
-    /**
-     * @param Request $request
-     *
-     * @return mixed
-     */
-    public static function getRequest(Request $request)
-    {
-        return $request;
     }
 
     /**

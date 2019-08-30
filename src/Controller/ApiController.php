@@ -71,7 +71,7 @@ class ApiController extends AbstractController
      * @Rest\Get("/internal/acl/acl", name="api_acl")
      * @SWG\Get(tags={"acl"})
      * @SWG\Parameter(
-     *     name="aclId",
+     *     name="App\Dto\AclDto[id]",
      *     in="query",
      *     type="string",
      *     description="id record"
@@ -140,19 +140,19 @@ class ApiController extends AbstractController
      * @Rest\Post("/internal/acl/save", name="api_acl_save")
      * @SWG\Post(tags={"acl"})
      * @SWG\Parameter(
-     *     name="aclId",
+     *     name="App\Dto\AclDto[id]",
      *     in="query",
      *     type="string",
      *     description="id record"
      * )
      * @SWG\Parameter(
-     *     name="email",
+     *     name="App\Dto\AclDto[email]",
      *     in="query",
      *     type="string",
      *     description="email or domain record"
      * )
      * @SWG\Parameter(
-     *     name="type",
+     *     name="App\Dto\AclDto[type]",
      *     in="query",
      *     type="array",
      *     description="black or white",
@@ -162,7 +162,7 @@ class ApiController extends AbstractController
      *     )
      * )
      * @SWG\Parameter(
-     *     name="domainName",
+     *     name="App\Dto\DomainDto[domain]",
      *     in="query",
      *     type="array",
      *     description="select domain",
@@ -226,21 +226,21 @@ class ApiController extends AbstractController
      * @Rest\Get("/internal/domain/query", name="api_query_domain")
      * @SWG\Get(tags={"domain"})
      * @SWG\Parameter(
-     *     name="page",
+     *     name="App\Dto\DomainDto[page]",
      *     in="query",
      *     type="integer",
      *     default="1",
      *     description="page number"
      * )
      * @SWG\Parameter(
-     *     name="per_page",
+     *     name="App\Dto\DomainDto[per_page]",
      *     in="query",
      *     type="integer",
      *     default="0",
      *     description="per page records"
      * )
      * @SWG\Parameter(
-     *     name="filter",
+     *     name="App\Dto\DomainDto[filter]",
      *     in="query",
      *     type="string",
      *     default="",
@@ -270,7 +270,7 @@ class ApiController extends AbstractController
      * @Rest\Delete("/internal/domain/delete", name="api_delete_domain")
      * @SWG\Delete(tags={"domain"})
      * @SWG\Parameter(
-     *     name="domainId",
+     *     name="App\Dto\DomainDto[id]",
      *     in="query",
      *     type="string",
      *     default="-1",
@@ -311,7 +311,7 @@ class ApiController extends AbstractController
      * @Rest\Post("/internal/domain/save", name="api_save_domain")
      * @SWG\Post(tags={"domain"})
      * @SWG\Parameter(
-     *  name="hostNameServer",
+     *  name="App\Dto\ServerDto[hostname]",
      *     in="query",
      *     type="array",
      *     description="This is a parameter",
@@ -321,7 +321,7 @@ class ApiController extends AbstractController
      *     )
      * )
      * @SWG\Parameter(
-     *     name="domainName",
+     *     name="App\Dto\DomainDto[domain]",
      *     in="query",
      *     type="string",
      *     default="ite-ng.ru",
@@ -596,7 +596,7 @@ class ApiController extends AbstractController
      * @Rest\Delete("/internal/server/delete", name="api_delete_server")
      * @SWG\Delete(tags={"server"})
      * @SWG\Parameter(
-     *  name="hostNameServer",
+     *  name="App\Dto\ServerDto[hostname]",
      *     in="query",
      *     type="array",
      *     description="This is a parameter",
@@ -627,14 +627,14 @@ class ApiController extends AbstractController
      * @Rest\Post("/internal/server/save", name="api_save_server")
      * @SWG\Post(tags={"server"})
      * @SWG\Parameter(
-     *     name="idServer",
+     *     name="App\Dto\ServerDto[id]",
      *     in="query",
      *     type="string",
      *     default=null,
      *     description="id server"
      * )
      * @SWG\Parameter(
-     *     name="ipServer",
+     *     name="App\Dto\ServerDto[ip]",
      *     in="query",
      *     type="string",
      *     pattern="\d{1,3}.\d{1,3}.\d{1,3}.\d{1,3}",
@@ -642,7 +642,7 @@ class ApiController extends AbstractController
      *     description="ip server"
      * )
      * @SWG\Parameter(
-     *     name="hostNameServer",
+     *     name="App\Dto\ServerDto[hostname]",
      *     in="query",
      *     type="string",
      *     default="mail.ite-ng.ru",
@@ -677,7 +677,7 @@ class ApiController extends AbstractController
      * @SWG\Get(tags={"spam"})
      * @SWG\Response(response=200,description="Returns the spam rules")
      * @SWG\Parameter(
-     *     name="type",
+     *     name="App\Dto\RuleTypeDto[type]",
      *     in="query",
      *     type="array",
      *     description="select spam filter type",
@@ -687,7 +687,7 @@ class ApiController extends AbstractController
      *     )
      * )
      * @SWG\Parameter(
-     *     name="conformity",
+     *     name="App\Dto\ConformityDto[type]",
      *     in="query",
      *     type="array",
      *     description="select spam conformity type",
@@ -759,21 +759,21 @@ class ApiController extends AbstractController
      * @Rest\Post("/internal/spam/save", name="api_save_spam")
      * @SWG\Post(tags={"spam"})
      * @SWG\Parameter(
-     *     name="spamRecord",
-     *     in="query",
-     *     type="string",
-     *     default=null,
-     *     description="spam Record"
-     * )
-     * @SWG\Parameter(
-     *     name="spamId",
+     *     name="App\Dto\SpamDto[id]",
      *     in="query",
      *     type="string",
      *     default=null,
      *     description="id spam"
      * )
      * @SWG\Parameter(
-     *     name="type",
+     *     name="App\Dto\SpamDto[spamRecord]",
+     *     in="query",
+     *     type="string",
+     *     default=null,
+     *     description="spam Record"
+     * )
+     * @SWG\Parameter(
+     *     name="App\Dto\RuleTypeDto[type]",
      *     in="query",
      *     type="array",
      *     description="select spam filter type",
@@ -783,7 +783,7 @@ class ApiController extends AbstractController
      *     )
      * )
      * @SWG\Parameter(
-     *     name="conformity",
+     *     name="App\Dto\ConformityDto[type]",
      *     in="query",
      *     type="array",
      *     description="select spam conformity type",

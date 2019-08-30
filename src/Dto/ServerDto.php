@@ -32,7 +32,7 @@ class ServerDto extends AbstractFactoryDto
     /**
      * @return mixed
      */
-    protected static function getClassEntity()
+    protected function getClassEntity()
     {
         return Server::class;
     }
@@ -72,34 +72,32 @@ class ServerDto extends AbstractFactoryDto
     /**
      * @param Request $request
      *
-     * @return FactoryDtoInterface
+     * @return AbstractFactoryDto
      */
-    public static function toDto($request)
+    public function toDto($request)
     {
-        $dto   = new self();
         $class = $request->get('class');
 
-        if ($class === self::getClassEntity()) {
+        if ($class === $this->getClassEntity()) {
 
             $ip   = $request->get('ip');
             $name = $request->get('hostname');
             $id   = $request->get('id');
 
             if ($name) {
-                $dto->setHostName($name);
+                $this->setHostName($name);
             }
 
             if ($ip) {
-                $dto->setIp($ip);
+                $this->setIp($ip);
             }
 
             if ($id) {
-                $dto->setId($id);
+                $this->setId($id);
             }
-
         }
 
-        return $dto;
+       return $this;
     }
 //endregion SECTION: Dto
 
@@ -113,15 +111,11 @@ class ServerDto extends AbstractFactoryDto
     }
 
     /**
-     * @param Request $request
-     *
-     * @return mixed
+     * @return string|null
      */
-    public static function getRequest(Request $request)
+    public function lookingForRequest()
     {
-        self::regeneratRequest($request, self::getClassEntity(), 'server');
-
-        return $request;
+        return 'server';
     }
 
     /**

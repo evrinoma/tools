@@ -37,16 +37,21 @@ interface FactoryDtoInterface
      *
      * @return FactoryDtoInterface
      */
-    public static function toDto($request);
+    public static function initDto($request);
+
+    /**
+     * @param Request $request
+     *
+     * @return AbstractFactoryDto
+     */
+    public function toDto($request);
 //endregion SECTION: Dto
 
 //region SECTION: Getters/Setters
     /**
-     * @param Request $request
-     *
-     * @return mixed
+     * @return string|null
      */
-    public static function getRequest(Request $request);
+    public function lookingForRequest();
 
     /**
      * @return string

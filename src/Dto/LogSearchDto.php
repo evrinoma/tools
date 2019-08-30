@@ -70,28 +70,25 @@ class LogSearchDto extends AbstractFactoryDto
      *
      * @return FactoryDtoInterface
      */
-    public static function toDto($request)
+    public function toDto($request)
     {
         $searchString = $request->get('searchString');
         $searchFile   = $request->get('searchFile');
 
-        $dto = new self();
-
         if ($searchString) {
-            $dto->setSearchString($searchString);
+            $this->setSearchString($searchString);
         }
 
         if ($searchFile) {
-            $dto->setSearchFile($searchFile);
+            $this->setSearchFile($searchFile);
         }
-
-        return $dto;
+        return $this;
     }
 
     /**
      * @return mixed
      */
-    protected static function getClassEntity()
+    protected function getClassEntity()
     {
         return static::class;
     }
@@ -115,13 +112,11 @@ class LogSearchDto extends AbstractFactoryDto
     }
 
     /**
-     * @param Request $request
-     *
-     * @return mixed
+     * @return string|null
      */
-    public static function getRequest(Request $request)
+    public function lookingForRequest()
     {
-        return $request;
+        return null;
     }
 
     /**

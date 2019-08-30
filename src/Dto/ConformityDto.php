@@ -30,7 +30,7 @@ class ConformityDto extends AbstractFactoryDto
     /**
      * @return mixed
      */
-    protected static function getClassEntity()
+    protected function getClassEntity()
     {
         return Conformity::class;
     }
@@ -52,33 +52,28 @@ class ConformityDto extends AbstractFactoryDto
     /**
      * @param Request $request
      *
-     * @return FactoryDtoInterface
+     * @return AbstractFactoryDto
      */
-    public static function toDto($request)
+    public function toDto($request)
     {
-        $dto   = new self();
         $class = $request->get('class');
 
-        if ($class === self::getClassEntity()) {
+        if ($class === $this->getClassEntity()) {
             $type = $request->get('type');
-            $dto->setType($type);
+            $this->setType($type);
         }
 
-        return $dto;
+        return $this;
     }
 //endregion SECTION: Dto
 
 //region SECTION: Getters/Setters
     /**
-     * @param Request $request
-     *
-     * @return mixed
+     * @return string|null
      */
-    public static function getRequest(Request $request)
+    public function lookingForRequest()
     {
-        self::regeneratRequest($request, self::getClassEntity(), 'conformity');
-
-        return $request;
+        return 'conformity';
     }
 
     /**
