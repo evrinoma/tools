@@ -10,6 +10,7 @@ namespace App\Entity\LiveVideo;
 
 use App\Entity\Model\ActiveTrait;
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation\Groups;
 
 /**
  * Class CamType
@@ -29,6 +30,7 @@ class Group
      * @ORM\Column(name="id", type="integer", nullable=false)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
+     * @Groups({"restrict", "full"})
      */
     private $id;
 
@@ -36,6 +38,7 @@ class Group
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=50, nullable=false)
+     * @Groups({"restrict", "full"})
      */
     private $name = '';
 
@@ -43,17 +46,20 @@ class Group
      * @var string
      *
      * @ORM\Column(name="alias", type="string", length=50, nullable=false)
+     * @Groups({"restrict", "full"})
      */
     private $alias = '';
     /**
      * @var int
      * @ORM\Column(name="max_column", type="integer", nullable=false)
+     * @Groups({"restrict", "full"})
      */
     private $maxColumn;
 
     /**
      * @var Cam
      * @ORM\OneToMany(targetEntity="App\Entity\LiveVideo\Cam", mappedBy="group")
+     * @Groups({"restrict", "full"})
      */
     private $liveStreams;
 //endregion Fields

@@ -22,6 +22,7 @@ class LiveVideoDto extends AbstractFactoryDto
 //region SECTION: Fields
     private $isEmptyResult = true;
     private $alias;
+    private $serializeGroup = 'restrict';
 //endregion Fields
 
 //region SECTION: Protected
@@ -76,12 +77,18 @@ class LiveVideoDto extends AbstractFactoryDto
             $alias         = $request->get('alias');
             $isEmptyResult = $request->get('isEmptyResult');
 
+            $serializeGroup = $request->get('serializeGroup');
+
             if ($alias) {
                 $this->setAlias($alias);
             }
 
             if ($isEmptyResult) {
                 $this->setIsEmptyResult($isEmptyResult);
+            }
+
+            if ($serializeGroup) {
+                $this->setSerializeGroup($serializeGroup);
             }
         }
 
@@ -93,9 +100,29 @@ class LiveVideoDto extends AbstractFactoryDto
     /**
      * @return mixed
      */
+    public function getSerializeGroup()
+    {
+        return $this->serializeGroup;
+    }
+
+    /**
+     * @return mixed
+     */
     public function getAlias()
     {
         return $this->alias;
+    }
+
+    /**
+     * @param mixed $serializeGroup
+     *
+     * @return LiveVideoDto
+     */
+    public function setSerializeGroup($serializeGroup)
+    {
+        $this->serializeGroup = $serializeGroup;
+
+        return $this;
     }
 
     /**

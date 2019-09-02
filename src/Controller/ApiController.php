@@ -29,6 +29,7 @@ use App\Manager\SearchManager;
 use App\Manager\ServerManager;
 use App\Manager\SpamManager;
 use FOS\RestBundle\Controller\Annotations as Rest;
+use JMS\Serializer\SerializationContext;
 use JMS\Serializer\Serializer;
 use JMS\Serializer\SerializerInterface;
 use Nelmio\ApiDocBundle\Annotation\Model;
@@ -51,13 +52,18 @@ class ApiController extends AbstractController
      * @var Serializer
      */
     private $serializer;
+    /**
+     * @var SerializationContext
+     */
+    private $serializationContext;
 //endregion Fields
 
 //region SECTION: Protected
     protected function json($data, int $status = 200, array $headers = [], array $context = []): JsonResponse
     {
         if ($this->serializer) {
-            $json = $this->serializer->serialize($data, 'json');
+
+            $json = $this->serializer->serialize($data, 'json', $this->serializationContext);
 
             return new JsonResponse($json, $status, $headers, true);
         }
@@ -414,6 +420,14 @@ class ApiController extends AbstractController
      *    description="if true then return all values then group unselected",
      *    enum={"true","false"}
      * )
+     * @SWG\Parameter(
+     *    name="App\Dto\LiveVideoDto[serializeGroup]",
+     *    in="query",
+     *    type="string",
+     *    default= "restrict",
+     *    description="group serialization",
+     *    enum={"restrict","full"}
+     * )
      * @SWG\Response(response=200,description="Returns Live Video Settings")
      *
      * @param Request          $request
@@ -424,11 +438,14 @@ class ApiController extends AbstractController
      */
     public function liveVideoAction(Request $request, FactoryDto $factoryDto, LiveVideoManager $liveVideoManager)
     {
+        /** @var LiveVideoDto $liveVideoDto */
         $liveVideoDto = $factoryDto->setRequest($request)->createDto(LiveVideoDto::class);
 
         $data = $liveVideoManager->setRestSuccessOk()->getLiveVideo($liveVideoDto)->getData($liveVideoDto);
 
         $status = $liveVideoManager->getRestStatus();
+
+        $this->setSerializeGroup($liveVideoDto->getSerializeGroup());
 
         return $this->json($data, $status);
     }
@@ -624,7 +641,6 @@ class ApiController extends AbstractController
         return $this->json($serverManger->setRestSuccessOk()->getRepositoryClass(), $serverManger->getRestStatus());
     }
 
-
     /**
      * @Rest\Delete("/internal/server/delete", name="api_delete_server")
      * @SWG\Delete(tags={"server"})
@@ -741,7 +757,6 @@ class ApiController extends AbstractController
 
         return $this->json($spamManager->setRestSuccessOk()->getSpamRules($spamDto)->getData(), $spamManager->getRestStatus());
     }
-
 
     /**
      * @Rest\Get("/internal/spam/class", name="api_spam_rules_class")
@@ -874,6 +889,20 @@ class ApiController extends AbstractController
 //endregion Public
 
 //region SECTION: Private
+    /**
+     * @param $name
+     *
+     * @return $this
+     */
+    private function setSerializeGroup($name)
+    {
+        if ($name) {
+            $this->serializationContext = SerializationContext::create()->setGroups($name);
+        }
+
+        return $this;
+    }
+
     /**
      * @param AbstractEntityManager $manager
      * @param VuetableInterface     $dto

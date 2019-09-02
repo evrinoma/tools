@@ -10,14 +10,17 @@
                                 <tbody>
                                 <tr v-for="row in item.live_streams">
                                     <template v-for="cam in row">
-                                        <td class="camera" :identity="cam.id" :class="item.resolution">
-                                            <div class="name" :class="'font_'+item.resolution">{{cam.title}}</div>
-                                            <div class="liveWowza">
-                                                <div :id="wowzaLink+cam.id" :class="item.resolution">{{loadStreamWowza(cam.id, cam.stream, cam.start_play)}}</div>
-                                            </div>
-                                        </td>
-                                        <td class="splitter">
-                                        </td>
+                                        <template v-if="cam.stream !== undefined">
+                                            <td class="camera" :identity="cam.id" :class="item.resolution">
+                                                <div class="name" :udapte="update" :class="shows[cam.id].hidden === true ? 'font_'+item.resolution+' hidden':'font_'+item.resolution">{{cam.title}}</div>
+                                                <!--<div class="name" :class="'font_'+item.resolution">{{cam.title}}</div>-->
+                                                <div class="liveWowza">
+                                                    <div :id="wowzaLink+cam.id" :class="item.resolution">{{loadStreamWowza(cam.id, cam.stream, cam.start_play)}}</div>
+                                                </div>
+                                            </td>
+                                            <td class="splitter">
+                                            </td>
+                                        </template>
                                     </template>
                                 </tr>
                                 </tbody>
@@ -64,6 +67,8 @@
                     // {width: 329, height: 194,},//rows 4
                     // {width: 288, height: 162,},//rows 5
                 ],
+                shows: [],
+                update: false,
             }
         },
         mounted() {
@@ -94,6 +99,7 @@
                                     if (mod === (item.max_column - 1)) {
                                         count++;
                                     }
+                                    self.shows[cam.id] = {id: cam.id, hidden: true};
                                 });
                                 while (mod !== (item.max_column - 1)) {
                                     row[count].push({});
@@ -114,16 +120,21 @@
                         this.steamEngine = response.data;
                         this.doLoadLiveVideo();
                         break;
+                    case 'wowza-load-stream':
+                        this.initWowzaPlayer(this.wowzaLink + query.id, query.stream, query.start_play);
+                        this.shows[query.id].hidden = false;
+                        this.update = !this.update;
+                        break;
                     case 'wowza-error-stream':
-                        let t = response;
-                        let q = query;
                         break;
                 }
             },
             loadStreamWowza(id, stream, start_play) {
-                axios.get(this.steamEngine.host + "/" + stream + "/" + this.steamEngine.list, {errorHandle: false})
-                    .then(response => (this.initWowzaPlayer(this.wowzaLink + id, stream, start_play)))
-                    .catch(error => (this._axiosResponse('wowza-error-stream', error, {wowzaLive: id, stream: stream, start_play: start_play})));
+                if (this.shows[id].hidden === true) {
+                    axios.get(this.steamEngine.host + "/" + stream + "/" + this.steamEngine.list, {errorHandle: false})
+                        .then(response => (this._axiosResponse('wowza-load-stream', response, {id: id, stream: stream, start_play: start_play})))
+                        .catch(error => (this._axiosResponse('wowza-error-stream', error, {id: id, stream: stream, start_play: start_play})));
+                }
             },
             initWowzaPlayer(wowzaLive, stream, start_play) {
                 WowzaPlayer.create(wowzaLive,
@@ -210,4 +221,9 @@
     .font_resolution288x162 {
         font-size: xx-small;
     }
+
+    .hidden {
+        display: none;
+    }
+
 </style>

@@ -10,6 +10,7 @@ namespace App\Entity\LiveVideo;
 
 use App\Entity\Model\ActiveTrait;
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation\Groups;
 
 
 /**
@@ -33,6 +34,7 @@ class Type
      * @ORM\Column(name="id", type="integer", nullable=false)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
+     * @Groups({"full"})
      */
     private $id;
 
@@ -40,6 +42,7 @@ class Type
      * @var string
      *
      * @ORM\Column(name="type", type="string", length=50, nullable=false)
+     * @Groups({"full"})
      */
     private $type = '';
 //endregion Fields

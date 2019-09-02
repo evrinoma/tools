@@ -12,6 +12,7 @@ namespace App\Entity\LiveVideo;
 use App\Entity\Model\ActiveTrait;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation\Exclude;
+use JMS\Serializer\Annotation\Groups;
 
 /**
  * Class Cam
@@ -31,6 +32,7 @@ class Cam
      * @ORM\Column(name="id", type="integer", nullable=false)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
+     * @Groups({"restrict", "full"})
      */
     private $id;
 
@@ -38,6 +40,7 @@ class Cam
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=50, nullable=false)
+     * @Groups({"restrict", "full"})
      */
     private $name = '';
 
@@ -45,6 +48,7 @@ class Cam
      * @var string
      *
      * @ORM\Column(name="ip", type="string", length=50, nullable=false)
+     * @Groups({"full"})
      */
     private $ip = '';
 
@@ -52,6 +56,7 @@ class Cam
      * @var string
      *
      * @ORM\Column(name="user_name", type="string", length=50, nullable=false)
+     * @Groups({"full"})
      */
     private $userName = '';
 
@@ -59,6 +64,7 @@ class Cam
      * @var string
      *
      * @ORM\Column(name="password", type="string", length=50, nullable=false)
+     * @Groups({"full"})
      */
     private $password = '';
 
@@ -66,6 +72,7 @@ class Cam
      * @var string
      *
      * @ORM\Column(name="link", type="string", length=50, nullable=false)
+     * @Groups({"full"})
      */
     private $link = '';
 
@@ -73,6 +80,7 @@ class Cam
      * @var string
      *
      * @ORM\Column(name="stream", type="string", length=50, nullable=false)
+     * @Groups({"restrict", "full"})
      */
     private $stream = '';
 
@@ -80,12 +88,14 @@ class Cam
      * @var string
      *
      * @ORM\Column(name="title", type="string", length=50, nullable=false)
+     * @Groups({"restrict", "full"})
      */
     private $title = '';
 
     /**
      * @var Type
      * @ORM\ManyToOne(targetEntity="App\Entity\LiveVideo\Type", inversedBy="id")
+     * @Groups({"full"})
      */
     private $type;
 
@@ -93,6 +103,7 @@ class Cam
      * @var bool
      *
      * @ORM\Column(type="boolean", nullable=false)
+     * @Groups({"restrict", "full"})
      */
     private $control = false;
 
@@ -100,6 +111,7 @@ class Cam
      * @var bool
      *
      * @ORM\Column(type="boolean", nullable=false)
+     * @Groups({"restrict", "full"})
      */
     private $startPlay = false;
     /**
