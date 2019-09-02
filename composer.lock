@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "5eaed0b9c769857bb4e04520e0563cc7",
+    "content-hash": "02c243b3138a22e7cfa659ff3d94d27d",
     "packages": [
         {
             "name": "composer/ca-bundle",
@@ -2769,6 +2769,20 @@
                 "menu"
             ],
             "time": "2019-06-17T12:58:15+00:00"
+        },
+        {
+            "name": "ltoscano/ponvif",
+            "version": "dev-master",
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/ltoscano/ponvif/archive/master.zip"
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "lib/"
+                ]
+            }
         },
         {
             "name": "nelmio/api-doc-bundle",
@@ -7959,7 +7973,8 @@
     "stability-flags": {
         "friendsofsymfony/user-bundle": 20,
         "nelmio/api-doc-bundle": 20,
-        "symfony/lts": 20
+        "symfony/lts": 20,
+        "ltoscano/ponvif": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,

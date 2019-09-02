@@ -24,7 +24,8 @@
         "symfony/templating": "^4.0",
         "symfony/twig-bundle": "^4.0",
         "symfony/webpack-encore-bundle": "^1.1",
-        "symfony/yaml": "^4.0"
+        "symfony/yaml": "^4.0",
+        "ltoscano/ponvif": "dev-master"
     },
     "require-dev": {
         "doctrine/doctrine-fixtures-bundle": "^3.2",
@@ -52,6 +53,22 @@
             "App\\Tests\\": "tests/"
         }
     },
+    "repositories": [
+        {
+            "type": "package",
+            "package": {
+                "name": "ltoscano/ponvif",
+                "version": "dev-master",
+                "dist": {
+                    "url": "https://github.com/ltoscano/ponvif/archive/master.zip",
+                    "type": "zip"
+                },
+                "autoload": {
+                    "classmap": ["lib/"]
+                }
+            }
+        }
+    ],
     "replace": {
         "symfony/polyfill-iconv": "*",
         "symfony/polyfill-php71": "*",
