@@ -2,14 +2,15 @@
 /**
  * Created by PhpStorm.
  * User: nikolns
- * Date: 8/29/19
- * Time: 2:20 PM
+ * Date: 9/3/19
+ * Time: 4:51 PM
  */
 
 namespace App\Form\LiveVideo;
 
 use App\Dto\FactoryDto;
 use App\Dto\LiveVideoDto;
+use App\Entity\LiveVideo\Cam;
 use App\Entity\LiveVideo\Group;
 use App\Manager\LiveVideoManager;
 use App\Rest\Form\RestChoiceType;
@@ -18,11 +19,11 @@ use Symfony\Component\OptionsResolver\Options;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
- * Class GroupType
+ * Class CamType
  *
  * @package App\Form\LiveVideo
  */
-class GroupType extends AbstractType
+class CamType extends AbstractType
 {
 //region SECTION: Fields
     /**
@@ -52,17 +53,22 @@ class GroupType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $callback = function (Options $options) {
-            $groups = [];
+            $streams      = [];
             $liveVideoDto = $this->factoryDto->cloneDto(LiveVideoDto::class);
+            /** @var Group $data */
             foreach ($this->liveVideoManager->getGroup($liveVideoDto)->getData() as $data) {
-                /** @var $data Group */
-                $groups[] = $data->getAlias();
+                /** @var Cam $cam */
+                foreach ($data->getLiveStreams() as $cam) {
+                    if ($cam->isControl()) {
+                        $streams[] = $cam->getStream();
+                    }
+                }
             }
 
-            return $groups;
+            return $streams;
         };
-        $resolver->setDefault(RestChoiceType::REST_COMPONENT_NAME, 'groups');
-        $resolver->setDefault(RestChoiceType::REST_DESCRIPTION, 'groupList');
+        $resolver->setDefault(RestChoiceType::REST_COMPONENT_NAME, 'camera');
+        $resolver->setDefault(RestChoiceType::REST_DESCRIPTION, 'cameraList');
         $resolver->setDefault(RestChoiceType::REST_CHOICES, $callback);
     }
 //endregion Public

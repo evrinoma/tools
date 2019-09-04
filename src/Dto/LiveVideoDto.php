@@ -8,6 +8,7 @@
 
 namespace App\Dto;
 
+use App\Annotation\Dto;
 use App\Entity\LiveVideo\Group;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -20,9 +21,21 @@ class LiveVideoDto extends AbstractFactoryDto
 {
 
 //region SECTION: Fields
-    private $isEmptyResult = true;
+    private $isEmptyResult  = true;
     private $alias;
     private $serializeGroup = 'restrict';
+
+    /**
+     * @Dto(class="App\Dto\LiveStreamsDto")
+     * @var LiveStreamsDto
+     */
+    private $liveStreams;
+
+    /**
+     * @Dto(class="App\Dto\LiveControlDto")
+     * @var LiveControlDto
+     */
+    private $liveControl;
 //endregion Fields
 
 //region SECTION: Protected
@@ -98,6 +111,22 @@ class LiveVideoDto extends AbstractFactoryDto
 
 //region SECTION: Getters/Setters
     /**
+     * @return LiveControlDto
+     */
+    public function getLiveControl()
+    {
+        return $this->liveControl;
+    }
+
+    /**
+     * @return LiveStreamsDto
+     */
+    public function getLiveStreams()
+    {
+        return $this->liveStreams;
+    }
+
+    /**
      * @return mixed
      */
     public function getSerializeGroup()
@@ -111,6 +140,30 @@ class LiveVideoDto extends AbstractFactoryDto
     public function getAlias()
     {
         return $this->alias;
+    }
+
+    /**
+     * @param LiveStreamsDto $liveControl
+     *
+     * @return LiveVideoDto
+     */
+    public function setLiveControl($liveControl)
+    {
+        $this->liveControl = $liveControl;
+
+        return $this;
+    }
+
+    /**
+     * @param LiveStreamsDto[] $liveStreams
+     *
+     * @return LiveVideoDto
+     */
+    public function setLiveStreams($liveStreams)
+    {
+        $this->liveStreams = $liveStreams;
+
+        return $this;
     }
 
     /**

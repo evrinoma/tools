@@ -342,7 +342,6 @@ class LiveCamFixtures extends AbstractFixtures
             ->setPassword('N.vtym2017')
             ->setTitle('Камера №1')
             ->setStream('cam_172.16.47.243_LQ.stream')
-            ->setControl(true)
             ->setType($this->hikvisionType)
             ->setGroup($group);
         $manager->persist($camOne);

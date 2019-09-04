@@ -23,6 +23,7 @@ use App\Manager\AclManager;
 use App\Manager\DashBoardManager;
 use App\Manager\DomainManager;
 use App\Manager\JournalManager;
+use App\Manager\LiveControlManager;
 use App\Manager\LiveVideoManager;
 use App\Manager\MenuManager;
 use App\Manager\SearchManager;
@@ -462,6 +463,46 @@ class ApiController extends AbstractController
     public function liveVideoClassAction(LiveVideoManager $liveVideoManager)
     {
         return $this->json($liveVideoManager->setRestSuccessOk()->getRepositoryClass(), $liveVideoManager->getRestStatus());
+    }
+
+    /**
+     * @Rest\Get("/internal/live_video/control", name="api_live_video_control")
+     * @SWG\Get(tags={"live_video"})
+     * @SWG\Parameter(
+     *     name="App\Dto\LiveControlDto[action]",
+     *     in="query",
+     *     type="array",
+     *     default=null,
+     *     description="cam action",
+     *     items=@SWG\Items(
+     *         type="string",
+     *         @Model(type=App\Form\LiveVideo\ActionType::class)
+     *     )
+     * )
+     * @SWG\Parameter(
+     *     name="App\Dto\LiveStreamsDto[live_streams]",
+     *     in="query",
+     *     type="array",
+     *     description="search there",
+     *     items=@SWG\Items(
+     *         type="string",
+     *         @Model(type=App\Form\LiveVideo\CamType::class)
+     *     )
+     * )
+     * @SWG\Response(response=200,description="Cam Live Video Contol")
+     *
+     * @param Request            $request
+     * @param FactoryDto         $factoryDto
+     * @param LiveControlManager $liveControlManager
+     *
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     */
+    public function liveVideoControlAction(Request $request, FactoryDto $factoryDto, LiveControlManager $liveControlManager)
+    {
+        /** @var LiveVideoDto $liveVideoDto */
+        $liveVideoDto = $factoryDto->setRequest($request)->createDto(LiveVideoDto::class);
+
+        return $this->json($liveControlManager->setAction($liveVideoDto->getLiveControl()->getAction())->controlAction($liveVideoDto)->getData(), $liveControlManager->getRestStatus());
     }
 
     /**

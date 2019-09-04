@@ -10,6 +10,7 @@ namespace App\Manager;
 
 use App\Core\AbstractEntityManager;
 use App\Dto\LiveVideoDto;
+use App\Entity\LiveVideo\Cam;
 use App\Entity\LiveVideo\Group;
 use App\Rest\Core\RestTrait;
 
@@ -50,7 +51,7 @@ class LiveVideoManager extends AbstractEntityManager
     /**
      * @param LiveVideoDto $liveVideoDto
      *
-     * @return mixed
+     * @return LiveVideoManager
      */
     public function getGroup($liveVideoDto)
     {
@@ -67,6 +68,41 @@ class LiveVideoManager extends AbstractEntityManager
 
         return $this;
     }
+
+    /**
+     * @param LiveVideoDto $liveVideoDto
+     *
+     * @return LiveVideoManager
+     */
+    public function getCamera($liveVideoDto)
+    {
+        $repository = $this->entityManager->getRepository(Cam::class);
+
+        $builder = $repository->createQueryBuilder('cams');
+
+        $builder
+            ->where('cams.active = \'a\'')
+            ->leftJoin('cams.group', 'group');
+
+        if ($liveVideoDto && $liveVideoDto->getLiveStreams()) {
+            $streams = $liveVideoDto->getLiveStreams()->getStreams();
+            if ($streams) {
+                $builder->andWhere('cams.stream IN (:streams)')
+                    ->setParameter('streams', $streams);
+            }
+        }
+
+        if ($liveVideoDto && $liveVideoDto->getLiveControl()) {
+            $builder->andWhere('cams.control = :control')
+                ->setParameter('control', $liveVideoDto->getLiveControl()->hasControl());
+        }
+
+
+        $this->setData($builder->getQuery()->getResult());
+
+        return $this;
+    }
+
 
     /**
      * @param LiveVideoDto|null $dto

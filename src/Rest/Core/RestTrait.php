@@ -21,6 +21,16 @@ trait RestTrait
     private $status = RestModel::SUCCESS_OK;
 //endregion Fields
 
+//region SECTION: Public
+    /**
+     * @return bool
+     */
+    public function isRestStatusOk()
+    {
+        return $this->getRestStatus() === RestModel::SUCCESS_OK;
+    }
+//endregion Public
+
 //region SECTION: Getters/Setters
     abstract public function getRestStatus(): int;
 
