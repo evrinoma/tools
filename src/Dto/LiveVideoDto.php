@@ -30,12 +30,6 @@ class LiveVideoDto extends AbstractFactoryDto
      * @var LiveStreamsDto
      */
     private $liveStreams;
-
-    /**
-     * @Dto(class="App\Dto\LiveControlDto")
-     * @var LiveControlDto
-     */
-    private $liveControl;
 //endregion Fields
 
 //region SECTION: Protected
@@ -110,14 +104,6 @@ class LiveVideoDto extends AbstractFactoryDto
 //endregion SECTION: Dto
 
 //region SECTION: Getters/Setters
-    /**
-     * @return LiveControlDto
-     */
-    public function getLiveControl()
-    {
-        return $this->liveControl;
-    }
-
     /**
      * @return LiveStreamsDto
      */

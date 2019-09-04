@@ -22,6 +22,14 @@ class LiveStreamsDto extends AbstractFactoryDto
     private $liveStreams = [];
 
     private $streams = [];
+    /**
+     * @var boolean
+     */
+    private $control = true;
+    /**
+     * @var
+     */
+    private $action;
 //endregion Fields
 
 //region SECTION: Protected
@@ -65,6 +73,14 @@ class LiveStreamsDto extends AbstractFactoryDto
 
         return $this;
     }
+
+    /**
+     * @return bool
+     */
+    public function hasControl(): bool
+    {
+        return $this->control;
+    }
 //endregion Public
 
 //region SECTION: Dto
@@ -88,6 +104,15 @@ class LiveStreamsDto extends AbstractFactoryDto
                     }
                 }
             }
+
+            $action = $request->get('action');
+
+            if (!is_array($action)) {
+                $action = explode(',', $action);
+                if (is_array($action)) {
+                    $this->setAction(end($action));
+                }
+            }
         }
 
         return $this;
@@ -102,17 +127,14 @@ class LiveStreamsDto extends AbstractFactoryDto
     {
         return $this->streams;
     }
-//    public function getImplodeStreams($glue = ',')
-//    {
-//        $data = [];
-//        foreach ($this->liveStreams as $streams) {
-//            foreach ($streams as $stream) {
-//                $data[] = $stream;
-//            }
-//        }
-//
-//        return implode($glue, $data);
-//    }
+
+    /**
+     * @return mixed
+     */
+    public function getAction()
+    {
+        return $this->action;
+    }
 
     /**
      * @return mixed
@@ -120,6 +142,30 @@ class LiveStreamsDto extends AbstractFactoryDto
     public function getLiveStreams()
     {
         return $this->liveStreams;
+    }
+
+    /**
+     * @param bool $control
+     *
+     * @return LiveStreamsDto
+     */
+    public function setControl(bool $control)
+    {
+        $this->control = $control;
+
+        return $this;
+    }
+
+    /**
+     * @param mixed $action
+     *
+     * @return LiveStreamsDto
+     */
+    public function setAction($action)
+    {
+        $this->action = $action;
+
+        return $this;
     }
 //endregion Getters/Setters
 }

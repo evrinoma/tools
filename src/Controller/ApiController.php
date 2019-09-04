@@ -469,7 +469,7 @@ class ApiController extends AbstractController
      * @Rest\Get("/internal/live_video/control", name="api_live_video_control")
      * @SWG\Get(tags={"live_video"})
      * @SWG\Parameter(
-     *     name="App\Dto\LiveControlDto[action]",
+     *     name="App\Dto\LiveStreamsDto[action]",
      *     in="query",
      *     type="array",
      *     default=null,
@@ -502,7 +502,22 @@ class ApiController extends AbstractController
         /** @var LiveVideoDto $liveVideoDto */
         $liveVideoDto = $factoryDto->setRequest($request)->createDto(LiveVideoDto::class);
 
-        return $this->json($liveControlManager->setAction($liveVideoDto->getLiveControl()->getAction())->controlAction($liveVideoDto)->getData(), $liveControlManager->getRestStatus());
+        return $this->json($liveControlManager->setAction($liveVideoDto->getLiveStreams()->getAction())->controlAction($liveVideoDto)->getData(), $liveControlManager->getRestStatus());
+    }
+
+    /**
+     * @Rest\Get("/internal/live_video/control/class", name="api_live_video_control_class")
+     * @SWG\Get(tags={"live_video"})
+     * @SWG\Response(response=200,description="Returns class acl entity")
+     *
+     *
+     * @param LiveControlManager $liveControlManager
+     *
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     */
+    public function liveVideoControlClassAction(LiveControlManager $liveControlManager)
+    {
+        return $this->json($liveControlManager->setRestSuccessOk()->getRepositoryClass(), $liveControlManager->getRestStatus());
     }
 
     /**

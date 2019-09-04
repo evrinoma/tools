@@ -35,6 +35,8 @@ class LiveControlManager extends AbstractEntityManager
     const ACTION_MOVE_TO_PRESET                   = 'actionMoveToPreset';
     const ACTION_RETURN_FROM_PRESET               = 'actionReturnFromPreset';
     const DELETE_ALL_PRESETS_BY_NAME              = 'deleteAllPresetsByName';
+
+    protected $repositoryClass = Cam::class;
     /**
      * @var array
      */
@@ -280,39 +282,6 @@ class LiveControlManager extends AbstractEntityManager
     public function getModelActions()
     {
         return $this->actions;
-    }
-
-    /**
-     * @param string $style
-     *
-     * @return string
-     */
-    public function getControl($style = '')
-    {
-        $html = '';
-        $html .= '<div class="livecontrol-actions" object="'.$this->camera->getName().'"';
-        $html .= 'style="';
-        $html .= $style;
-        $html .= (($this->camera->isShowOnCreate()) ? '' : ' display: none;');
-        $html .= '">';
-        $html .= '<table>';
-        $html .= '<tr>';
-        $html .= '<td><button id="actionZoomOut" class="livecontrol-zoomOut"></button></td>';
-        $html .= '<td><button id="actionTop" class="livecontrol-top"></button></td>';
-        $html .= '<td><button id="actionZoomIn" class="livecontrol-zoomIn"></button></td>';
-        $html .= '</tr><tr>';
-        $html .= '<td><button id="actionLeft" class="livecontrol-left"></button></td>';
-        $html .= '<td></td>';
-        $html .= '<td><button id="actionRight" class="livecontrol-right"></button></td>';
-        $html .= '</tr><tr>';
-        $html .= '<td></td>';
-        $html .= '<td><button id="actionBottom" class="livecontrol-bottom"></button></td>';
-        $html .= '<td></td>';
-        $html .= '</tr>';
-        $html .= '</table>';
-        $html .= '</div>';
-
-        return $html;
     }
 
     /**

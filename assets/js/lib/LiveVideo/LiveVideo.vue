@@ -19,6 +19,51 @@
                                                 </div>
                                             </td>
                                             <td class="splitter">
+                                                <template v-if="cam.control">
+                                                    <table>
+                                                        <tbody>
+                                                        <tr>
+                                                            <td>
+                                                                <button class="circular ui icon button" :class="cam.actions.disable.actionZoomIn!=0?'disabled':cam.actions.load.actionZoomIn!=0 ?'loading':''" @click="doAction(cam,cam.actions.actionZoomIn)">
+                                                                    <i class="zoom in icon"></i>
+                                                                </button>
+                                                            </td>
+                                                            <td>
+                                                                <button class="circular ui icon button" :class="cam.actions.disable.actionTop!=0?'disabled':cam.actions.load.actionTop!=0 ?'loading':''" @click="doAction(cam,cam.actions.actionTop)">
+                                                                    <i class="icon arrow alternate circle up"></i>
+                                                                </button>
+                                                            </td>
+                                                            <td>
+                                                                <button class="circular ui icon button" :class="cam.actions.disable.actionZoomOut!=0?'disabled':cam.actions.load.actionZoomOut!=0 ?'loading':''" @click="doAction(cam,cam.actions.actionZoomOut)">
+                                                                    <i class="zoom out icon"></i>
+                                                                </button>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>
+                                                                <button class="circular ui icon button" :class="cam.actions.disable.actionLeft!=0?'disabled':cam.actions.load.actionLeft!=0 ?'loading':''" @click="doAction(cam,cam.actions.actionLeft)">
+                                                                    <i class="icon arrow alternate circle left"></i>
+                                                                </button>
+                                                            </td>
+                                                            <td></td>
+                                                            <td>
+                                                                <button class="circular ui icon button" :class="cam.actions.disable.actionRight!=0?'disabled':cam.actions.load.actionRight!=0 ?'loading':''" @click="doAction(cam,cam.actions.actionRight)">
+                                                                    <i class="icon arrow alternate circle right"></i>
+                                                                </button>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td></td>
+                                                            <td>
+                                                                <button class="circular ui icon button" :class="cam.actions.disable.actionRight!=0?'disabled':cam.actions.load.actionBottom!=0?'loading':''" @click="doAction(cam,cam.actions.actionBottom)">
+                                                                    <i class="icon arrow alternate circle down"></i>
+                                                                </button>
+                                                            </td>
+                                                            <td></td>
+                                                        </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </template>
                                             </td>
                                         </template>
                                     </template>
@@ -49,8 +94,11 @@
                 apiUrlLive: 'http://php72.tools/internal/live_video',
                 apiUrlGroupClass: 'http://php72.tools/internal/live_video/class',
                 apiUrlWowzaStream: 'http://php72.tools/internal/live_video/streaming_engine',
+                apiUrlControl: 'http://php72.tools/internal/live_video/control',
+                apiUrlControlClass: 'http://php72.tools/internal/live_video/control/class',
                 group: null,
                 groupClass: null,
+                controlClass: null,
                 steamEngine: null,
                 wowzaLink: "wowza_",
                 showPreloadLiveVideo: 0,
@@ -61,14 +109,21 @@
                     'resolution384x216',
                     'resolution329x194',
                     'resolution288x162',
+                    'resolution226x130',
+                    'resolution200x112',
+                    'resolution165x93',
                     // {width: 640, height: 360,},//rows 1
                     // {width: 640, height: 360,},//rows 2
                     // {width: 384, height: 216,},//rows 3
                     // {width: 329, height: 194,},//rows 4
                     // {width: 288, height: 162,},//rows 5
+                    // {width: 226, height: 130,},//rows 6
+                    // {width: 200, height: 112,},//rows 7
+                    // {width: 165, height: 93,},//rows 8
                 ],
                 shows: [],
                 update: false,
+                bufferSec: 30,
             }
         },
         mounted() {
@@ -77,6 +132,41 @@
         methods: {
             getResolution(maxColumn) {
                 return this.resolution[maxColumn] !== undefined ? this.resolution[maxColumn] : this.resolution[this.resolution.length];
+            },
+            _getActions() {
+                return {
+                    load: {
+                        actionTop: 0,
+                        actionBottom: 0,
+                        actionLeft: 0,
+                        actionRight: 0,
+                        actionZoomIn: 0,
+                        actionZoomOut: 0,
+                    },
+                    disable: {
+                        actionTop: 0,
+                        actionBottom: 0,
+                        actionLeft: 0,
+                        actionRight: 0,
+                        actionZoomIn: 0,
+                        actionZoomOut: 0,
+                    },
+                    actionTop: 'actionTop',
+                    actionBottom: 'actionBottom',
+                    actionLeft: 'actionLeft',
+                    actionRight: 'actionRight',
+                    actionZoomIn: 'actionZoomIn',
+                    actionZoomOut: 'actionZoomOut',
+                    setLoad(action) {
+                        this.load[action]++;
+                    },
+                    resetLoad(action) {
+                        this.load[action]--;
+                    },
+                    setDisable(action) {
+                        this.disable[action]++;
+                    },
+                }
             },
             _axiosResponse(type, response, query) {
                 switch (type) {
@@ -95,11 +185,13 @@
                                     if (row[count] === undefined) {
                                         row[count] = [];
                                     }
+                                    cam.actions = self._getActions();
                                     row[count].push(cam);
                                     if (mod === (item.max_column - 1)) {
                                         count++;
                                     }
                                     self.shows[cam.id] = {id: cam.id, hidden: true};
+
                                 });
                                 while (mod !== (item.max_column - 1)) {
                                     row[count].push({});
@@ -116,6 +208,9 @@
                     case 'group-load-class':
                         this.groupClass = response.data;
                         break;
+                    case 'control-load-class':
+                        this.controlClass = response.data;
+                        break;
                     case 'wowza-steam-engine':
                         this.steamEngine = response.data;
                         this.doLoadLiveVideo();
@@ -127,7 +222,17 @@
                         break;
                     case 'wowza-error-stream':
                         break;
+                    case 'control-action':
+                        setTimeout(this._resetLoad, (this.bufferSec + 5) * 1000, query.cam, query.action);
+                        break;
+                    case 'control-action-error':
+                        query.cam.actions.resetLoad(query.action);
+                        query.cam.actions.setDisable(query.action);
+                        break;
                 }
+            },
+            _resetLoad(cam, action) {
+                cam.actions.resetLoad(action);
             },
             loadStreamWowza(id, stream, start_play) {
                 if (this.shows[id].hidden === true) {
@@ -149,14 +254,25 @@
                         "loop": false,
                         "audioOnly": false,
                         "uiShowQuickRewind": false,
-                        "uiQuickRewindSeconds": "30"
+                        "uiQuickRewindSeconds": 1
                     }
                 );
+            },
+            doAction(cam, action) {
+                cam.actions.setLoad(action);
+                let query = {class: this.controlClass, action: action, live_streams: cam.stream, cam: cam};
+                axios
+                    .get(this.apiUrlControl, {params: query})
+                    .then(response => (this._axiosResponse('control-action', response, query)))
+                    .catch(error => (this._axiosResponse('control-action-error', error, query)));
             },
             doLoad() {
                 axios
                     .get(this.apiUrlGroupClass)
                     .then(response => (this._axiosResponse('group-load-class', response)));
+                axios
+                    .get(this.apiUrlControlClass)
+                    .then(response => (this._axiosResponse('control-load-class', response)));
                 axios
                     .get(this.apiUrlWowzaStream)
                     .then(response => (this._axiosResponse('wowza-steam-engine', response)));
@@ -207,6 +323,21 @@
         height: 162px;
     }
 
+    .resolution226x130 {
+        width: 226px;
+        height: 130px;
+    }
+
+    .resolution200x112 {
+        width: 200px;
+        height: 112px;
+    }
+
+    .resolution165x93 {
+        width: 165px;
+        height: 93px;
+    }
+
     .font_resolution640x360 {
     }
 
@@ -214,16 +345,22 @@
         font-size: x-small;
     }
 
-    .font_resolution329x194 {
+    .font_resolution329x194,
+    .font_resolution288x162,
+    .font_rresolution226x130,
+    .font_rresolution200x112,
+    .font_rresolution165x93 {
         font-size: xx-small;
     }
 
-    .font_resolution288x162 {
-        font-size: xx-small;
-    }
 
     .hidden {
         display: none;
     }
+
+    /*.ui.button.circular {*/
+    /*height: 10px;*/
+    /*width: 10px;*/
+    /*}*/
 
 </style>

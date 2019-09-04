@@ -73,7 +73,7 @@ class LiveCamFixtures extends AbstractFixtures
         $group
             ->setAlias('live_ipark45')
             ->setName('Курганский Индустриальный парк')
-            ->setMaxColumn(4);
+            ->setMaxColumn(5);
 
         $manager->persist($group);
 

@@ -92,9 +92,9 @@ class LiveVideoManager extends AbstractEntityManager
             }
         }
 
-        if ($liveVideoDto && $liveVideoDto->getLiveControl()) {
+        if ($liveVideoDto && $liveVideoDto->getLiveStreams()) {
             $builder->andWhere('cams.control = :control')
-                ->setParameter('control', $liveVideoDto->getLiveControl()->hasControl());
+                ->setParameter('control', $liveVideoDto->getLiveStreams()->hasControl());
         }
 
 
