@@ -185,7 +185,9 @@
                                     if (row[count] === undefined) {
                                         row[count] = [];
                                     }
-                                    cam.actions = self._getActions();
+                                    if(cam.control) {
+                                        cam.actions = self._getActions();
+                                    }
                                     row[count].push(cam);
                                     if (mod === (item.max_column - 1)) {
                                         count++;

@@ -13,6 +13,7 @@ use App\Dto\LiveVideoDto;
 use App\Entity\LiveVideo\Cam;
 use App\Entity\LiveVideo\Group;
 use App\Rest\Core\RestTrait;
+use Doctrine\ORM\EntityManagerInterface;
 
 /**
  * Class LiveVideoManager
@@ -25,7 +26,32 @@ class LiveVideoManager extends AbstractEntityManager
 
 //region SECTION: Fields
     protected $repositoryClass = Group::class;
+    /**
+     * @var VoterManager
+     */
+    private $voterManager;
+
 //endregion Fields
+
+//region SECTION: Constructor
+    public function __construct(EntityManagerInterface $entityManager, VoterManager $voterManager)
+    {
+        parent::__construct($entityManager);
+        $this->voterManager = $voterManager;
+    }
+//endregion Constructor
+
+//region SECTION: Private
+    private function checkVoiter()
+    {
+        return $this->voterManager->checkPermission($this->getRole());
+    }
+
+    private function getRole()
+    {
+        return ['ROLE_VIDEO_CONTROL'];
+    }
+//endregion Private
 
 //region SECTION: Getters/Setters
     /**
@@ -103,7 +129,6 @@ class LiveVideoManager extends AbstractEntityManager
         return $this;
     }
 
-
     /**
      * @param LiveVideoDto|null $dto
      *
@@ -118,6 +143,24 @@ class LiveVideoManager extends AbstractEntityManager
         }
     }
 
+    /**
+     * @param mixed $data
+     *
+     * @return AbstractEntityManager
+     */
+    public function setData($data)
+    {
+        if (!$this->checkVoiter()) {
+            /** @var Group $item */
+            foreach ($data as $item) {
+                /** @var Cam $camera */
+                foreach ($item->getLiveStreams() as $camera) {
+                    $camera->setControl(false);
+                }
+            }
+        }
 
+        return parent::setData($data);
+    }
 //endregion Getters/Setters
 }
