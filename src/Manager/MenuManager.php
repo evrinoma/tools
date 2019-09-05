@@ -92,33 +92,6 @@ class MenuManager extends AbstractEntityManager
 
         $this->entityManager->persist($display);
 
-        $journal = new MenuItem();
-        $journal
-            ->setRole(['ROLE_USER_DELTA8'])
-            ->setName('Journal')
-            ->setRoute('delta_journal');
-
-        $this->entityManager->persist($journal);
-
-        $journalRtt = new MenuItem();
-        $journalRtt
-            ->setRole(['ROLE_USER_DELTA8'])
-            ->setName('Rtt')
-            ->setRoute('delta_rtt');
-
-        $this->entityManager->persist($journalRtt);
-
-        $menuDelta = new MenuItem();
-        $menuDelta
-            ->setRole(['ROLE_USER_DELTA8'])
-            ->setName('Delta8')
-            ->setUri('#')
-            ->addChild($journal)
-            ->addChild($journalRtt);
-
-        $this->entityManager->persist($menuDelta);
-
-
         $logout = new MenuItem();
         $logout
             ->setRole(['ROLE_USER'])
@@ -126,13 +99,6 @@ class MenuManager extends AbstractEntityManager
             ->setRoute('fos_user_security_logout')
             ->setAttributes(['class' => 'logout']);
         $this->entityManager->persist($logout);
-
-        $apiDocDefault = new MenuItem();
-        $apiDocDefault
-            ->setRole(['ROLE_SUPER_ADMIN', 'ROLE_API'])
-            ->setName('Default')
-            ->setRoute('app.swagger_ui');
-        $this->entityManager->persist($apiDocDefault);
 
         $apiDocInternal = new MenuItem();
         $apiDocInternal
@@ -146,7 +112,6 @@ class MenuManager extends AbstractEntityManager
             ->setRole(['ROLE_SUPER_ADMIN', 'ROLE_API'])
             ->setName('ApiDoc')
             ->setUri('#')
-            ->addChild($apiDocDefault)
             ->addChild($apiDocInternal);
 
         $this->entityManager->persist($apiDoc);
@@ -185,51 +150,6 @@ class MenuManager extends AbstractEntityManager
             ->addChild($mailAcl);
 
         $this->entityManager->persist($mail);
-
-
-        $iparkVideo = new MenuItem();
-        $iparkVideo
-            ->setRole(['ROLE_SUPER_ADMIN', 'ROLE_IPARK_VIDEO', 'ROLE_VIDEO_ALL'])
-            ->setName('ipark45')
-            ->setRoute('live_ipark45');
-
-        $this->entityManager->persist($iparkVideo);
-
-        $kzktVideo = new MenuItem();
-        $kzktVideo
-            ->setRole(['ROLE_SUPER_ADMIN', 'ROLE_KZKT_VIDEO', 'ROLE_VIDEO_ALL'])
-            ->setName('kzkt45')
-            ->setRoute('live_kzkt45');
-
-        $this->entityManager->persist($kzktVideo);
-
-        $ishimVideo = new MenuItem();
-        $ishimVideo
-            ->setRole(['ROLE_SUPER_ADMIN', 'ROLE_ISHIM_VIDEO', 'ROLE_VIDEO_ALL'])
-            ->setName('Ишим')
-            ->setRoute('live_ishim');
-
-        $this->entityManager->persist($ishimVideo);
-
-        $tobolskVideo = new MenuItem();
-        $tobolskVideo
-            ->setRole(['ROLE_SUPER_ADMIN', 'ROLE_TOBOLSK_VIDEO', 'ROLE_VIDEO_ALL'])
-            ->setName('Тобольск')
-            ->setRoute('live_tobolsk');
-
-        $this->entityManager->persist($tobolskVideo);
-
-        $video = new MenuItem();
-        $video
-            ->setRole(['ROLE_SUPER_ADMIN', 'ROLE_VIDEO', 'ROLE_VIDEO_ALL'])
-            ->setName('Live Cam')
-            ->setUri('#')
-            ->addChild($iparkVideo)
-            ->addChild($kzktVideo)
-            ->addChild($ishimVideo)
-            ->addChild($tobolskVideo);
-
-        $this->entityManager->persist($video);
 
         $this->entityManager->flush();
     }
