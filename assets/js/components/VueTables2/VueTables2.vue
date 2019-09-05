@@ -37,7 +37,7 @@
     Vue.use(VueEvents);
     Vue.use(axios);
     Vue.component('custom-actions', CustomActions);
-    Vue.component('filter-bar', FilterBar)
+    Vue.component('filter-bar', FilterBar);
 
     let component = {
         components: {
