@@ -104,9 +104,9 @@
                 settings: {},
                 classEntity: '',
                 tabSelected: '',
-                apiUrlSearch: 'http://php72.tools/internal/log/search',
-                apiUrlSettings: 'http://php72.tools/internal/log/settings',
-                apiUrlSettingsSave: 'http://php72.tools/internal/log/settings/save',
+                apiUrlSearch: window.location.origin+'/internal/log/search',
+                apiUrlSettings: window.location.origin+'/internal/log/settings',
+                apiUrlSettingsSave: window.location.origin+'/internal/log/settings/save',
             }
         },
         mounted() {

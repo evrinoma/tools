@@ -91,11 +91,11 @@
         components: {},
         data() {
             return {
-                apiUrlLive: 'http://php72.tools/internal/live_video',
-                apiUrlGroupClass: 'http://php72.tools/internal/live_video/class',
-                apiUrlWowzaStream: 'http://php72.tools/internal/live_video/streaming_engine',
-                apiUrlControl: 'http://php72.tools/internal/live_video/control',
-                apiUrlControlClass: 'http://php72.tools/internal/live_video/control/class',
+                apiUrlLive: window.location.origin+'/internal/live_video',
+                apiUrlGroupClass: window.location.origin+'/internal/live_video/class',
+                apiUrlWowzaStream: window.location.origin+'/internal/live_video/streaming_engine',
+                apiUrlControl: window.location.origin+'/internal/live_video/control',
+                apiUrlControlClass: window.location.origin+'/internal/live_video/control/class',
                 group: null,
                 groupClass: null,
                 controlClass: null,

@@ -65,17 +65,17 @@
                         direction: 'asc'
                     }
                 ],
-                apiUrl: 'http://php72.tools/internal/domain/query',
-                apiUrlDelete: 'http://php72.tools/internal/domain/delete',
-                apiUrlServers: 'http://php72.tools/internal/server/server',
-                apiUrlSave: 'http://php72.tools/internal/domain/save',
-                apiUrlServerDelete: 'http://php72.tools/internal/server/delete',
-                apiUrlServerSave: 'http://php72.tools/internal/server/save',
-                apiUrlClass: 'http://php72.tools/internal/domain/class',
+                apiUrl: window.location.origin+'/internal/domain/query',
+                apiUrlDelete: window.location.origin+'/internal/domain/delete',
+                apiUrlServers: window.location.origin+'/internal/server/server',
+                apiUrlSave: window.location.origin+'/internal/domain/save',
+                apiUrlServerDelete: window.location.origin+'/internal/server/delete',
+                apiUrlServerSave: window.location.origin+'/internal/server/save',
+                apiUrlClass: window.location.origin+'/internal/domain/class',
                 domainClass: null,
                 serverClass: null,
-                apiUrlDomainClass: 'http://php72.tools/internal/domain/class',
-                apiUrlServerClass: 'http://php72.tools/internal/server/class',
+                apiUrlDomainClass: window.location.origin+'/internal/domain/class',
+                apiUrlServerClass: window.location.origin+'/internal/server/class',
             }
         },
         mounted() {
