@@ -185,6 +185,9 @@
     "knplabs/knp-menu-bundle": {
         "version": "v2.2.1"
     },
+    "ltoscano/ponvif": {
+        "version": "dev-master"
+    },
     "monolog/monolog": {
         "version": "1.23.0"
     },
