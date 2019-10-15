@@ -1,6 +1,6 @@
 {
   "devDependencies": {
-    "@symfony/webpack-encore": "^0.22.0",
+    "@symfony/webpack-encore": "^0.28.0",
     "autoprefixer": "^9.4.0",
     "babel-core": "^6.26.0",
     "babel-loader": "^7.1.4",
@@ -37,6 +37,7 @@
     "build": "encore production"
   },
   "dependencies": {
+    "lodash.merge": "^4.6.2",
     "vue-events": "^3.1.0",
     "vuetable-2": "^1.7.5"
   }
