@@ -1,12 +1,12 @@
 # tools
 
 <h4>How to install</h4>
-/**
+/**<br>
  * yarn add babel-preset-es2015 --dev<br>
  * yarn add vuetable-2 --dev<br>
  * yarn add css-loader --dev<br>
  * yarn add css-loader<br>
- */
+ */<br>
 yarn
 
 <h4>Load fixtures</h4>
