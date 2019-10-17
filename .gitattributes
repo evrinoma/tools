@@ -1,2 +1,4 @@
 # to change language of repo from JavaScript to PHP
+* linguist-vendored
+*.js linguist-vendored=false
 *.php linguist-language=PHP
