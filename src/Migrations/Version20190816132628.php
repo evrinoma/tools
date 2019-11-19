@@ -22,7 +22,6 @@ final class Version20190816132628 extends AbstractMigration
         // this up() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
-//        $this->addSql('DROP TABLE ParamData');
         $this->addSql('ALTER TABLE settings ADD active VARCHAR(255) NOT NULL');
     }
 
@@ -31,7 +30,6 @@ final class Version20190816132628 extends AbstractMigration
         // this down() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
-//        $this->addSql('CREATE TABLE ParamData (T INT NOT NULL, V INT NOT NULL, S INT NOT NULL, XS INT NOT NULL, N INT NOT NULL, PRIMARY KEY(T, N)) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB COMMENT = \'\' ');
         $this->addSql('ALTER TABLE settings DROP active');
     }
 }
