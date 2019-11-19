@@ -2,9 +2,9 @@
 
 create file .env
 touch ./env
-DATABASE_URL=mysql://user:pass@172.18.2.1:3306/tools
-DATABASE_DELTA_URL=mssql://user:pass@172.16.45.10\\DCSRV01:1433
-DATABASE_DELTA_DATA_URL=mssql://user:pass@172.16.45.10\\DCSRV01:1433/TAZOVSKIY_DATA
+DATABASE_URL=mysql://tools:tools@mysql.localhost:3306/tools
+DATABASE_DELTA_URL=mssql://user:pass@mssql.localhost\\DCSRV01:1433
+DATABASE_DELTA_DATA_URL=mssql://user:pass@mssql.localhost\\DCSRV01:1433/TAZOVSKIY_DATA
 
 composer install
 
@@ -20,8 +20,28 @@ yarn
 
 webpack --env=dev && chown -R apache.apache .
 
+<h4>create datavase</h4>
+create empty DB by command
+init.install passValue
+php bin/console d:m:mi
+
+<h4>create user</h4>
+php bin/console fos:user:create user user@my.email pass --super-admin
+login
+<h4>generate menu</h4>
+http://localhost/api/doc/internal
+create menu /internal/menu/create_default
+
 <h4>Load fixtures</h4>
 php bin/console doctrine:fixtures:load --group=DeltaFixtures --append
 php bin/console doctrine:fixtures:load --group=SettingsFixtures --append
 php bin/console doctrine:fixtures:load --group=SearchManagerFixtures --append
-php bin/console doctrine:fixtures:load --group=LiveCamFixtures --appendgit 
+php bin/console doctrine:fixtures:load --group=LiveCamFixtures --append
+
+
+http://localhost/internal/domain/import
+http://localhost/internal/acl/import
+http://localhost/internal/spam/import
+
+UPDATE `tools`.`mail_filter` SET `pattern` = 'ip' WHERE `mail_filter`.`type` = 'Range';
+UPDATE `tools`.`mail_filter` SET `pattern` = 'burn' WHERE `mail_filter`.`type` = 'name';
