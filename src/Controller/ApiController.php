@@ -125,7 +125,7 @@ class ApiController extends AbstractController
      */
     public function aclImport(AclManager $aclManager)
     {
-        return $this->json(['acls' => $aclManager->setRestSuccessOk()->megrateAcls()], $aclManager->getRestStatus());
+        return $this->json(['acls' => $aclManager->setRestSuccessOk()->migrateAcls()], $aclManager->getRestStatus());
     }
 
     /**
@@ -311,7 +311,7 @@ class ApiController extends AbstractController
      */
     public function domainImportAction(DomainManager $domainManager)
     {
-        return $this->json(['domains' => $domainManager->setRestSuccessOk()->megrateDomains()], $domainManager->getRestStatus());
+        return $this->json(['domains' => $domainManager->setRestSuccessOk()->migrateDomains()], $domainManager->getRestStatus());
     }
 
     /**
@@ -856,7 +856,7 @@ class ApiController extends AbstractController
      */
     public function spamRulesImportAction(SpamManager $spamManager)
     {
-        return $this->json(['spam' => $spamManager->setRestSuccessOk()->megrateSpamRules()], $spamManager->getRestStatus());
+        return $this->json(['spam' => $spamManager->setRestSuccessOk()->migrateSpamRules()], $spamManager->getRestStatus());
     }
 
     /**

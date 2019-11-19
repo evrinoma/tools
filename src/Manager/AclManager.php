@@ -60,7 +60,7 @@ class AclManager extends AbstractEntityManager
      * @return array
      * @throws \Doctrine\ORM\ORMException
      */
-    public function megrateAcls()
+    public function migrateAcls()
     {
         $this->getRepositoryAll(Acl::class)->removeEntitys();
 

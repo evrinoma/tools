@@ -37,7 +37,7 @@ class SpamManager extends AbstractEntityManager
 //endregion Fields
 
 //region SECTION: Public
-    public function megrateSpamRules()
+    public function migrateSpamRules()
     {
         $this
             ->getRepositoryAll(Conformity::class)->removeEntitys()

@@ -87,7 +87,7 @@ class DomainManager extends AbstractEntityManager
     /**
      * @return array
      */
-    public function megrateDomains()
+    public function migrateDomains()
     {
         $this
             ->getRepositoryAll(Server::class)->removeEntitys()
