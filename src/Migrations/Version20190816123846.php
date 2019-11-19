@@ -32,12 +32,12 @@ final class Version20190816123846 extends AbstractMigration
         $this->addSql('ALTER TABLE PARAMS ADD CONSTRAINT FK_7F36C975FE08514F FOREIGN KEY (DEVICEID) REFERENCES DEVICES (ID)');
         $this->addSql('ALTER TABLE PARAMS ADD CONSTRAINT FK_7F36C975EBD84B70 FOREIGN KEY (SCRIPT_ENGINE_ID) REFERENCES SCRIPT_ENGINES (ID)');
         $this->addSql('ALTER TABLE PARAMS ADD CONSTRAINT FK_7F36C97547405208 FOREIGN KEY (GROUPID) REFERENCES GROUPS (ID)');
-        $this->addSql('DROP TABLE tb_emails');
+/*        $this->addSql('DROP TABLE tb_emails');
         $this->addSql('DROP TABLE tb_spam_fishing');
         $this->addSql('DROP TABLE tb_spam_hits');
         $this->addSql('DROP TABLE tb_spam_rules');
-        $this->addSql('ALTER TABLE settings ADD type VARCHAR(255) NOT NULL');
-        $this->addSql('ALTER TABLE tb_domains CHANGE owner_id owner_id INT NOT NULL, CHANGE domain domain VARCHAR(255) NOT NULL, CHANGE geoip geoip INT NOT NULL');
+*/        $this->addSql('ALTER TABLE settings ADD type VARCHAR(255) NOT NULL');
+//        $this->addSql('ALTER TABLE tb_domains CHANGE owner_id owner_id INT NOT NULL, CHANGE domain domain VARCHAR(255) NOT NULL, CHANGE geoip geoip INT NOT NULL');
     }
 
     public function down(Schema $schema) : void
@@ -49,17 +49,17 @@ final class Version20190816123846 extends AbstractMigration
         $this->addSql('ALTER TABLE PARAMS DROP FOREIGN KEY FK_7F36C97547405208');
         $this->addSql('ALTER TABLE PARAMS DROP FOREIGN KEY FK_7F36C9759497FC04');
         $this->addSql('ALTER TABLE PARAMS DROP FOREIGN KEY FK_7F36C975EBD84B70');
-        $this->addSql('CREATE TABLE tb_emails (id INT AUTO_INCREMENT NOT NULL, domain_id INT DEFAULT 0 NOT NULL, type VARCHAR(50) DEFAULT \'\' NOT NULL COLLATE cp1251_general_ci, email VARCHAR(255) DEFAULT \'\' NOT NULL COLLATE cp1251_general_ci, UNIQUE INDEX id (id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = MyISAM COMMENT = \'\' ');
+/*        $this->addSql('CREATE TABLE tb_emails (id INT AUTO_INCREMENT NOT NULL, domain_id INT DEFAULT 0 NOT NULL, type VARCHAR(50) DEFAULT \'\' NOT NULL COLLATE cp1251_general_ci, email VARCHAR(255) DEFAULT \'\' NOT NULL COLLATE cp1251_general_ci, UNIQUE INDEX id (id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = MyISAM COMMENT = \'\' ');
         $this->addSql('CREATE TABLE tb_spam_fishing (id INT AUTO_INCREMENT NOT NULL, tb_spam_rules INT DEFAULT NULL, sender_host_name VARCHAR(255) DEFAULT NULL COLLATE utf8_general_ci, sender_helo_name VARCHAR(255) DEFAULT NULL COLLATE utf8_general_ci, sender_ident VARCHAR(255) DEFAULT NULL COLLATE utf8_general_ci, local_part VARCHAR(255) DEFAULT NULL COLLATE utf8_general_ci, sender_address_local_part VARCHAR(255) DEFAULT NULL COLLATE utf8_general_ci, UNIQUE INDEX sender_host_name (sender_host_name, sender_helo_name, sender_ident, local_part), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB COMMENT = \'\' ');
         $this->addSql('CREATE TABLE tb_spam_hits (id INT AUTO_INCREMENT NOT NULL, tb_spam_rules INT NOT NULL, time DATETIME DEFAULT CURRENT_TIMESTAMP, destination TEXT DEFAULT NULL COLLATE latin1_swedish_ci, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB COMMENT = \'\' ');
         $this->addSql('CREATE TABLE tb_spam_rules (id INT AUTO_INCREMENT NOT NULL, type VARCHAR(255) DEFAULT NULL COLLATE latin1_swedish_ci, conformity VARCHAR(255) DEFAULT NULL COLLATE latin1_swedish_ci, domain VARCHAR(512) DEFAULT NULL COLLATE latin1_swedish_ci, hit INT DEFAULT 0 NOT NULL, update_at DATETIME DEFAULT CURRENT_TIMESTAMP, INDEX type (type), INDEX domain (domain), INDEX conformity (conformity), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB COMMENT = \'\' ');
-        $this->addSql('DROP TABLE DEVICES');
+*/        $this->addSql('DROP TABLE DEVICES');
         $this->addSql('DROP TABLE GROUPS');
         $this->addSql('DROP TABLE SCALES');
         $this->addSql('DROP TABLE SCRIPT_ENGINES');
         $this->addSql('DROP TABLE DiscreetInfo');
         $this->addSql('DROP TABLE PARAMS');
         $this->addSql('ALTER TABLE settings DROP type');
-        $this->addSql('ALTER TABLE tb_domains CHANGE owner_id owner_id INT DEFAULT 0 NOT NULL, CHANGE domain domain VARCHAR(255) DEFAULT \'\' NOT NULL COLLATE cp1251_general_ci, CHANGE geoip geoip INT DEFAULT 0 NOT NULL');
+//        $this->addSql('ALTER TABLE tb_domains CHANGE owner_id owner_id INT DEFAULT 0 NOT NULL, CHANGE domain domain VARCHAR(255) DEFAULT \'\' NOT NULL COLLATE cp1251_general_ci, CHANGE geoip geoip INT DEFAULT 0 NOT NULL');
     }
 }

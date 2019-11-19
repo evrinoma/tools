@@ -22,7 +22,7 @@ final class Version20190828145514 extends AbstractMigration
         // this up() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
-        $this->addSql('ALTER TABLE mail_filter ADD pattern VARCHAR(255) NOT NULL, DROP ip');
+        $this->addSql('ALTER TABLE mail_filter ADD pattern VARCHAR(255) NOT NULL');
         $this->addSql('ALTER TABLE mail_spam_rule DROP FOREIGN KEY FK_BFD914521380D476');
         $this->addSql('ALTER TABLE mail_spam_rule DROP FOREIGN KEY FK_BFD91452C54C8C93');
         $this->addSql('ALTER TABLE mail_spam_rule CHANGE update_at update_at DATETIME DEFAULT \'0000-00-00 00:00:00\'');
@@ -35,7 +35,7 @@ final class Version20190828145514 extends AbstractMigration
         // this down() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
-        $this->addSql('ALTER TABLE mail_filter ADD ip TINYINT(1) NOT NULL, DROP pattern');
+        $this->addSql('ALTER TABLE mail_filter DROP pattern');
         $this->addSql('ALTER TABLE mail_spam_rule DROP FOREIGN KEY FK_BFD91452C54C8C93');
         $this->addSql('ALTER TABLE mail_spam_rule DROP FOREIGN KEY FK_BFD914521380D476');
         $this->addSql('ALTER TABLE mail_spam_rule CHANGE update_at update_at DATETIME DEFAULT \'0000-00-00 00:00:00\'');

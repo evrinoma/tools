@@ -21,7 +21,7 @@ final class Version20190827152251 extends AbstractMigration
         $this->addSql('CREATE TABLE mail_filter (id INT AUTO_INCREMENT NOT NULL, type VARCHAR(255) DEFAULT NULL, active VARCHAR(255) NOT NULL, INDEX type (type), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci ENGINE = InnoDB');
         $this->addSql('CREATE TABLE mail_spam_rule (id INT AUTO_INCREMENT NOT NULL, type_id INT DEFAULT NULL, conformity VARCHAR(255) DEFAULT NULL, domain VARCHAR(512) DEFAULT NULL, hit INT NOT NULL, update_at DATETIME DEFAULT \'0000-00-00 00:00:00\', active VARCHAR(255) NOT NULL, INDEX IDX_BFD91452C54C8C93 (type_id), INDEX domain (domain), INDEX conformity (conformity), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci ENGINE = InnoDB');
         $this->addSql('ALTER TABLE mail_spam_rule ADD CONSTRAINT FK_BFD91452C54C8C93 FOREIGN KEY (type_id) REFERENCES mail_filter (id)');
-        $this->addSql('ALTER TABLE tb_spam_rules CHANGE hit hit INT NOT NULL');
+#        $this->addSql('ALTER TABLE tb_spam_rules CHANGE hit hit INT NOT NULL');
     }
 
     public function down(Schema $schema): void
@@ -32,7 +32,7 @@ final class Version20190827152251 extends AbstractMigration
         $this->addSql('ALTER TABLE mail_spam_rule DROP FOREIGN KEY FK_BFD91452C54C8C93');
         $this->addSql('DROP TABLE mail_filter');
         $this->addSql('DROP TABLE mail_spam_rule');
-        $this->addSql('ALTER TABLE tb_spam_rules CHANGE hit hit INT DEFAULT 0 NOT NULL');
+#        $this->addSql('ALTER TABLE tb_spam_rules CHANGE hit hit INT DEFAULT 0 NOT NULL');
     }
 //endregion Public
 
