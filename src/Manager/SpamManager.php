@@ -69,7 +69,7 @@ class SpamManager extends AbstractEntityManager
                     $conformity = $conformists[$value->getConformity()];
                 }
             } else {
-                $valueConformity = substr($value->getType(), $pos, strlen($value->getType()));
+                $valueConformity = substr($value->getConformity(), strlen('disable_'));
                 if (!array_key_exists($valueConformity, $conformists)) {
                     $conformity = new Conformity();
                     $conformity->setType($valueConformity);
@@ -86,7 +86,14 @@ class SpamManager extends AbstractEntityManager
             if ($pos === false) {
                 if (!array_key_exists($value->getType(), $types)) {
                     $type = new Filter();
-                    $type->setType($value->getType());
+                    $valueType = $value->getType();
+                    $type->setType($valueType);
+                    if ($valueType === 'Range') {
+                        $type->setPattern(Filter::FILTER_IP);
+                    }
+                    if ($valueType === 'name') {
+                        $type->setPattern(Filter::FILTER_BURN);
+                    }
                     $types[$value->getType()] = $type;
                     $this->entityManager->persist($type);
                 } else {
@@ -97,6 +104,12 @@ class SpamManager extends AbstractEntityManager
                 if (!array_key_exists($valueType, $types)) {
                     $type = new Filter();
                     $type->setType($valueType);
+                    if ($valueType === 'Range') {
+                        $type->setPattern(Filter::FILTER_IP);
+                    }
+                    if ($valueType === 'name') {
+                        $type->setPattern(Filter::FILTER_BURN);
+                    }
                     $types[$valueType] = $type;
                     $this->entityManager->persist($type);
                 } else {
@@ -105,7 +118,6 @@ class SpamManager extends AbstractEntityManager
 
                 $spamRule->setActiveToBlocked();
             }
-
 
             $spamRule
                 ->setType($type)

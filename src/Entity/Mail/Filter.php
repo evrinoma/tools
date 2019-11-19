@@ -24,6 +24,8 @@ class Filter
     use ClassEntityTrait;
     use ActiveTrait;
 
+    public const FILTER_BURN = 'burn';
+    public const FILTER_IP = 'ip';
 //region SECTION: Fields
     /**
      * @var int
@@ -56,7 +58,7 @@ class Filter
      */
     public function isPatternBurn(): bool
     {
-        return $this->pattern === 'burn';
+        return $this->pattern === self::FILTER_BURN;
     }
 
     /**
@@ -64,7 +66,7 @@ class Filter
      */
     public function isPatternIP(): bool
     {
-        return $this->pattern === 'ip';
+        return $this->pattern === self::FILTER_IP;
     }
 
     /**
@@ -94,11 +96,11 @@ class Filter
     }
 
     /**
-     * @param bool $pattern
+     * @param string $pattern
      *
      * @return Filter
      */
-    public function setPattern(bool $pattern)
+    public function setPattern($pattern)
     {
         $this->pattern = $pattern;
 
