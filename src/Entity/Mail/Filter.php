@@ -47,7 +47,7 @@ class Filter
      *
      * @ORM\Column(name="pattern", type="string")
      */
-    private $pattern;
+    private $pattern = '';
 //endregion Fields
 
 //region SECTION: Public
