@@ -524,7 +524,7 @@ class ApiController extends AbstractController
      * @Rest\Get("/internal/live_video/streaming_engine", name="api_live_video_streaming_engine")
      * @SWG\Get(tags={"live_video"})
      * @SWG\Response(response=200,description="Returns class acl entity")
-     * @TODO Host and Appliaction
+     * @TODO Host and Applications
      * @param LiveVideoManager $liveVideoManager
      *
      * @return \Symfony\Component\HttpFoundation\JsonResponse
@@ -532,7 +532,7 @@ class ApiController extends AbstractController
     public function liveVideoWowzaStreamingEngineAction(LiveVideoManager $liveVideoManager)
     {
         $appliaction = 'live';
-        $host = 'http://172.16.45.5:1935/';
+        $host = 'http://cam.ite-ng.ru:1935/';
         $list = 'playlist.m3u8';
         
         return $this->json(['host' => $host.$appliaction, 'list' => $list], $liveVideoManager->setRestSuccessOk()->getRestStatus());
