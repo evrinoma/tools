@@ -45,3 +45,5 @@ http://localhost/internal/spam/import
 
 UPDATE `tools`.`mail_filter` SET `pattern` = 'ip' WHERE `mail_filter`.`type` = 'Range';
 UPDATE `tools`.`mail_filter` SET `pattern` = 'burn' WHERE `mail_filter`.`type` = 'name';
+
+mysql -u root -p tools < sql/exim.sql 
