@@ -47,3 +47,6 @@ UPDATE `tools`.`mail_filter` SET `pattern` = 'ip' WHERE `mail_filter`.`type` = '
 UPDATE `tools`.`mail_filter` SET `pattern` = 'burn' WHERE `mail_filter`.`type` = 'name';
 
 mysql -u root -p tools < sql/exim.sql 
+
+wowza
+ln -s ../../assets/js/components/Wowza/wowzaplayer.min.js public/video/
