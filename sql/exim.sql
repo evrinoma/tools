@@ -60,22 +60,6 @@ CREATE TABLE IF NOT EXISTS `relaytofrom` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tb_spam_fishing`
---
-
-CREATE TABLE IF NOT EXISTS `tb_spam_fishing` (
-  `id` int(11) NOT NULL,
-  `tb_spam_rules` int(11) DEFAULT NULL,
-  `sender_host_name` varchar(255) DEFAULT NULL,
-  `sender_helo_name` varchar(255) DEFAULT NULL,
-  `sender_ident` varchar(255) DEFAULT NULL,
-  `local_part` varchar(255) DEFAULT NULL,
-  `sender_address_local_part` varchar(255) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `tb_spam_hits`
 --
 
@@ -103,12 +87,6 @@ ALTER TABLE `relaytofrom`
   ADD KEY `rcpt_to` (`rcpt_to`(20));
 
 --
--- Indexes for table `tb_spam_fishing`
---
-ALTER TABLE `tb_spam_fishing`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `sender_host_name` (`sender_host_name`,`sender_helo_name`,`sender_ident`,`local_part`);
-
 --
 -- Indexes for table `tb_spam_hits`
 --
@@ -124,12 +102,6 @@ ALTER TABLE `tb_spam_hits`
 --
 ALTER TABLE `relaytofrom`
   MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT for table `tb_spam_fishing`
---
-ALTER TABLE `tb_spam_fishing`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
---
 -- AUTO_INCREMENT for table `tb_spam_hits`
 --
 ALTER TABLE `tb_spam_hits`
