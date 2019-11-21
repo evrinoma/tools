@@ -2,7 +2,8 @@
 USER=$1
 USERMAIL=$2
 PASS=$3
-if [ -d "$USER" ] && [ -d "$USERMAIL" ] && [ -d "$PASS" ]; then
+echo $USER $USERMAIL $PASS
+if [ ! -z "$USER" ] && [ ! -z "$USERMAIL" ] && [ ! -z "$PASS" ]; then
 	php bin/console fos:user:create $USER $USERMAIL $PASS
 	php bin/console fos:user:promote $USER ROLE_VIDEO
 	php bin/console fos:user:promote $USER ROLE_ISHIM_VIDEO
