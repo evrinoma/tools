@@ -1,52 +1,95 @@
 # tools
+What is it
 
-create file .env
-touch ./env
-DATABASE_URL=mysql://tools:tools@mysql.localhost:3306/tools
-DATABASE_DELTA_URL=mssql://user:pass@mssql.localhost\\DCSRV01:1433
-DATABASE_DELTA_DATA_URL=mssql://user:pass@mssql.localhost\\DCSRV01:1433/TAZOVSKIY_DATA
+It is SPA web project base on framework Symfony 4 (engine php7.2) to control exim mail system. 
+The system allows for manage gray listing, domain control, search in system logs, also system support Active Directory Integration and other fiches.
 
-composer install
+scheme how it's work
+
+![Alt text](readme/howis.jpg?raw=true "How is work")
+
+The mysql and exim deployment you can found here https://github.com/evrinoma/docker.git
+
+@Todo 
+Docker Example
 
 <h4>How to install</h4>
-/**<br>
+
+Just clone branch main repository 
+
+<b>git clone https://github.com/evrinoma/tools.git</b>
+
+create .env configuration file by command
+
+<b>touch .env</b>
+
+configure your SQL connect by setting environments
+DATABASE_URL=mysql://tools:tools@mysql.dockerMySqlHost:3306/tools
+DATABASE_DELTA_URL=mssql://user:pass@mssql.dockerMsSqlHost\\DCSRV01:1433
+DATABASE_DELTA_DATA_URL=mssql://user:pass@mssql.dockerMsSqlHost\\DCSRV01:1433/TAZOVSKIY_DATA
+
+Install PHP 7.2 or higher and all needed PHP extensions. Also you have to installed Composer.
+Next you should to make Composer install the project's dependencies into vendor by command
+<b>composer install</b>
+
+if you are trying to use wowza integration design than don't forget to create symlink 
+<b>ln -s ../../assets/js/components/Wowza/wowzaplayer.min.js public/video/</b>
+
+Now run in a terminal window to add webpack to our local project and resolve all dependencies
+
+<b>yarn</b>
+
  * yarn add webpack 
  * yarn add webpack-cli 
- * yarn add babel-preset-es2015 --dev<br>
- * yarn add vuetable-2 --dev<br>
- * yarn add css-loader<br>
- */<br>
-yarn
+ * yarn add babel-preset-es2015 --dev
+ * yarn add vuetable-2 --dev
+ * yarn add css-loader
 
-webpack --env=dev && chown -R apache.apache .
+Next you should to build our frontend part, just running in a terminal window
+<br>
+<br>for develop mode <b>webpack --env=dev</b>
+<br>for production mode <b>webpack --env=prod</b>
+<br>Change the permissions for your project folder <b>chown -R apache.apache .</b>
 
-<h4>create datavase</h4>
-create empty DB by command
-init.install passValue
-php bin/console d:m:mi
+Now, you're ready to configure database and your website works
+
+<h4>create database</h4>
+If you are using myDocker deploy than you should initialize database. Just connect to docker mysql and run command
+<br><b>create.user passValue</b>
+<br>where - passValue - root user password
+<br>Now connect to docker php72.tools container and run command
+<br><b>init.install passValue</b>
+You've created database and database user  
+
+And last operation is running database migrations. That defines how to modify our database
+<br><b>php bin/console d:m:mi</b>
 
 <h4>create user</h4>
-php bin/console fos:user:create user user@my.email pass --super-admin
-login
-<h4>generate menu</h4>
-http://localhost/api/doc/internal
-create menu /internal/menu/create_default
+if you wanted to create a user with username user with email user@my.email and password pass, you would run the command as follows.
+<br><b>php bin/console fos:user:create user user@my.email pass --super-admin</b>
 
 <h4>Load fixtures</h4>
-php bin/console doctrine:fixtures:load --group=DeltaFixtures --append
-php bin/console doctrine:fixtures:load --group=SettingsFixtures --append
-php bin/console doctrine:fixtures:load --group=SearchManagerFixtures --append
-php bin/console doctrine:fixtures:load --group=LiveCamFixtures --append
+Open a command console, enter your project directory and run the following commands. Once our data fixtures have been written be careful without --append option command removing all data from every table
+<br><b>php bin/console doctrine:fixtures:load --group=DeltaFixtures --append</b>
+<br><b>php bin/console doctrine:fixtures:load --group=SettingsFixtures --append</b>
+<br><b>php bin/console doctrine:fixtures:load --group=SearchManagerFixtures --append</b>
+<br><b>php bin/console doctrine:fixtures:load --group=LiveCamFixtures --append</b>
 
 
-http://localhost/internal/domain/import
-http://localhost/internal/acl/import
-http://localhost/internal/spam/import
+Now make a menu for that please Login and goto rest Api by next link
+http://localToolsHost/api/doc/internal
+looking for method PUT in section menu and run execute ("/internal/menu/create_default")
+![Alt text](readme/menu.png?raw=true "Api Menu Page")
 
-UPDATE `tools`.`mail_filter` SET `pattern` = 'ip' WHERE `mail_filter`.`type` = 'Range';
-UPDATE `tools`.`mail_filter` SET `pattern` = 'burn' WHERE `mail_filter`.`type` = 'name';
+if you're have a latest tools engine version, than run import data by Integration Api.
+http://localToolsHost/internal/domain/import
+http://localToolsHost/internal/acl/import
+http://localToolsHost/internal/spam/import
 
+and finally create exim data structure
 mysql -u root -p tools < sql/exim.sql 
 
-wowza
-ln -s ../../assets/js/components/Wowza/wowzaplayer.min.js public/video/
+#what does it look like
+![Alt text](readme/aclMail.png?raw=true "Acl Mail Page")
+![Alt text](readme/mailDomain.png?raw=true "Domain Page")
+![Alt text](readme/mailLogs.png?raw=true "Log Search Page")
