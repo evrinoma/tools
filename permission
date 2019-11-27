@@ -4,11 +4,14 @@ USERMAIL=$2
 PASS=$3
 echo $USER $USERMAIL $PASS
 if [ ! -z "$USER" ] && [ ! -z "$USERMAIL" ] && [ ! -z "$PASS" ]; then
-	php bin/console fos:user:create $USER $USERMAIL $PASS
-	php bin/console fos:user:promote $USER ROLE_SUPER_ADMIN
-#	php bin/console fos:user:promote $USER ROLE_VIDEO
+#	php bin/console fos:user:create $USER $USERMAIL $PASS
+#	php bin/console fos:user:promote $USER ROLE_SUPER_ADMIN
+	php bin/console fos:user:promote $USER ROLE_USER
+	php bin/console fos:user:promote $USER ROLE_VIDEO
 #	php bin/console fos:user:promote $USER ROLE_VIDEO_ALL
 #	php bin/console fos:user:promote $USER ROLE_VIDEO_CONTROL
 #	php bin/console fos:user:promote $USER ROLE_ISHIM_VIDEO
 #	php bin/console fos:user:promote $USER ROLE_TOBOLSK_VIDEO
+	php bin/console fos:user:promote $USER ROLE_IPARK_VIDEO
+	php bin/console fos:user:promote $USER ROLE_KZKT_VIDEO
 fi
