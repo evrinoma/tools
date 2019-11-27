@@ -11,6 +11,7 @@ namespace App\Dto;
 use App\Annotation\Dto;
 use App\Entity\Mail\Acl;
 use App\Entity\Model\ActiveTrait;
+use App\Entity\Model\MailTrait;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -21,6 +22,7 @@ use Symfony\Component\HttpFoundation\Request;
 class AclDto extends AbstractFactoryDto
 {
     use ActiveTrait;
+    use MailTrait;
 
 //region SECTION: Fields
     private $id;
@@ -69,14 +71,6 @@ class AclDto extends AbstractFactoryDto
             ->setDomain($this->getDomain()->generatorEntity()->current());
 
         return $entity;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function isEmail()
-    {
-        return mb_strpos($this->email, '*@') === false;
     }
 
     /**

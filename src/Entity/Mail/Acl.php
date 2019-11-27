@@ -5,6 +5,7 @@ namespace App\Entity\Mail;
 use App\Entity\Model\AclModel;
 use App\Entity\Model\ActiveTrait;
 use App\Entity\Model\ClassEntityTrait;
+use App\Entity\Model\MailTrait;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation\Exclude;
 use JMS\Serializer\Annotation\Type;
@@ -20,6 +21,7 @@ class Acl
 {
     use ClassEntityTrait;
     use ActiveTrait;
+    use MailTrait;
 
 //region SECTION: Fields
     /**
@@ -53,16 +55,7 @@ class Acl
     private $domain;
 //endregion Fields
 
-//region SECTION: Getters/Setters
-    /**
-     * @VirtualProperty
-     * @return int
-     */
-    public function getId(): int
-    {
-        return $this->id;
-    }
-
+//region SECTION: Public
     /**
      * @return bool
      */
@@ -77,6 +70,18 @@ class Acl
     public function isBlack()
     {
         return $this->type === AclModel::BLACK;
+    }
+
+//endregion Public
+
+//region SECTION: Getters/Setters
+    /**
+     * @VirtualProperty
+     * @return int
+     */
+    public function getId(): int
+    {
+        return $this->id;
     }
 
     /**

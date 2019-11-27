@@ -29,6 +29,7 @@ use Doctrine\ORM\EntityManagerInterface;
 class AclManager extends AbstractEntityManager
 {
     use RestTrait;
+
 //region SECTION: Fields
     /**
      * @var string
@@ -91,7 +92,22 @@ class AclManager extends AbstractEntityManager
         if ($aclDto->isValidEmail()) {
             $entity = $this->repository->setDto($aclDto)->findAcl();
             $aclDto->setEntitys($entity);
-            if (!$aclDto->getId() && count($entity)) {
+
+            $recordExist = false;
+            if (!$aclDto->getId() && $aclDto->isEmail() && count($entity)) {
+                if (count($entity) === 1) {
+                    $item = current($entity);
+                    if (!$item->isEmail() && $item->isBlack()) {
+                        $recordExist = false;
+                    } else {
+                        $recordExist = true;
+                    }
+                } else {
+                    $recordExist = true;
+                }
+            }
+
+            if ($recordExist) {
                 $this->setRestClientErrorBadRequest();
                 $entity = 'уже существует';
             } else {
