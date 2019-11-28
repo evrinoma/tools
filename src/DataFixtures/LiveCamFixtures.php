@@ -355,7 +355,7 @@ class LiveCamFixtures extends AbstractFixtures
         $group
             ->setAlias('live_kzkt45')
             ->setName('Курганский завод комплексных технологий')
-            ->setMaxColumn(4);
+            ->setMaxColumn(3);
 
         $manager->persist($group);
 
@@ -432,6 +432,7 @@ class LiveCamFixtures extends AbstractFixtures
             ->setPassword('rehufy2014')
             ->setTitle('3 пролет восточная сторона')
             ->setStream('cam_172.16.39.39_LQ.stream')
+            ->setControl(true)
             ->setType($this->hikvisionType)
             ->setGroup($group);
         $manager->persist($camFourteen);
@@ -444,6 +445,7 @@ class LiveCamFixtures extends AbstractFixtures
             ->setPassword('rehufy2014')
             ->setTitle('2 пролет восточная сторона')
             ->setStream('cam_172.16.39.40_LQ.stream')
+            ->setControl(true)
             ->setType($this->hikvisionType)
             ->setGroup($group);
         $manager->persist($camFourteen);
