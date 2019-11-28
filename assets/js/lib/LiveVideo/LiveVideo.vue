@@ -13,9 +13,8 @@
                                         <template v-if="cam.stream !== undefined">
                                             <td class="camera" :identity="cam.id" :class="item.resolution">
                                                 <div class="name" :udapte="update" :class="shows[cam.id].hidden === true ? 'font_'+item.resolution+' hidden':'font_'+item.resolution">{{cam.title}}</div>
-                                                <!--<div class="name" :class="'font_'+item.resolution">{{cam.title}}</div>-->
                                                 <div class="liveWowza">
-                                                    <div :id="wowzaLink+cam.id" :class="item.resolution">{{loadStreamWowza(cam.id, cam.stream, cam.start_play)}}</div>
+                                                    <div :id="wowzaLink+cam.id" :class="item.resolution"></div>
                                                 </div>
                                             </td>
                                             <td class="splitter">
@@ -91,11 +90,11 @@
         components: {},
         data() {
             return {
-                apiUrlLive: window.location.origin+'/internal/live_video',
-                apiUrlGroupClass: window.location.origin+'/internal/live_video/class',
-                apiUrlWowzaStream: window.location.origin+'/internal/live_video/streaming_engine',
-                apiUrlControl: window.location.origin+'/internal/live_video/control',
-                apiUrlControlClass: window.location.origin+'/internal/live_video/control/class',
+                apiUrlLive: window.location.origin + '/internal/live_video',
+                apiUrlGroupClass: window.location.origin + '/internal/live_video/class',
+                apiUrlWowzaStream: window.location.origin + '/internal/live_video/streaming_engine',
+                apiUrlControl: window.location.origin + '/internal/live_video/control',
+                apiUrlControlClass: window.location.origin + '/internal/live_video/control/class',
                 group: null,
                 groupClass: null,
                 controlClass: null,
@@ -185,7 +184,7 @@
                                     if (row[count] === undefined) {
                                         row[count] = [];
                                     }
-                                    if(cam.control) {
+                                    if (cam.control) {
                                         cam.actions = self._getActions();
                                     }
                                     row[count].push(cam);
@@ -193,7 +192,7 @@
                                         count++;
                                     }
                                     self.shows[cam.id] = {id: cam.id, hidden: true};
-
+                                    self.loadStreamWowza(cam.id, cam.stream, cam.start_play);
                                 });
                                 while (mod !== (item.max_column - 1)) {
                                     row[count].push({});
@@ -203,23 +202,21 @@
                                 item.live_streams = row;
                             });
                             this.group = group;
-                        } else {
-                            this.doLoadLiveVideo();
                         }
                         break;
                     case 'group-load-class':
                         this.groupClass = response.data;
+                        this.doLoadLiveVideo();
                         break;
                     case 'control-load-class':
                         this.controlClass = response.data;
                         break;
                     case 'wowza-steam-engine':
                         this.steamEngine = response.data;
-                        this.doLoadLiveVideo();
                         break;
                     case 'wowza-load-stream':
-                        this.initWowzaPlayer(this.wowzaLink + query.id, query.stream, query.start_play);
                         this.shows[query.id].hidden = false;
+                        this.initWowzaPlayer(this.wowzaLink + query.id, query.stream, query.start_play);
                         this.update = !this.update;
                         break;
                     case 'wowza-error-stream':
