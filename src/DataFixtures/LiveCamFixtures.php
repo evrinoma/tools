@@ -432,7 +432,6 @@ class LiveCamFixtures extends AbstractFixtures
             ->setPassword('rehufy2014')
             ->setTitle('3 пролет восточная сторона')
             ->setStream('cam_172.16.39.39_LQ.stream')
-            ->setControl(true)
             ->setType($this->hikvisionType)
             ->setGroup($group);
         $manager->persist($camFourteen);
@@ -445,7 +444,6 @@ class LiveCamFixtures extends AbstractFixtures
             ->setPassword('rehufy2014')
             ->setTitle('2 пролет восточная сторона')
             ->setStream('cam_172.16.39.40_LQ.stream')
-            ->setControl(true)
             ->setType($this->hikvisionType)
             ->setGroup($group);
         $manager->persist($camFourteen);
