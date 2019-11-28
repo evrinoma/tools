@@ -20,8 +20,7 @@ Just clone branch main repository
 <b>git clone https://github.com/evrinoma/tools.git</b>
 
 create .env configuration file by command
-
-<b>touch .env</b>
+<br><b>cp .env.dist .env</b>
 
 configure your SQL connect by setting environments
 DATABASE_URL=mysql://tools:tools@mysql.dockerMySqlHost:3306/tools
@@ -30,10 +29,10 @@ DATABASE_DELTA_DATA_URL=mssql://user:pass@mssql.dockerMsSqlHost\\DCSRV01:1433/TA
 
 Install PHP 7.2 or higher and all needed PHP extensions. Also you have to installed Composer.
 Next you should to make Composer install the project's dependencies into vendor by command
-<b>composer install</b>
+<br><b>composer install</b>
 
 if you are trying to use wowza integration design than don't forget to create symlink 
-<b>ln -s ../../assets/js/components/Wowza/wowzaplayer.min.js public/video/</b>
+<br><b>ln -s ../../assets/js/components/Wowza/wowzaplayer.min.js public/video/</b>
 
 Now run in a terminal window to add webpack to our local project and resolve all dependencies
 
@@ -62,7 +61,7 @@ If you are using myDocker deploy than you should initialize database. Just conne
 You've created database and database user  
 
 And last operation is running database migrations. That defines how to modify our database
-<br><b>php bin/console d:m:mi</b>
+<br><b>php bin/console doctrine:migration:migrate</b>
 
 <h4>create user</h4>
 if you wanted to create a user with username user with email user@my.email and password pass, you would run the command as follows.
@@ -70,9 +69,10 @@ if you wanted to create a user with username user with email user@my.email and p
 
 <h4>Load fixtures</h4>
 Open a command console, enter your project directory and run the following commands. Once our data fixtures have been written be careful without --append option command removing all data from every table
-<br><b>php bin/console doctrine:fixtures:load --group=DeltaFixtures --append</b>
 <br><b>php bin/console doctrine:fixtures:load --group=SettingsFixtures --append</b>
 <br><b>php bin/console doctrine:fixtures:load --group=SearchManagerFixtures --append</b>
+additional fixtures
+<br><b>php bin/console doctrine:fixtures:load --group=DeltaFixtures --append</b>
 <br><b>php bin/console doctrine:fixtures:load --group=LiveCamFixtures --append</b>
 
 
