@@ -71,7 +71,7 @@ if you wanted to create a user with username user with email user@my.email and p
 Open a command console, enter your project directory and run the following commands. Once our data fixtures have been written be careful without --append option command removing all data from every table
 <br><b>php bin/console doctrine:fixtures:load --group=SettingsFixtures --append</b>
 <br><b>php bin/console doctrine:fixtures:load --group=SearchManagerFixtures --append</b>
-additional fixtures
+<br>additional fixtures
 <br><b>php bin/console doctrine:fixtures:load --group=DeltaFixtures --append</b>
 <br><b>php bin/console doctrine:fixtures:load --group=LiveCamFixtures --append</b>
 
@@ -82,9 +82,9 @@ looking for method PUT in section menu and run execute ("/internal/menu/create_d
 ![Alt text](readme/menu.png?raw=true "Api Menu Page")
 
 if you're have a latest tools engine version, than run import data by Integration Api.
-http://localToolsHost/internal/domain/import
-http://localToolsHost/internal/acl/import
-http://localToolsHost/internal/spam/import
+<br>http://localToolsHost/internal/domain/import
+<br>http://localToolsHost/internal/acl/import
+<br>http://localToolsHost/internal/spam/import
 
 and finally create exim data structure
 mysql -u root -p tools < sql/exim.sql 
