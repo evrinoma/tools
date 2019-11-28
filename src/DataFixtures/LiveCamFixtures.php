@@ -246,30 +246,6 @@ class LiveCamFixtures extends AbstractFixtures
             ->setGroup($group);
         $manager->persist($camFourteen);
 
-        $camFourteen = new Cam();
-        $camFourteen
-            ->setName('Fifteen')
-            ->setIp('172.16.39.39')
-            ->setUserName('admin')
-            ->setPassword('rehufy2014')
-            ->setTitle('3 пролет восточная сторона')
-            ->setStream('cam_172.16.39.39_LQ.stream')
-            ->setType($this->hikvisionType)
-            ->setGroup($group);
-        $manager->persist($camFourteen);
-
-        $camFourteen = new Cam();
-        $camFourteen
-            ->setName('Sixteen')
-            ->setIp('172.16.39.40')
-            ->setUserName('admin')
-            ->setPassword('rehufy2014')
-            ->setTitle('2 пролет восточная сторона')
-            ->setStream('cam_172.16.39.40_LQ.stream')
-            ->setType($this->hikvisionType)
-            ->setGroup($group);
-        $manager->persist($camFourteen);
-
         return $this;
     }
 
@@ -447,6 +423,30 @@ class LiveCamFixtures extends AbstractFixtures
             ->setType($this->hikvisionType)
             ->setGroup($group);
         $manager->persist($camFive);
+
+        $camFourteen = new Cam();
+        $camFourteen
+            ->setName('Six')
+            ->setIp('172.16.39.39')
+            ->setUserName('admin')
+            ->setPassword('rehufy2014')
+            ->setTitle('3 пролет восточная сторона')
+            ->setStream('cam_172.16.39.39_LQ.stream')
+            ->setType($this->hikvisionType)
+            ->setGroup($group);
+        $manager->persist($camFourteen);
+
+        $camFourteen = new Cam();
+        $camFourteen
+            ->setName('Seven')
+            ->setIp('172.16.39.40')
+            ->setUserName('admin')
+            ->setPassword('rehufy2014')
+            ->setTitle('2 пролет восточная сторона')
+            ->setStream('cam_172.16.39.40_LQ.stream')
+            ->setType($this->hikvisionType)
+            ->setGroup($group);
+        $manager->persist($camFourteen);
 
         return $this;
     }
