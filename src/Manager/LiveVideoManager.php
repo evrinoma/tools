@@ -12,6 +12,7 @@ use App\Core\AbstractEntityManager;
 use App\Dto\LiveVideoDto;
 use App\Entity\LiveVideo\Cam;
 use App\Entity\LiveVideo\Group;
+use App\Interfaces\RoleInterface;
 use App\Rest\Core\RestTrait;
 use Doctrine\ORM\EntityManagerInterface;
 
@@ -49,7 +50,7 @@ class LiveVideoManager extends AbstractEntityManager
 
     private function getRole()
     {
-        return ['ROLE_VIDEO_CONTROL'];
+        return [RoleInterface::ROLE_CONTROL_VIDEO];
     }
 //endregion Private
 

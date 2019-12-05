@@ -9,6 +9,7 @@
 namespace App\Manager;
 
 
+use App\Interfaces\RoleInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 /**
@@ -16,7 +17,7 @@ use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
  *
  * @package App\Manager
  */
-class VoterManager
+class VoterManager implements RoleInterface
 {
 //region SECTION: Fields
     /**
@@ -52,7 +53,7 @@ class VoterManager
 //region SECTION: Private
     private function isSuperAdmin(): bool
     {
-        return $this->security->isGranted(['ROLE_SUPER_ADMIN']) ? true : false;
+        return $this->security->isGranted([RoleInterface::ROLE_SUPER_ADMIN]) ? true : false;
     }
 //endregion Private
 }

@@ -8,6 +8,7 @@
 
 namespace App\Security;
 
+use App\Interfaces\RoleInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -259,7 +260,7 @@ class AuthenticatorGuard extends AbstractGuardAuthenticator
      */
     private function noNeedLdapAuthorize($user)
     {
-        return $user->hasRole('ROLE_NO_LDAP');
+        return $user->hasRole(RoleInterface::ROLE_NO_LDAP_USER);
     }
 //endregion Private
 

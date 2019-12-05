@@ -12,6 +12,7 @@ namespace App\DataFixtures;
 use App\Entity\LiveVideo\Cam;
 use App\Entity\LiveVideo\Group;
 use App\Entity\LiveVideo\Type;
+use App\Interfaces\RoleInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 
 /**
@@ -73,7 +74,8 @@ class LiveCamFixtures extends AbstractFixtures
         $group
             ->setAlias('live_ipark45')
             ->setName('Курганский Индустриальный парк')
-            ->setMaxColumn(5);
+            ->setMaxColumn(5)
+            ->addRole(RoleInterface::ROLE_IPARK_CONTROL_VIDEO);
 
         $manager->persist($group);
 
@@ -330,7 +332,8 @@ class LiveCamFixtures extends AbstractFixtures
         $group
             ->setAlias('live_ishim')
             ->setName('Ишим')
-            ->setMaxColumn(3);
+            ->setMaxColumn(3)
+            ->addRole(RoleInterface::ROLE_ISHIM_CONTROL_VIDEO);
 
         $manager->persist($group);
 
@@ -355,7 +358,8 @@ class LiveCamFixtures extends AbstractFixtures
         $group
             ->setAlias('live_kzkt45')
             ->setName('Курганский завод комплексных технологий')
-            ->setMaxColumn(3);
+            ->setMaxColumn(3)
+            ->addRole(RoleInterface::ROLE_KZKT_CONTROL_VIDEO);
 
         $manager->persist($group);
 
@@ -681,7 +685,8 @@ class LiveCamFixtures extends AbstractFixtures
         $group
             ->setAlias('live_tobolsk')
             ->setName('Тобольск')
-            ->setMaxColumn(3);
+            ->setMaxColumn(3)
+            ->addRole(RoleInterface::ROLE_ISHIM_CONTROL_VIDEO);
 
         $manager->persist($group);
 

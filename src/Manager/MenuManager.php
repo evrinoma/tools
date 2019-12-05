@@ -11,6 +11,7 @@ namespace App\Manager;
 
 use App\Core\AbstractEntityManager;
 use App\Entity\MenuItem;
+use App\Interfaces\RoleInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Menu\FactoryInterface;
 use Knp\Menu\ItemInterface;
@@ -86,7 +87,7 @@ class MenuManager extends AbstractEntityManager
     {
         $display = new MenuItem();
         $display
-            ->setRole(['ROLE_USER'])
+            ->setRole([RoleInterface::ROLE_USER])
             ->setName('Status')
             ->setRoute('core_status');
 
@@ -94,7 +95,7 @@ class MenuManager extends AbstractEntityManager
 
         $journal = new MenuItem();
         $journal
-            ->setRole(['ROLE_USER_DELTA8'])
+            ->setRole([RoleInterface::ROLE_USER_DELTA8])
             ->setName('Journal')
             ->setRoute('delta_journal');
 
@@ -102,7 +103,7 @@ class MenuManager extends AbstractEntityManager
 
         $journalRtt = new MenuItem();
         $journalRtt
-            ->setRole(['ROLE_USER_DELTA8'])
+            ->setRole([RoleInterface::ROLE_USER_DELTA8])
             ->setName('Rtt')
             ->setRoute('delta_rtt');
 
@@ -110,7 +111,7 @@ class MenuManager extends AbstractEntityManager
 
         $menuDelta = new MenuItem();
         $menuDelta
-            ->setRole(['ROLE_USER_DELTA8'])
+            ->setRole([RoleInterface::ROLE_USER_DELTA8])
             ->setName('Delta8')
             ->setUri('#')
             ->addChild($journal)
@@ -121,7 +122,7 @@ class MenuManager extends AbstractEntityManager
 
         $logout = new MenuItem();
         $logout
-            ->setRole(['ROLE_USER'])
+            ->setRole([RoleInterface::ROLE_USER])
             ->setName('Logout')
             ->setRoute('fos_user_security_logout')
             ->setAttributes(['class' => 'logout']);
@@ -129,21 +130,21 @@ class MenuManager extends AbstractEntityManager
 
         $apiDocDefault = new MenuItem();
         $apiDocDefault
-            ->setRole(['ROLE_SUPER_ADMIN', 'ROLE_API'])
+            ->setRole([RoleInterface::ROLE_SUPER_ADMIN, RoleInterface::ROLE_API])
             ->setName('Default')
             ->setRoute('app.swagger_ui');
         $this->entityManager->persist($apiDocDefault);
 
         $apiDocInternal = new MenuItem();
         $apiDocInternal
-            ->setRole(['ROLE_SUPER_ADMIN'])
+            ->setRole([RoleInterface::ROLE_SUPER_ADMIN])
             ->setName('Internal')
             ->setRoute('app.swagger_ui.internal');
         $this->entityManager->persist($apiDocInternal);
 
         $apiDoc = new MenuItem();
         $apiDoc
-            ->setRole(['ROLE_SUPER_ADMIN', 'ROLE_API'])
+            ->setRole([RoleInterface::ROLE_SUPER_ADMIN, RoleInterface::ROLE_API])
             ->setName('ApiDoc')
             ->setUri('#')
             ->addChild($apiDocDefault)
@@ -153,7 +154,7 @@ class MenuManager extends AbstractEntityManager
 
         $mailSearch = new MenuItem();
         $mailSearch
-            ->setRole(['ROLE_SUPER_ADMIN'])
+            ->setRole([RoleInterface::ROLE_SUPER_ADMIN])
             ->setName('Log Search')
             ->setRoute('mail_search');
 
@@ -161,7 +162,7 @@ class MenuManager extends AbstractEntityManager
 
         $mailDomain = new MenuItem();
         $mailDomain
-            ->setRole(['ROLE_SUPER_ADMIN'])
+            ->setRole([RoleInterface::ROLE_SUPER_ADMIN])
             ->setName('Edit Domain')
             ->setRoute('mail_domain');
 
@@ -169,7 +170,7 @@ class MenuManager extends AbstractEntityManager
 
         $mailAcl = new MenuItem();
         $mailAcl
-            ->setRole(['ROLE_SUPER_ADMIN'])
+            ->setRole([RoleInterface::ROLE_SUPER_ADMIN])
             ->setName('Edit ACL')
             ->setRoute('mail_acl');
 
@@ -177,7 +178,7 @@ class MenuManager extends AbstractEntityManager
 
         $mail = new MenuItem();
         $mail
-            ->setRole(['ROLE_SUPER_ADMIN'])
+            ->setRole([RoleInterface::ROLE_SUPER_ADMIN])
             ->setName('Mail')
             ->setUri('#')
             ->addChild($mailSearch)
@@ -189,7 +190,7 @@ class MenuManager extends AbstractEntityManager
 
         $iparkVideo = new MenuItem();
         $iparkVideo
-            ->setRole(['ROLE_SUPER_ADMIN', 'ROLE_IPARK_VIDEO', 'ROLE_VIDEO_ALL'])
+            ->setRole([RoleInterface::ROLE_SUPER_ADMIN, RoleInterface::ROLE_IPARK_VIDEO, RoleInterface::ROLE_VIDEO_ALL])
             ->setName('ipark45')
             ->setRoute('live_ipark45');
 
@@ -197,7 +198,7 @@ class MenuManager extends AbstractEntityManager
 
         $kzktVideo = new MenuItem();
         $kzktVideo
-            ->setRole(['ROLE_SUPER_ADMIN', 'ROLE_KZKT_VIDEO', 'ROLE_VIDEO_ALL'])
+            ->setRole([RoleInterface::ROLE_SUPER_ADMIN, RoleInterface::ROLE_KZKT_VIDEO, RoleInterface::ROLE_VIDEO_ALL])
             ->setName('kzkt45')
             ->setRoute('live_kzkt45');
 
@@ -205,7 +206,7 @@ class MenuManager extends AbstractEntityManager
 
         $ishimVideo = new MenuItem();
         $ishimVideo
-            ->setRole(['ROLE_SUPER_ADMIN', 'ROLE_ISHIM_VIDEO', 'ROLE_VIDEO_ALL'])
+            ->setRole([RoleInterface::ROLE_SUPER_ADMIN, RoleInterface::ROLE_ISHIM_VIDEO, RoleInterface::ROLE_VIDEO_ALL])
             ->setName('Ишим')
             ->setRoute('live_ishim');
 
@@ -213,7 +214,7 @@ class MenuManager extends AbstractEntityManager
 
         $tobolskVideo = new MenuItem();
         $tobolskVideo
-            ->setRole(['ROLE_SUPER_ADMIN', 'ROLE_TOBOLSK_VIDEO', 'ROLE_VIDEO_ALL'])
+            ->setRole([RoleInterface::ROLE_SUPER_ADMIN, RoleInterface::ROLE_TOBOLSK_VIDEO, RoleInterface::ROLE_VIDEO_ALL])
             ->setName('Тобольск')
             ->setRoute('live_tobolsk');
 
@@ -221,7 +222,7 @@ class MenuManager extends AbstractEntityManager
 
         $video = new MenuItem();
         $video
-            ->setRole(['ROLE_SUPER_ADMIN', 'ROLE_VIDEO', 'ROLE_VIDEO_ALL'])
+            ->setRole([RoleInterface::ROLE_SUPER_ADMIN, RoleInterface::ROLE_VIDEO, RoleInterface::ROLE_VIDEO_ALL])
             ->setName('Live Cam')
             ->setUri('#')
             ->addChild($iparkVideo)

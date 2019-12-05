@@ -9,6 +9,7 @@
 namespace App\Entity\LiveVideo;
 
 use App\Entity\Model\ActiveTrait;
+use App\Entity\Model\RoleTrait;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation\Groups;
 
@@ -21,7 +22,7 @@ use JMS\Serializer\Annotation\Groups;
  */
 class Group
 {
-    use ActiveTrait;
+    use ActiveTrait, RoleTrait;
 
 //region SECTION: Fields
     /**

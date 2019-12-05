@@ -9,6 +9,7 @@
 namespace App\Entity;
 
 use App\Entity\Model\RelationTrait;
+use App\Entity\Model\RoleTrait;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -22,7 +23,7 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class MenuItem
 {
-    use RelationTrait;
+    use RelationTrait, RoleTrait;
 
 //region SECTION: Fields
     /**
@@ -118,13 +119,6 @@ class MenuItem
         return $this->attributes ? ['attributes' => $this->attributes] : null;
     }
 
-    /**
-     * @return array|null
-     */
-    public function getRole(): ?array
-    {
-        return $this->role;
-    }
 
     public function getOptions()
     {
@@ -187,18 +181,6 @@ class MenuItem
     public function setAttributes($attributes): self
     {
         $this->attributes = $attributes;
-
-        return $this;
-    }
-
-    /**
-     * @param array $role
-     *
-     * @return MenuItem
-     */
-    public function setRole($role): self
-    {
-        $this->role = $role;
 
         return $this;
     }
