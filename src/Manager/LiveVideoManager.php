@@ -43,14 +43,14 @@ class LiveVideoManager extends AbstractEntityManager
 //endregion Constructor
 
 //region SECTION: Private
-    private function checkVoiter()
+    private function checkVoiter($role)
     {
-        return $this->voterManager->checkPermission($this->getRole());
+        return $this->voterManager->checkPermission($role);
     }
 
     private function getRole()
     {
-        return [RoleInterface::ROLE_CONTROL_VIDEO];
+        return RoleInterface::ROLE_CONTROL_VIDEO_MIXED;
     }
 //endregion Private
 
@@ -151,9 +151,10 @@ class LiveVideoManager extends AbstractEntityManager
      */
     public function setData($data)
     {
-        if (!$this->checkVoiter()) {
-            /** @var Group $item */
-            foreach ($data as $item) {
+
+        /** @var Group $item */
+        foreach ($data as $item) {
+            if (!$this->checkVoiter($item->getRole())) {
                 /** @var Cam $camera */
                 foreach ($item->getLiveStreams() as $camera) {
                     $camera->setControl(false);

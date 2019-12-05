@@ -75,7 +75,8 @@ class LiveCamFixtures extends AbstractFixtures
             ->setAlias('live_ipark45')
             ->setName('Курганский Индустриальный парк')
             ->setMaxColumn(5)
-            ->addRole(RoleInterface::ROLE_IPARK_CONTROL_VIDEO);
+            ->addRole(RoleInterface::ROLE_IPARK_CONTROL_VIDEO)
+            ->addRole(RoleInterface::ROLE_CONTROL_VIDEO_ALL);
 
         $manager->persist($group);
 
@@ -333,7 +334,8 @@ class LiveCamFixtures extends AbstractFixtures
             ->setAlias('live_ishim')
             ->setName('Ишим')
             ->setMaxColumn(3)
-            ->addRole(RoleInterface::ROLE_ISHIM_CONTROL_VIDEO);
+            ->addRole(RoleInterface::ROLE_ISHIM_CONTROL_VIDEO)
+            ->addRole(RoleInterface::ROLE_CONTROL_VIDEO_ALL);
 
         $manager->persist($group);
 
@@ -359,7 +361,8 @@ class LiveCamFixtures extends AbstractFixtures
             ->setAlias('live_kzkt45')
             ->setName('Курганский завод комплексных технологий')
             ->setMaxColumn(3)
-            ->addRole(RoleInterface::ROLE_KZKT_CONTROL_VIDEO);
+            ->addRole(RoleInterface::ROLE_KZKT_CONTROL_VIDEO)
+            ->addRole(RoleInterface::ROLE_CONTROL_VIDEO_ALL);
 
         $manager->persist($group);
 
@@ -686,7 +689,8 @@ class LiveCamFixtures extends AbstractFixtures
             ->setAlias('live_tobolsk')
             ->setName('Тобольск')
             ->setMaxColumn(3)
-            ->addRole(RoleInterface::ROLE_ISHIM_CONTROL_VIDEO);
+            ->addRole(RoleInterface::ROLE_ISHIM_CONTROL_VIDEO)
+            ->addRole(RoleInterface::ROLE_CONTROL_VIDEO_ALL);
 
         $manager->persist($group);
 

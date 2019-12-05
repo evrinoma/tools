@@ -29,10 +29,19 @@ interface RoleInterface
     public const ROLE_IPARK_VIDEO = 'ROLE_IPARK_VIDEO';
     public const ROLE_TOBOLSK_VIDEO = 'ROLE_TOBOLSK_VIDEO';
 
-    public const ROLE_CONTROL_VIDEO = 'ROLE_CONTROL_VIDEO';
+    public const ROLE_CONTROL_VIDEO_ALL = 'ROLE_CONTROL_VIDEO_ALL';
     public const ROLE_KZKT_CONTROL_VIDEO = 'ROLE_KZKT_CONTROL_VIDEO';
     public const ROLE_ISHIM_CONTROL_VIDEO = 'ROLE_ISHIM_CONTROL_VIDEO';
     public const ROLE_IPARK_CONTROL_VIDEO = 'ROLE_IPARK_CONTROL_VIDEO';
+
     public const ROLE_TOBOLSK_CONTROL_VIDEO = 'ROLE_TOBOLSK_CONTROL_VIDEO';
+
+    public const ROLE_CONTROL_VIDEO_MIXED = [
+        self::ROLE_CONTROL_VIDEO_ALL,
+        self::ROLE_KZKT_CONTROL_VIDEO,
+        self::ROLE_ISHIM_CONTROL_VIDEO,
+        self::ROLE_IPARK_CONTROL_VIDEO,
+        self::ROLE_TOBOLSK_CONTROL_VIDEO,
+    ];
 //endregion Fields
 }
