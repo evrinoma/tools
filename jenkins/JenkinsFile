@@ -4,7 +4,7 @@ node {
         def gitHeadLocal = ''
         def gitHeadRemote = ''
         def remote = [:]
-        remote.name = 'backup'
+        remote.name = 'tools'
         remote.host = '172.16.45.5'
         remote.user = 'root'
         remote.port = 12000
