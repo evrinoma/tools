@@ -30,6 +30,8 @@ class ContactManager
      */
     public function getContact($user): ?QrCodeResponse
     {
+        opcache_reset();
+        apcu_clear_cache();
         $vcard = $user->getVCard();
         if ($vcard) {
             $qrCode = new QrCode();

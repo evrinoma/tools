@@ -69,6 +69,22 @@ class RouteController extends AbstractController
     }
 
     /**
+     * титуальная страница
+     *
+     * @Route("/clear_cache", name="core_clear_cache")
+     * @Template("base.html.twig")
+     *
+     * @return array
+     */
+    public function clearCache()
+    {
+        opcache_reset();
+        apcu_clear_cache();
+
+        return [];
+    }
+
+    /**
      * @Route("/", name="encore_display")
      * @Template("encore/show.html.twig")
      *
