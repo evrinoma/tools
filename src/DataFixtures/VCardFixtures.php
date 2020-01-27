@@ -28,20 +28,20 @@ class VCardFixtures extends AbstractFixtures
      */
     public function load(ObjectManager $manager)
     {
-        $user = $manager->find(User::class, 1);
+        $user = $manager->find(User::class, 16);
         /** @var User $user */
         if ($user) {
             $vCard = new ContactDto();
             $vCard
-                ->setFirstName('')
-                ->setLastName('')
-                ->setPosition('')
-                ->setComapanyName('')
-                ->setTelWork('')
-                ->setTelWorkDop('')
-                ->setTelMobile('')
-                ->setEmail('')
-                ->setUrl('');
+                ->setFirstName('Вадим')
+                ->setLastName('Гришанов Владимирович')
+                ->setPosition('заместитель главного инженера по информационным технологиям')
+                ->setComapanyName('АО Интертехэлектро')
+                ->setTelWork('+74956444430')
+                ->setTelWorkDop('3813')
+                ->setTelMobile('+79261883881')
+                ->setEmail('grishvv@ite-ng.ru')
+                ->setUrl('www.ite-ng.ru');
             $user->setContact($vCard);
 
             $manager->flush();

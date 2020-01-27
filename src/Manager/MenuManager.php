@@ -232,6 +232,14 @@ class MenuManager extends AbstractEntityManager
 
         $this->entityManager->persist($video);
 
+        $contact = new MenuItem();
+        $contact
+            ->setRole([RoleInterface::ROLE_USER])
+            ->setName('Contact')
+            ->setRoute('core_contact');
+
+        $this->entityManager->persist($contact);
+
         $this->entityManager->flush();
     }
 //endregion Public
