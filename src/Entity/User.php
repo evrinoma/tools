@@ -36,6 +36,13 @@ class User extends BaseUser
      */
     private $plain;
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="contact", type="object")
+     */
+    private $contact;
+
 //endregion Fields
 
 //region SECTION: Constructor
@@ -65,5 +72,26 @@ class User extends BaseUser
 
         return $this;
     }
+
+    /**
+     * @return string
+     */
+    public function getContact(): string
+    {
+        return $this->contact;
+    }
+
+    /**
+     * @param string $contact
+     *
+     * @return User
+     */
+    public function setContact(string $contact)
+    {
+        $this->contact = $contact;
+
+        return $this;
+    }
+
 //endregion Getters/Setters
 }

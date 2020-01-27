@@ -5,11 +5,13 @@
         "php": "^7.2.3",
         "ext-iconv": "*",
         "doctrine/doctrine-bundle": "^1.10",
+        "endroid/qrcode": "^3.7",
         "friendsofsymfony/jsrouting-bundle": "^2.3",
         "friendsofsymfony/rest-bundle": "^2.5",
         "friendsofsymfony/user-bundle": "dev-master",
         "jms/serializer-bundle": "^3.1",
         "knplabs/knp-menu-bundle": "^2.0",
+        "ltoscano/ponvif": "dev-master",
         "nelmio/api-doc-bundle": "dev-master",
         "sensio/framework-extra-bundle": "^5.2",
         "sensiolabs/security-checker": "^5.0",
@@ -24,8 +26,7 @@
         "symfony/templating": "^4.0",
         "symfony/twig-bundle": "^4.0",
         "symfony/webpack-encore-bundle": "^1.1",
-        "symfony/yaml": "^4.0",
-        "ltoscano/ponvif": "dev-master"
+        "symfony/yaml": "^4.0"
     },
     "require-dev": {
         "doctrine/doctrine-fixtures-bundle": "^3.2",
