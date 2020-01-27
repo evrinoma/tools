@@ -8,6 +8,7 @@
 
 namespace App\Entity;
 
+use App\Dto\ApartDto\ContactDto;
 use Doctrine\ORM\Mapping as ORM;
 use FOS\UserBundle\Model\User as BaseUser;
 
@@ -37,7 +38,7 @@ class User extends BaseUser
     private $plain;
 
     /**
-     * @var string
+     * @var ContactDto
      *
      * @ORM\Column(name="contact", type="object")
      */
@@ -62,6 +63,30 @@ class User extends BaseUser
     }
 
     /**
+     * @return ContactDto
+     */
+    public function getContact(): ContactDto
+    {
+        return $this->contact;
+    }
+
+    public function getVCard()
+    {
+        $vCard = "BEGIN:VCARD\n";
+        $vCard .= "VERSION:4.0\n";
+        $vCard .= 'N:'.$this->getContact()->getFirstName().';'.$this->getContact()->getLastName()."\n";
+        $vCard .= 'ORG:'.$this->getContact()->getComapanyName()."\n";
+        $vCard .= 'TITLE:'.$this->getContact()->getPosition()."\n";
+        $vCard .= 'TEL;WORK,VOICE:'.$this->getContact()->getTelWork().($this->getContact()->getTelWorkDop() ? 'p*'.$this->getContact()->getTelWorkDop() : '')."\n";
+        $vCard .= 'TEL;MOBILE,VOICE:'.$this->getContact()->getTelMobile()."\n";
+        $vCard .= 'EMAIL:'.$this->getContact()->getEmail()."\n";
+        $vCard .= "URL:".$this->getContact()->getEmail()."\n";
+        $vCard .= 'END:VCARD';
+
+        return $vCard;
+    }
+
+    /**
      * @param string $plain
      *
      * @return User
@@ -74,24 +99,15 @@ class User extends BaseUser
     }
 
     /**
-     * @return string
-     */
-    public function getContact(): string
-    {
-        return $this->contact;
-    }
-
-    /**
-     * @param string $contact
+     * @param ContactDto $contact
      *
      * @return User
      */
-    public function setContact(string $contact)
+    public function setContact(ContactDto $contact)
     {
         $this->contact = $contact;
 
         return $this;
     }
-
 //endregion Getters/Setters
 }

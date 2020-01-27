@@ -30,6 +30,10 @@ body, html {
     background-size: cover;
 }
 
+contact {
+    background: url("../../images/contact/logo.png") no-repeat center center fixed;
+}
+
 /*---------------------------------------------*/
 a {
     font-family: Ubuntu-Regular;

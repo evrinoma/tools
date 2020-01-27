@@ -9,6 +9,7 @@
 namespace App\Controller;
 
 
+use App\Manager\ContactManager;
 use App\Manager\DashBoardManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -44,9 +45,25 @@ class RouteController extends AbstractController
      *
      * @return array
      */
-    public function home()
+    public function home(ContactManager $contactManager)
     {
         return [];
+    }
+
+    /**
+     * титуальная страница
+     *
+     * @Route("/contact", name="core_contact")
+     * @Template("modules/contact.html.twig")
+     *
+     * @param ContactManager $contactManager
+     *
+     * @return \Endroid\QrCode\Response\QrCodeResponse
+     * @throws \Endroid\QrCode\Exception\InvalidPathException
+     */
+    public function contact(ContactManager $contactManager)
+    {
+        return $contactManager->getContact($this->getUser());
     }
 
     /**
