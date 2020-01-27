@@ -63,7 +63,9 @@ class RouteController extends AbstractController
      */
     public function contact(ContactManager $contactManager)
     {
-        return $contactManager->getContact($this->getUser());
+        $qr = $contactManager->getContact($this->getUser());
+
+        return $qr ?: '';
     }
 
     /**

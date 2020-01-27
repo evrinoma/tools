@@ -65,7 +65,7 @@ class User extends BaseUser
     /**
      * @return ContactDto
      */
-    public function getContact(): ?ContactDto
+    public function getContact()
     {
         return $this->contact;
     }
