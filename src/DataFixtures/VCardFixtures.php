@@ -33,14 +33,14 @@ class VCardFixtures extends AbstractFixtures
         if ($user) {
             $vCard = new ContactDto();
             $vCard
-                ->setFirstName('Вадим')
-                ->setLastName('Гришанов Владимирович')
-                ->setPosition('заместитель главного инженера по информационным технологиям')
+                ->setFirstName('')
+                ->setLastName('')
+                ->setPosition('')
                 ->setComapanyName('АО Интертехэлектро')
                 ->setTelWork('+74956444430')
-                ->setTelWorkDop('3813')
-                ->setTelMobile('+79261883881')
-                ->setEmail('grishvv@ite-ng.ru')
+                ->setTelWorkDop('')
+                ->setTelMobile('+7')
+                ->setEmail('@ite-ng.ru')
                 ->setUrl('www.ite-ng.ru');
             $user->setContact($vCard);
 
