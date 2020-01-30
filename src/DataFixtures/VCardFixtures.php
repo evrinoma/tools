@@ -28,24 +28,27 @@ class VCardFixtures extends AbstractFixtures
      */
     public function load(ObjectManager $manager)
     {
-        $user = $manager->find(User::class, 16);
-        /** @var User $user */
-        if ($user) {
-            $vCard = new ContactDto();
-            $vCard
-                ->setFirstName('')
-                ->setLastName('')
-                ->setPosition('')
-                ->setComapanyName('АО Интертехэлектро')
-                ->setTelWork('+74956444430')
-                ->setTelWorkDop('')
-                ->setTelMobile('+7')
-                ->setEmail('@ite-ng.ru')
-                ->setUrl('www.ite-ng.ru');
-            $user->setContact($vCard);
+        $vCard = new ContactDto();
+        $vCard
+            ->setFirstName('')
+            ->setLastName('')
+            ->setPosition('')
+            ->setComapanyName('АО Интертехэлектро')
+            ->setTelWork('+74956444430')
+            ->setTelWorkDop('')
+            ->setTelMobile('+7')
+            ->setEmail('@ite-ng.ru')
+            ->setUrl('www.ite-ng.ru');
 
-            $manager->flush();
+        if ($vCard && $vCard->getEmail()) {
+            /** @var User $user */
+            $user = $manager->getRepository(User::class)->findOneBy(['email' => $vCard->getEmail()]);
+            if ($user) {
+                $user->setContact($vCard);
+                $manager->flush();
+            }
         }
+
     }
 //endregion Public
 }
