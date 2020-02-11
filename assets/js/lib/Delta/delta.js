@@ -17,7 +17,7 @@ let Delta = function () {
         App.showSpinner();
         let requestParam = {
             dataFlow: 'TAZOVSKIY',
-            date: '15-07-2019'
+            date: '11-02-2020'
         };
         $.ajax({
             url: App.getRouting().generate('api_delta_journal', requestParam),
@@ -41,7 +41,7 @@ let Delta = function () {
             $.each(valueJournal.discreet_info, function (keyDiscreetInfo, valueDiscreetInfo) {
                 componentData.push(componentData[keyDiscreetInfo] = {
                     begin: date + ' ' + valueDiscreetInfo.time,
-                    end: valueDiscreetInfo.time_end,
+                    end: date + ' ' + valueDiscreetInfo.time_end,
                     object: valueJournal.group.name,
                     message: valueJournal.name,
                     notes: valueJournal.additionalname,
@@ -70,8 +70,8 @@ let Delta = function () {
                             {name: 'begin', header: 'Начало', hasClasses: true},
                             {name: 'end', header: 'Конец', hasClasses: true},
                             {name: 'object', header: 'Объект', hasClasses: true},
-                            {name: 'message', header: 'Сообщение', hasClasses: true},
-                            {name: 'notes', header: 'Пояснение', hasClasses: true},
+                            {name: 'message', header: 'Параметр', hasClasses: true},
+                            {name: 'notes', header: 'Сообщение', hasClasses: true},
                         ],
                         rowsTable: loadedData.versions,
                         deleteButton: {
