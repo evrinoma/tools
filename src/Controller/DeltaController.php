@@ -44,7 +44,7 @@ class DeltaController extends AbstractController
 
     /**
      * @Route("/delta/rtt", options={"expose"=true}, name="delta_rtt")
-     * @Template("delta/display.html.twig")
+     * @Template("delta/journal.html.twig")
      *
      * @return array
      */
