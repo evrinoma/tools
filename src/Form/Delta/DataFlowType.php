@@ -9,6 +9,7 @@
 namespace App\Form\Delta;
 
 use App\Entity\DescriptionService;
+use App\Manager\JournalManager;
 use App\Manager\SettingsManager;
 use App\Rest\Form\RestChoiceType;
 use Symfony\Component\Form\AbstractType;
@@ -22,22 +23,20 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class DataFlowType extends AbstractType
 {
-
-
     //region SECTION: Fields
     /**
-     * ServerManager.
+     * JournalManager.
      */
-    private $settingsManager;
+    private $journalManager;
 //endregion Fields
 
 //region SECTION: Constructor
     /**
      * ServerType constructor.
      */
-    public function __construct(SettingsManager $settingsManager)
+    public function __construct(JournalManager $journalManager)
     {
-        $this->settingsManager = $settingsManager;
+        $this->journalManager = $journalManager;
     }
 
 //endregion Constructor
@@ -45,13 +44,7 @@ class DataFlowType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $callback = function (Options $options) {
-            $servers = [];
-            /** @var DescriptionService $server */
-            foreach ($this->settingsManager->getDeltaServices() as $server) {
-                $servers[] = $server->getDescription();
-            }
-
-            return $servers;
+            return $this->journalManager->getDeltaObjects();
         };
         $resolver->setDefault(RestChoiceType::REST_COMPONENT_NAME, 'dataflow');
         $resolver->setDefault(RestChoiceType::REST_DESCRIPTION, 'Delta Data Server');

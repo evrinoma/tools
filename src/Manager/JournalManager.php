@@ -353,5 +353,16 @@ class JournalManager extends AbstractEntityManager
     {
         return $this->status;
     }
+
+    public function getDeltaObjects()
+    {
+        $servers = [];
+        /** @var DescriptionService $server */
+        foreach ($this->settingsManager->getDeltaServices() as $server) {
+            $servers[] = $server->getDescription();
+        }
+
+        return $servers;
+    }
 //endregion Getters/Setters
 }

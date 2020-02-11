@@ -401,6 +401,25 @@ class ApiController extends AbstractController
     }
 
     /**
+     * @Rest\Get("/api/doc/object", options={"expose"=true}, name="api_delta_object")
+     * @SWG\Get(tags={"delta"})
+     * @SWG\Response(response=200,description="Returns delta objects")
+     *
+     * @param Request        $request
+     * @param JournalManager $journalManager
+     *
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     */
+    public function journalDelptaObjectAction(Request $request, JournalManager $journalManager)
+    {
+        return $this->json(
+            $journalManager->getDeltaObjects(),
+            $journalManager->getRestStatus()
+        );
+    }
+
+
+    /**
      * @Rest\Get("/internal/live_video", name="api_live_video_group")
      * @SWG\Get(tags={"live_video"})
      * @SWG\Parameter(
@@ -525,6 +544,7 @@ class ApiController extends AbstractController
      * @SWG\Get(tags={"live_video"})
      * @SWG\Response(response=200,description="Returns class acl entity")
      * @TODO Host and Applications
+     *
      * @param LiveVideoManager $liveVideoManager
      *
      * @return \Symfony\Component\HttpFoundation\JsonResponse
@@ -532,9 +552,9 @@ class ApiController extends AbstractController
     public function liveVideoWowzaStreamingEngineAction(LiveVideoManager $liveVideoManager)
     {
         $appliaction = 'live';
-        $host = 'http://cam.ite-ng.ru:1935/';
-        $list = 'playlist.m3u8';
-        
+        $host        = 'http://cam.ite-ng.ru:1935/';
+        $list        = 'playlist.m3u8';
+
         return $this->json(['host' => $host.$appliaction, 'list' => $list], $liveVideoManager->setRestSuccessOk()->getRestStatus());
     }
 

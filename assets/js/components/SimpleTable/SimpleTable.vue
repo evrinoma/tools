@@ -1,6 +1,25 @@
 <template>
     <div>
         <h4>{{ headerTable }}</h4>
+        <template v-if="objectSelector!== undefined">
+            <div class="inline field">
+                <b><label>Object:</label></b>
+                <div class="ui simple dropdown item" :class="lock ? 'disabled' : ''">
+                    {{ _getObject() }}
+                    <i class="dropdown icon"></i>
+                    <div class="menu">
+                        <div class="item" v-for="(object,index) in objects" @click="_objectAction(index)">
+                            {{object}}
+                        </div>
+                    </div>
+                </div>
+                <div class="ui slider checkbox">
+                    <input type="checkbox" name="newsletter" :checked="autoUpdate" @click="_autoUpdateAction()">
+                    <label>Auto update</label>
+                </div>
+            </div>
+        </template>
+        <br>
         <table class="simpleTable">
             <thead>
             <tr>
@@ -51,6 +70,8 @@
 </template>
 
 <script>
+    import axios from "axios";
+
     export default {
         name: "SimpleTable",
         props: {
@@ -58,15 +79,23 @@
             rowsTable: Object,
             columnsTable: Array,
             deleteButton: Object,
+            objectSelector: Object,
+            objectUpdate: Object,
         },
         data: function () {
             this.init();
             let columns = this.setColumns();
             let rows = this.setColumnRows();
             let sortOrders = {};
+            let autoUpdate = false;
             columns.forEach(function (item) {
                 sortOrders[item.name] = 1;
             });
+            if (this.objectUpdate !== undefined && this.objectUpdate.autoUpdate !== undefined && this.objectUpdate.autoUpdate === true) {
+                autoUpdate = true;
+                this._setAutoUpdateTimer();
+            }
+
             return {
                 rows: rows,
                 columns: columns,
@@ -74,6 +103,11 @@
                 sortOrders: sortOrders,
                 isDeleted: false,
                 dataLoad: this.rowsTable,
+                objects: null,
+                objectSelect: null,
+                lock: false,
+                interval: undefined,
+                autoUpdate: autoUpdate,
             }
         },
         computed: {
@@ -96,7 +130,54 @@
                 return str.charAt(0).toUpperCase() + str.slice(1);
             }
         },
+        mounted() {
+            this.doLoad();
+        },
+        beforeDestroy() {
+            clearInterval(this.interval)
+        },
         methods: {
+            _axiosResponse(type, response) {
+                switch (type) {
+                    case 'load-objects':
+                        this.objects = response.data;
+                        break;
+                }
+            },
+            _autoUpdateAction() {
+                this.autoUpdate = !this.autoUpdate;
+                (this.autoUpdate) ? this._setAutoUpdateTimer() : this._resetAutoUpdateTimer();
+            },
+            _setAutoUpdateTimer() {
+                this.interval = setInterval(this.objectUpdate.callBack, this.objectUpdate.interval);
+            },
+            _resetAutoUpdateTimer() {
+                this.interval = undefined;
+                clearInterval(this.interval);
+            },
+            _getObject() {
+                return (this.objects === null || this.objects[this.objectSelect] === undefined) ? 'Select Object' : this.objects[this.objectSelect];
+            },
+            getObject() {
+                let selected = this._getObject();
+                return selected === 'Select Object' ? undefined : selected;
+            },
+            _objectAction(index) {
+                this.objectSelect = index;
+                this.setLock();
+                this.objectSelector.callBack();
+            },
+            setLock() {
+                this.lock = true;
+            },
+            setUnLock() {
+                this.lock = false;
+            },
+            doLoad() {
+                axios
+                    .get(this.objectSelector.route)
+                    .then(response => (this._axiosResponse('load-objects', response)));
+            },
             sortBy: function (key) {
                 this.sortKey = key;
                 this.sortOrders[key] = this.sortOrders[key] * -1;
@@ -192,7 +273,7 @@
                 this.currentRow = this.currentRow + this.maxRow;
                 let maxRowSizeInPage = ~~(this.dataLoad.length / this.maxRow);
 
-                if (this.currentRow > (maxRowSizeInPage*this.maxRow)) {
+                if (this.currentRow > (maxRowSizeInPage * this.maxRow)) {
                     this.currentRow = maxRowSizeInPage;
                 }
                 this.setRows(this.setColumnRows());

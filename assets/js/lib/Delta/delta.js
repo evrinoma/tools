@@ -3,8 +3,7 @@ import Vue from 'vue';
 
 let Delta = function () {
 
-    this.interval = 20000;
-
+    this.interval = 180000;
 
     this.deltaTable;
 
@@ -13,25 +12,46 @@ let Delta = function () {
 
     };
 
+    this.getCurrentDate = function () {
+        let today = new Date();
+        let dd = String(today.getDate()).padStart(2, '0');
+        let mm = String(today.getMonth() + 1).padStart(2, '0');
+        let yyyy = today.getFullYear();
+
+        return dd + '-' + mm + '-' + yyyy;
+    };
+
+    this.callBackAutoUpdate = function () {
+        App.delta.callBackGetJournal();
+    };
+
     this.callBackGetJournal = function () {
         App.showSpinner();
-        let requestParam = {
-            dataFlow: 'TAZOVSKIY',
-            date: '11-02-2020'
-        };
-        $.ajax({
-            url: App.getRouting().generate('api_delta_journal', requestParam),
-            type: 'GET',
-            success: function (html) {
-                let delta = App.delta;
-                let component = delta.deltaTable.$options.getComponent(delta.deltaTable);
-                if (html.delta_data !== undefined) {
-                    let dataLoad = delta.toComponentData(html.delta_data, requestParam.date);
-                    component.updateRows(dataLoad);
+        let delta = App.delta;
+        let component = delta.deltaTable.$options.getComponent(delta.deltaTable);
+        let dataFlow = component.getObject();
+        if (undefined !== dataFlow) {
+            let requestParam = {
+                dataFlow: dataFlow,
+                date: delta.getCurrentDate()
+            };
+            $.ajax({
+                url: App.getRouting().generate('api_delta_journal', requestParam),
+                type: 'GET',
+                success: function (html) {
+                    let delta = App.delta;
+                    let component = delta.deltaTable.$options.getComponent(delta.deltaTable);
+                    if (html.delta_data !== undefined) {
+                        let dataLoad = delta.toComponentData(html.delta_data, requestParam.date);
+                        component.updateRows(dataLoad);
+                    }
+                    App.hideSpinner();
+                    component.setUnLock()
                 }
-                App.hideSpinner();
-            }
-        });
+            });
+        } else {
+            App.hideSpinner();
+        }
     };
 
     this.toComponentData = function (journal, date) {
@@ -66,6 +86,10 @@ let Delta = function () {
                 return h(SimpleTable, {
                     props: {
                         headerTable: loadedData.project.name,
+                        objectSelector: {
+                            route: window.location.origin + '/api/doc/object',
+                            callBack: delta.callBackGetJournal,
+                        },
                         columnsTable: [
                             {name: 'begin', header: 'Начало', hasClasses: true},
                             {name: 'end', header: 'Конец', hasClasses: true},
@@ -77,6 +101,11 @@ let Delta = function () {
                         deleteButton: {
                             route: loadedData.deleteRoute,
                             callBack: delta.callBackDelete,
+                        },
+                        objectUpdate: {
+                            autoUpdate: true,
+                            interval: delta.interval,
+                            callBack: delta.callBackAutoUpdate,
                         },
                     }
                 })
@@ -96,7 +125,7 @@ let Delta = function () {
 
     this.init = function () {
         this.createTable();
-        this.callBackGetJournal();
+        // this.callBackGetJournal();
         //window.setInterval(this.callBackGetJournal, this.interval);
     };
 
