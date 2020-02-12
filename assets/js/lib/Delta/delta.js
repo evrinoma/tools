@@ -7,18 +7,32 @@ let Delta = function () {
 
     this.deltaTable;
 
+    this.today = undefined;
 
     this.callBackDelete = function () {
 
     };
 
-    this.getCurrentDate = function () {
-        let today = new Date();
+    this.getFormatCurrentDate = function () {
+        let today = this.getCurrentDate();
         let dd = String(today.getDate()).padStart(2, '0');
         let mm = String(today.getMonth() + 1).padStart(2, '0');
         let yyyy = today.getFullYear();
 
         return dd + '-' + mm + '-' + yyyy;
+    };
+
+    this.getCurrentDate = function () {
+        if (this.today === undefined) {
+            this.today = new Date();
+            this.today.setHours(0, 0, 0, 0);
+        }
+
+        return this.today;
+    };
+
+    this.callBackDate = function () {
+        App.delta.callBackGetJournal();
     };
 
     this.callBackAutoUpdate = function () {
@@ -29,11 +43,12 @@ let Delta = function () {
         App.showSpinner();
         let delta = App.delta;
         let component = delta.deltaTable.$options.getComponent(delta.deltaTable);
-        let dataFlow = component.getObject();
-        if (undefined !== dataFlow) {
+        let dataFlow = component.getFilterSelectValue();
+        let date = component.getFilterDateValue();
+        if (undefined !== dataFlow && date === delta.getFormatCurrentDate()) {
             let requestParam = {
                 dataFlow: dataFlow,
-                date: delta.getCurrentDate()
+                date: date
             };
             $.ajax({
                 url: App.getRouting().generate('api_delta_journal', requestParam),
@@ -51,6 +66,7 @@ let Delta = function () {
             });
         } else {
             App.hideSpinner();
+            component.setUnLock()
         }
     };
 
@@ -91,9 +107,15 @@ let Delta = function () {
                                 callBack: delta.callBackGetJournal,
                             },
                             update: {
-                                update: true,
+                                isUpdate: true,
                                 interval: delta.interval,
                                 callBack: delta.callBackAutoUpdate,
+                            },
+                            date: {
+                                value: delta.getFormatCurrentDate(),
+                                callBack: delta.callBackDate,
+                                format: "DD-MM-YYYY",
+                                range: delta.getCurrentDate(),
                             },
                         },
                         headerTable: loadedData.project.name,

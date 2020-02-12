@@ -4,31 +4,44 @@
             <template v-if="filter !== undefined">
                 <h3 class="ui header">Settings</h3>
                 <div class="ui segment">
-                    <div class="ui two column very relaxed grid">
-                        <div class="column">
-                            <div class="ui form">
-                                <div class="inline field">
-                                    <template v-if="filter.selector !== undefined">
-                                        <b><label>Object:</label></b>
-                                        <div class="ui simple dropdown item" :class="lock ? 'disabled' : ''">
-                                            {{ _getObject() }}
-                                            <i class="dropdown icon"></i>
-                                            <div class="menu">
-                                                <div class="item" v-for="(object,index) in objects" @click="_objectAction(index)">
-                                                    {{object}}
-                                                </div>
-                                            </div>
+                    <div class="ui eight column very relaxed grid">
+                        <template v-if="filter.selector !== undefined">
+                            <div class="column">
+                                <b><label>Object:</label></b>
+                                <div class="ui simple dropdown item" :class="lock ? 'disabled' : ''">
+                                    {{ _getFilterSelectValue() }}
+                                    <i class="dropdown icon"></i>
+                                    <div class="menu">
+                                        <div class="item" v-for="(object,index) in objects" @click="setFilterSelectValueAction(index)">
+                                            {{object}}
                                         </div>
-                                    </template>
-                                    <template v-if="filter.update !== undefined">
-                                        <div class="ui slider checkbox">
-                                            <input type="checkbox" name="newsletter" :checked="update" @click="_updateAction()">
-                                            <label>Auto update</label>
-                                        </div>
-                                    </template>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                        </template>
+                        <template v-if="filter.update !== undefined">
+                            <div class="column">
+                                <b><label>Auto update:</label></b>
+                                <div class="ui left floated compact segment">
+                                    <div class="ui fitted slider checkbox">
+                                        <input type="checkbox" :checked="update" @click="setFilterUpdateAction()">
+                                        <label></label>
+                                    </div>
+                                </div>
+                            </div>
+                        </template>
+                        <template v-if="filter.date !== undefined">
+                            <div class="column">
+                                <b><label>Date:</label></b>
+                                <date-picker v-model="datePickerValue"
+                                             valueType="format"
+                                             :format="datePickerFormat"
+                                             :disabled-date="setFilterDisabledDates"
+                                             :disabled="lock"
+                                >
+                                </date-picker>
+                            </div>
+                        </template>
                     </div>
                 </div>
             </template>
@@ -55,8 +68,7 @@
                     </tr>
                     </tbody>
                 </table>
-                <br>
-                <table class="simpleTable">
+                <table class="ui celled table">
                     <thead>
                     <tr>
                         <th v-for="item in columns"
@@ -72,15 +84,16 @@
                         <td v-for="item in columns" v-bind:class="getClasses(item.name, key)">
                             {{entry[item.name]}}
                             <span v-if="typeof item.delete_button !== 'undefined'">
-                        <div class="delete_button" @click="clickDeleteButton(entry.id)" @mouseover="mouseoverDeleteButton(item.name, key)" @mouseout="mouseoutDeleteButton(item.name, key)">
-                            <i class="fa fa-trash-o" aria-hidden="true"></i>
-                            <div class="hint"></div>
-                        </div>
-                    </span>
+                                <div class="delete_button" @click="clickDeleteButton(entry.id)" @mouseover="mouseoverDeleteButton(item.name, key)" @mouseout="mouseoutDeleteButton(item.name, key)">
+                                    <i class="fa fa-trash-o" aria-hidden="true"></i>
+                                    <div class="hint"></div>
+                                </div>
+                            </span>
                         </td>
                     </tr>
                     </tbody>
                 </table>
+
             </div>
         </div>
     </div>
@@ -88,8 +101,11 @@
 
 <script>
     import axios from "axios";
+    import DatePicker from 'vue2-datepicker';
+    import 'vue2-datepicker/index.css';
 
     export default {
+        components: {DatePicker},
         name: "SimpleTable",
         props: {
             filter: Object,
@@ -97,18 +113,19 @@
             rowsTable: Object,
             columnsTable: Array,
             deleteButton: Object,
+            date: String,
         },
         data: function () {
             this.init();
             let columns = this.setColumns();
             let rows = this.setColumnRows();
             let sortOrders = {};
-            let update = false;
+            let isUpdate = false;
             columns.forEach(function (item) {
                 sortOrders[item.name] = 1;
             });
-            if (this.filter !== undefined && this.filter.update !== undefined && this.filter.update.update !== undefined && this.filter.update.update === true) {
-                update = true;
+            if (this.filter !== undefined && this.filter.update !== undefined && this.filter.update.isUpdate !== undefined && this.filter.update.isUpdate === true) {
+                isUpdate = true;
                 this._setUpdateTimer();
             }
             return {
@@ -122,7 +139,10 @@
                 objectSelect: null,
                 lock: false,
                 interval: undefined,
-                update: update,
+                update: isUpdate,
+                datePickerValue: (this.filter !== undefined && this.filter.date !== undefined && this.filter.date.value !== undefined) ? this.filter.date.value : '',
+                datePickerFormat: (this.filter !== undefined && this.filter.date !== undefined && this.filter.date.format !== undefined) ? this.filter.date.format : '',
+                datePickerFormatRange: (this.filter !== undefined && this.filter.date !== undefined && this.filter.date.range !== undefined) ? this.filter.date.range : undefined,
             }
         },
         computed: {
@@ -152,6 +172,30 @@
             clearInterval(this.interval)
         },
         methods: {
+            getFilterDateValue() {
+                return this.datePickerValue;
+            },
+            setFilterDisabledDates(date) {
+                if (this.datePickerFormatRange !== undefined) {
+                    return date > this.datePickerFormatRange;
+                }
+            },
+            _getFilterSelectValue() {
+                return (this.objects === null || this.objects[this.objectSelect] === undefined) ? 'Select Object' : this.objects[this.objectSelect];
+            },
+            getFilterSelectValue() {
+                let selected = this._getFilterSelectValue();
+                return selected === 'Select Object' ? undefined : selected;
+            },
+            setFilterSelectValueAction(index) {
+                this.objectSelect = index;
+                this.setLock();
+                this.filter.selector.callBack();
+            },
+            setFilterUpdateAction() {
+                this.update = !this.update;
+                (this.update) ? this._setUpdateTimer() : this._resetUpdateTimer();
+            },
             _axiosResponse(type, response) {
                 switch (type) {
                     case 'load-objects':
@@ -159,28 +203,12 @@
                         break;
                 }
             },
-            _updateAction() {
-                this.update = !this.update;
-                (this.update) ? this._setUpdateTimer() : this._resetUpdateTimer();
-            },
             _setUpdateTimer() {
                 this.interval = setInterval(this.filter.update.callBack, this.filter.update.interval);
             },
             _resetUpdateTimer() {
                 this.interval = undefined;
                 clearInterval(this.interval);
-            },
-            _getObject() {
-                return (this.objects === null || this.objects[this.objectSelect] === undefined) ? 'Select Object' : this.objects[this.objectSelect];
-            },
-            getObject() {
-                let selected = this._getObject();
-                return selected === 'Select Object' ? undefined : selected;
-            },
-            _objectAction(index) {
-                this.objectSelect = index;
-                this.setLock();
-                this.filter.selector.callBack();
             },
             setLock() {
                 this.lock = true;
@@ -302,123 +330,5 @@
 <style>
     .ui.segment.block {
         height: 84vh;
-    }
-
-    table.simpleTable {
-        border: 2px solid #42b983;
-        border-radius: 3px;
-        background-color: #fff;
-        display: inline-block;
-    }
-
-    .simpleTable th {
-        background-color: #42b983;
-        color: rgba(255, 255, 255, 0.66);
-        cursor: pointer;
-        -webkit-user-select: none;
-        -moz-user-select: none;
-        -ms-user-select: none;
-        user-select: none;
-    }
-
-    .simpleTable td {
-        background-color: #f9f9f9;
-    }
-
-    .simpleTable th:not(:first-child), .simpleTable td:not(:first-child) {
-        min-width: 120px;
-        padding: 10px 20px;
-    }
-
-    .simpleTable th.active {
-        color: #fff;
-    }
-
-    .simpleTable th.active .arrow {
-        opacity: 1;
-    }
-
-    .simpleTable .arrow {
-        display: inline-block;
-        vertical-align: middle;
-        width: 0;
-        height: 0;
-        margin-left: 5px;
-        opacity: 0.66;
-    }
-
-    .simpleTable .arrow.asc {
-        border-left: 4px solid transparent;
-        border-right: 4px solid transparent;
-        border-bottom: 4px solid #fff;
-    }
-
-    .simpleTable .arrow.dsc {
-        border-left: 4px solid transparent;
-        border-right: 4px solid transparent;
-        border-top: 4px solid #fff;
-    }
-
-    .simpleTable div.delete_button {
-        line-height: 19px;
-        font-size: 13px;
-        width: 20px;
-        height: 20px;
-        border-radius: 10px;
-        cursor: pointer;
-        text-align: center;
-        position: relative;
-        background: #FF6E7B;
-        color: #2A3F54;
-        margin-left: 115%;
-        margin-top: -10%;
-    }
-
-    .simpleTable td.delete_row {
-        box-shadow: inset 0 -2px 2px 0 #FF6E7B, inset 0 2px 2px 0 #FF6E7B;
-        color: #FF6E7B;
-    }
-
-    .simpleTable div.hint {
-        position: absolute;
-        margin-left: 3px;
-        margin-top: -10px;
-        height: 40px;
-        width: 75px;
-        z-index: 1000;
-        -webkit-border-radius: 4px;
-        -moz-border-radius: 4px;
-        border-radius: 4px;
-        text-align: center;
-        -webkit-box-shadow: none;
-        -moz-box-shadow: none;
-        box-shadow: none;
-        text-shadow: none;
-        font-size: 11px;
-        line-height: 15px;
-    }
-
-    .simpleTable .delete_row div.hint::after {
-        color: #73879C;
-        background: rgba(242, 245, 247, 0.75);
-        border: 1px solid white;
-        display: block;
-        content: "Удалить документ";
-        margin-left: 23px;
-        margin-top: -3px;
-    }
-
-    .simpleTable .fa {
-        display: inline-block;
-        font: normal normal normal 14px/1 FontAwesome;
-        font-size: inherit;
-        text-rendering: auto;
-        -webkit-font-smoothing: antialiased;
-        -moz-osx-font-smoothing: grayscale;
-    }
-
-    .simpleTable .delete_row .delete_button .fa {
-        -webkit-animation: fa-spin 2s infinite linear;
-        animation: fa-spin 2s infinite linear;
     }
 </style>
