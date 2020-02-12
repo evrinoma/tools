@@ -35,6 +35,7 @@
                                 <b><label>Date:</label></b>
                                 <date-picker v-model="datePickerValue"
                                              valueType="format"
+                                             @change="setFilterDateValue"
                                              :format="datePickerFormat"
                                              :disabled-date="setFilterDisabledDates"
                                              :disabled="lock"
@@ -172,6 +173,10 @@
             clearInterval(this.interval)
         },
         methods: {
+            setFilterDateValue() {
+                this.setLock();
+                this.filter.date.callBack();
+            },
             getFilterDateValue() {
                 return this.datePickerValue;
             },

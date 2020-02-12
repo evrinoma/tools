@@ -139,8 +139,7 @@ class JournalManager extends AbstractEntityManager
 //region SECTION: Dto
     private function getDto()
     {
-        return new class()
-        {
+        return new class() {
             /** @var Params[] */
             private $params = [];
 
@@ -242,15 +241,17 @@ class JournalManager extends AbstractEntityManager
                 /** @var DiscreetInfo $item */
                 foreach ($this->discreetInfo as $item) {
                     $param = &$this->params[$item->getN()];
-                    if ($item->getV()) {
-                        $param
-                            ->addDiscreetInfo($item)
-                            ->setInitial();
-                        $this->hasDiscreetInfo[] = &$param;
-                    } elseif($this->params[$item->getN()]->getInitial()) {
-                        $discreetInfo = $param->getLastDiscreetInfo();
-                        $discreetInfo->setTe($item->getT());
-                        $param->setInitial();
+                    if ($param) {
+                        if ($item->getV()) {
+                            $param
+                                ->addDiscreetInfo($item)
+                                ->setInitial();
+                            $this->hasDiscreetInfo[] = &$param;
+                        } elseif ($this->params[$item->getN()]->getInitial()) {
+                            $discreetInfo = $param->getLastDiscreetInfo();
+                            $discreetInfo->setTe($item->getT());
+                            $param->setInitial();
+                        }
                     }
                 }
 
@@ -346,7 +347,7 @@ class JournalManager extends AbstractEntityManager
      */
     public function getData()
     {
-        return $this->dto->getHasDiscreetInfo();
+        return ($this->dto) ? $this->dto->getHasDiscreetInfo() : [];
     }
 
     public function getRestStatus(): int

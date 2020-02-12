@@ -40,7 +40,7 @@ let Delta = function () {
         let delta = App.delta;
         let component = delta.deltaTable.$options.getComponent(delta.deltaTable);
         let date = component.getFilterDateValue();
-        if (undefined !== dataFlow && date === delta.getFormatCurrentDate()) {
+        if (date === delta.getFormatCurrentDate()) {
             App.delta.callBackGetJournal();
         }
         App.hideSpinner();
