@@ -36,7 +36,15 @@ let Delta = function () {
     };
 
     this.callBackAutoUpdate = function () {
-        App.delta.callBackGetJournal();
+        App.showSpinner();
+        let delta = App.delta;
+        let component = delta.deltaTable.$options.getComponent(delta.deltaTable);
+        let date = component.getFilterDateValue();
+        if (undefined !== dataFlow && date === delta.getFormatCurrentDate()) {
+            App.delta.callBackGetJournal();
+        }
+        App.hideSpinner();
+        component.setUnLock()
     };
 
     this.callBackGetJournal = function () {
@@ -45,7 +53,7 @@ let Delta = function () {
         let component = delta.deltaTable.$options.getComponent(delta.deltaTable);
         let dataFlow = component.getFilterSelectValue();
         let date = component.getFilterDateValue();
-        if (undefined !== dataFlow && date === delta.getFormatCurrentDate()) {
+        if (undefined !== dataFlow) {
             let requestParam = {
                 dataFlow: dataFlow,
                 date: date
