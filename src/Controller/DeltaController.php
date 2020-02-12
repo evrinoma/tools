@@ -31,14 +31,9 @@ class DeltaController extends AbstractController
      */
     public function deltaJournal(JournalManager $journalManager, SerializerInterface $serializer)
     {
-        //$data = $journalManager->validate('TAZOVSKIY', '13-07-2018')->findParams()->findDiscretInfo()->getData();
-
-       // $deltaData = $serializer->serialize($data, 'json');
-
         return [
             'titleHeader' => 'Delta8 Administration',
             'pageName'    => 'Journal Delta8',
-         //   'delta_data'  => json_decode($deltaData,1),
         ];
     }
 

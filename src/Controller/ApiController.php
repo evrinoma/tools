@@ -390,12 +390,13 @@ class ApiController extends AbstractController
      */
     public function journalAction(Request $request, JournalManager $journalManager)
     {
-
         $date     = $request->get('date');
         $dataFlow = $request->get('dataFlow');
-
-        $data = $journalManager->validate($dataFlow, $date)->findParams()->findDiscretInfo()->getData();
-
+        try {
+            $data = $journalManager->validate($dataFlow, $date)->findParams()->findDiscretInfo()->getData();
+        } catch (\Exception $exception) {
+            $data = [];
+        }
 
         return $this->json(['delta_data' => $data]);
     }
