@@ -130,7 +130,7 @@ class JournalManager extends AbstractEntityManager
         $metadata->setPrimaryTable(['name' => $this->toTableName()]);
         /** @var EntityRepository $repository */
         $repository = $this->entityManagerDelta->getRepository(DiscreetInfo::class);
-        $this->dto->addDiscreetInfo($repository->findBy([], ['n' => 'DESC']));
+        $this->dto->addDiscreetInfo($repository->findBy([], ['n' => 'ASC']));
 
         return $this;
     }
