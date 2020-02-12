@@ -38,6 +38,20 @@ class DeltaController extends AbstractController
     }
 
     /**
+     * @Route("/delta/journal/clear", options={"expose"=true}, name="delta_journal_clear")
+     * @Template("delta/display.clear.html.twig")
+     *
+     * @return array
+     */
+    public function deltaJournalClear(JournalManager $journalManager)
+    {
+        return [
+            'titleHeader' => 'Delta8 Administration',
+            'pageName'    => 'Journal Delta8',
+        ];
+    }
+
+    /**
      * @Route("/delta/rtt", options={"expose"=true}, name="delta_rtt")
      * @Template("delta/journal.html.twig")
      *
