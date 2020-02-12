@@ -1,71 +1,88 @@
 <template>
     <div>
-        <h4>{{ headerTable }}</h4>
-        <template v-if="objectSelector!== undefined">
-            <div class="inline field">
-                <b><label>Object:</label></b>
-                <div class="ui simple dropdown item" :class="lock ? 'disabled' : ''">
-                    {{ _getObject() }}
-                    <i class="dropdown icon"></i>
-                    <div class="menu">
-                        <div class="item" v-for="(object,index) in objects" @click="_objectAction(index)">
-                            {{object}}
+        <div class="ui segment block">
+            <template v-if="filter !== undefined">
+                <h3 class="ui header">Settings</h3>
+                <div class="ui segment">
+                    <div class="ui two column very relaxed grid">
+                        <div class="column">
+                            <div class="ui form">
+                                <div class="inline field">
+                                    <template v-if="filter.selector !== undefined">
+                                        <b><label>Object:</label></b>
+                                        <div class="ui simple dropdown item" :class="lock ? 'disabled' : ''">
+                                            {{ _getObject() }}
+                                            <i class="dropdown icon"></i>
+                                            <div class="menu">
+                                                <div class="item" v-for="(object,index) in objects" @click="_objectAction(index)">
+                                                    {{object}}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </template>
+                                    <template v-if="filter.update !== undefined">
+                                        <div class="ui slider checkbox">
+                                            <input type="checkbox" name="newsletter" :checked="update" @click="_updateAction()">
+                                            <label>Auto update</label>
+                                        </div>
+                                    </template>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div class="ui slider checkbox">
-                    <input type="checkbox" name="newsletter" :checked="autoUpdate" @click="_autoUpdateAction()">
-                    <label>Auto update</label>
-                </div>
-            </div>
-        </template>
-        <br>
-        <table class="simpleTable">
-            <thead>
-            <tr>
-                <th v-for="item in columns"
-                    @click="sortBy(item.name)"
-                    :class="{ active: sortKey == item.name }">
-                    {{ item.header | capitalize }}
-                    <span class="arrow" :class="sortOrders[item.name] > 0 ? 'asc' : 'dsc'"></span>
-                </th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr v-for="(entry, key) in filteredRows">
-                <td v-for="item in columns" v-bind:class="getClasses(item.name, key)">
-                    {{entry[item.name]}}
-                    <span v-if="typeof item.delete_button !== 'undefined'">
+            </template>
+            <h3 class="ui header">{{ headerTable }}</h3>
+            <div>
+                <table class="pagination">
+                    <tbody>
+                    <tr>
+                        <td>
+                            <div class="begin_button" @click="clickBeginButton()">
+                                <button style="font-size:24px"><i class="fa fa-home"></i></button>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="prev_button" @click="clickPrevButton()">
+                                <button style="font-size:24px"><i class="fa fa-arrow-left"></i></button>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="next_button" @click="clickNextButton()">
+                                <button style="font-size:24px"><i class="fa fa-arrow-right"></i></button>
+                            </div>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+                <br>
+                <table class="simpleTable">
+                    <thead>
+                    <tr>
+                        <th v-for="item in columns"
+                            @click="sortBy(item.name)"
+                            :class="{ active: sortKey == item.name }">
+                            {{ item.header | capitalize }}
+                            <span class="arrow" :class="sortOrders[item.name] > 0 ? 'asc' : 'dsc'"></span>
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr v-for="(entry, key) in filteredRows">
+                        <td v-for="item in columns" v-bind:class="getClasses(item.name, key)">
+                            {{entry[item.name]}}
+                            <span v-if="typeof item.delete_button !== 'undefined'">
                         <div class="delete_button" @click="clickDeleteButton(entry.id)" @mouseover="mouseoverDeleteButton(item.name, key)" @mouseout="mouseoutDeleteButton(item.name, key)">
                             <i class="fa fa-trash-o" aria-hidden="true"></i>
                             <div class="hint"></div>
                         </div>
                     </span>
-                </td>
-            </tr>
-            </tbody>
-        </table>
-        <table class="pagination">
-            <tbody>
-            <tr>
-                <td>
-                    <div class="begin_button" @click="clickBeginButton()">
-                        <button style="font-size:24px"><i class="fa fa-home"></i></button>
-                    </div>
-                </td>
-                <td>
-                    <div class="prev_button" @click="clickPrevButton()">
-                        <button style="font-size:24px"><i class="fa fa-arrow-left"></i></button>
-                    </div>
-                </td>
-                <td>
-                    <div class="next_button" @click="clickNextButton()">
-                        <button style="font-size:24px"><i class="fa fa-arrow-right"></i></button>
-                    </div>
-                </td>
-            </tr>
-            </tbody>
-        </table>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
 </template>
 
@@ -75,27 +92,25 @@
     export default {
         name: "SimpleTable",
         props: {
+            filter: Object,
             headerTable: String,
             rowsTable: Object,
             columnsTable: Array,
             deleteButton: Object,
-            objectSelector: Object,
-            objectUpdate: Object,
         },
         data: function () {
             this.init();
             let columns = this.setColumns();
             let rows = this.setColumnRows();
             let sortOrders = {};
-            let autoUpdate = false;
+            let update = false;
             columns.forEach(function (item) {
                 sortOrders[item.name] = 1;
             });
-            if (this.objectUpdate !== undefined && this.objectUpdate.autoUpdate !== undefined && this.objectUpdate.autoUpdate === true) {
-                autoUpdate = true;
-                this._setAutoUpdateTimer();
+            if (this.filter !== undefined && this.filter.update !== undefined && this.filter.update.update !== undefined && this.filter.update.update === true) {
+                update = true;
+                this._setUpdateTimer();
             }
-
             return {
                 rows: rows,
                 columns: columns,
@@ -107,7 +122,7 @@
                 objectSelect: null,
                 lock: false,
                 interval: undefined,
-                autoUpdate: autoUpdate,
+                update: update,
             }
         },
         computed: {
@@ -144,14 +159,14 @@
                         break;
                 }
             },
-            _autoUpdateAction() {
-                this.autoUpdate = !this.autoUpdate;
-                (this.autoUpdate) ? this._setAutoUpdateTimer() : this._resetAutoUpdateTimer();
+            _updateAction() {
+                this.update = !this.update;
+                (this.update) ? this._setUpdateTimer() : this._resetUpdateTimer();
             },
-            _setAutoUpdateTimer() {
-                this.interval = setInterval(this.objectUpdate.callBack, this.objectUpdate.interval);
+            _setUpdateTimer() {
+                this.interval = setInterval(this.filter.update.callBack, this.filter.update.interval);
             },
-            _resetAutoUpdateTimer() {
+            _resetUpdateTimer() {
                 this.interval = undefined;
                 clearInterval(this.interval);
             },
@@ -165,7 +180,7 @@
             _objectAction(index) {
                 this.objectSelect = index;
                 this.setLock();
-                this.objectSelector.callBack();
+                this.filter.selector.callBack();
             },
             setLock() {
                 this.lock = true;
@@ -174,9 +189,11 @@
                 this.lock = false;
             },
             doLoad() {
-                axios
-                    .get(this.objectSelector.route)
-                    .then(response => (this._axiosResponse('load-objects', response)));
+                if (this.filter !== undefined && this.filter.selector !== undefined) {
+                    axios
+                        .get(this.filter.selector.route)
+                        .then(response => (this._axiosResponse('load-objects', response)));
+                }
             },
             sortBy: function (key) {
                 this.sortKey = key;
@@ -283,6 +300,10 @@
 </script>
 
 <style>
+    .ui.segment.block {
+        height: 84vh;
+    }
+
     table.simpleTable {
         border: 2px solid #42b983;
         border-radius: 3px;

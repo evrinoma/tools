@@ -74,7 +74,7 @@ let Delta = function () {
 
     this.createTable = function () {
         let loadedData = {
-            project: {name: 'Журнал'},
+            project: {name: 'Journal'},
             versions: {},//{"snapshotId": {'begin': 'name', 'end': 'id',}},
             deleteRoute: "#"
         };
@@ -85,11 +85,18 @@ let Delta = function () {
             render(h) {
                 return h(SimpleTable, {
                     props: {
-                        headerTable: loadedData.project.name,
-                        objectSelector: {
-                            route: window.location.origin + '/api/doc/object',
-                            callBack: delta.callBackGetJournal,
+                        filter: {
+                            selector: {
+                                route: window.location.origin + '/api/doc/object',
+                                callBack: delta.callBackGetJournal,
+                            },
+                            update: {
+                                update: true,
+                                interval: delta.interval,
+                                callBack: delta.callBackAutoUpdate,
+                            },
                         },
+                        headerTable: loadedData.project.name,
                         columnsTable: [
                             {name: 'begin', header: 'Начало', hasClasses: true},
                             {name: 'end', header: 'Конец', hasClasses: true},
@@ -101,11 +108,6 @@ let Delta = function () {
                         deleteButton: {
                             route: loadedData.deleteRoute,
                             callBack: delta.callBackDelete,
-                        },
-                        objectUpdate: {
-                            autoUpdate: true,
-                            interval: delta.interval,
-                            callBack: delta.callBackAutoUpdate,
                         },
                     }
                 })
