@@ -10,6 +10,9 @@ if [ ! -z "$USER" ] && [ ! -z "$USERMAIL" ] && [ ! -z "$PASS" ]; then
 #	php bin/console fos:user:promote $USER ROLE_SUPER_ADMIN
 #	php bin/console fos:user:promote $USER ROLE_USER
 
+#	php bin/console fos:user:promote $USER ROLE_API
+#	php bin/console fos:user:promote $USER ROLE_USER_DELTA8
+
 #	php bin/console fos:user:promote $USER ROLE_VIDEO
 #	php bin/console fos:user:promote $USER ROLE_VIDEO_ALL
 
