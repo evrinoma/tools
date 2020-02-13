@@ -65,7 +65,8 @@ security:
     #- { path: ^/*, role: ROLE_USER }
     #- { path: ^/*, role: IS_AUTHENTICATED_REMEMBERED }
     - { path: ^/admin/, role: ROLE_SUPER_ADMIN }
-    - { path: ^/delta/journal/*, roles: IS_AUTHENTICATED_ANONYMOUSLY, ips: [172.20.1.1/16] }
+    - { path: ^/api/doc/default, roles: IS_AUTHENTICATED_ANONYMOUSLY, ips: [172.20.1.1/16] }
+    - { path: ^/delta/journal/clear, roles: IS_AUTHENTICATED_ANONYMOUSLY, ips: [172.20.1.1/16] }
     - { path: ^/login$, roles: IS_AUTHENTICATED_ANONYMOUSLY }
     - { path: ^/.*, roles: IS_AUTHENTICATED_FULLY }
 
