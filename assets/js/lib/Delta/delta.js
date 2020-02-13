@@ -85,7 +85,7 @@ let Delta = function () {
             $.each(valueJournal.discreet_info, function (keyDiscreetInfo, valueDiscreetInfo) {
                 componentData.push(componentData[keyDiscreetInfo] = {
                     begin: date + ' ' + valueDiscreetInfo.time,
-                    end: valueDiscreetInfo.time_end,
+                    end: date + ' ' + valueDiscreetInfo.time_end,
                     object: valueJournal.group.name,
                     message: valueJournal.name,
                     notes: valueJournal.additionalname,
