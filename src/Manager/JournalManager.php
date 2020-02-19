@@ -32,6 +32,7 @@ class JournalManager extends AbstractEntityManager
     const MSSQL_LINK      = 'delta';
     const DEFAULT_DB      = 'TAZOVSKIY';
     const DEFAULT_DB_DATA = 'TAZOVSKIY_DATA';
+    const DEFAULT_LIMIT   = 500;
 
     /** @var Params[] */
     private $params = [];
@@ -130,7 +131,7 @@ class JournalManager extends AbstractEntityManager
         $metadata->setPrimaryTable(['name' => $this->toTableName()]);
         /** @var EntityRepository $repository */
         $repository = $this->entityManagerDelta->getRepository(DiscreetInfo::class);
-        $this->dto->addDiscreetInfo($repository->findBy([], ['n' => 'ASC']));
+        $this->dto->addDiscreetInfo($repository->findBy([], ['n' => 'ASC'], self::DEFAULT_LIMIT));
 
         return $this;
     }
