@@ -28,6 +28,7 @@ interface RoleInterface
     public const ROLE_ISHIM_VIDEO = 'ROLE_ISHIM_VIDEO';
     public const ROLE_IPARK_VIDEO = 'ROLE_IPARK_VIDEO';
     public const ROLE_TOBOLSK_VIDEO = 'ROLE_TOBOLSK_VIDEO';
+    public const ROLE_VANKOR_VIDEO = 'ROLE_VANKOR_VIDEO';
 
     public const ROLE_CONTROL_VIDEO_ALL = 'ROLE_CONTROL_VIDEO_ALL';
     public const ROLE_KZKT_CONTROL_VIDEO = 'ROLE_KZKT_CONTROL_VIDEO';

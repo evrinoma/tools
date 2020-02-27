@@ -220,6 +220,14 @@ class MenuManager extends AbstractEntityManager
 
         $this->entityManager->persist($tobolskVideo);
 
+        $vankorVideo = new MenuItem();
+        $vankorVideo
+            ->setRole([RoleInterface::ROLE_SUPER_ADMIN, RoleInterface::ROLE_VANKOR_VIDEO, RoleInterface::ROLE_VIDEO_ALL])
+            ->setName('Ванкор')
+            ->setRoute('live_vankor');
+
+        $this->entityManager->persist($vankorVideo);
+
         $video = new MenuItem();
         $video
             ->setRole([RoleInterface::ROLE_SUPER_ADMIN, RoleInterface::ROLE_VIDEO, RoleInterface::ROLE_VIDEO_ALL])
@@ -228,7 +236,9 @@ class MenuManager extends AbstractEntityManager
             ->addChild($iparkVideo)
             ->addChild($kzktVideo)
             ->addChild($ishimVideo)
-            ->addChild($tobolskVideo);
+            ->addChild($tobolskVideo)
+            ->addChild($vankorVideo)
+            ;
 
         $this->entityManager->persist($video);
 
