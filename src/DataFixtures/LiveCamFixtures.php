@@ -47,7 +47,9 @@ class LiveCamFixtures extends AbstractFixtures
             ->createLivePrimorsky($manager)
             ->createLiveSovetsk($manager)
             ->createLiveTobolsk($manager)
-            ->createLiveTumen($manager);
+            ->createLiveTumen($manager)
+            ->createLiveVankor($manager)
+            ;
 
         $manager->flush();
     }
@@ -67,6 +69,56 @@ class LiveCamFixtures extends AbstractFixtures
 
         return $this;
     }
+    private function createLiveVankor(ObjectManager $manager)
+    {
+        $group = new Group();
+        $group
+            ->setAlias('live_vankor')
+            ->setName('Ванкор')
+            ->setMaxColumn(2)
+            ->setActiveToBlocked();
+
+        $manager->persist($group);
+
+        $camOne = new Cam();
+        $camOne
+            ->setName('One')
+            ->setIp('172.16.22.243')
+            ->setUserName('ite')
+            ->setPassword('video2014')
+            ->setTitle('Камера #1')
+            ->setStream('cam_172.16.22.243_LQ.stream')
+            ->setType($this->hikvisionType)
+            ->setGroup($group);
+        $manager->persist($camOne);
+
+        $camTwo = new Cam();
+        $camTwo
+            ->setName('Two')
+            ->setIp('172.16.22.244')
+            ->setUserName('ite')
+            ->setPassword('video2014')
+            ->setTitle('Камера #2')
+            ->setStream('cam_172.16.22.244_LQ.stream')
+            ->setType($this->hikvisionType)
+            ->setGroup($group);
+        $manager->persist($camTwo);
+
+        $camThree = new Cam();
+        $camThree
+            ->setName('Three')
+            ->setIp('172.16.22.245')
+            ->setUserName('ite')
+            ->setPassword('video2014')
+            ->setTitle('Камера #3 ')
+            ->setStream('cam_172.16.22.245_LQ.stream')
+            ->setType($this->hikvisionType)
+            ->setGroup($group);
+        $manager->persist($camThree);
+
+        return $this;
+    }
+
 
     private function createLiveIpark45(ObjectManager $manager)
     {
@@ -253,10 +305,11 @@ class LiveCamFixtures extends AbstractFixtures
         $camFourteen
             ->setName('Sixteen')
             ->setIp('83.146.116.47:31694')
-            ->setUserName('ite')
-            ->setPassword('video2014')
+            ->setUserName('admin')
+            ->setPassword('Qwer12345')
             ->setTitle('Indpark kur 14')
             ->setStream('cam_172.16.39.43_LQ.stream')
+            ->setControl(true)
             ->setType($this->hikvisionType)
             ->setGroup($group);
         $manager->persist($camFourteen);
@@ -265,10 +318,11 @@ class LiveCamFixtures extends AbstractFixtures
         $camFourteen
             ->setName('Seventeen')
             ->setIp('83.146.116.47:31704')
-            ->setUserName('ite')
-            ->setPassword('video2014')
+            ->setUserName('admin')
+            ->setPassword('Qwer12345')
             ->setTitle('Indpark kur 15')
             ->setStream('cam_172.16.39.44_LQ.stream')
+            ->setControl(true)
             ->setType($this->hikvisionType)
             ->setGroup($group);
         $manager->persist($camFourteen);
