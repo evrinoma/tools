@@ -154,7 +154,7 @@ class LiveVideoManager extends AbstractEntityManager
 
         /** @var Group $item */
         foreach ($data as $item) {
-            if (!$this->checkVoiter($item->getRole())) {
+            if ($item instanceof Group && !$this->checkVoiter($item->getRole())) {
                 /** @var Cam $camera */
                 foreach ($item->getLiveStreams() as $camera) {
                     $camera->setControl(false);
