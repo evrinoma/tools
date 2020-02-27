@@ -45,5 +45,8 @@ interface RoleInterface
         self::ROLE_IPARK_CONTROL_VIDEO,
         self::ROLE_TOBOLSK_CONTROL_VIDEO,
     ];
+
+    public const ROLE_STATUS = 'ROLE_STATUS';
+    public const ROLE_VCARD = 'ROLE_VCARD';
 //endregion Fields
 }

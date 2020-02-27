@@ -87,7 +87,7 @@ class MenuManager extends AbstractEntityManager
     {
         $display = new MenuItem();
         $display
-            ->setRole([RoleInterface::ROLE_USER])
+            ->setRole([RoleInterface::ROLE_STATUS])
             ->setName('Status')
             ->setRoute('core_status');
 
@@ -244,7 +244,7 @@ class MenuManager extends AbstractEntityManager
 
         $contact = new MenuItem();
         $contact
-            ->setRole([RoleInterface::ROLE_USER])
+            ->setRole([RoleInterface::ROLE_VCARD])
             ->setName('Contact')
             ->setRoute('core_contact');
 
