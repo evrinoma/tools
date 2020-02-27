@@ -83,7 +83,7 @@ class LiveCamFixtures extends AbstractFixtures
         $camOne = new Cam();
         $camOne
             ->setName('One')
-            ->setIp('172.16.22.243')
+            ->setIp('176.118.25.162:31243')
             ->setUserName('ite')
             ->setPassword('video2014')
             ->setTitle('Камера #1')
@@ -95,7 +95,7 @@ class LiveCamFixtures extends AbstractFixtures
         $camTwo = new Cam();
         $camTwo
             ->setName('Two')
-            ->setIp('172.16.22.244')
+            ->setIp('176.118.25.162:31244')
             ->setUserName('ite')
             ->setPassword('video2014')
             ->setTitle('Камера #2')
@@ -107,7 +107,7 @@ class LiveCamFixtures extends AbstractFixtures
         $camThree = new Cam();
         $camThree
             ->setName('Three')
-            ->setIp('172.16.22.245')
+            ->setIp('176.118.25.162:31245')
             ->setUserName('ite')
             ->setPassword('video2014')
             ->setTitle('Камера #3 ')
