@@ -63,5 +63,16 @@ class VideoController extends AbstractController
     {
         return ['titleHeader' => 'Video', 'pageName' => 'Video Tobolsk'];
     }
+
+    /**
+     * @Route("/video/live_vankor", options={"expose"=true}, name="live_vankor")
+     * @Template("video/display.html.twig")
+     *
+     * @return array
+     */
+    public function videoVankorAction()
+    {
+        return ['titleHeader' => 'Video', 'pageName' => 'Video Vankor'];
+    }
 //endregion Public
 }
