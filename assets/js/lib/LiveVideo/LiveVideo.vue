@@ -104,7 +104,6 @@
                 resolution: [
                     'resolution640x360',
                     'resolution640x360',
-                    'resolution640x360',
                     'resolution384x216',
                     'resolution329x194',
                     'resolution288x162',
