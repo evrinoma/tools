@@ -76,7 +76,8 @@ class LiveCamFixtures extends AbstractFixtures
             ->setAlias('live_vankor')
             ->setName('Ванкор')
             ->setMaxColumn(2)
-            ->setActiveToBlocked();
+            ->addRole(RoleInterface::ROLE_VANKOR_CONTROL_VIDEO)
+            ->addRole(RoleInterface::ROLE_CONTROL_VIDEO_ALL);
 
         $manager->persist($group);
 
