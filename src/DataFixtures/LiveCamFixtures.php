@@ -328,6 +328,18 @@ class LiveCamFixtures extends AbstractFixtures
             ->setGroup($group);
         $manager->persist($camFourteen);
 
+        $camFourteen = new Cam();
+        $camFourteen
+            ->setName('Eighteen')
+            ->setIp('172.16.39.45')
+            ->setUserName('admin')
+            ->setPassword('rehufy2014')
+            ->setTitle('Indpark kur 16')
+            ->setStream('cam_172.16.39.45_LQ.stream')
+            ->setType($this->hikvisionType)
+            ->setGroup($group);
+        $manager->persist($camFourteen);
+
         return $this;
     }
 
