@@ -6,6 +6,7 @@
         "ext-iconv": "*",
         "doctrine/doctrine-bundle": "^1.10",
         "endroid/qrcode": "^3.7",
+        "evrinoma/dashboard-bundle": "*@dev",
         "friendsofsymfony/jsrouting-bundle": "^2.3",
         "friendsofsymfony/rest-bundle": "^2.5",
         "friendsofsymfony/user-bundle": "dev-master",
