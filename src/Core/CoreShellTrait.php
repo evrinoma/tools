@@ -8,7 +8,12 @@
 
 namespace App\Core;
 
-
+/**
+ * @deprecated copy past
+ * Trait CoreShellTrait
+ *
+ * @package App\Core
+ */
 trait CoreShellTrait
 {
 //region SECTION: Fields

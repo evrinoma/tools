@@ -68,6 +68,10 @@
                     "classmap": ["lib/"]
                 }
             }
+        },
+        {
+            "type": "path",
+            "url": "..//DashBoardBundle"
         }
     ],
     "replace": {
