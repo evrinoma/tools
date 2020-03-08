@@ -1,0 +1,4 @@
+dashboard:
+  infos:
+#    - 'Evrinoma\DashBoardBundle\Info\ProcInfo'
+#    - 'Evrinoma\DashBoardBundle\Info\SysInfo'

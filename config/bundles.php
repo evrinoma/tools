@@ -20,4 +20,6 @@ return [
     Knp\Bundle\MenuBundle\KnpMenuBundle::class => ['all' => true],
     FOS\JsRoutingBundle\FOSJsRoutingBundle::class => ['all' => true],
     Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle::class => ['dev' => true, 'test' => true],
+    Evrinoma\ShellBundle\EvrinomaShellBundle::class => ['all' => true],
+    Evrinoma\DashBoardBundle\EvrinomaDashBoardBundle::class => ['all' => true],
 ];

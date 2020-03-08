@@ -10,13 +10,13 @@ namespace App\Manager;
 
 
 use App\Core\AbstractEntityManager;
-use App\Core\CoreShellTrait;
 use App\Dto\ApartDto\FileDto;
 use App\Dto\LogSearchDto;
 use App\Dto\SettingsDto;
 use App\Entity\Settings;
 use App\Rest\Core\RestTrait;
 use Doctrine\ORM\EntityManagerInterface;
+use Evrinoma\ShellBundle\Core\ShellInterface;
 
 /**
  * Class SearchManager
@@ -25,8 +25,6 @@ use Doctrine\ORM\EntityManagerInterface;
  */
 class SearchManager extends AbstractEntityManager
 {
-    use CoreShellTrait;
-
     use RestTrait;
 
 //region SECTION: Fields
@@ -47,18 +45,27 @@ class SearchManager extends AbstractEntityManager
     private $step = 5;
 
     private $settingsManager;
+
+    /**
+     * @var ShellInterface
+     */
+    private $shellManager;
 //endregion Fields
 
 //region SECTION: Constructor
     /**
      * SearchManager constructor.
      *
+     * @param EntityManagerInterface $entityManager
+     * @param SettingsManager        $settingsManager
      */
-    public function __construct(EntityManagerInterface $entityManager, SettingsManager $settingsManager)
+    public function __construct(EntityManagerInterface $entityManager, SettingsManager $settingsManager, ShellInterface $shellManager)
     {
         parent::__construct($entityManager);
 
         $this->settingsManager = $settingsManager;
+
+        $this->shellManager = $shellManager;
     }
 //endregion Constructor
 
@@ -123,7 +130,7 @@ class SearchManager extends AbstractEntityManager
                     $run  = $this->programs['cat'].' '.escapeshellarg($file).' | '.
                         $this->programs['grep'].' -ni \''.escapeshellarg($this->dto->getSearchString()).'\' | '.
                         $this->programs['sed'].' -n \'s/^\\([0-9]*\\)[:].*/\\1/p\'';
-                    if ($this->setClean()->executeProgram($run)) {
+                    if ($this->shellManager->setClean()->executeProgram($run)) {
                         $this->getLineMeet($this->getResult(), $file, $fileDto->getName());
                     }
                 }
@@ -147,7 +154,7 @@ class SearchManager extends AbstractEntityManager
         $message = [];
         foreach ($lines as $number) {
             $run = $this->programs['sed'].' -n \''.$number.','.($number + $this->step).'p;'.($number + $this->step + 1).'q\' '.$file;
-            if ($this->setClean()->executeProgram($run)) {
+            if ($this->shellManager->setClean()->executeProgram($run)) {
                 $message[] = $this->getResult();
             }
         }
@@ -166,7 +173,7 @@ class SearchManager extends AbstractEntityManager
     private function hasProgram(): bool
     {
         foreach ($this->programs as $program => $value) {
-            $this->programs[$program] = $this->findProgram($program);
+            $this->programs[$program] = $this->shellManager->findProgram($program);
             if (!$this->programs[$program]) {
                 return false;
             }

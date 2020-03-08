@@ -6,7 +6,7 @@
         "ext-iconv": "*",
         "doctrine/doctrine-bundle": "^1.10",
         "endroid/qrcode": "^3.7",
-        "evrinoma/dashboard-bundle": "*@dev",
+        "evrinoma/dashboard-bundle": "dev-master",
         "friendsofsymfony/jsrouting-bundle": "^2.3",
         "friendsofsymfony/rest-bundle": "^2.5",
         "friendsofsymfony/user-bundle": "dev-master",
@@ -55,6 +55,8 @@
             "App\\Tests\\": "tests/"
         }
     },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
     "repositories": [
         {
             "type": "package",
@@ -71,8 +73,12 @@
             }
         },
         {
-            "type": "path",
-            "url": "..//DashBoardBundle"
+            "type": "vcs",
+            "url": "/opt/WWW/container.ite-ng.ru/PhpstormProjects/DashBoardBundle"
+        },
+        {
+            "type": "vcs",
+            "url": "/opt/WWW/container.ite-ng.ru/PhpstormProjects/ShellBundle"
         }
     ],
     "replace": {
