@@ -16,5 +16,5 @@
 npm-debug.log
 yarn-error.log
 ###< symfony/webpack-encore-bundle ###
-/DashboardBundle/
+/DashBoardBundle/
 /ShellBundle/
