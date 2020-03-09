@@ -55,3 +55,12 @@ services:
   App\Annotation\DtoAdapterAnnotationListener:
     tags:
       - { name: kernel.event_listener, event: custom.event.dto.adapter, method: onKernelDto }
+
+  App\Shell\SearchShell:
+    autowire: true
+
+  App\Manager\SettingsManager:
+    arguments: ['@doctrine.orm.entity_manager']
+
+  App\Manager\SearchManager:
+    arguments: ['@doctrine.orm.entity_manager', '@App\Shell\SearchShell', '@App\Manager\SettingsManager']

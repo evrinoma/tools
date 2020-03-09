@@ -29,7 +29,6 @@ class SearchManager extends AbstractEntityManager
 
 //region SECTION: Fields
 
-    private $programs = ['sed' => '', 'grep' => '', 'cat' => ''];
 
     /**
      * @var Settings[]
@@ -57,9 +56,10 @@ class SearchManager extends AbstractEntityManager
      * SearchManager constructor.
      *
      * @param EntityManagerInterface $entityManager
+     * @param ShellInterface         $shellManager
      * @param SettingsManager        $settingsManager
      */
-    public function __construct(EntityManagerInterface $entityManager, SettingsManager $settingsManager, ShellInterface $shellManager)
+    public function __construct(EntityManagerInterface $entityManager, ShellInterface $shellManager, SettingsManager $settingsManager)
     {
         parent::__construct($entityManager);
 
@@ -68,20 +68,6 @@ class SearchManager extends AbstractEntityManager
         $this->shellManager = $shellManager;
     }
 //endregion Constructor
-
-//region SECTION: Protected
-    /**
-     * @param $run
-     *
-     * @return bool
-     */
-    protected function executeProgram($run): bool
-    {
-        exec($run, $this->result);
-
-        return count($this->result) ? true : false;
-    }
-//endregion Protected
 
 //region SECTION: Public
     /**
@@ -110,7 +96,7 @@ class SearchManager extends AbstractEntityManager
     private function loadSettings()
     {
         if ($this->dto) {
-            $settingsDto = $this->dto->getFactoryAdapter()->setFrom($this->dto)->setTo(SettingsDto::class)->adapter();
+            $settingsDto    = $this->dto->getFactoryAdapter()->setFrom($this->dto)->setTo(SettingsDto::class)->adapter();
             $this->settings = $this->settingsManager->getSettings($settingsDto);
         }
 
@@ -119,6 +105,7 @@ class SearchManager extends AbstractEntityManager
 
     /**
      * @return $this
+     * @throws \Exception
      */
     private function getNumberLineMeet()
     {
@@ -127,9 +114,9 @@ class SearchManager extends AbstractEntityManager
             if ($fileDto instanceof FileDto) {
                 if ($this->dto->hasFile($fileDto->getName())) {
                     $file = $fileDto->getFilePath();
-                    $run  = $this->programs['cat'].' '.escapeshellarg($file).' | '.
-                        $this->programs['grep'].' -ni \''.escapeshellarg($this->dto->getSearchString()).'\' | '.
-                        $this->programs['sed'].' -n \'s/^\\([0-9]*\\)[:].*/\\1/p\'';
+                    $run  = $this->shellManager->getProgram('cat').' '.escapeshellarg($file).' | '.
+                        $this->shellManager->getProgram('grep').' -ni \''.escapeshellarg($this->dto->getSearchString()).'\' | '.
+                        $this->shellManager->getProgram('sed').' -n \'s/^\\([0-9]*\\)[:].*/\\1/p\'';
                     if ($this->shellManager->setClean()->executeProgram($run)) {
                         $this->getLineMeet($this->getResult(), $file, $fileDto->getName());
                     }
@@ -148,12 +135,13 @@ class SearchManager extends AbstractEntityManager
      * @param string $name
      *
      * @return SearchManager
+     * @throws \Exception
      */
     private function getLineMeet(array $lines, $file, $name)
     {
         $message = [];
         foreach ($lines as $number) {
-            $run = $this->programs['sed'].' -n \''.$number.','.($number + $this->step).'p;'.($number + $this->step + 1).'q\' '.$file;
+            $run = $this->shellManager->getProgram('sed').' -n \''.$number.','.($number + $this->step).'p;'.($number + $this->step + 1).'q\' '.$file;
             if ($this->shellManager->setClean()->executeProgram($run)) {
                 $message[] = $this->getResult();
             }
@@ -164,23 +152,6 @@ class SearchManager extends AbstractEntityManager
 
         return $this;
     }
-
-    /**
-     * Got to exit, if executable program have't a valid path
-     *
-     * @return bool
-     */
-    private function hasProgram(): bool
-    {
-        foreach ($this->programs as $program => $value) {
-            $this->programs[$program] = $this->shellManager->findProgram($program);
-            if (!$this->programs[$program]) {
-                return false;
-            }
-        }
-
-        return true;
-    }
 //endregion Private
 
 //region SECTION: Dto
@@ -189,7 +160,7 @@ class SearchManager extends AbstractEntityManager
      *
      * @return $this
      */
-    public function setDto($dto)
+    public function setDto($dto): self
     {
         $this->dto = $dto;
 
@@ -201,17 +172,17 @@ class SearchManager extends AbstractEntityManager
     /**
      * @return Settings[]
      */
-    public function getSettings()
+    public function getSettings(): array
     {
         $this->loadSettings();
 
         return $this->settings;
     }
 
-    public function getResult()
+    public function getResult(): array
     {
         $converts = [];
-        foreach ($this->result as $value) {
+        foreach ($this->getResult() as $value) {
             $string     = preg_replace('/[^[:print:]\r\n]/', '', $value);
             $converts[] = mb_convert_encoding($string, 'UTF-8', 'UTF-8');
         }
@@ -222,7 +193,7 @@ class SearchManager extends AbstractEntityManager
     /**
      * @return array
      */
-    public function getSearchResult()
+    public function getSearchResult(): array
     {
         return $this->searchResult;
     }
@@ -230,11 +201,15 @@ class SearchManager extends AbstractEntityManager
     /**
      * @return $this
      */
-    public function getSearch()
+    public function getSearch(): self
     {
         if ($this->dto) {
-            if ($this->hasProgram() && $this->dto->isValidSearchStr()) {
-                $this->loadSettings()->getNumberLineMeet();
+            if ($this->dto->isValidSearchStr()) {
+                try {
+                    $this->loadSettings()->getNumberLineMeet();
+                } catch (\Exception $exception) {
+                    $this->searchResult[] = $exception->getMessage();
+                }
             }
         }
 
