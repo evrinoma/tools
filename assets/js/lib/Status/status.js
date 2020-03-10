@@ -5,8 +5,8 @@ let Status = function () {
         let dashboard= $('#dashboard');
         App.showSpinner();
         $.ajax({
-            url: App.getRouting().generate('core_status'),
-            type: 'POST',
+            url: App.getRouting().generate('dashboard_status'),
+            type: 'GET',
             success: function (html) {
                 let div = $('<div/>').html(html).contents();
                 dashboard.html(div.find('#dashboard'));

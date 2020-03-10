@@ -1,0 +1,9 @@
+dashboard:
+  resource: "@EvrinomaDashBoardBundle/Resources/config/routes.yml"
+
+#core_status:
+#  path: /status
+#  methods: GET
+#  defaults: { _controller: Evrinoma\DashBoardBundle\Controller\DashBoardController:status }
+#  options:
+#    expose: true

@@ -10,7 +10,6 @@ namespace App\Controller;
 
 
 use App\Manager\ContactManager;
-use Evrinoma\DashBoardBundle\Manager\DashBoardManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
@@ -24,20 +23,6 @@ class RouteController extends AbstractController
 {
 //region SECTION: Public
     /**
-     * @Route("/status", options={"expose"=true}, name="core_status")
-     * @Template("modules/display.html.twig")
-     *
-     * @param DashBoardManager $dashBoardManager
-     *
-     * @return array
-     */
-    public function status(DashBoardManager $dashBoardManager)
-    {
-        return ['titleHeader' => 'Administration', 'pageName' => 'System Status'] + $dashBoardManager->getDashBoard();
-    }
-
-
-    /**
      * титуальная страница
      *
      * @Route("/", name="core_home")
@@ -47,7 +32,7 @@ class RouteController extends AbstractController
      */
     public function home(ContactManager $contactManager)
     {
-        return [];
+        return ['titleHeader' => 'Site Administration', 'pageName' => 'Setup Module Administration'];
     }
 
     /**

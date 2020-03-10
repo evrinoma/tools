@@ -89,7 +89,7 @@ class MenuManager extends AbstractEntityManager
         $display
             ->setRole([RoleInterface::ROLE_STATUS])
             ->setName('Status')
-            ->setRoute('core_status');
+            ->setRoute('dashboard_status');
 
         $this->entityManager->persist($display);
 
