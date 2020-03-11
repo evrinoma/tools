@@ -1,4 +1,17 @@
-import '../css/status/status.css';
-import Status from '../js/lib/Status/status';
+import DashBoard from '../../public/bundles/evrinomadashboard/js/status/status';
 
-const status = new Status();
+export default class MyDashBoard extends DashBoard {
+    getUrl(alias) {
+        return App.getRouting().generate(alias);
+    }
+
+    beforeUpdate() {
+        App.showSpinner();
+    }
+
+    afterUpdate() {
+        App.hideSpinner();
+    }
+}
+
+new MyDashBoard();
