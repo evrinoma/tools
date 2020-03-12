@@ -1,16 +1,21 @@
 <?php
 
 
-namespace App\Manager;
+namespace App\DashBoard\Provider;
 
-
-use App\Adaptor\ScanServiceAdaptor;
-use App\Adaptor\ServiceAdaptor;
+use App\DashBoard\Adaptor\ScanServiceAdaptor;
+use App\DashBoard\Adaptor\DefaultServiceAdaptor;
+use App\Manager\SettingsManager;
 use Doctrine\Common\Collections\ArrayCollection;
-use Evrinoma\DashBoardBundle\Plugin\PluginInterface;
+use Evrinoma\DashBoardBundle\Provider\ProviderInterface;
 use Iterator;
 
-class DashBoardPlugin implements PluginInterface
+/**
+ * Class DashBoardProvider
+ *
+ * @package App\DashBoard\Manager\Provider
+ */
+class DashBoardProvider implements ProviderInterface
 {
 //region SECTION: Fields
     /**
@@ -42,7 +47,7 @@ class DashBoardPlugin implements PluginInterface
 
         foreach ($this->settingsManager->getSqlServers() as $server)
         {
-            $services->add(new ServiceAdaptor($server));
+            $services->add(new DefaultServiceAdaptor($server));
         }
 
         foreach ($this->settingsManager->getLocalSsh() as $server)

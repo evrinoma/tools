@@ -1,18 +1,19 @@
 <?php
 
 
-namespace App\Adaptor;
+namespace App\DashBoard\Adaptor;
 
 
 use App\Entity\Settings;
-use Evrinoma\DashBoardBundle\Plugin\DefaultServiceInterface;
+use Evrinoma\DashBoardBundle\Provider\DefaultServiceInterface;
+
 
 /**
- * Class ServiceAdaptor
+ * Class DefaultServiceAdaptor
  *
  * @package App\Adaptor
  */
-class ServiceAdaptor implements DefaultServiceInterface
+class DefaultServiceAdaptor implements DefaultServiceInterface
 {
 //region SECTION: Fields
     /**

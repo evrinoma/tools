@@ -1,5 +1,5 @@
 dashboard:
-  infos:
+#  infos:
 #    - 'Evrinoma\DashBoardBundle\Info\ProcInfo'
 #    - 'Evrinoma\DashBoardBundle\Info\SysInfo'
-  plugin: App\Manager\DashBoardPlugin
+  provider: App\DashBoard\Provider\DashBoardProvider

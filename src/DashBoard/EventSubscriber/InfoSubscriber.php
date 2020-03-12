@@ -1,7 +1,7 @@
 <?php
 
 
-namespace App\EventSubscriber;
+namespace App\DashBoard\EventSubscriber;
 
 
 use Evrinoma\DashBoardBundle\Event\InfoEvent;
@@ -9,7 +9,6 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class InfoSubscriber implements EventSubscriberInterface
 {
-
     /**
      * @inheritDoc
      */
