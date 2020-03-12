@@ -2,3 +2,4 @@ dashboard:
   infos:
 #    - 'Evrinoma\DashBoardBundle\Info\ProcInfo'
 #    - 'Evrinoma\DashBoardBundle\Info\SysInfo'
+  plugin: App\Manager\DashBoardPlugin
