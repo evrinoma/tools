@@ -7,6 +7,8 @@
         "doctrine/doctrine-bundle": "^1.10",
         "endroid/qrcode": "^3.7",
         "evrinoma/dashboard-bundle": "dev-master",
+        "evrinoma/livevideo-bundle": "dev-master",
+        "evrinoma/utils-bundle": "dev-master",
         "friendsofsymfony/jsrouting-bundle": "^2.3",
         "friendsofsymfony/rest-bundle": "^2.5",
         "friendsofsymfony/user-bundle": "dev-master",
@@ -59,26 +61,20 @@
     "prefer-stable": true,
     "repositories": [
         {
-            "type": "package",
-            "package": {
-                "name": "ltoscano/ponvif",
-                "version": "dev-master",
-                "dist": {
-                    "url": "https://github.com/ltoscano/ponvif/archive/master.zip",
-                    "type": "zip"
-                },
-                "autoload": {
-                    "classmap": ["lib/"]
-                }
-            }
-        },
-        {
             "type": "vcs",
             "url": "/opt/WWW/container.ite-ng.ru/PhpstormProjects/DashBoardBundle"
         },
         {
             "type": "vcs",
             "url": "/opt/WWW/container.ite-ng.ru/PhpstormProjects/ShellBundle"
+        },
+        {
+            "type": "vcs",
+            "url": "/opt/WWW/container.ite-ng.ru/PhpstormProjects/LiveVideoBundle"
+        },
+        {
+            "type": "vcs",
+            "url": "/opt/WWW/container.ite-ng.ru/PhpstormProjects/UtilsBundle"
         }
     ],
     "replace": {
