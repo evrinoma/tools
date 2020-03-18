@@ -192,7 +192,8 @@ class MenuManager extends AbstractEntityManager
         $iparkVideo
             ->setRole([RoleInterface::ROLE_SUPER_ADMIN, RoleInterface::ROLE_IPARK_VIDEO, RoleInterface::ROLE_VIDEO_ALL])
             ->setName('ipark45')
-            ->setRoute('live_ipark45');
+            ->setRoute('live_video')
+            ->setRouteParameters(['groupAlias' => 'live_ipark45']);
 
         $this->entityManager->persist($iparkVideo);
 
@@ -200,7 +201,8 @@ class MenuManager extends AbstractEntityManager
         $kzktVideo
             ->setRole([RoleInterface::ROLE_SUPER_ADMIN, RoleInterface::ROLE_KZKT_VIDEO, RoleInterface::ROLE_VIDEO_ALL])
             ->setName('kzkt45')
-            ->setRoute('live_kzkt45');
+            ->setRoute('live_video')
+            ->setRouteParameters(['groupAlias' => 'live_kzkt45']);
 
         $this->entityManager->persist($kzktVideo);
 
@@ -208,7 +210,8 @@ class MenuManager extends AbstractEntityManager
         $ishimVideo
             ->setRole([RoleInterface::ROLE_SUPER_ADMIN, RoleInterface::ROLE_ISHIM_VIDEO, RoleInterface::ROLE_VIDEO_ALL])
             ->setName('Ишим')
-            ->setRoute('live_ishim');
+            ->setRoute('live_video')
+            ->setRouteParameters(['groupAlias' => 'live_ishim']);
 
         $this->entityManager->persist($ishimVideo);
 
@@ -216,7 +219,8 @@ class MenuManager extends AbstractEntityManager
         $tobolskVideo
             ->setRole([RoleInterface::ROLE_SUPER_ADMIN, RoleInterface::ROLE_TOBOLSK_VIDEO, RoleInterface::ROLE_VIDEO_ALL])
             ->setName('Тобольск')
-            ->setRoute('live_tobolsk');
+            ->setRoute('live_video')
+            ->setRouteParameters(['groupAlias' => 'live_tobolsk']);
 
         $this->entityManager->persist($tobolskVideo);
 
@@ -224,7 +228,8 @@ class MenuManager extends AbstractEntityManager
         $vankorVideo
             ->setRole([RoleInterface::ROLE_SUPER_ADMIN, RoleInterface::ROLE_VANKOR_VIDEO, RoleInterface::ROLE_VIDEO_ALL])
             ->setName('Ванкор')
-            ->setRoute('live_vankor');
+            ->setRoute('live_video')
+            ->setRouteParameters(['groupAlias' => 'live_vankor']);
 
         $this->entityManager->persist($vankorVideo);
 

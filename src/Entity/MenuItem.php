@@ -59,6 +59,12 @@ class MenuItem
     protected $route = null;
 
     /**
+     * @var array
+     * @ORM\Column(name="routeParameters ", type="array", nullable=true)
+     */
+    protected $routeParameters = null;
+
+    /**
      * @var string
      * @ORM\Column(name="uri", type="string", nullable=true)
      */
@@ -114,15 +120,22 @@ class MenuItem
     /**
      * @return array|null
      */
+    public function getRouteParameters(): ?array
+    {
+        return $this->routeParameters ? ['routeParameters' => $this->routeParameters] : null;
+    }
+
+    /**
+     * @return array|null
+     */
     public function getAttributes(): ?array
     {
         return $this->attributes ? ['attributes' => $this->attributes] : null;
     }
 
-
     public function getOptions()
     {
-        return (array)$this->getUri() + (array)$this->getRoute() + (array)$this->getAttributes();
+        return (array)$this->getUri() + (array)$this->getRoute() + (array)$this->getAttributes() + (array)$this->getRouteParameters();
     }
 
     /**
@@ -181,6 +194,18 @@ class MenuItem
     public function setAttributes($attributes): self
     {
         $this->attributes = $attributes;
+
+        return $this;
+    }
+
+    /**
+     * @param array $routeParameters
+     *
+     * @return MenuItem
+     */
+    public function setRouteParameters(array $routeParameters): self
+    {
+        $this->routeParameters = $routeParameters;
 
         return $this;
     }
