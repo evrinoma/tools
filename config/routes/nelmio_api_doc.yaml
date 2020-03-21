@@ -7,10 +7,14 @@
 ## Requires the Asset component and the Twig bundle
 ## $ composer require twig asset
 app.swagger_ui:
-    path: /api/doc/{area}
-    methods: GET
-    defaults: { _controller: nelmio_api_doc.controller.swagger_ui, area: default  }
+  path: /api/doc/{area}
+  methods: GET
+  defaults: { _controller: nelmio_api_doc.controller.swagger_ui, area: default  }
 
 app.swagger_ui.internal:
-    path: /api/doc/internal
-    methods: GET
+  path: /api/doc/internal
+  methods: GET
+
+app.swagger_ui.evrinoma:
+  path: /api/doc/evrinoma
+  methods: GET|POST|PUT
