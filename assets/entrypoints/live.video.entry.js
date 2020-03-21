@@ -1,1 +1,1 @@
-import LiveVideo from '../js/lib/LiveVideo/liveVideo';
+import LiveVideo from '../../public/bundles/evrinomalivevideo/js/LiveVideo/liveVideo';

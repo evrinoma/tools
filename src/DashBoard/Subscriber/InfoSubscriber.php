@@ -1,8 +1,7 @@
 <?php
 
 
-namespace App\DashBoard\EventSubscriber;
-
+namespace App\DashBoard\Subscriber;
 
 use Evrinoma\DashBoardBundle\Event\InfoEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -15,11 +14,11 @@ class InfoSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents()
     {
         return [
-            InfoEvent::class => 'onInfo',
+            InfoEvent::class => 'onInfoEvent',
         ];
     }
 
-    public function onInfo(InfoEvent $event)
+    public function onInfoEvent(InfoEvent $event)
     {
         $event->addInfo(['titleHeader' => 'Administration', 'pageName' => 'System Status']);
     }

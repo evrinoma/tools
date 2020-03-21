@@ -3,11 +3,11 @@
 {% block title %}{{ titleHeader }}{% endblock %}
 
 {% block page %}
-    <div id="app"></div>
+    {% include '@EvrinomaLiveVideo/LiveVideo/template.html.twig' %}
 {% endblock %}
 
 {% block javascripts %}
     {{ parent() }}
-    <script type="text/javascript" src="wowzaplayer.min.js"></script>
+    {% include '@EvrinomaLiveVideo/LiveVideo/native.html.twig' %}
     <script src="{{ asset('build/live_video.js', 'webpack') }}"></script>
 {% endblock %}
