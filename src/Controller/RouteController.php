@@ -80,16 +80,16 @@ class RouteController extends AbstractController
         return ['titleHeader' => 'Site Administration', 'pageName' => 'Setup Module Administration'];
     }
 
-    /**
-     * @Route("/map", name="map_display")
-     * @Template("modules/map.html.twig")
-     *
-     * @return array
-     */
-    public function map()
-    {
-        return ['titleHeader' => 'Site Administration', 'pageName' => 'Setup Module Administration'];
-    }
+//    /**
+//     * @Route("/map", name="map_display")
+//     * @Template("modules/map.html.twig")
+//     *
+//     * @return array
+//     */
+//    public function map()
+//    {
+//        return ['titleHeader' => 'Site Administration', 'pageName' => 'Setup Module Administration'];
+//    }
 //endregion Public
 
 }
