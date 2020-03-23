@@ -9,14 +9,16 @@
 namespace App\Dto\ApartDto;
 
 
-use App\Dto\AbstractDto;
+
+
+use Evrinoma\DtoBundle\Dto\AbstractApartDto;
 
 /**
  * Class ContactDto
  *
  * @package App\Dto\ApartDto
  */
-class ContactDto extends AbstractDto
+class ContactDto extends AbstractApartDto
 {
 //region SECTION: Fields
     private $firstName;

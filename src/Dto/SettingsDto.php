@@ -9,8 +9,10 @@
 namespace App\Dto;
 
 
-use App\Entity\Model\ActiveTrait;
+
 use App\Entity\Settings;
+use Evrinoma\DtoBundle\Dto\AbstractDto;
+use Evrinoma\UtilsBundle\Entity\ActiveTrait;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -18,7 +20,7 @@ use Symfony\Component\HttpFoundation\Request;
  *
  * @package App\Dto
  */
-class SettingsDto extends AbstractFactoryDto
+class SettingsDto extends AbstractDto
 {
 
 //region SECTION: Fields

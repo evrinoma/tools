@@ -8,13 +8,14 @@
 
 namespace App\Dto\ApartDto;
 
-use App\Dto\AbstractDto;
+use Evrinoma\DtoBundle\Dto\AbstractApartDto;
+
 /**
  * Class FileDto
  *
  * @package App\Dto\ApartDto
  */
-class FileDto extends AbstractDto
+class FileDto extends AbstractApartDto
 {
 //region SECTION: Fields
     private $name;

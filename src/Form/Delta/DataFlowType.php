@@ -8,10 +8,8 @@
 
 namespace App\Form\Delta;
 
-use App\Entity\DescriptionService;
 use App\Manager\JournalManager;
-use App\Manager\SettingsManager;
-use App\Rest\Form\RestChoiceType;
+use Evrinoma\UtilsBundle\Form\Rest\RestChoiceType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\OptionsResolver\Options;
 use Symfony\Component\OptionsResolver\OptionsResolver;

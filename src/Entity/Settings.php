@@ -8,8 +8,9 @@
 
 namespace App\Entity;
 
-use App\Entity\Model\ActiveTrait;
+
 use Doctrine\ORM\Mapping as ORM;
+use Evrinoma\UtilsBundle\Entity\ActiveTrait;
 
 /**
  * Class Settings

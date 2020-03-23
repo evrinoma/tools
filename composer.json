@@ -69,6 +69,10 @@
         },
         {
             "type": "vcs",
+            "url": "/opt/WWW/container.ite-ng.ru/PhpstormProjects/EximBundle"
+        },
+        {
+            "type": "vcs",
             "url": "/opt/WWW/container.ite-ng.ru/PhpstormProjects/ShellBundle"
         },
         {

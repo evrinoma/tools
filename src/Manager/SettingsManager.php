@@ -13,7 +13,7 @@ use App\Core\AbstractEntityManager;
 use App\Dto\SettingsDto;
 use App\Entity\DescriptionService;
 use App\Entity\Settings;
-use App\Rest\Core\RestTrait;
+use Evrinoma\UtilsBundle\Rest\RestTrait;
 
 /**
  * Class SettingsManager

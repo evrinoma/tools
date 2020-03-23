@@ -13,10 +13,11 @@ use App\Core\AbstractEntityManager;
 use App\Entity\Delta\DiscreetInfo;
 use App\Entity\Delta\Params;
 use App\Entity\DescriptionService;
-use App\Rest\Core\RestTrait;
+
 use Doctrine\DBAL\Connection;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
+use Evrinoma\UtilsBundle\Rest\RestTrait;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /**
