@@ -81,6 +81,10 @@
         },
         {
             "type": "vcs",
+            "url": "/opt/WWW/container.ite-ng.ru/PhpstormProjects/SettingsBundle"
+        },
+        {
+            "type": "vcs",
             "url": "/opt/WWW/container.ite-ng.ru/PhpstormProjects/UtilsBundle"
         }
     ],
