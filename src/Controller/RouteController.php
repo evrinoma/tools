@@ -10,6 +10,10 @@ namespace App\Controller;
 
 
 use App\Manager\ContactManager;
+use Doctrine\ORM\EntityManagerInterface;
+use Evrinoma\EximBundle\Dto\ApartDto\FileDto;
+use Evrinoma\EximBundle\Dto\LogSearchDto;
+use Evrinoma\SettingsBundle\Entity\Settings;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
@@ -30,7 +34,7 @@ class RouteController extends AbstractController
      *
      * @return array
      */
-    public function home(ContactManager $contactManager)
+    public function home()
     {
         return ['titleHeader' => 'Site Administration', 'pageName' => 'Setup Module Administration'];
     }
@@ -90,6 +94,7 @@ class RouteController extends AbstractController
 //    {
 //        return ['titleHeader' => 'Site Administration', 'pageName' => 'Setup Module Administration'];
 //    }
+
 //endregion Public
 
 }
