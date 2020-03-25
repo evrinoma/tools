@@ -1,1 +1,1 @@
-import MailDomain from '../js/lib/Mail/Domain/domain';
+import MailDomain from '../../public/bundles/evrinomaexim/js/Domain/domain';

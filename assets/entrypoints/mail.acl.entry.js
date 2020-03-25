@@ -1,1 +1,1 @@
-import MailDomain from '../js/lib/Mail/Acl/acl';
+import MailAcl from '../../public/bundles/evrinomaexim/js/Acl/acl';

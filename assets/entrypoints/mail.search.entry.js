@@ -1,1 +1,1 @@
-import MailDomain from '../js/lib/Mail/Search/search';
+import MailSearch from '../../public/bundles/evrinomaexim/js/Search/search';

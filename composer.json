@@ -58,36 +58,37 @@
     },
     "minimum-stability": "dev",
     "prefer-stable": true,
-    "repositories": [
-        {
+    "repositories": {
+        "0": {
             "type": "vcs",
             "url": "/opt/WWW/container.ite-ng.ru/PhpstormProjects/DashBoardBundle"
         },
-        {
+        "1": {
             "type": "vcs",
             "url": "/opt/WWW/container.ite-ng.ru/PhpstormProjects/DtoBundle"
         },
-        {
+        "2": {
             "type": "vcs",
             "url": "/opt/WWW/container.ite-ng.ru/PhpstormProjects/EximBundle"
         },
-        {
+        "3": {
             "type": "vcs",
             "url": "/opt/WWW/container.ite-ng.ru/PhpstormProjects/ShellBundle"
         },
-        {
+        "4": {
             "type": "vcs",
             "url": "/opt/WWW/container.ite-ng.ru/PhpstormProjects/LiveVideoBundle"
         },
-        {
+        "5": {
             "type": "vcs",
             "url": "/opt/WWW/container.ite-ng.ru/PhpstormProjects/SettingsBundle"
         },
-        {
+        "6": {
             "type": "vcs",
             "url": "/opt/WWW/container.ite-ng.ru/PhpstormProjects/UtilsBundle"
-        }
-    ],
+        },
+        "packagist": false
+    },
     "replace": {
         "symfony/polyfill-iconv": "*",
         "symfony/polyfill-php71": "*",

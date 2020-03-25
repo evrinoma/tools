@@ -8,10 +8,11 @@
 
 namespace App\Entity;
 
-use App\Entity\Model\RelationTrait;
-use App\Entity\Model\RoleTrait;
+
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Evrinoma\UtilsBundle\Entity\RelationTrait;
+use Evrinoma\UtilsBundle\Entity\RoleTrait;
 
 /**
  * Class MenuItem

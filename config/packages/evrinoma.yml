@@ -1,0 +1,53 @@
+#all api section
+nelmio_api_doc:
+  documentation:
+    info:
+      title: LiveVideoApi
+      description: LiveVideo api doc
+      version: 1.0.2
+  areas: # to filter documented areas
+    evrinoma:
+      path_patterns:
+          - ^/evrinoma/api
+
+#dashboard section
+dashboard:
+#  infos:
+#    - 'Evrinoma\DashBoardBundle\Info\ProcInfo'
+#    - 'Evrinoma\DashBoardBundle\Info\SysInfo'
+  provider: App\DashBoard\Provider\DashBoardProvider
+#
+#nelmio_api_doc:
+#  documentation:
+#    info:
+#      title: DashBoard
+#      description: DashBoard api doc
+#      version: 1.0.2
+#  areas: # to filter documented areas
+#    dashboard:
+#      path_patterns:
+#        - ^/evrinoma/api/dashboard
+
+#exim section
+#nelmio_api_doc:
+#  documentation:
+#    info:
+#      title: EximApi
+#      description: Exim api doc
+#      version: 1.0.2
+#  areas: # to filter documented areas
+#    exim:
+#      path_patterns:
+#          - ^/evrinoma/api/exim
+
+#live_video section
+#nelmio_api_doc:
+#  documentation:
+#    info:
+#      title: LiveVideoApi
+#      description: LiveVideo api doc
+#      version: 1.0.2
+#  areas: # to filter documented areas
+#    live_video:
+#      path_patterns:
+#          - ^/evrinoma/api/live_video

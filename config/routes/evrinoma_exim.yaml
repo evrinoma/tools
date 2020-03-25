@@ -1,0 +1,2 @@
+exim:
+  resource: "@EvrinomaEximBundle/Resources/config/routes.yml"

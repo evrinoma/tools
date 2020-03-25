@@ -169,41 +169,6 @@ class ApiController extends AbstractController
         return $this;
     }
 
-    /**
-     * @param AbstractEntityManager $manager
-     * @param VuetableInterface     $dto
-     * @param                       $data
-     *
-     * @return array
-     */
-    private function toVuetable($manager, $dto, $data)
-    {
-        $total = $manager->getCount($dto);
-
-        $vuetableData = $dto ? [
-            'total'         => $total,
-            'per_page'      => $dto->getPerPage(),
-            'current_page'  => $dto->getPage(),
-            'last_page'     => ($dto->getPerPage() !== 0) ? intdiv($total, $dto->getPerPage()) + (($total % $dto->getPerPage()) !== 0 ? 1 : 0) : 1,
-            'next_page_url' => null,
-            'prev_page_url' => null,
-            'from'          => $dto->getPage() * $dto->getPerPage() - $dto->getPerPage() + 1,
-            'to'            => $dto->getPage() * $dto->getPerPage(),
-            'data'          => $data,
-        ] : [
-            'total'         => 0,
-            'per_page'      => 0,
-            'current_page'  => 0,
-            'last_page'     => 1,
-            'next_page_url' => null,
-            'prev_page_url' => null,
-            'from'          => 0,
-            'to'            => 0,
-            'data'          => 0,
-        ];
-
-        return $vuetableData;
-    }
 //endregion Private
 
 //region SECTION: Getters/Setters
