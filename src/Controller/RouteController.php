@@ -10,10 +10,6 @@ namespace App\Controller;
 
 
 use App\Manager\ContactManager;
-use Doctrine\ORM\EntityManagerInterface;
-use Evrinoma\EximBundle\Dto\ApartDto\FileDto;
-use Evrinoma\EximBundle\Dto\LogSearchDto;
-use Evrinoma\SettingsBundle\Entity\Settings;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
@@ -72,28 +68,6 @@ class RouteController extends AbstractController
 
         return [];
     }
-
-    /**
-     * @Route("/", name="encore_display")
-     * @Template("encore/show.html.twig")
-     *
-     * @return array
-     */
-    public function encore()
-    {
-        return ['titleHeader' => 'Site Administration', 'pageName' => 'Setup Module Administration'];
-    }
-
-//    /**
-//     * @Route("/map", name="map_display")
-//     * @Template("modules/map.html.twig")
-//     *
-//     * @return array
-//     */
-//    public function map()
-//    {
-//        return ['titleHeader' => 'Site Administration', 'pageName' => 'Setup Module Administration'];
-//    }
 
 //endregion Public
 

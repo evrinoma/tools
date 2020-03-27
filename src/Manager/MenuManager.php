@@ -9,10 +9,11 @@
 namespace App\Manager;
 
 
-use App\Core\AbstractEntityManager;
+
 use App\Entity\MenuItem;
 use App\Interfaces\RoleInterface;
 use Doctrine\ORM\EntityManagerInterface;
+use Evrinoma\UtilsBundle\Manager\AbstractEntityManager;
 use Knp\Menu\FactoryInterface;
 use Knp\Menu\ItemInterface;
 

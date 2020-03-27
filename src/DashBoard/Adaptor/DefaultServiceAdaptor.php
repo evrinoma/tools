@@ -3,9 +3,8 @@
 
 namespace App\DashBoard\Adaptor;
 
-
-use App\Entity\Settings;
 use Evrinoma\DashBoardBundle\Provider\DefaultServiceInterface;
+use Evrinoma\SettingsBundle\Entity\Settings;
 
 
 /**
@@ -25,14 +24,14 @@ class DefaultServiceAdaptor implements DefaultServiceInterface
 //region SECTION: Constructor
     public function __construct(Settings $entity)
     {
-        $this->entity = $entity;
+        $this->entity = $entity->getData();
     }
 //endregion Constructor
 
 //region SECTION: Getters/Setters
     public function getName()
     {
-        return $this->entity->getServiceType()->getName();
+        return $this->entity->getDescription()->getName();
     }
 
     public function getPort()

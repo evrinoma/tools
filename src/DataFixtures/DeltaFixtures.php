@@ -8,10 +8,11 @@
 
 namespace App\DataFixtures;
 
-
-use App\Entity\DescriptionService;
-use App\Entity\Settings;
 use Doctrine\Common\Persistence\ObjectManager;
+use Evrinoma\SettingsBundle\Dto\ApartDto\DescriptionDto;
+use Evrinoma\SettingsBundle\Dto\ApartDto\ServerDto;
+use Evrinoma\SettingsBundle\Dto\ServiceDto;
+use Evrinoma\SettingsBundle\Entity\Settings;
 
 /**
  * Class SettingsFixtures
@@ -29,175 +30,160 @@ class DeltaFixtures extends AbstractFixtures
      */
     public function load(ObjectManager $manager)
     {
-        $descriptionChildMssql = new DescriptionService();
-        $descriptionChildMssql
+        $descriptionChild = new DescriptionDto();
+        $descriptionChild
             ->setName('MsSql')
-            ->setType('sql')
             ->setInstance('DCSRV01')
             ->setDescription('TAZOVSKIY_DATA')
             ->setDate((new \DateTime())->createFromFormat('dmY', '17112017'));
 
-        $descriptionMssql = new DescriptionService();
-        $descriptionMssql
+        $description= new DescriptionDto();
+        $description
             ->setName('MsSql')
-            ->setType('sql')
             ->setInstance('DCSRV01')
             ->setDescription('TAZOVSKIY')
-            ->addChild($descriptionChildMssql);
+            ->addChild($descriptionChild);
 
-
-        $settingsMssql = new Settings();
-        $settingsMssql
+        $service = new ServerDto();
+        $service
             ->setPort('1433')
             ->setHost('172.16.45.10')
-            ->setType(DescriptionService::class)
-            ->setServiceType($descriptionMssql)
+            ->setType('orm')
+            ->setDescription($description)
             ->setRemote();
 
-        $manager->persist($descriptionMssql);
-        $manager->persist($descriptionChildMssql);
-        $manager->persist($settingsMssql);
+        $settings = new Settings();
+        $settings->setData($service)->setType(ServiceDto::class);
+        $manager->persist($settings);
 
-
-        $descriptionChildMssql = new DescriptionService();
-        $descriptionChildMssql
+        $descriptionChild = new DescriptionDto();
+        $descriptionChild
             ->setName('MsSql')
-            ->setType('sql')
             ->setInstance('DCSRV01')
             ->setDescription('BELOYARSK_DATA')
             ->setDate((new \DateTime())->createFromFormat('dmY', '25032019'));
 
-        $descriptionMssql = new DescriptionService();
-        $descriptionMssql
+        $description= new DescriptionDto();
+        $description
             ->setName('MsSql')
-            ->setType('sql')
             ->setInstance('DCSRV01')
             ->setDescription('BELOYARSK')
-            ->addChild($descriptionChildMssql);
+            ->addChild($descriptionChild);
 
-        $settingsMssql = new Settings();
-        $settingsMssql
+        $service = new ServerDto();
+        $service
             ->setPort('1433')
             ->setHost('172.16.45.10')
-            ->setType(DescriptionService::class)
-            ->setServiceType($descriptionMssql)
+            ->setType('orm')
+            ->setDescription($description)
             ->setRemote();
 
-        $manager->persist($descriptionMssql);
-        $manager->persist($descriptionChildMssql);
-        $manager->persist($settingsMssql);
+        $settings = new Settings();
+        $settings->setData($service)->setType(ServiceDto::class);
+        $manager->persist($settings);
 
-
-        $descriptionChildMssql = new DescriptionService();
-        $descriptionChildMssql
+        $descriptionChild = new DescriptionDto();
+        $descriptionChild
             ->setName('MsSql')
-            ->setType('sql')
             ->setInstance('DCSRV01')
             ->setDescription('KAMENNIY_GPA_DATA')
             ->setDate((new \DateTime())->createFromFormat('dmY', '18032017'));
 
-        $descriptionMssql = new DescriptionService();
-        $descriptionMssql
+        $description= new DescriptionDto();
+        $description
             ->setName('MsSql')
-            ->setType('sql')
             ->setInstance('DCSRV01')
             ->setDescription('KAMENNIY_GPA')
-            ->addChild($descriptionChildMssql);
+            ->addChild($descriptionChild);
 
-        $settingsMssql = new Settings();
-        $settingsMssql
+        $service = new ServerDto();
+        $service
             ->setPort('1433')
             ->setHost('172.16.45.10')
-            ->setType(DescriptionService::class)
-            ->setServiceType($descriptionMssql)
+            ->setType('orm')
+            ->setDescription($description)
             ->setRemote();
 
-        $manager->persist($descriptionMssql);
-        $manager->persist($descriptionChildMssql);
-        $manager->persist($settingsMssql);
+        $settings = new Settings();
+        $settings->setData($service)->setType(ServiceDto::class);
+        $manager->persist($settings);
 
-        $descriptionChildMssql = new DescriptionService();
-        $descriptionChildMssql
+        $descriptionChild = new DescriptionDto();
+        $descriptionChild
             ->setName('MsSql')
-            ->setType('sql')
             ->setInstance('DCSRV01')
             ->setDescription('TG6_DATA')
             ->setDate((new \DateTime())->createFromFormat('dmY', '15042019'));
 
-        $descriptionMssql = new DescriptionService();
-        $descriptionMssql
+        $description= new DescriptionDto();
+        $description
             ->setName('MsSql')
-            ->setType('sql')
             ->setInstance('DCSRV01')
             ->setDescription('TG6')
-            ->addChild($descriptionChildMssql);
+            ->addChild($descriptionChild);
 
-        $settingsMssql = new Settings();
-        $settingsMssql
+        $service = new ServerDto();
+        $service
             ->setPort('1433')
             ->setHost('172.16.45.10')
-            ->setType(DescriptionService::class)
-            ->setServiceType($descriptionMssql)
+            ->setType('orm')
+            ->setDescription($description)
             ->setRemote();
 
-        $manager->persist($descriptionMssql);
-        $manager->persist($descriptionChildMssql);
-        $manager->persist($settingsMssql);
+        $settings = new Settings();
+        $settings->setData($service)->setType(ServiceDto::class);
+        $manager->persist($settings);
 
-        $descriptionChildMssql = new DescriptionService();
-        $descriptionChildMssql
+        $descriptionChild = new DescriptionDto();
+        $descriptionChild
             ->setName('MsSql')
-            ->setType('sql')
             ->setInstance('DCSRV01')
             ->setDescription('TG8_DATA')
             ->setDate((new \DateTime())->createFromFormat('dmY', '22032018'));
 
-        $descriptionMssql = new DescriptionService();
-        $descriptionMssql
+        $description= new DescriptionDto();
+        $description
             ->setName('MsSql')
-            ->setType('sql')
             ->setInstance('DCSRV01')
             ->setDescription('TG8')
-            ->addChild($descriptionChildMssql);
+            ->addChild($descriptionChild);
 
-        $settingsMssql = new Settings();
-        $settingsMssql
+        $service = new ServerDto();
+        $service
             ->setPort('1433')
             ->setHost('172.16.45.10')
-            ->setType(DescriptionService::class)
-            ->setServiceType($descriptionMssql)
+            ->setType('orm')
+            ->setDescription($description)
             ->setRemote();
 
-        $manager->persist($descriptionMssql);
-        $manager->persist($descriptionChildMssql);
-        $manager->persist($settingsMssql);
+        $settings = new Settings();
+        $settings->setData($service)->setType(ServiceDto::class);
+        $manager->persist($settings);
 
-        $descriptionChildMssql = new DescriptionService();
-        $descriptionChildMssql
+        $descriptionChild = new DescriptionDto();
+        $descriptionChild
             ->setName('MsSql')
-            ->setType('sql')
             ->setInstance('DCSRV01')
             ->setDescription('YARSALE_DATA');
 
-        $descriptionMssql = new DescriptionService();
-        $descriptionMssql
+        $description= new DescriptionDto();
+        $description
             ->setName('MsSql')
-            ->setType('sql')
             ->setInstance('DCSRV01')
             ->setDescription('YARSALE')
-            ->addChild($descriptionChildMssql);
+            ->addChild($descriptionChild);
 
-        $settingsMssql = new Settings();
-        $settingsMssql
+        $service = new ServerDto();
+        $service
             ->setPort('1433')
             ->setHost('172.16.45.10')
-            ->setType(DescriptionService::class)
-            ->setServiceType($descriptionMssql)
+            ->setType('orm')
+            ->setDescription($description)
             ->setRemote();
 
-        $manager->persist($descriptionMssql);
-        $manager->persist($descriptionChildMssql);
-        $manager->persist($settingsMssql);
+        $settings = new Settings();
+        $settings->setData($service)->setType(ServiceDto::class);
+        $manager->persist($settings);
 
         $manager->flush();
     }

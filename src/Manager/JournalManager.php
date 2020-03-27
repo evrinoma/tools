@@ -9,14 +9,14 @@
 namespace App\Manager;
 
 
-use App\Core\AbstractEntityManager;
 use App\Entity\Delta\DiscreetInfo;
 use App\Entity\Delta\Params;
-use App\Entity\DescriptionService;
 
 use Doctrine\DBAL\Connection;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
+use Evrinoma\SettingsBundle\Manager\SettingsManagerInterface;
+use Evrinoma\UtilsBundle\Manager\AbstractEntityManager;
 use Evrinoma\UtilsBundle\Rest\RestTrait;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
@@ -52,7 +52,7 @@ class JournalManager extends AbstractEntityManager
     private $connection;
 
     /**
-     * @var SettingsManager
+     * @var SettingsManagerInterface
      */
     private $settingsManager;
 
@@ -66,14 +66,14 @@ class JournalManager extends AbstractEntityManager
 
 
 //region SECTION: Constructor
-    public function __construct(EntityManagerInterface $entityManager, RegistryInterface $registry, SettingsManager $settingsManager)
+    public function __construct(EntityManagerInterface $entityManager, RegistryInterface $registry)//, SettingsManager $settingsManager)
     {
         parent::__construct($entityManager);
 
         $this->entityManagerDelta = $registry->getEntityManager(self::MSSQL_LINK);
         $this->connection         = $this->entityManagerDelta->getConnection();
 
-        $this->settingsManager = $settingsManager;
+       // $this->settingsManager = $settingsManager;
     }
 //endregion Constructor
 

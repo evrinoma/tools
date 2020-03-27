@@ -56,5 +56,3 @@ services:
 #    tags:
 #      - { name: kernel.event_listener, event: custom.event.dto.adapter, method: onKernelDto }
 
-  App\Manager\SettingsManager:
-    arguments: ['@doctrine.orm.entity_manager']

@@ -21,26 +21,26 @@ doctrine:
                 # With Symfony 3.3, remove the `resolve:` prefix
                 url: '%env(resolve:DATABASE_URL)%'
 
-            delta:
-                # configure these for your database server
-                driver: 'pdo_sqlsrv'
-                server_version: '5.7'
-                charset: utf8mb4
-                schema_filter: ~^.*(^PARAMS*|^GROUPS*|^DEVICES*|^SCALES*|^SCRIPT_ENGINES*)~
-                # With Symfony 3.3, remove the `resolve:` prefix
-                url: '%env(resolve:DATABASE_DELTA_URL)%'
-#                mapping_types:
-#                    datetime2: datetime2
-#                    timestamp: timestamp
-
-            delta_data:
-                # configure these for your database server
-                driver: 'pdo_sqlsrv'
-                server_version: '5.7'
-                charset: utf8mb4
-                schema_filter: ~^.*(^A01012019*|^D01012019*)~
-                # With Symfony 3.3, remove the `resolve:` prefix
-                url: '%env(resolve:DATABASE_DELTA_DATA_URL)%'
+#            delta:
+#                # configure these for your database server
+#                driver: 'pdo_sqlsrv'
+#                server_version: '5.7'
+#                charset: utf8mb4
+#                schema_filter: ~^.*(^PARAMS*|^GROUPS*|^DEVICES*|^SCALES*|^SCRIPT_ENGINES*)~
+#                # With Symfony 3.3, remove the `resolve:` prefix
+#                url: '%env(resolve:DATABASE_DELTA_URL)%'
+##                mapping_types:
+##                    datetime2: datetime2
+##                    timestamp: timestamp
+#
+#            delta_data:
+#                # configure these for your database server
+#                driver: 'pdo_sqlsrv'
+#                server_version: '5.7'
+#                charset: utf8mb4
+#                schema_filter: ~^.*(^A01012019*|^D01012019*)~
+#                # With Symfony 3.3, remove the `resolve:` prefix
+#                url: '%env(resolve:DATABASE_DELTA_DATA_URL)%'
 
 
 
@@ -66,21 +66,21 @@ doctrine:
                         dir: '%kernel.project_dir%/src/Entity'
                         prefix: 'App\Entity'
                         alias: App
-            delta:
-                connection: delta
-                mappings:
-                    Customer:
-                        is_bundle: false
-                        type: annotation
-                        dir: '%kernel.project_dir%/src/Entity/Delta'
-                        prefix: 'App\Entity\Delta'
-                        alias: Delta
-            delta_data:
-                connection: delta_data
-                mappings:
-                    Customer:
-                        is_bundle: false
-                        type: annotation
-                        dir: '%kernel.project_dir%/src/Entity/Delta'
-                        prefix: 'App\Entity\Delta'
-                        alias: DeltaData
+#            delta:
+#                connection: delta
+#                mappings:
+#                    Customer:
+#                        is_bundle: false
+#                        type: annotation
+#                        dir: '%kernel.project_dir%/src/Entity/Delta'
+#                        prefix: 'App\Entity\Delta'
+#                        alias: Delta
+#            delta_data:
+#                connection: delta_data
+#                mappings:
+#                    Customer:
+#                        is_bundle: false
+#                        type: annotation
+#                        dir: '%kernel.project_dir%/src/Entity/Delta'
+#                        prefix: 'App\Entity\Delta'
+#                        alias: DeltaData

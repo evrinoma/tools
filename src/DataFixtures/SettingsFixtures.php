@@ -9,9 +9,11 @@
 namespace App\DataFixtures;
 
 
-use App\Entity\DescriptionService;
-use App\Entity\Settings;
 use Doctrine\Common\Persistence\ObjectManager;
+use Evrinoma\SettingsBundle\Dto\ApartDto\DescriptionDto;
+use Evrinoma\SettingsBundle\Dto\ApartDto\ServerDto;
+use Evrinoma\SettingsBundle\Dto\ServiceDto;
+use Evrinoma\SettingsBundle\Entity\Settings;
 
 /**
  * Class SettingsFixtures
@@ -29,36 +31,37 @@ class SettingsFixtures extends AbstractFixtures
      */
     public function load(ObjectManager $manager)
     {
-        $descriptionMysql = new DescriptionService();
-        $descriptionMysql
-            ->setName('MySql')
-            ->setType('sql');
+        $description = new DescriptionDto();
+        $description
+            ->setName('MySql');
 
-        $settingsMysql = new Settings();
-        $settingsMysql
+        $service = new ServerDto();
+        $service
             ->setPort('3306')
             ->setHost('172.18.2.1')
-            ->setType(DescriptionService::class)
-            ->setRemote()
-            ->setServiceType($descriptionMysql);
+            ->setType('orm')
+            ->setDescription($description)
+            ->setRemote();
 
-        $manager->persist($descriptionMysql);
-        $manager->persist($settingsMysql);
+        $settings = new Settings();
+        $settings->setData($service)->setType(ServiceDto::class);
+        $manager->persist($settings);
 
-        $descriptionSsh = new DescriptionService();
-        $descriptionSsh
+        $description = new DescriptionDto();
+        $description
             ->setName('SSH')
-            ->setType('ssh');
+            ->setInstance('ssh');
 
-        $settingsSsh = new Settings();
-        $settingsSsh
+        $service = new ServerDto();
+        $service
             ->setPort('22')
             ->setHost('localhost')
-            ->setType(DescriptionService::class)
-            ->setServiceType($descriptionSsh);
+            ->setType('port')
+            ->setDescription($description);
 
-        $manager->persist($descriptionSsh);
-        $manager->persist($settingsSsh);
+        $settings = new Settings();
+        $settings->setData($service)->setType(ServiceDto::class);
+        $manager->persist($settings);
 
         $manager->flush();
     }

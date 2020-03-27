@@ -16,7 +16,7 @@ class ScanServiceAdaptor extends DefaultServiceAdaptor implements ScanServiceInt
 //region SECTION: Getters/Setters
     public function getProtocol(): string
     {
-        return $this->entity->getServiceType()->getType();
+        return $this->entity->getDescription()->getInstance();
     }
 //endregion Getters/Setters
 }

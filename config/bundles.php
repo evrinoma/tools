@@ -23,6 +23,7 @@ return [
     Evrinoma\ShellBundle\EvrinomaShellBundle::class => ['all' => true],
     Evrinoma\DashBoardBundle\EvrinomaDashBoardBundle::class => ['all' => true],
     Evrinoma\LiveVideoBundle\EvrinomaLiveVideoBundle::class => ['all' => true],
-    Evrinoma\EximBundle\EvrinomaEximBundle::class => ['all' => true],
     Evrinoma\DtoBundle\EvrinomaDtoBundle::class => ['all' => true],
+    Evrinoma\SettingsBundle\EvrinomaSettingsBundle::class => ['all' => true],
+    Evrinoma\EximBundle\EvrinomaEximBundle::class => ['all' => true],
 ];

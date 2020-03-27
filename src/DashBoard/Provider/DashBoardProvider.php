@@ -3,11 +3,13 @@
 
 namespace App\DashBoard\Provider;
 
-use App\DashBoard\Adaptor\ScanServiceAdaptor;
 use App\DashBoard\Adaptor\DefaultServiceAdaptor;
-use App\Manager\SettingsManager;
+use App\DashBoard\Adaptor\ScanServiceAdaptor;
 use Doctrine\Common\Collections\ArrayCollection;
 use Evrinoma\DashBoardBundle\Provider\ProviderInterface;
+use Evrinoma\SettingsBundle\Dto\ApartDto\ServerDto;
+use Evrinoma\SettingsBundle\Dto\ServiceDto;
+use Evrinoma\SettingsBundle\Manager\SettingsManager;
 use Iterator;
 
 /**
@@ -44,15 +46,25 @@ class DashBoardProvider implements ProviderInterface
     public function getService(): Iterator
     {
         $services = new ArrayCollection();
+        $hash     = [];
 
-        foreach ($this->settingsManager->getSqlServers() as $server)
-        {
-            $services->add(new DefaultServiceAdaptor($server));
-        }
-
-        foreach ($this->settingsManager->getLocalSsh() as $server)
-        {
-            $services->add(new ScanServiceAdaptor($server));
+        foreach ($this->settingsManager->toSettings(new ServiceDto()) as $service) {
+            /** @var ServerDto $settings */
+            $settings = $service->getData();
+            switch ($settings->getType()) {
+                case 'orm':
+                    if (!in_array($settings->getHost().'_'.$settings->getPort(), $hash, true)) {
+                        $hash[] = $settings->getHost().'_'.$settings->getPort();
+                        $services->add(new DefaultServiceAdaptor($service));
+                    }
+                    break;
+                case 'port':
+                    if (!in_array($settings->getHost().'_'.$settings->getPort(), $hash, true)) {
+                        $hash[] = $settings->getHost().'_'.$settings->getPort();
+                        $services->add(new ScanServiceAdaptor($service));
+                    }
+                    break;
+            }
         }
 
         return $services->getIterator();
