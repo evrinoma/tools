@@ -7,6 +7,7 @@
         "doctrine/doctrine-bundle": "^1.10",
         "endroid/qrcode": "^3.7",
         "evrinoma/dashboard-bundle": "dev-master",
+        "evrinoma/exim-bundle": "dev-master",
         "evrinoma/livevideo-bundle": "dev-master",
         "friendsofsymfony/jsrouting-bundle": "^2.3",
         "friendsofsymfony/rest-bundle": "^2.5",
@@ -65,25 +66,29 @@
         },
         "1": {
             "type": "vcs",
-            "url": "/opt/WWW/container.ite-ng.ru/PhpstormProjects/DtoBundle"
+            "url": "/opt/WWW/container.ite-ng.ru/PhpstormProjects/Delta8Bundle"
         },
         "2": {
             "type": "vcs",
-            "url": "/opt/WWW/container.ite-ng.ru/PhpstormProjects/EximBundle"
+            "url": "/opt/WWW/container.ite-ng.ru/PhpstormProjects/DtoBundle"
         },
         "3": {
             "type": "vcs",
-            "url": "/opt/WWW/container.ite-ng.ru/PhpstormProjects/ShellBundle"
+            "url": "/opt/WWW/container.ite-ng.ru/PhpstormProjects/EximBundle"
         },
         "4": {
             "type": "vcs",
-            "url": "/opt/WWW/container.ite-ng.ru/PhpstormProjects/LiveVideoBundle"
+            "url": "/opt/WWW/container.ite-ng.ru/PhpstormProjects/ShellBundle"
         },
         "5": {
             "type": "vcs",
-            "url": "/opt/WWW/container.ite-ng.ru/PhpstormProjects/SettingsBundle"
+            "url": "/opt/WWW/container.ite-ng.ru/PhpstormProjects/LiveVideoBundle"
         },
         "6": {
+            "type": "vcs",
+            "url": "/opt/WWW/container.ite-ng.ru/PhpstormProjects/SettingsBundle"
+        },
+        "7": {
             "type": "vcs",
             "url": "/opt/WWW/container.ite-ng.ru/PhpstormProjects/UtilsBundle"
         },
