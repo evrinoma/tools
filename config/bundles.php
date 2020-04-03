@@ -26,4 +26,6 @@ return [
     Evrinoma\DtoBundle\EvrinomaDtoBundle::class => ['all' => true],
     Evrinoma\SettingsBundle\EvrinomaSettingsBundle::class => ['all' => true],
     Evrinoma\EximBundle\EvrinomaEximBundle::class => ['all' => true],
+    Evrinoma\MenuBundle\EvrinomaMenuBundle::class => ['all' => true],
+    Evrinoma\Delta8Bundle\EvrinomaDelta8Bundle::class => ['all' => true],
 ];

@@ -63,40 +63,40 @@
   "prefer-stable": true,
   "repositories": {
     "0": {
-      "type": "vcs",
-      "url": "/opt/WWW/container.ite-ng.ru/PhpstormProjects/DashBoardBundle"
+      "type": "vcs",https://github.com/evrinoma/DashBoardBundle.git
+      "url",: ""
     },
     "1": {
       "type": "vcs",
-      "url": "/opt/WWW/container.ite-ng.ru/PhpstormProjects/Delta8Bundle"
+      "url": "https://github.com/evrinoma/Delta8Bundle.git"
     },
     "2": {
       "type": "vcs",
-      "url": "/opt/WWW/container.ite-ng.ru/PhpstormProjects/DtoBundle"
+      "url": "https://github.com/evrinoma/DtoBundle.git"
     },
     "3": {
       "type": "vcs",
-      "url": "/opt/WWW/container.ite-ng.ru/PhpstormProjects/EximBundle"
+      "url": "https://github.com/evrinoma/EximBundle.git"
     },
     "4": {
       "type": "vcs",
-      "url": "/opt/WWW/container.ite-ng.ru/PhpstormProjects/ShellBundle"
+      "url": "https://github.com/evrinoma/ShellBundle.git"
     },
     "5": {
       "type": "vcs",
-      "url": "/opt/WWW/container.ite-ng.ru/PhpstormProjects/LiveVideoBundle"
+      "url": "https://github.com/evrinoma/LiveVideoBundle.git"
     },
     "6": {
       "type": "vcs",
-      "url": "/opt/WWW/container.ite-ng.ru/PhpstormProjects/MenuBundle"
+      "url": "https://github.com/evrinoma/MenuBundle.git"
     },
     "7": {
       "type": "vcs",
-      "url": "/opt/WWW/container.ite-ng.ru/PhpstormProjects/SettingsBundle"
+      "url": "https://github.com/evrinoma/SettingsBundle.git"
     },
     "8": {
       "type": "vcs",
-      "url": "/opt/WWW/container.ite-ng.ru/PhpstormProjects/UtilsBundle"
+      "url": "https://github.com/evrinoma/UtilsBundle.git"
     },
     "packagist": false
   },
