@@ -51,3 +51,28 @@ dashboard:
 #    live_video:
 #      path_patterns:
 #          - ^/evrinoma/api/live_video
+
+
+doctrine:
+  dbal:
+    connections:
+      delta:
+        # configure these for your database server
+        driver: 'pdo_sqlsrv'
+        server_version: '5.7'
+        charset: utf8mb4
+#        schema_filter: ~^.*(^PARAMS*|^GROUPS*|^DEVICES*|^SCALES*|^SCRIPT_ENGINES*)~
+        # With Symfony 3.3, remove the `resolve:` prefix
+        url: '%env(resolve:DATABASE_DELTA_URL)%'
+  orm:
+    default_entity_manager: default
+    entity_managers:
+      delta8:
+        connection: delta
+        mappings:
+          Customer:
+            is_bundle: false
+            type: annotation
+            dir: '%kernel.project_dir%/vendor/evrinoma/delta8-bundle/src/Entity'
+            prefix: 'Evrinoma\Delta8Bundle\Entity'
+            alias: Delta

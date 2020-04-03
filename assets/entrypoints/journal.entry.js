@@ -1,1 +1,1 @@
-import Journal from "../js/lib/AgGrid/journal.js";
+import Journal from '../../public/bundles/evrinomadelta8/js/AgGrid/journal.js';

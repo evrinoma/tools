@@ -1,17 +1,11 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: nikolns
- * Date: 2/12/18
- * Time: 10:43 AM
- */
 
 namespace App\Security;
 
 /**
  * Class Ldap
  *
- * @package App\Core
+ * @package App\Security
  */
 class Ldap
 {
@@ -182,66 +176,6 @@ class Ldap
 //endregion Private
 
 //region SECTION: Getters/Setters
-//    public function getList($domain = 'ite-ng.ru')
-//    {
-//        if (!$this->connect) {
-//            $this->connect($domain);
-//        }
-//
-//        $ad_users = array();
-//
-//        if (true === ldap_bind($this->connect, $this->log, $this->pass)) {
-//            $ldap_base_dn  = $this->search;
-//            $search_filter = '(&(objectclass=organizationalperson)(samaccountname=*))';
-//            $attributes    = array(
-//                'mail',
-//                'givenname',
-//                'sn',
-//                'telephonenumber',
-//                'description',
-//                'physicaldeliveryofficename',
-//                'department',
-//                'company',
-//                'samaccountname',
-//                'whencreated',
-//                'whenchanged',
-//            );
-//            $result        = ldap_search($this->connect, $ldap_base_dn, $search_filter, $attributes);
-//
-//            if (false !== $result) {
-//                $entries = ldap_get_entries($this->connect, $result);
-//                for ($x = 0; $x < $entries['count']; $x++) {
-//                    if (
-//                        !empty($entries[$x]['givenname'][0]) &&
-//                        !empty($entries[$x]['mail'][0]) &&
-//                        !empty($entries[$x]['samaccountname'][0]) &&
-//                        !empty($entries[$x]['sn'][0])
-//                    ) {
-//                        $account = trim($entries[$x]['samaccountname'][0]);
-//
-//                        $ad_users[$account] = //$entries[$x];
-//                            array(
-//                                'email'           => isset($entries[$x]['mail'][0]) ? trim($entries[$x]['mail'][0]) : '',//strtolower(trim($entries[$x]['mail'][0])),
-//                                'first_name'      => isset($entries[$x]['givenname'][0]) ? trim($entries[$x]['givenname'][0]) : '',
-//                                'last_name'       => isset($entries[$x]['sn'][0]) ? trim($entries[$x]['sn'][0]) : '',//trim($entries[$x]['sn'][0]),
-//                                'telephonenumber' => isset($entries[$x]['telephonenumber'][0]) ? trim($entries[$x]['telephonenumber'][0]) : '',
-//                                'post'            => isset($entries[$x]['description'][0]) ? trim($entries[$x]['description'][0]) : '',
-//                                'room'            => isset($entries[$x]['physicaldeliveryofficename'][0]) ? trim($entries[$x]['physicaldeliveryofficename'][0]) : '',
-//                                'department'      => isset($entries[$x]['department'][0]) ? trim($entries[$x]['department'][0]) : '',
-//                                'company'         => isset($entries[$x]['company'][0]) ? trim($entries[$x]['company'][0]) : '',
-//                                'createdAt'       => isset($entries[$x]['whencreated'][0]) ? trim($entries[$x]['whencreated'][0]) : '',
-//                                'updatedAt'       => isset($entries[$x]['whenchanged'][0]) ? trim($entries[$x]['whenchanged'][0]) : '',
-//                                'dn'              => trim($entries[$x]['dn']),
-//                            );
-//                    }
-//                }
-//            }
-//        }
-//
-//
-//        return $ad_users;
-//    }
-
     /**
      * настроки поумолчанию для ldap серверов
      */

@@ -1,15 +1,9 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: nikolns
- * Date: 2/9/18
- * Time: 5:45 PM
- */
 
 namespace App\Security;
 
-use App\Interfaces\RoleInterface;
 use Doctrine\ORM\EntityManagerInterface;
+use Evrinoma\UtilsBundle\Voter\RoleInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;

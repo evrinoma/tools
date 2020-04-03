@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+{% block title %}{{ titleHeader }}{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {% include '@EvrinomaDelta8/delta8/css.html.twig' %}
+{% endblock stylesheets %}
+
+{% block page %}
+    {% include '@EvrinomaDelta8/delta8/template.html.twig' %}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {% include '@EvrinomaDelta8/delta8/js.html.twig' %}
+{% endblock %}

@@ -1,14 +1,8 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: nikolns
- * Date: 2/8/18
- * Time: 2:02 PM
- */
 
 namespace App\Entity;
 
-use App\Dto\ApartDto\ContactDto;
+use App\QrCode\Dto\ApartDto\ContactDto;
 use Doctrine\ORM\Mapping as ORM;
 use FOS\UserBundle\Model\User as BaseUser;
 

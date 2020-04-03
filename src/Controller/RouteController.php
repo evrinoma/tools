@@ -1,15 +1,8 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: nikolns
- * Date: 2/1/18
- * Time: 10:24 AM
- */
 
 namespace App\Controller;
 
-
-use App\Manager\ContactManager;
+use App\QrCode\Manager\ContactManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
