@@ -37,7 +37,7 @@
     "build": "encore production"
   },
   "dependencies": {
-    "acorn": "^7.1.1",
+    "acorn": "^6.4.1",
     "ag-grid-community": "^22.1.1",
     "ag-grid-vue": "^22.1.1",
     "atob": "^2.1.2",
