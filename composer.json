@@ -15,7 +15,7 @@
     "friendsofsymfony/rest-bundle": "^2.5",
     "friendsofsymfony/user-bundle": "dev-master",
     "jms/serializer-bundle": "^3.1",
-    "knplabs/knp-menu-bundle": "^2.0",
+    "knplabs/knp-menu-bundle": "^3.0",
     "ltoscano/ponvif": "dev-master",
     "nelmio/api-doc-bundle": "dev-master",
     "sensio/framework-extra-bundle": "^5.2",
@@ -30,7 +30,6 @@
     "symfony/swiftmailer-bundle": "^3.1",
     "symfony/templating": "^4.0",
     "symfony/twig-bundle": "^4.0",
-    "symfony/webpack-encore-bundle": "^1.1",
     "symfony/yaml": "^4.0"
   },
   "require-dev": {
@@ -44,6 +43,9 @@
     "symfony/var-dumper": "^3.3|^4.0"
   },
   "config": {
+    "github-oauth": {
+      "github.com": "10705da1d796bd7a9797c252d575dade22badfc7"
+    },
     "preferred-install": {
       "*": "dist"
     },
@@ -62,43 +64,56 @@
   "minimum-stability": "dev",
   "prefer-stable": true,
   "repositories": {
-    "0": {
-      "type": "vcs",https://github.com/evrinoma/DashBoardBundle.git
-      "url",: ""
+    "dashboard": {
+      "type": "vcs",
+      "url": "https://github.com/evrinoma/DashBoardBundle.git"
     },
-    "1": {
+    "delta8": {
       "type": "vcs",
       "url": "https://github.com/evrinoma/Delta8Bundle.git"
     },
-    "2": {
+    "dto": {
       "type": "vcs",
       "url": "https://github.com/evrinoma/DtoBundle.git"
     },
-    "3": {
+    "exim": {
       "type": "vcs",
       "url": "https://github.com/evrinoma/EximBundle.git"
     },
-    "4": {
+    "shell": {
       "type": "vcs",
       "url": "https://github.com/evrinoma/ShellBundle.git"
     },
-    "5": {
+    "livevideo": {
       "type": "vcs",
       "url": "https://github.com/evrinoma/LiveVideoBundle.git"
     },
-    "6": {
+    "menu": {
       "type": "vcs",
       "url": "https://github.com/evrinoma/MenuBundle.git"
     },
-    "7": {
+    "settings": {
       "type": "vcs",
       "url": "https://github.com/evrinoma/SettingsBundle.git"
     },
-    "8": {
+    "utils": {
       "type": "vcs",
       "url": "https://github.com/evrinoma/UtilsBundle.git"
     },
-    "packagist": false
+    "ponvif": {
+      "type": "package",
+      "package": {
+        "name": "ltoscano/ponvif",
+        "version": "dev-master",
+        "dist": {
+          "url": "https://github.com/ltoscano/ponvif/archive/master.zip",
+          "type": "zip"
+        },
+        "autoload": {
+          "classmap": ["lib/"]
+        }
+      }
+    }
   },
   "replace": {
     "symfony/polyfill-iconv": "*",

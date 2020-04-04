@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "f8c582f71f8b1bd0a5404398a5ff74e9",
+    "content-hash": "58f0a2c40fb282bc2edca2733f8e62ce",
     "packages": [
         {
             "name": "bacon/bacon-qr-code",
@@ -155,20 +155,21 @@
         },
         {
             "name": "doctrine/annotations",
-            "version": "v1.8.0",
+            "version": "1.10.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/annotations.git",
-                "reference": "904dca4eb10715b92569fbcd79e201d5c349b6bc"
+                "reference": "5eb79f3dbdffed6544e1fc287572c0f462bd29bb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/annotations/zipball/904dca4eb10715b92569fbcd79e201d5c349b6bc",
-                "reference": "904dca4eb10715b92569fbcd79e201d5c349b6bc",
+                "url": "https://api.github.com/repos/doctrine/annotations/zipball/5eb79f3dbdffed6544e1fc287572c0f462bd29bb",
+                "reference": "5eb79f3dbdffed6544e1fc287572c0f462bd29bb",
                 "shasum": ""
             },
             "require": {
                 "doctrine/lexer": "1.*",
+                "ext-tokenizer": "*",
                 "php": "^7.1"
             },
             "require-dev": {
@@ -178,7 +179,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.7.x-dev"
+                    "dev-master": "1.9.x-dev"
                 }
             },
             "autoload": {
@@ -219,7 +220,7 @@
                 "docblock",
                 "parser"
             ],
-            "time": "2019-10-01T18:55:10+00:00"
+            "time": "2020-04-02T12:33:25+00:00"
         },
         {
             "name": "doctrine/cache",
@@ -1513,8 +1514,14 @@
             "version": "dev-master",
             "source": {
                 "type": "git",
-                "url": "/opt/WWW/container.ite-ng.ru/PhpstormProjects/DashBoardBundle",
-                "reference": "cc28626a186c7dbd529ab099c1d703b3a4b026f8"
+                "url": "https://github.com/evrinoma/DashBoardBundle.git",
+                "reference": "657ae5830d71018324cf479d91dd0ae46c44beb1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/evrinoma/DashBoardBundle/zipball/657ae5830d71018324cf479d91dd0ae46c44beb1",
+                "reference": "657ae5830d71018324cf479d91dd0ae46c44beb1",
+                "shasum": ""
             },
             "require": {
                 "evrinoma/shell-bundle": "dev-master",
@@ -1542,15 +1549,25 @@
             "keywords": [
                 "DashBoard"
             ],
-            "time": "2020-04-03T04:08:05+00:00"
+            "support": {
+                "source": "https://github.com/evrinoma/DashBoardBundle/tree/master",
+                "issues": "https://github.com/evrinoma/DashBoardBundle/issues"
+            },
+            "time": "2020-04-03T10:03:53+00:00"
         },
         {
             "name": "evrinoma/delta8-bundle",
             "version": "dev-master",
             "source": {
                 "type": "git",
-                "url": "/opt/WWW/container.ite-ng.ru/PhpstormProjects/Delta8Bundle",
-                "reference": "5895d26ea020b5d64fd60b17280f7602a3873fc6"
+                "url": "https://github.com/evrinoma/Delta8Bundle.git",
+                "reference": "20e0ceabe3ca3c423b1872d7e9c0a8a6c6075048"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/evrinoma/Delta8Bundle/zipball/20e0ceabe3ca3c423b1872d7e9c0a8a6c6075048",
+                "reference": "20e0ceabe3ca3c423b1872d7e9c0a8a6c6075048",
+                "shasum": ""
             },
             "require": {
                 "evrinoma/settings-bundle": "dev-master",
@@ -1579,15 +1596,25 @@
             "keywords": [
                 "Delta8"
             ],
-            "time": "2020-04-03T04:08:09+00:00"
+            "support": {
+                "source": "https://github.com/evrinoma/Delta8Bundle/tree/master",
+                "issues": "https://github.com/evrinoma/Delta8Bundle/issues"
+            },
+            "time": "2020-04-03T10:12:55+00:00"
         },
         {
             "name": "evrinoma/dto-bundle",
             "version": "dev-master",
             "source": {
                 "type": "git",
-                "url": "/opt/WWW/container.ite-ng.ru/PhpstormProjects/DtoBundle",
-                "reference": "eab829a2405b1720b0c3bfdfcc12f8f042640772"
+                "url": "https://github.com/evrinoma/DtoBundle.git",
+                "reference": "810d2bd64fc4d045eb322e23434884e08610a788"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/evrinoma/DtoBundle/zipball/810d2bd64fc4d045eb322e23434884e08610a788",
+                "reference": "810d2bd64fc4d045eb322e23434884e08610a788",
+                "shasum": ""
             },
             "require": {
                 "php": "^7.1.3"
@@ -1614,15 +1641,25 @@
             "keywords": [
                 "Dto"
             ],
-            "time": "2020-04-03T04:08:12+00:00"
+            "support": {
+                "source": "https://github.com/evrinoma/DtoBundle/tree/master",
+                "issues": "https://github.com/evrinoma/DtoBundle/issues"
+            },
+            "time": "2020-04-03T10:14:02+00:00"
         },
         {
             "name": "evrinoma/exim-bundle",
             "version": "dev-master",
             "source": {
                 "type": "git",
-                "url": "/opt/WWW/container.ite-ng.ru/PhpstormProjects/EximBundle",
-                "reference": "f5233d187f966c7fc157e5b5013ee4556485fdc8"
+                "url": "https://github.com/evrinoma/EximBundle.git",
+                "reference": "bb958ca6e041e14b5c1e553c4f5284cfa4e1bd18"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/evrinoma/EximBundle/zipball/bb958ca6e041e14b5c1e553c4f5284cfa4e1bd18",
+                "reference": "bb958ca6e041e14b5c1e553c4f5284cfa4e1bd18",
+                "shasum": ""
             },
             "require": {
                 "evrinoma/dto-bundle": "dev-master",
@@ -1652,15 +1689,25 @@
             "keywords": [
                 "Exim"
             ],
-            "time": "2020-04-03T04:08:16+00:00"
+            "support": {
+                "source": "https://github.com/evrinoma/EximBundle/tree/master",
+                "issues": "https://github.com/evrinoma/EximBundle/issues"
+            },
+            "time": "2020-04-03T10:15:45+00:00"
         },
         {
             "name": "evrinoma/livevideo-bundle",
             "version": "dev-master",
             "source": {
                 "type": "git",
-                "url": "/opt/WWW/container.ite-ng.ru/PhpstormProjects/LiveVideoBundle",
-                "reference": "b5931e258c8c30bf475bc5a5220746b6d1b00ee8"
+                "url": "https://github.com/evrinoma/LiveVideoBundle.git",
+                "reference": "66ee6315d7f7925d7651b6b6f23305a93f37e16a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/evrinoma/LiveVideoBundle/zipball/66ee6315d7f7925d7651b6b6f23305a93f37e16a",
+                "reference": "66ee6315d7f7925d7651b6b6f23305a93f37e16a",
+                "shasum": ""
             },
             "require": {
                 "evrinoma/dto-bundle": "dev-master",
@@ -1692,19 +1739,29 @@
                 "Stream player",
                 "Wowza"
             ],
-            "time": "2020-04-03T04:08:19+00:00"
+            "support": {
+                "source": "https://github.com/evrinoma/LiveVideoBundle/tree/master",
+                "issues": "https://github.com/evrinoma/LiveVideoBundle/issues"
+            },
+            "time": "2020-04-03T10:17:47+00:00"
         },
         {
             "name": "evrinoma/menu-bundle",
             "version": "dev-master",
             "source": {
                 "type": "git",
-                "url": "/opt/WWW/container.ite-ng.ru/PhpstormProjects/MenuBundle",
-                "reference": "62f247c27c378d4fed09f10cd0cd3870c5d285b6"
+                "url": "https://github.com/evrinoma/MenuBundle.git",
+                "reference": "a7518f137eeef051ca427087bc31b4b8590e4050"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/evrinoma/MenuBundle/zipball/a7518f137eeef051ca427087bc31b4b8590e4050",
+                "reference": "a7518f137eeef051ca427087bc31b4b8590e4050",
+                "shasum": ""
             },
             "require": {
                 "evrinoma/utils-bundle": "dev-master",
-                "knplabs/knp-menu-bundle": "^2.0",
+                "knplabs/knp-menu-bundle": "^3.0",
                 "php": "^7.1.3"
             },
             "type": "symfony-bundle",
@@ -1729,15 +1786,25 @@
             "keywords": [
                 "Menu"
             ],
-            "time": "2020-04-03T04:08:22+00:00"
+            "support": {
+                "source": "https://github.com/evrinoma/MenuBundle/tree/master",
+                "issues": "https://github.com/evrinoma/MenuBundle/issues"
+            },
+            "time": "2020-04-03T13:46:03+00:00"
         },
         {
             "name": "evrinoma/settings-bundle",
             "version": "dev-master",
             "source": {
                 "type": "git",
-                "url": "/opt/WWW/container.ite-ng.ru/PhpstormProjects/SettingsBundle",
-                "reference": "ca2874c41818a3bc7bda48f83836b4bbbae487f0"
+                "url": "https://github.com/evrinoma/SettingsBundle.git",
+                "reference": "879c89e52687711fb92cbf936e979730ded866a0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/evrinoma/SettingsBundle/zipball/879c89e52687711fb92cbf936e979730ded866a0",
+                "reference": "879c89e52687711fb92cbf936e979730ded866a0",
+                "shasum": ""
             },
             "require": {
                 "evrinoma/dto-bundle": "dev-master",
@@ -1765,15 +1832,25 @@
             "keywords": [
                 "settings"
             ],
-            "time": "2020-04-03T04:08:26+00:00"
+            "support": {
+                "source": "https://github.com/evrinoma/SettingsBundle/tree/master",
+                "issues": "https://github.com/evrinoma/SettingsBundle/issues"
+            },
+            "time": "2020-04-03T10:21:22+00:00"
         },
         {
             "name": "evrinoma/shell-bundle",
             "version": "dev-master",
             "source": {
                 "type": "git",
-                "url": "/opt/WWW/container.ite-ng.ru/PhpstormProjects/ShellBundle",
-                "reference": "c1f4f86a774c0464619b5918d8f6b3956d6be26d"
+                "url": "https://github.com/evrinoma/ShellBundle.git",
+                "reference": "6a8900f4f96e93780a2b21778e28d6199c56c1fa"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/evrinoma/ShellBundle/zipball/6a8900f4f96e93780a2b21778e28d6199c56c1fa",
+                "reference": "6a8900f4f96e93780a2b21778e28d6199c56c1fa",
+                "shasum": ""
             },
             "require": {
                 "php": "^7.1.3"
@@ -1800,15 +1877,25 @@
             "keywords": [
                 "Shell"
             ],
-            "time": "2020-03-09T06:55:29+00:00"
+            "support": {
+                "source": "https://github.com/evrinoma/ShellBundle/tree/master",
+                "issues": "https://github.com/evrinoma/ShellBundle/issues"
+            },
+            "time": "2020-04-03T10:23:31+00:00"
         },
         {
             "name": "evrinoma/utils-bundle",
             "version": "dev-master",
             "source": {
                 "type": "git",
-                "url": "/opt/WWW/container.ite-ng.ru/PhpstormProjects/UtilsBundle",
-                "reference": "e0a56ebe90afb09e964d8133cdc5cbbebd5a0725"
+                "url": "https://github.com/evrinoma/UtilsBundle.git",
+                "reference": "bc8c4ee2ae4652b2644b1f2e9e87e7465e5f21c5"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/evrinoma/UtilsBundle/zipball/bc8c4ee2ae4652b2644b1f2e9e87e7465e5f21c5",
+                "reference": "bc8c4ee2ae4652b2644b1f2e9e87e7465e5f21c5",
+                "shasum": ""
             },
             "require": {
                 "php": "^7.1.3"
@@ -1836,7 +1923,11 @@
                 "Core",
                 "Utils"
             ],
-            "time": "2020-04-03T04:08:34+00:00"
+            "support": {
+                "source": "https://github.com/evrinoma/UtilsBundle/tree/master",
+                "issues": "https://github.com/evrinoma/UtilsBundle/issues"
+            },
+            "time": "2020-04-03T10:25:09+00:00"
         },
         {
             "name": "exsyst/swagger",
@@ -2049,12 +2140,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/FriendsOfSymfony/FOSUserBundle.git",
-                "reference": "a9e71b6e7b61e7f39ba77436ba3e9af954450c4b"
+                "reference": "cf7fe27b2f4e1f298ee6eadf537267f8c9f9b85c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FriendsOfSymfony/FOSUserBundle/zipball/a9e71b6e7b61e7f39ba77436ba3e9af954450c4b",
-                "reference": "a9e71b6e7b61e7f39ba77436ba3e9af954450c4b",
+                "url": "https://api.github.com/repos/FriendsOfSymfony/FOSUserBundle/zipball/cf7fe27b2f4e1f298ee6eadf537267f8c9f9b85c",
+                "reference": "cf7fe27b2f4e1f298ee6eadf537267f8c9f9b85c",
                 "shasum": ""
             },
             "require": {
@@ -2118,7 +2209,7 @@
             "keywords": [
                 "User management"
             ],
-            "time": "2020-01-08T18:06:24+00:00"
+            "time": "2020-03-31T10:59:53+00:00"
         },
         {
             "name": "hoa/compiler",
@@ -3220,30 +3311,31 @@
         },
         {
             "name": "knplabs/knp-menu",
-            "version": "2.6.0",
+            "version": "v3.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/KnpLabs/KnpMenu.git",
-                "reference": "b6aade272c345b6fbd07fce5929a761cba0909b8"
+                "reference": "df1a329c60e4d96146a6e72d5604d8df010d85c9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/KnpLabs/KnpMenu/zipball/b6aade272c345b6fbd07fce5929a761cba0909b8",
-                "reference": "b6aade272c345b6fbd07fce5929a761cba0909b8",
+                "url": "https://api.github.com/repos/KnpLabs/KnpMenu/zipball/df1a329c60e4d96146a6e72d5604d8df010d85c9",
+                "reference": "df1a329c60e4d96146a6e72d5604d8df010d85c9",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.6.0"
+                "php": "^7.2"
             },
             "conflict": {
-                "twig/twig": "<1.40|>=2,<2.9"
+                "twig/twig": "<1.40 || >=2,<2.9"
             },
             "require-dev": {
+                "phpspec/prophecy": "^1.8",
                 "psr/container": "^1.0",
-                "symfony/http-foundation": "~2.4|~3.0|^4.0",
-                "symfony/phpunit-bridge": "~3.3|^4.0",
-                "symfony/routing": "~2.3|~3.0|^4.0",
-                "twig/twig": "^1.40|^2.9"
+                "symfony/http-foundation": "^3.4 || ^4.2|| ^5.0",
+                "symfony/phpunit-bridge": "^3.3 || ^4.2|| ^5.0",
+                "symfony/routing": "^3.4 || ^4.2|| ^5.0",
+                "twig/twig": "^1.40 || ^2.9 || ^3.0"
             },
             "suggest": {
                 "twig/twig": "for the TwigRenderer and the integration with your templates"
@@ -3251,7 +3343,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "3.0-dev"
+                    "dev-master": "3.2-dev"
                 }
             },
             "autoload": {
@@ -3273,7 +3365,7 @@
                     "email": "stof@notk.org"
                 },
                 {
-                    "name": "Symfony Community",
+                    "name": "The Community",
                     "homepage": "https://github.com/KnpLabs/KnpMenu/contributors"
                 }
             ],
@@ -3283,36 +3375,37 @@
                 "menu",
                 "tree"
             ],
-            "time": "2019-09-02T10:16:14+00:00"
+            "time": "2019-12-01T13:01:06+00:00"
         },
         {
             "name": "knplabs/knp-menu-bundle",
-            "version": "v2.3.0",
+            "version": "v3.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/KnpLabs/KnpMenuBundle.git",
-                "reference": "78b0cebf8e1490f12ba6555511282954de83f627"
+                "reference": "2795e236db1d807040762be9a2813ab8c6ed0569"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/KnpLabs/KnpMenuBundle/zipball/78b0cebf8e1490f12ba6555511282954de83f627",
-                "reference": "78b0cebf8e1490f12ba6555511282954de83f627",
+                "url": "https://api.github.com/repos/KnpLabs/KnpMenuBundle/zipball/2795e236db1d807040762be9a2813ab8c6ed0569",
+                "reference": "2795e236db1d807040762be9a2813ab8c6ed0569",
                 "shasum": ""
             },
             "require": {
-                "knplabs/knp-menu": "~2.3",
-                "php": "^7.1",
-                "symfony/framework-bundle": "^3.4 | ^4.0"
+                "knplabs/knp-menu": "^3.0",
+                "php": "^7.2",
+                "symfony/framework-bundle": "^3.4 | ^4.2 | ^5.0"
             },
             "require-dev": {
-                "symfony/expression-language": "^3.4 | ^4.0",
-                "symfony/phpunit-bridge": "^3.4 | ^4.0",
-                "symfony/templating": "^3.4 | ^4.0"
+                "phpspec/prophecy": "^1.8",
+                "symfony/expression-language": "^3.4 | ^4.2 | ^5.0",
+                "symfony/phpunit-bridge": "^3.4 | ^4.2 | ^5.0",
+                "symfony/templating": "^3.4 | ^4.0 | ^5.0"
             },
             "type": "symfony-bundle",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "3.0.x-dev"
+                    "dev-master": "3.1.x-dev"
                 }
             },
             "autoload": {
@@ -3342,7 +3435,7 @@
             "keywords": [
                 "menu"
             ],
-            "time": "2019-09-19T08:51:48+00:00"
+            "time": "2019-12-01T13:07:41+00:00"
         },
         {
             "name": "ltoscano/ponvif",
@@ -3410,12 +3503,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/nelmio/NelmioApiDocBundle.git",
-                "reference": "b3c663dd6d6d9e9931f42a37e8acf617e3c5c651"
+                "reference": "ab014fe032beb1a7875939ff4162e8d05ad778ab"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nelmio/NelmioApiDocBundle/zipball/b3c663dd6d6d9e9931f42a37e8acf617e3c5c651",
-                "reference": "b3c663dd6d6d9e9931f42a37e8acf617e3c5c651",
+                "url": "https://api.github.com/repos/nelmio/NelmioApiDocBundle/zipball/ab014fe032beb1a7875939ff4162e8d05ad778ab",
+                "reference": "ab014fe032beb1a7875939ff4162e8d05ad778ab",
                 "shasum": ""
             },
             "require": {
@@ -3490,7 +3583,7 @@
                 "documentation",
                 "rest"
             ],
-            "time": "2020-03-29T08:29:39+00:00"
+            "time": "2020-03-31T10:05:08+00:00"
         },
         {
             "name": "ocramius/package-versions",
@@ -7508,59 +7601,6 @@
                 "serialize"
             ],
             "time": "2020-03-27T16:56:45+00:00"
-        },
-        {
-            "name": "symfony/webpack-encore-bundle",
-            "version": "v1.7.3",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/symfony/webpack-encore-bundle.git",
-                "reference": "5c0f659eceae87271cce54bbdfb05ed8ec9007bd"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/symfony/webpack-encore-bundle/zipball/5c0f659eceae87271cce54bbdfb05ed8ec9007bd",
-                "reference": "5c0f659eceae87271cce54bbdfb05ed8ec9007bd",
-                "shasum": ""
-            },
-            "require": {
-                "php": "^7.1.3",
-                "symfony/asset": "^3.4 || ^4.0 || ^5.0",
-                "symfony/config": "^3.4 || ^4.0 || ^5.0",
-                "symfony/dependency-injection": "^3.4 || ^4.0 || ^5.0",
-                "symfony/http-kernel": "^3.4 || ^4.0 || ^5.0",
-                "symfony/service-contracts": "^1.0 || ^2.0"
-            },
-            "require-dev": {
-                "symfony/framework-bundle": "^3.4 || ^4.0 || ^5.0",
-                "symfony/phpunit-bridge": "^4.3.5 || ^5.0",
-                "symfony/twig-bundle": "^3.4 || ^4.0 || ^5.0",
-                "symfony/web-link": "^3.4 || ^4.0 || ^5.0"
-            },
-            "type": "symfony-bundle",
-            "extra": {
-                "thanks": {
-                    "name": "symfony/webpack-encore",
-                    "url": "https://github.com/symfony/webpack-encore"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Symfony\\WebpackEncoreBundle\\": "src"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Symfony Community",
-                    "homepage": "https://symfony.com/contributors"
-                }
-            ],
-            "description": "Integration with your Symfony app & Webpack Encore!",
-            "time": "2020-01-31T15:31:59+00:00"
         },
         {
             "name": "symfony/yaml",
