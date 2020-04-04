@@ -2,9 +2,9 @@
 What is it
 
 It is SPA web project base on framework Symfony 4 (engine php7.2) to control exim mail system. 
-The system allows for manage gray listing, domain control, search in system logs, also system support Active Directory Integration and other fiches.
+The system allows for manage gray listing, domain control, search in system logs, also system support Active Directory Integration and other fetches.
 
-scheme how it's work
+how it's work scheme
 
 ![Alt text](readme/howis.jpg?raw=true "How is work")
 
@@ -24,20 +24,38 @@ create .env configuration file by command
 
 configure your SQL connect by setting environments
 DATABASE_URL=mysql://tools:tools@mysql.dockerMySqlHost:3306/tools
+
+If you'd like to use delta8 integration please configure 
 DATABASE_DELTA_URL=mssql://user:pass@mssql.dockerMsSqlHost\\DCSRV01:1433
 DATABASE_DELTA_DATA_URL=mssql://user:pass@mssql.dockerMsSqlHost\\DCSRV01:1433/TAZOVSKIY_DATA
 
-Install PHP 7.2 or higher and all needed PHP extensions. Also you have to installed Composer.
+Install PHP 7.2 or higher and all needed PHP extensions. Also you have to installed Composer.<br>
+Also configure composer.json:<br>
+ * composer config repositories.dashboard vcs https://github.com/evrinoma/DashBoardBundle.git<br>
+ * composer config repositories.delta8 vcs https://github.com/evrinoma/Delta8Bundle.git<br>
+ * composer config repositories.dto vcs https://github.com/evrinoma/DtoBundle.git<br>
+ * composer config repositories.exim vcs https://github.com/evrinoma/EximBundle.git<br>
+ * composer config repositories.shell vcs https://github.com/evrinoma/ShellBundle.git<br>
+ * composer config repositories.livevideo vcs https://github.com/evrinoma/LiveVideoBundle.git<br>
+ * composer config repositories.menu vcs https://github.com/evrinoma/MenuBundle.git<br>
+ * composer config repositories.settings vcs https://github.com/evrinoma/SettingsBundle.git<br>
+ * composer config repositories.utils vcs https://github.com/evrinoma/ShellBundle.git<br>
+ * composer config repositories.livevideo vcs https://github.com/evrinoma/UtilsBundle.git<br>
+ * composer config repositories.ponvif vcs '{"type": "package","package": {"name": "ltoscano/ponvif", "version": "dev-master","dist": { "url": "https://github.com/ltoscano/ponvif/archive/master.zip", "type": "zip"}, "autoload": {"classmap": ["lib/"] }}}'<br>
+
+Install dependency:<br>
+ * composer require  evrinoma/dashboard-bundle<br>
+ * composer require  evrinoma/delta8-bundle<br>
+ * composer require  evrinoma/exim-bundle<br>
+ * composer require  evrinoma/livevideo-bundle<br>
+ * composer require  evrinoma/menu-bundle<br>
+
 Next you should to make Composer install the project's dependencies into vendor by command
 <br><b>composer install</b>
-
-if you are trying to use wowza integration design than don't forget to create symlink 
-<br><b>ln -s ../../assets/js/components/Wowza/wowzaplayer.min.js public/video/</b>
 
 Now run in a terminal window to add webpack to our local project and resolve all dependencies
 
 <b>yarn</b>
-
  * yarn add webpack 
  * yarn add webpack-cli 
  * yarn add babel-preset-es2015 --dev
@@ -74,7 +92,6 @@ Open a command console, enter your project directory and run the following comma
 <br>additional fixtures
 <br><b>php bin/console doctrine:fixtures:load --group=DeltaFixtures --append</b>
 <br><b>php bin/console doctrine:fixtures:load --group=LiveCamFixtures --append</b>
-
 
 Now make a menu for that please Login and goto rest Api by next link
 http://localToolsHost/api/doc/internal
