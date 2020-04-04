@@ -27,4 +27,5 @@ return [
     Evrinoma\EximBundle\EvrinomaEximBundle::class => ['all' => true],
     Evrinoma\MenuBundle\EvrinomaMenuBundle::class => ['all' => true],
     Evrinoma\Delta8Bundle\EvrinomaDelta8Bundle::class => ['all' => true],
+    Evrinoma\UtilsBundle\EvrinomaUtilsBundle::class => ['all' => true],
 ];
