@@ -7,7 +7,7 @@
     <title>{% block title %}Wellcome{% endblock %}</title>
 
     {% block stylesheets %}
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.7/semantic.min.css" media="screen" title="no title" charset="utf-8">
+        {% include 'base/css.html.twig' %}
     {% endblock stylesheets %}
 
     {% block load_data %}
@@ -45,7 +45,7 @@
     {% endspaceless %}
 {% endblock %}
 {% block javascripts %}
-    <script src="{{ asset('build/app.js', 'webpack') }}"></script>
+    {% include 'base/js.html.twig' %}
 {% endblock %}
 </body>
 </html>

@@ -46,6 +46,16 @@ class RouteController extends AbstractController
         return $qr ?: [];
     }
 
+
+    /**
+     * @Route("/delta/journal/clear", name="delta_journal_clear")
+     * @Template("modules/delta8.clear.html.twig")
+     */
+    public function journalClear()
+    {
+        return ['titleHeader' => 'Delta8 Administration', 'pageName' => 'Journal Delta8'];
+    }
+
     /**
      * титуальная страница
      *
