@@ -5,7 +5,7 @@ namespace App\Menu;
 
 
 use Doctrine\ORM\EntityManagerInterface;
-use Evrinoma\Delta8Bundle\Voter\Delta8RoleInterface;
+use Evrinoma\Delta8Bundle\Voiter\Delta8RoleInterface;
 use Evrinoma\MenuBundle\Entity\MenuItem;
 use Evrinoma\MenuBundle\Manager\MenuInterface;
 

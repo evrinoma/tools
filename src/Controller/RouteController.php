@@ -72,6 +72,18 @@ class RouteController extends AbstractController
         return [];
     }
 
+    /**
+     * @Route("/contact_migrate", name="core_contact_migrate")
+     * @Template("base.html.twig")
+     *
+     * @return array
+     */
+    public function contactMigrate(ContactManager $contactManager)
+    {
+        $contactManager->migration();
+
+        return [];
+    }
 //endregion Public
 
 }

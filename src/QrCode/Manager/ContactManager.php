@@ -3,17 +3,51 @@
 namespace App\QrCode\Manager;
 
 use App\Entity\User;
+use App\QrCode\Dto\ApartDto\ContactDto;
 use Endroid\QrCode\ErrorCorrectionLevel;
 use Endroid\QrCode\QrCode;
 use Endroid\QrCode\Response\QrCodeResponse;
+use Evrinoma\UtilsBundle\Manager\AbstractEntityManager;
 
 /**
  * Class ContactManager
  *
  * @package App\Manager
  */
-class ContactManager
+class ContactManager extends AbstractEntityManager
 {
+//region SECTION: Public
+    public function migration()
+    {
+        $users = $this->entityManager->getRepository(User::class)->findAll();
+        foreach ($users as $user) {
+            if ($user->getContact()) {
+                $contact             = new ContactDto();
+                $aUser               = (array)$user->getContact();
+                $incompleteClassName = $aUser['__PHP_Incomplete_Class_Name'];
+                $ar                  = [];
+                foreach ($aUser as $key => $value) {
+                    if ($incompleteClassName !== $value) {
+                        $keyNew      = substr($key, strlen($incompleteClassName)+2);
+                        $ar[$keyNew] = $value;
+                    }
+                }
+                $ar = (object)$ar;
+                $contact->setFirstName($ar->firstName);
+                $contact->setLastName($ar->lastName);
+                $contact->setPosition($ar->position);
+                $contact->setComapanyName($ar->comapanyName);
+                $contact->setTelWork($ar->telWork);
+                $contact->setTelWorkDop($ar->telWorkDop);
+                $contact->setTelMobile($ar->telMobile);
+                $contact->setEmail($ar->email);
+                $contact->setUrl($ar->url);
+                $user->setContact($contact);
+            }
+        }
+       $this->entityManager->flush();
+    }
+//endregion Public
 
 //region SECTION: Getters/Setters
     /**
@@ -37,6 +71,7 @@ class ContactManager
 
             return new QrCodeResponse($qrCode);
         }
+
         return null;
     }
 //endregion Getters/Setters

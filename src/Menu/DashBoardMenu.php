@@ -4,7 +4,7 @@
 namespace App\Menu;
 
 use Doctrine\ORM\EntityManagerInterface;
-use Evrinoma\DashBoardBundle\Voter\DashBoardRoleInterface;
+use Evrinoma\DashBoardBundle\Voiter\DashBoardRoleInterface;
 use Evrinoma\MenuBundle\Entity\MenuItem;
 use Evrinoma\MenuBundle\Manager\MenuInterface;
 

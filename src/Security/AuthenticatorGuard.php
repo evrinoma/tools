@@ -3,7 +3,7 @@
 namespace App\Security;
 
 use Doctrine\ORM\EntityManagerInterface;
-use Evrinoma\UtilsBundle\Voter\RoleInterface;
+use Evrinoma\UtilsBundle\Voiter\RoleInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
