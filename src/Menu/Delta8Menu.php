@@ -8,6 +8,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Evrinoma\Delta8Bundle\Voiter\Delta8RoleInterface;
 use Evrinoma\MenuBundle\Entity\MenuItem;
 use Evrinoma\MenuBundle\Manager\MenuInterface;
+use Evrinoma\UtilsBundle\Voiter\RoleInterface;
 
 /**
  * Class Delta8Menu
@@ -29,11 +30,19 @@ final class Delta8Menu implements MenuInterface
 
         $journalRtt = new MenuItem();
         $journalRtt
-            ->setRole([Delta8RoleInterface::ROLE_USER_DELTA8])
+            ->setRole([RoleInterface::ROLE_SUPER_ADMIN])
             ->setName('Rtt')
             ->setRoute('delta_rtt');
 
         $em->persist($journalRtt);
+
+        $journalTree = new MenuItem();
+        $journalTree
+            ->setRole([RoleInterface::ROLE_SUPER_ADMIN])
+            ->setName('Tree')
+            ->setRoute('delta_tree');
+
+        $em->persist($journalTree);
 
         $menuDelta = new MenuItem();
         $menuDelta
@@ -41,7 +50,8 @@ final class Delta8Menu implements MenuInterface
             ->setName('Delta8')
             ->setUri('#')
             ->addChild($journal)
-            ->addChild($journalRtt);
+            ->addChild($journalRtt)
+            ->addChild($journalTree);
 
         $em->persist($menuDelta);
     }
