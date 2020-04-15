@@ -28,21 +28,29 @@ final class Delta8Menu implements MenuInterface
 
         $em->persist($journal);
 
-        $journalRtt = new MenuItem();
-        $journalRtt
+        $journalAgSimple = new MenuItem();
+        $journalAgSimple
             ->setRole([RoleInterface::ROLE_SUPER_ADMIN])
-            ->setName('Rtt')
-            ->setRoute('delta_rtt');
+            ->setName('Ag Simple')
+            ->setRoute('delta_ag_simple');
 
-        $em->persist($journalRtt);
+        $em->persist($journalAgSimple);
 
-        $journalTree = new MenuItem();
-        $journalTree
+        $journalAgTree = new MenuItem();
+        $journalAgTree
             ->setRole([RoleInterface::ROLE_SUPER_ADMIN])
-            ->setName('Tree')
-            ->setRoute('delta_tree');
+            ->setName('Ag Tree')
+            ->setRoute('delta_ag_tree');
 
-        $em->persist($journalTree);
+        $em->persist($journalAgTree);
+
+        $journalHandsonTree = new MenuItem();
+        $journalHandsonTree
+            ->setRole([RoleInterface::ROLE_SUPER_ADMIN])
+            ->setName('Handson Tree')
+            ->setRoute('delta_handson_tree');
+
+        $em->persist($journalHandsonTree);
 
         $menuDelta = new MenuItem();
         $menuDelta
@@ -50,8 +58,10 @@ final class Delta8Menu implements MenuInterface
             ->setName('Delta8')
             ->setUri('#')
             ->addChild($journal)
-            ->addChild($journalRtt)
-            ->addChild($journalTree);
+            ->addChild($journalAgSimple)
+            ->addChild($journalAgTree)
+            ->addChild($journalHandsonTree)
+        ;
 
         $em->persist($menuDelta);
     }

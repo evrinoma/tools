@@ -14,8 +14,9 @@ module.exports = (env) => {
         entry: {
             app: path.join(__dirname, 'assets/entrypoints/app.entry.js'),
             delta: path.join(__dirname, 'assets/entrypoints/delta.entry.js'),
-            journal: path.join(__dirname, 'assets/entrypoints/journal.entry.js'),
-            tree: path.join(__dirname, 'assets/entrypoints/tree.entry.js'),
+            ag_simple: path.join(__dirname, 'assets/entrypoints/ag_simple.entry.js'),
+            ag_tree: path.join(__dirname, 'assets/entrypoints/ag_tree.entry.js'),
+            handson_tree: path.join(__dirname, 'assets/entrypoints/handson_tree.entry.js'),
             live_video: path.join(__dirname, 'assets/entrypoints/live.video.entry.js'),
             login: path.join(__dirname, 'assets/entrypoints/login.entry.js'),
             status: path.join(__dirname, 'assets/entrypoints/status.entry.js'),
