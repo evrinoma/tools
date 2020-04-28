@@ -67,3 +67,7 @@ services:
     tags:
       - { name: evrinoma.menu }
 
+  App\Menu\QuantitySurveyorMenu:
+    tags:
+      - { name: evrinoma.menu }
+
