@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+
+use App\QuantitySurveyor\Manager\ProjectManager;
 use Evrinoma\DashBoardBundle\Manager\DashBoardManager;
 use Evrinoma\UtilsBundle\Controller\AbstractApiController;
 use FOS\RestBundle\Controller\Annotations as Rest;
@@ -22,32 +24,32 @@ final class ProjectApiController extends AbstractApiController
      * @var Request
      */
     private $request;
-
     /**
-     * @var DashBoardManager
+     * @var ProjectManager
      */
-    private $dashBoardManager;
+    private $projectManager;
 //endregion Fields
 
 //region SECTION: Constructor
     /**
      * ApiController constructor.
      *
-     * @param SerializerInterface         $serializer
-     * @param RequestStack                $requestStack
+     * @param SerializerInterface $serializer
+     * @param RequestStack        $requestStack
      */
-    public function __construct(SerializerInterface $serializer, RequestStack $requestStack)
+    public function __construct(SerializerInterface $serializer, RequestStack $requestStack, ProjectManager $projectManager)
     {
         parent::__construct($serializer);
-        $this->request            = $requestStack->getCurrentRequest();
+        $this->request        = $requestStack->getCurrentRequest();
+        $this->projectManager = $projectManager;
     }
 //endregion Constructor
 
 //region SECTION: Public
 
     /**
-     * @Rest\Get("/api/project/project", options={"expose"=true}, name="api_project")
-     * @SWG\Get(tags={"system"})
+     * @Rest\Get("/evrinoma/api/quantity_surveyor/project", options={"expose"=true}, name="api_project")
+     * @SWG\Get(tags={"project"})
      * @SWG\Response(response=200,description="Returns projects")
      *
      * @param DashBoardManager $dashBoardManager
@@ -56,7 +58,21 @@ final class ProjectApiController extends AbstractApiController
      */
     public function projectAction()
     {
-        return $this->json(['project' => '']);
+        return $this->json($this->projectManager->setRestSuccessOk()->getAll(), $this->projectManager->getRestStatus());
+    }
+
+    /**
+     * @Rest\Get("/evrinoma/api/quantity_surveyor/project/column_defs", options={"expose"=true}, name="api_column_defs_project")
+     * @SWG\Get(tags={"project"})
+     * @SWG\Response(response=200,description="Returns column_defs project")
+     *
+     * @param DashBoardManager $dashBoardManager
+     *
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     */
+    public function projectColumnDefsAction()
+    {
+        return $this->json($this->projectManager->setRestSuccessOk()->getColumnDefs(), $this->projectManager->getRestStatus());
     }
 //endregion Public
 }
