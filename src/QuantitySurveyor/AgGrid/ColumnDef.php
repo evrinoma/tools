@@ -9,6 +9,10 @@ class ColumnDef
 //region SECTION: Fields
     public const NUMBER_COLUMN = 'numberColumn';
     public const DATE_COLUMN   = 'dateColumn';
+
+
+
+    public const CELL_EDITOR_DATE_PICKER =  'datePicker';
     /**
      * @var string
      */
@@ -70,6 +74,14 @@ class ColumnDef
     }
 
     /**
+     * @return mixed
+     */
+    public function getCellEditor()
+    {
+        return $this->cellEditor;
+    }
+
+    /**
      * @return string
      */
     public function getField(): string
@@ -91,6 +103,18 @@ class ColumnDef
     public function getWidth(): int
     {
         return $this->width;
+    }
+
+    /**
+     * @param mixed $cellEditor
+     *
+     * @return ColumnDef
+     */
+    public function setCellEditor($cellEditor): self
+    {
+        $this->cellEditor = $cellEditor;
+
+        return $this;
     }
 
     /**

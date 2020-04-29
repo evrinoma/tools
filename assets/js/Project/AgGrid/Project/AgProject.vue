@@ -13,6 +13,8 @@
                                      :rowData="rowData"
                                      rowSelection="multiple"
                                      @grid-ready="onGridReady"
+                                     :components="components"
+                                     @first-data-rendered="onFirstDataRendered"
                         >
                         </ag-grid-vue>
                     </div>
@@ -28,19 +30,30 @@
 <script>
     import {AgGridVue} from "ag-grid-vue";
     import {fetch} from 'whatwg-fetch';
+    import DatePicker from '../../../Components/Edit/datePicker';
 
     export default {
         name: 'agProjectVue',
         data() {
             return {
+                gridOptions: null,
+                gridApi: null,
+                columnApi: null,
                 columnDefs: null,
-                rowData: null
+                defaultColDef: null,
+                components: null,
+                editType: null,
+                rowData: null,
             }
         },
         components: {
             AgGridVue
         },
         methods: {
+            //автоматический ресайз всех столбцов в ширину окна таблицы
+            onFirstDataRendered(params) {
+                params.api.sizeColumnsToFit();
+            },
             loadRowData() {
                 fetch(location.protocol + '//' + location.hostname + '/evrinoma/api/quantity_surveyor/project')
                     .then(result => result.json())
@@ -55,6 +68,10 @@
             fetch(location.protocol + '//' + location.hostname + '/evrinoma/api/quantity_surveyor/project/column_defs')
                 .then(result => result.json())
                 .then(rowData => this.columnDefs = rowData);
+            //помпонеты редактирования
+            this.components = { datePicker: getDatePicker() };
+            //полнострочное редактирование
+            this.editType = 'fullRow';
         },
         created() {
             this.loadRowData();

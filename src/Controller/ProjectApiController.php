@@ -58,7 +58,7 @@ final class ProjectApiController extends AbstractApiController
 
     /**
      * @Rest\Get("/evrinoma/api/quantity_surveyor/project", options={"expose"=true}, name="api_project")
-     * @SWG\Get(tags={"project"})
+     * @SWG\Get(tags={"quantity_surveyor"})
      * @SWG\Response(response=200,description="Returns projects")
      *
      * @param DashBoardManager $dashBoardManager
@@ -72,7 +72,7 @@ final class ProjectApiController extends AbstractApiController
 
     /**
      * @Rest\Get("/evrinoma/api/quantity_surveyor/project/column_defs", options={"expose"=true}, name="api_column_defs_project")
-     * @SWG\Get(tags={"project"})
+     * @SWG\Get(tags={"quantity_surveyor"})
      * @SWG\Response(response=200,description="Returns column_defs project")
      *
      * @param DashBoardManager $dashBoardManager
