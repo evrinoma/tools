@@ -11,6 +11,7 @@
                                      class="ag-theme-balham"
                                      :columnDefs="columnDefs"
                                      :rowData="rowData"
+                                     :editType="editType"
                                      rowSelection="multiple"
                                      @grid-ready="onGridReady"
                                      :components="components"
@@ -108,5 +109,14 @@
     div.ui.two.column.very.relaxed.grid {
         height: 100%;
         width: 100%;
+    }
+
+    /*подстветка столюца и строки*/
+    .ag-row-hover {
+        /* putting in !important so it overrides the theme's styling as it hovers the row also */
+        background-color: #dfdfff !important;
+    }
+    .ag-column-hover {
+        background-color: #dfffdf;
     }
 </style>

@@ -45,19 +45,23 @@ class ProjectManager extends AbstractEntityManager
     public function getColumnDefs()
     {
         $id = new ColumnDef();
-        $id->setType(ColumnDef::NUMBER_COLUMN)->setHeaderName('ID')->setField('id')->setWidth(20)->setEditable()->setResizable();
+        $id->setType(ColumnDef::NUMBER_COLUMN)->setHeaderName('ID')->setField('id')->setWidth(1)->setEditable()->setResizable();
 
         $name = new ColumnDef();
         $name->setHeaderName('Название')->setField('name')->setWidth(200);
 
         $dateStart = new ColumnDef();
-        $dateStart->setType(ColumnDef::DATE_COLUMN)->setHeaderName('Дата начала')->setField('dateStart')->setWidth(140)->setCellEditor(ColumnDef::CELL_EDITOR_DATE_PICKER);
+        $dateStart->setType(ColumnDef::DATE_COLUMN)->setHeaderName('Дата начала')->setField('dateStart')->setWidth(5)->setResizable()
+            ->setCellEditor(ColumnDef::CELL_EDITOR_DATE_PICKER)
+        ;
 
         $dateFinish = new ColumnDef();
-        $dateFinish->setType(ColumnDef::DATE_COLUMN)->setHeaderName('Дата окончания')->setField('dateFinish')->setWidth(140)->setCellEditor(ColumnDef::CELL_EDITOR_DATE_PICKER);
+        $dateFinish->setType(ColumnDef::DATE_COLUMN)->setHeaderName('Дата окончания')->setField('dateFinish')->setWidth(5)->setResizable()
+            ->setCellEditor(ColumnDef::CELL_EDITOR_DATE_PICKER)
+        ;
 
         $description = new ColumnDef();
-        $description->setHeaderName('Описание')->setField('description')->setWidth(140);
+        $description->setHeaderName('Описание')->setField('description')->setWidth(140)->setCellEditor(ColumnDef::CELL_EDITOR_AG_LARGE_TEXT_CELL_EDITOR);
 
         return [$id, $name, $dateStart, $dateFinish, $description];
     }

@@ -152,7 +152,10 @@ module.exports = (env) => {
         },
         resolve: {
             alias: {
-                'vue$': 'vue/dist/vue.esm.js' // 'vue/dist/vue.common.js' для webpack 1
+                'vue$': 'vue/dist/vue.esm.js', // 'vue/dist/vue.common.js' для webpack 1
+                'jquery': path.join(__dirname, 'node_modules/jquery/dist/jquery'),
+                // 'jquery-ui': 'jquery-ui'
+                //'jquery': path.join(__dirname, '/node_modules/jquery/dist/jquery.min.js'),
             },
             extensions: [
                 ".js",

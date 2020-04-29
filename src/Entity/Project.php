@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Evrinoma\UtilsBundle\Entity\ActiveTrait;
+use JMS\Serializer\Annotation\Type;
 
 /**
  * Project
@@ -26,11 +27,11 @@ class Project
     private $id;
 
     /**
-     * @var int|null
-     *
-     * @ORM\Column(name="company_id", type="integer", nullable=true)
+     * @var Contragent
+     * @Type("App\Entity\Contragent")
+     * @ORM\ManyToOne(targetEntity="Contragent")
      */
-    private $companyId;
+    private $contragent;
 
     /**
      * @var string
@@ -47,6 +48,7 @@ class Project
     private $description;
 
     /**
+     * @Type("DateTime<'d-m-Y'>")
      * @var \DateTime
      *
      * @ORM\Column(name="date_start", type="date", nullable=false)
@@ -54,6 +56,7 @@ class Project
     private $dateStart;
 
     /**
+     * @Type("DateTime<'d-m-Y'>")
      * @var \DateTime|null
      *
      * @ORM\Column(name="date_finish", type="date", nullable=true)
@@ -61,6 +64,7 @@ class Project
     private $dateFinish;
 
     /**
+     * @Type("DateTime<'d-m-Y'>")
      * @var \DateTime
      *
      * @ORM\Column(name="created_at", type="datetime", nullable=false)
@@ -68,6 +72,7 @@ class Project
     private $createdAt;
 
     /**
+     * @Type("DateTime<'d-m-Y'>")
      * @var \DateTime
      *
      * @ORM\Column(name="updated_at", type="datetime", nullable=false)
@@ -96,14 +101,6 @@ class Project
     public function getId(): int
     {
         return $this->id;
-    }
-
-    /**
-     * @return int|null
-     */
-    public function getCompanyId(): ?int
-    {
-        return $this->companyId;
     }
 
     /**
@@ -169,6 +166,16 @@ class Project
     {
         return $this->updatedById;
     }
+
+    /**
+     * @return Contragent
+     */
+    public function getContragent(): Contragent
+    {
+        return $this->contragent;
+    }
+
+
 //endregion Getters/Setters
 
 }

@@ -13,6 +13,8 @@ class ColumnDef
 
 
     public const CELL_EDITOR_DATE_PICKER =  'datePicker';
+    public const CELL_EDITOR_AG_LARGE_TEXT_CELL_EDITOR =  'agLargeTextCellEditor';
+
     /**
      * @var string
      */
