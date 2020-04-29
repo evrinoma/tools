@@ -44,13 +44,22 @@ class ProjectManager extends AbstractEntityManager
 
     public function getColumnDefs()
     {
-        $columnDef = new ColumnDef();
-        $columnDef
-            ->setField()
-            ->setHeaderName()
-            ->setWidth();
+        $id = new ColumnDef();
+        $id->setType(ColumnDef::NUMBER_COLUMN)->setHeaderName('ID')->setField('id')->setWidth(100)->setEditable()->setResizable();
 
-        return [];
+        $name = new ColumnDef();
+        $name->setHeaderName('Название')->setField('name')->setWidth(200);
+
+        $dateStart = new ColumnDef();
+        $dateStart->setType(ColumnDef::DATE_COLUMN)->setHeaderName('Дата начала')->setField('dateStart')->setWidth(140);
+
+        $dateFinish = new ColumnDef();
+        $dateFinish->setType(ColumnDef::DATE_COLUMN)->setHeaderName('Дата окончания')->setField('dateFinish')->setWidth(140);
+
+        $description = new ColumnDef();
+        $description->setHeaderName('Описание')->setField('description')->setWidth(140);
+
+        return [$id, $name, $dateStart, $dateFinish, $description];
     }
 
     public function getRestStatus(): int

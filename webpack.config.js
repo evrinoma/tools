@@ -23,6 +23,7 @@ module.exports = (env) => {
             mail_acl: path.join(__dirname, 'assets/entrypoints/mail.acl.entry.js'),
             mail_domain: path.join(__dirname, 'assets/entrypoints/mail.domain.entry.js'),
             mail_search: path.join(__dirname, 'assets/entrypoints/mail.search.entry.js'),
+            project: path.join(__dirname, 'assets/entrypoints/project.search.entry.js'),
         },
         node: {
             fs: 'empty'

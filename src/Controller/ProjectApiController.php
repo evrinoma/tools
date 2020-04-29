@@ -39,9 +39,18 @@ final class ProjectApiController extends AbstractApiController
      */
     public function __construct(SerializerInterface $serializer, RequestStack $requestStack, ProjectManager $projectManager)
     {
+        $serializer = \JMS\Serializer\SerializerBuilder::create()
+            ->setPropertyNamingStrategy(
+                new \JMS\Serializer\Naming\SerializedNameAnnotationStrategy(
+                    new \JMS\Serializer\Naming\IdenticalPropertyNamingStrategy()
+                )
+            )
+            ->build();
+
         parent::__construct($serializer);
         $this->request        = $requestStack->getCurrentRequest();
         $this->projectManager = $projectManager;
+
     }
 //endregion Constructor
 
