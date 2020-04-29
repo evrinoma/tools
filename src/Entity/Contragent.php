@@ -4,17 +4,19 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Evrinoma\UtilsBundle\Entity\ActiveTrait;
+use JMS\Serializer\Annotation\Type;
 
 /**
  * Contragent
  *
- * @ORM\Table(name="contragent", indexes={@ORM\Index(name="IDX_4FBF094FB03A8386", columns={"created_by_id"}), @ORM\Index(name="IDX_4FBF094F896DBBDE", columns={"updated_by_id"})})
+ * @ORM\Table(name="contragent", indexes={@ORM\Index(name="IDX_4FBF094FB03A8386", columns={"created_id"}), @ORM\Index(name="IDX_4FBF094F896DBBDE", columns={"updated_id"})})
  * @ORM\Entity
  */
 class Contragent
 {
     use ActiveTrait;
 
+//region SECTION: Fields
     /**
      * @var int
      *
@@ -46,33 +48,35 @@ class Contragent
     private $inn;
 
     /**
-     * @var int|null
-     *
-     * @ORM\Column(name="created_by_id", type="integer", nullable=true)
+     * @var User
+     * @Type("App\Entity\User")
+     * @ORM\ManyToOne(targetEntity="User")
      */
-    private $createdById;
+    private $created;
 
     /**
      * @var \DateTime
-     *
+     * @Type("DateTime<'d-m-Y'>")
      * @ORM\Column(name="created_at", type="datetime", nullable=false)
      */
     private $createdAt;
 
     /**
      * @var \DateTime
-     *
+     * @Type("DateTime<'d-m-Y'>")
      * @ORM\Column(name="updated_at", type="datetime", nullable=false)
      */
     private $updatedAt;
 
     /**
-     * @var int|null
-     *
-     * @ORM\Column(name="updated_by_id", type="integer", nullable=true)
+     * @var User
+     * @Type("App\Entity\User")
+     * @ORM\ManyToOne(targetEntity="User")
      */
-    private $updatedById;
+    private $updated;
+//endregion Fields
 
+//region SECTION: Getters/Setters
     /**
      * @return int
      */
@@ -108,9 +112,9 @@ class Contragent
     /**
      * @return int|null
      */
-    public function getCreatedById(): ?int
+    public function getCreated(): ?int
     {
-        return $this->createdById;
+        return $this->created;
     }
 
     /**
@@ -132,8 +136,9 @@ class Contragent
     /**
      * @return int|null
      */
-    public function getUpdatedById(): ?int
+    public function getUpdated(): ?int
     {
-        return $this->updatedById;
+        return $this->updated;
     }
+//endregion Getters/Setters
 }
