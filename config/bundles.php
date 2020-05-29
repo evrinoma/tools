@@ -29,4 +29,5 @@ return [
     Evrinoma\Delta8Bundle\EvrinomaDelta8Bundle::class => ['all' => true],
     Evrinoma\UtilsBundle\EvrinomaUtilsBundle::class => ['all' => true],
     Evrinoma\GridBundle\EvrinomaGridBundle::class => ['all' => true],
+    Evrinoma\ProjectBundle\EvrinomaProjectBundle::class => ['all' => true],
 ];

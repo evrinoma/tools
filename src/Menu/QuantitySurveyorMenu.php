@@ -24,7 +24,7 @@ final class QuantitySurveyorMenu implements MenuInterface
         $project
             ->setRole([RoleInterface::ROLE_SUPER_ADMIN])
             ->setName('Project')
-            ->setRoute('quantity_surveyor_project');
+            ->setRoute('project');
 
         $em->persist($project);
 
