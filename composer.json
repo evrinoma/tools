@@ -97,6 +97,10 @@
       "type": "vcs",
       "url": "https://github.com/evrinoma/MenuBundle.git"
     },
+    "project": {
+      "type": "vcs",
+      "url": "https://github.com/evrinoma/ProjectBundle.git"
+    },
     "settings": {
       "type": "vcs",
       "url": "https://github.com/evrinoma/SettingsBundle.git"

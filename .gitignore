@@ -28,6 +28,7 @@ yarn-error.log
 /SettingsBundle/
 /Delta8Bundle/
 /MenuBundle/
+/ProjectBundle/
 DashBoardBundle
 ShellBundle
 composer
@@ -39,4 +40,5 @@ SettingsBundle
 Delta8Bundle
 MenuBundle
 GridBundle
+ProjectBundle
 
