@@ -3,6 +3,19 @@
 Create settings
 php bin/console doctrine:fixtures:load --group=SettingsFixtures --append
 php bin/console doctrine:fixtures:load --group=DeltaFixtures --append
-php bin/console doctrine:fixtures:load --group=CamFixtures --append --env=dev
+
+Create liveCam
+php bin/console doctrine:fixtures:load --group=LiveCamAllFixtures --append --env=dev
+php bin/console doctrine:fixtures:load --group=TypeFixtures --append --env=dev
+php bin/console doctrine:fixtures:load --group=LiveCamIpark45Fixtures --append --env=dev
+php bin/console doctrine:fixtures:load --group=LiveCamVankorFixtures --append --env=dev
+php bin/console doctrine:fixtures:load --group=LiveCamIshimFixtures --append --env=dev
+php bin/console doctrine:fixtures:load --group=LiveCamGusevFixtures --append --env=dev
+php bin/console doctrine:fixtures:load --group=LiveCamPregolskayFixtures --append --env=dev
+php bin/console doctrine:fixtures:load --group=LiveCamPrimorskyFixtures --append --env=dev
+php bin/console doctrine:fixtures:load --group=LiveCamSovetskFixtures --append --env=dev
+php bin/console doctrine:fixtures:load --group=LiveCamTobolskFixtures --append --env=dev
+php bin/console doctrine:fixtures:load --group=LiveCamTumenFixtures --append --env=dev
+
 php bin/console doctrine:fixtures:load --group=VCardFixtures --append --env=dev
 

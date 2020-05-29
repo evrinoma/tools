@@ -22,7 +22,7 @@ final class QuantitySurveyorMenu implements MenuInterface
     {
         $project = new MenuItem();
         $project
-            ->setRole([RoleInterface::ROLE_SUPER_ADMIN])
+            ->setRole([RoleInterface::ROLE_DEV_USER])
             ->setName('Project')
             ->setRoute('project');
 
@@ -30,7 +30,7 @@ final class QuantitySurveyorMenu implements MenuInterface
 
         $contrAgent = new MenuItem();
         $contrAgent
-            ->setRole([RoleInterface::ROLE_SUPER_ADMIN])
+            ->setRole([RoleInterface::ROLE_DEV_USER])
             ->setName('ContrAgent')
             ->setRoute('contr_agent');
 
@@ -39,7 +39,7 @@ final class QuantitySurveyorMenu implements MenuInterface
 
         $menuQuantitySurveyor = new MenuItem();
         $menuQuantitySurveyor
-            ->setRole([RoleInterface::ROLE_SUPER_ADMIN])
+            ->setRole([RoleInterface::ROLE_DEV_USER])
             ->setName('QuantitySurveyor')
             ->setUri('#')
             ->addChild($project)
