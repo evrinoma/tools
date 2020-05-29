@@ -37,9 +37,10 @@
 <script>
     import {AgGridVue} from "ag-grid-vue";
     import {fetch} from 'whatwg-fetch';
+    import DatePicker from '../../Components/Edit/DatePicker';
 
     export default {
-        name: 'agProjectVue',
+        name: 'agReestrVue',
         data() {
             return {
                 gridOptions: null,
@@ -86,8 +87,8 @@
 </script>
 
 <style lang="scss">
-    @import "../../../../../node_modules/ag-grid-community/dist/styles/ag-grid.css";
-    @import "../../../../../node_modules/ag-grid-community/dist/styles/ag-theme-balham-dark.css";
+    @import "../../../../node_modules/ag-grid-community/dist/styles/ag-grid.css";
+    @import "../../../../node_modules/ag-grid-community/dist/styles/ag-theme-balham-dark.css";
 
     .ui.segment.block {
         height: 90vh;
