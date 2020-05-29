@@ -32,7 +32,7 @@ final class QuantitySurveyorMenu implements MenuInterface
         $contrAgent
             ->setRole([RoleInterface::ROLE_SUPER_ADMIN])
             ->setName('ContrAgent')
-            ->setRoute('quantity_surveyor_contr_agent');
+            ->setRoute('contr_agent');
 
         $em->persist($contrAgent);
 

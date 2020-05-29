@@ -1,12 +1,11 @@
 {% extends 'base.html.twig' %}
-
 {% block title %}{{ titleHeader }}{% endblock %}
 
 {% block page %}
-    <div id="agContrAgent"></div>
+    {% include '@EvrinomaContrAgent/contr_agent/template.html.twig' %}
 {% endblock %}
 
 {% block javascripts %}
     {{ parent() }}
-    <script src="{{ asset('build/contr_agent.js', 'webpack') }}"></script>
+    {% include '@EvrinomaContrAgent/contr_agent/js.html.twig' %}
 {% endblock %}

@@ -14,14 +14,17 @@ use JMS\Serializer\Annotation\Type;
  */
 class Project extends BaseProject
 {
+//region SECTION: Fields
     /**
      * @var Contragent
      * @Type("App\Entity\Contragent")
      * @ORM\ManyToOne(targetEntity="Contragent")
      */
     private $contragent;
+//endregion Fields
 
 
+//region SECTION: Getters/Setters
     /**
      * @return Contragent
      */
@@ -29,4 +32,5 @@ class Project extends BaseProject
     {
         return $this->contragent;
     }
+//endregion Getters/Setters
 }

@@ -1,0 +1,23 @@
+dashboard:
+  resource: "@EvrinomaDashBoardBundle/Resources/config/routes.yml"
+
+delta8:
+  resource: "@EvrinomaDelta8Bundle/Resources/config/routes.yml"
+
+exim:
+  resource: "@EvrinomaEximBundle/Resources/config/routes.yml"
+
+grid:
+  resource: "@EvrinomaGridBundle/Resources/config/routes.yml"
+
+livevideo:
+  resource: "@EvrinomaLiveVideoBundle/Resources/config/routes.yml"
+
+menu:
+  resource: "@EvrinomaMenuBundle/Resources/config/routes.yml"
+
+project:
+  resource: "@EvrinomaProjectBundle/Resources/config/routes.yml"
+
+contr_agent:
+  resource: "@EvrinomaContrAgentBundle/Resources/config/routes.yml"

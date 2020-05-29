@@ -24,6 +24,7 @@ module.exports = (env) => {
             mail_domain: path.join(__dirname, 'assets/entrypoints/mail.domain.entry.js'),
             mail_search: path.join(__dirname, 'assets/entrypoints/mail.search.entry.js'),
             project: path.join(__dirname, 'assets/entrypoints/reestr.project.entry.js'),
+            contr_agent: path.join(__dirname, 'assets/entrypoints/reestr.contr_agent.entry.js'),
         },
         node: {
             fs: 'empty'

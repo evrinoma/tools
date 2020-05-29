@@ -1,2 +1,0 @@
-livevideo:
-  resource: "@EvrinomaLiveVideoBundle/Resources/config/routes.yml"

@@ -73,6 +73,10 @@
       "type": "vcs",
       "url": "https://github.com/evrinoma/Delta8Bundle.git"
     },
+    "contragent": {
+      "type": "vcs",
+      "url": "https://github.com/evrinoma/ContrAgentBundle.git"
+    },
     "dto": {
       "type": "vcs",
       "url": "https://github.com/evrinoma/DtoBundle.git"

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "2c28cfb7fdf9f41911c2638fc98c93ab",
+    "content-hash": "7bac53c65f09e514750d844750addbbd",
     "packages": [
         {
             "name": "bacon/bacon-qr-code",
@@ -1510,6 +1510,52 @@
             "time": "2020-03-10T08:32:43+00:00"
         },
         {
+            "name": "evrinoma/contragent-bundle",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/evrinoma/ContrAgentBundle.git",
+                "reference": "bb6ef149a054340e61a6e0f01f4789b1037f4948"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/evrinoma/ContrAgentBundle/zipball/bb6ef149a054340e61a6e0f01f4789b1037f4948",
+                "reference": "bb6ef149a054340e61a6e0f01f4789b1037f4948",
+                "shasum": ""
+            },
+            "require": {
+                "evrinoma/utils-bundle": "dev-master",
+                "php": "^7.1.3"
+            },
+            "type": "symfony-bundle",
+            "autoload": {
+                "psr-4": {
+                    "Evrinoma\\ContrAgentBundle\\": "src/"
+                },
+                "exclude-from-classmap": [
+                    "/Tests/"
+                ]
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Nikolay Nikolaev",
+                    "email": "evrinoma@gmail.com"
+                }
+            ],
+            "description": "ContrAgent",
+            "keywords": [
+                "ContrAgent"
+            ],
+            "support": {
+                "source": "https://github.com/evrinoma/ContrAgentBundle/tree/master",
+                "issues": "https://github.com/evrinoma/ContrAgentBundle/issues"
+            },
+            "time": "2020-05-29T22:15:19+00:00"
+        },
+        {
             "name": "evrinoma/dashboard-bundle",
             "version": "dev-master",
             "source": {
@@ -1694,6 +1740,52 @@
                 "issues": "https://github.com/evrinoma/EximBundle/issues"
             },
             "time": "2020-04-03T10:15:45+00:00"
+        },
+        {
+            "name": "evrinoma/grid-bundle",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/evrinoma/GridBundle.git",
+                "reference": "7266bd3721b08065c5352560a13e0c084f48c3af"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/evrinoma/GridBundle/zipball/7266bd3721b08065c5352560a13e0c084f48c3af",
+                "reference": "7266bd3721b08065c5352560a13e0c084f48c3af",
+                "shasum": ""
+            },
+            "require": {
+                "evrinoma/menu-bundle": "dev-master",
+                "php": "^7.1.3"
+            },
+            "type": "symfony-bundle",
+            "autoload": {
+                "psr-4": {
+                    "Evrinoma\\GridBundle\\": "src/"
+                },
+                "exclude-from-classmap": [
+                    "/Tests/"
+                ]
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Nikolay Nikolaev",
+                    "email": "evrinoma@gmail.com"
+                }
+            ],
+            "description": "Grid",
+            "keywords": [
+                "Grid"
+            ],
+            "support": {
+                "source": "https://github.com/evrinoma/GridBundle/tree/master",
+                "issues": "https://github.com/evrinoma/GridBundle/issues"
+            },
+            "time": "2020-05-29T14:57:27+00:00"
         },
         {
             "name": "evrinoma/livevideo-bundle",
@@ -3502,7 +3594,7 @@
             "version": "dev-master",
             "source": {
                 "type": "git",
-                "url": "https://github.com/nelmio/NelmioApiDocBundle.git",
+                "url": "git@github.com:nelmio/NelmioApiDocBundle.git",
                 "reference": "ab014fe032beb1a7875939ff4162e8d05ad778ab"
             },
             "dist": {
@@ -8222,7 +8314,54 @@
                 "monolog",
                 "productivity"
             ],
+            "abandoned": true,
             "time": "2019-10-24T07:13:31+00:00"
+        },
+        {
+            "name": "evrinoma/project-bundle",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/evrinoma/ProjectBundle.git",
+                "reference": "a09212b8abd0412d33ce150edbdf7a7567f330fc"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/evrinoma/ProjectBundle/zipball/a09212b8abd0412d33ce150edbdf7a7567f330fc",
+                "reference": "a09212b8abd0412d33ce150edbdf7a7567f330fc",
+                "shasum": ""
+            },
+            "require": {
+                "evrinoma/utils-bundle": "dev-master",
+                "php": "^7.1.3"
+            },
+            "type": "symfony-bundle",
+            "autoload": {
+                "psr-4": {
+                    "Evrinoma\\ProjectBundle\\": "src/"
+                },
+                "exclude-from-classmap": [
+                    "/Tests/"
+                ]
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Nikolay Nikolaev",
+                    "email": "evrinoma@gmail.com"
+                }
+            ],
+            "description": "Project",
+            "keywords": [
+                "Project"
+            ],
+            "support": {
+                "source": "https://github.com/evrinoma/ProjectBundle/tree/master",
+                "issues": "https://github.com/evrinoma/ProjectBundle/issues"
+            },
+            "time": "2020-05-29T19:33:17+00:00"
         },
         {
             "name": "monolog/monolog",
@@ -8718,9 +8857,11 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
+        "evrinoma/contragent-bundle": 20,
         "evrinoma/dashboard-bundle": 20,
         "evrinoma/delta8-bundle": 20,
         "evrinoma/exim-bundle": 20,
+        "evrinoma/grid-bundle": 20,
         "evrinoma/livevideo-bundle": 20,
         "evrinoma/menu-bundle": 20,
         "friendsofsymfony/user-bundle": 20,
