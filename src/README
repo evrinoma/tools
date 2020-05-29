@@ -3,3 +3,6 @@
 Create settings
 php bin/console doctrine:fixtures:load --group=SettingsFixtures --append
 php bin/console doctrine:fixtures:load --group=DeltaFixtures --append
+php bin/console doctrine:fixtures:load --group=CamFixtures --append --env=dev
+php bin/console doctrine:fixtures:load --group=VCardFixtures --append --env=dev
+
