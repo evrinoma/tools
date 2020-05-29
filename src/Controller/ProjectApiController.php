@@ -34,10 +34,9 @@ final class ProjectApiController extends AbstractApiController
     /**
      * ApiController constructor.
      *
-     * @param SerializerInterface $serializer
      * @param RequestStack        $requestStack
      */
-    public function __construct(SerializerInterface $serializer, RequestStack $requestStack, ProjectManager $projectManager)
+    public function __construct(RequestStack $requestStack, ProjectManager $projectManager)
     {
         $serializer = \JMS\Serializer\SerializerBuilder::create()
             ->setPropertyNamingStrategy(

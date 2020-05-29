@@ -1,1 +1,1 @@
-import Journal from '../../public/bundles/evrinomadelta8/js/AgGrid/Simple/agSimple.js';
+import Journal from '../../public/bundles/evrinomagrid/js/AgGrid/Simple/agSimple.js';

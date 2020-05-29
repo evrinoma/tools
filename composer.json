@@ -9,6 +9,7 @@
     "evrinoma/dashboard-bundle": "dev-master",
     "evrinoma/delta8-bundle": "dev-master",
     "evrinoma/exim-bundle": "dev-master",
+    "evrinoma/grid-bundle": "dev-master",
     "evrinoma/livevideo-bundle": "dev-master",
     "evrinoma/menu-bundle": "dev-master",
     "friendsofsymfony/jsrouting-bundle": "^2.3",
@@ -44,7 +45,7 @@
   },
   "config": {
     "github-oauth": {
-      "github.com": "d341fe295b314a19d6502442b4a72194923ef1cd"
+      "github.com": "eb641ba3fd38f68f820241bc8e77ba5ea0503493"
     },
     "preferred-install": {
       "*": "dist"
@@ -75,6 +76,10 @@
     "dto": {
       "type": "vcs",
       "url": "https://github.com/evrinoma/DtoBundle.git"
+    },
+    "grid": {
+      "type": "vcs",
+      "url": "https://github.com/evrinoma/GridBundle.git"
     },
     "exim": {
       "type": "vcs",

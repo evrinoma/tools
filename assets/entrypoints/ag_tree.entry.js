@@ -1,1 +1,1 @@
-import Tree from '../../public/bundles/evrinomadelta8/js/AgGrid/Tree/agTree.js';
+import Tree from '../../public/bundles/evrinomagrid/js/AgGrid/Tree/agTree.js';

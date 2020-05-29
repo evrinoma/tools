@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "58f0a2c40fb282bc2edca2733f8e62ce",
+    "content-hash": "2c28cfb7fdf9f41911c2638fc98c93ab",
     "packages": [
         {
             "name": "bacon/bacon-qr-code",
@@ -1561,12 +1561,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/evrinoma/Delta8Bundle.git",
-                "reference": "82c064d6a0b6a046954b7a0aad879f4454a2c86a"
+                "reference": "d85ec5202152b75caa6b797e12d54d8661a01faf"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/evrinoma/Delta8Bundle/zipball/82c064d6a0b6a046954b7a0aad879f4454a2c86a",
-                "reference": "82c064d6a0b6a046954b7a0aad879f4454a2c86a",
+                "url": "https://api.github.com/repos/evrinoma/Delta8Bundle/zipball/d85ec5202152b75caa6b797e12d54d8661a01faf",
+                "reference": "d85ec5202152b75caa6b797e12d54d8661a01faf",
                 "shasum": ""
             },
             "require": {
@@ -1600,7 +1600,7 @@
                 "source": "https://github.com/evrinoma/Delta8Bundle/tree/master",
                 "issues": "https://github.com/evrinoma/Delta8Bundle/issues"
             },
-            "time": "2020-04-04T10:20:00+00:00"
+            "time": "2020-05-29T13:28:27+00:00"
         },
         {
             "name": "evrinoma/dto-bundle",
