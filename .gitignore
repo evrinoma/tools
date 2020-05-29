@@ -29,6 +29,7 @@ yarn-error.log
 /Delta8Bundle/
 /MenuBundle/
 /ProjectBundle/
+/ContrAgentBundle/
 DashBoardBundle
 ShellBundle
 composer
@@ -41,4 +42,5 @@ Delta8Bundle
 MenuBundle
 GridBundle
 ProjectBundle
+ContrAgentBundle
 
