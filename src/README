@@ -16,6 +16,7 @@ php bin/console doctrine:fixtures:load --group=LiveCamPrimorskyFixtures --append
 php bin/console doctrine:fixtures:load --group=LiveCamSovetskFixtures --append --env=dev
 php bin/console doctrine:fixtures:load --group=LiveCamTobolskFixtures --append --env=dev
 php bin/console doctrine:fixtures:load --group=LiveCamTumenFixtures --append --env=dev
+php bin/console doctrine:fixtures:load --group=LiveCamKzkt45Fixtures --append --env=dev
 
 php bin/console doctrine:fixtures:load --group=VCardFixtures --append --env=dev
 
