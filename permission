@@ -29,4 +29,5 @@ if [ ! -z "$USER" ] && [ ! -z "$USERMAIL" ] && [ ! -z "$PASS" ]; then
 #	php bin/console fos:user:promote $USER ROLE_KZKT_CONTROL_VIDEO
 #	php bin/console fos:user:promote $USER ROLE_IPARK_CONTROL_VIDEO
 
+#	php bin/console fos:user:promote $USER ROLE_DEV_USER
 fi
