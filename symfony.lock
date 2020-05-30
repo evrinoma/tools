@@ -104,6 +104,9 @@
     "endroid/qrcode": {
         "version": "3.7.7"
     },
+    "evrinoma/contragent-bundle": {
+        "version": "dev-master"
+    },
     "evrinoma/dashboard-bundle": {
         "version": "dev-master"
     },
@@ -116,10 +119,16 @@
     "evrinoma/exim-bundle": {
         "version": "dev-master"
     },
+    "evrinoma/grid-bundle": {
+        "version": "dev-master"
+    },
     "evrinoma/livevideo-bundle": {
         "version": "dev-master"
     },
     "evrinoma/menu-bundle": {
+        "version": "dev-master"
+    },
+    "evrinoma/project-bundle": {
         "version": "dev-master"
     },
     "evrinoma/settings-bundle": {
