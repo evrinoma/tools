@@ -47,22 +47,6 @@ services:
     tags:
       - { name: evrinoma.menu }
 
-#  App\Menu\DashBoardMenu:
-#    tags:
-#      - { name: evrinoma.menu }
-
-#  App\Menu\Delta8Menu:
-#    tags:
-#      - { name: evrinoma.menu }
-
-#  App\Menu\EximMenu:
-#    tags:
-#      - { name: evrinoma.menu }
-
-#  App\Menu\LiveVideoMenu:
-#    tags:
-#      - { name: evrinoma.menu }
-
   App\Menu\VCardMenu:
     tags:
       - { name: evrinoma.menu }
