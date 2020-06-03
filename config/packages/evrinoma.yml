@@ -16,7 +16,7 @@ dashboard:
 #    - 'Evrinoma\DashBoardBundle\Info\ProcInfo'
 #    - 'Evrinoma\DashBoardBundle\Info\SysInfo'
   provider: App\DashBoard\Provider\DashBoardProvider
-#
+#  menu: App\Menu\DashBoardMenu
 #nelmio_api_doc:
 #  documentation:
 #    info:
@@ -36,8 +36,8 @@ dashboard:
 #    - { name: evrinoma.menu }
 
 #exim section
-exim:
-  menu: App\Menu\EximMenu
+#exim:
+#  menu: App\Menu\EximMenu
 #App\Menu\EximMenu:
 #  tags:
 #    - { name: evrinoma.menu }
@@ -58,8 +58,6 @@ exim:
 #App\Menu\LiveVideoMenu:
 #  tags:
 #    - { name: evrinoma.menu }
-
-
 #nelmio_api_doc:
 #  documentation:
 #    info:

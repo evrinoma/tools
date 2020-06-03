@@ -47,9 +47,9 @@ services:
     tags:
       - { name: evrinoma.menu }
 
-  App\Menu\DashBoardMenu:
-    tags:
-      - { name: evrinoma.menu }
+#  App\Menu\DashBoardMenu:
+#    tags:
+#      - { name: evrinoma.menu }
 
 #  App\Menu\Delta8Menu:
 #    tags:
