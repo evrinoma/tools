@@ -12,8 +12,6 @@
     "evrinoma/grid-bundle": "dev-master",
     "evrinoma/livevideo-bundle": "dev-master",
     "evrinoma/menu-bundle": "dev-master",
-    "evrinoma/project-bundle": "dev-master",
-    "evrinoma/contragent-bundle": "dev-master",
     "friendsofsymfony/jsrouting-bundle": "^2.3",
     "friendsofsymfony/rest-bundle": "^2.5",
     "friendsofsymfony/user-bundle": "dev-master",
@@ -75,10 +73,6 @@
       "type": "vcs",
       "url": "https://github.com/evrinoma/Delta8Bundle.git"
     },
-    "contragent": {
-      "type": "vcs",
-      "url": "https://github.com/evrinoma/ContrAgentBundle.git"
-    },
     "dto": {
       "type": "vcs",
       "url": "https://github.com/evrinoma/DtoBundle.git"
@@ -102,10 +96,6 @@
     "menu": {
       "type": "vcs",
       "url": "https://github.com/evrinoma/MenuBundle.git"
-    },
-    "project": {
-      "type": "vcs",
-      "url": "https://github.com/evrinoma/ProjectBundle.git"
     },
     "settings": {
       "type": "vcs",
