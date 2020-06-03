@@ -28,6 +28,13 @@ dashboard:
 #      path_patterns:
 #        - ^/evrinoma/api/dashboard
 
+#delta8 section
+#delta8:
+#  menu: App\Menu\Delta8Menu
+#App\Menu\Delta8Menu:
+#  tags:
+#    - { name: evrinoma.menu }
+
 #exim section
 #nelmio_api_doc:
 #  documentation:

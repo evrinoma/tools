@@ -51,9 +51,9 @@ services:
     tags:
       - { name: evrinoma.menu }
 
-  App\Menu\Delta8Menu:
-    tags:
-      - { name: evrinoma.menu }
+#  App\Menu\Delta8Menu:
+#    tags:
+#      - { name: evrinoma.menu }
 
   App\Menu\EximMenu:
     tags:

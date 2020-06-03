@@ -22,7 +22,7 @@ final class Delta8Menu implements MenuInterface
         $journal = new MenuItem();
         $journal
             ->setRole([Delta8RoleInterface::ROLE_USER_DELTA8])
-            ->setName('Journal')
+            ->setName('Journal2')
             ->setRoute('delta_journal');
 
         $em->persist($journal);
@@ -30,7 +30,7 @@ final class Delta8Menu implements MenuInterface
         $menuDelta = new MenuItem();
         $menuDelta
             ->setRole([Delta8RoleInterface::ROLE_USER_DELTA8])
-            ->setName('Delta8')
+            ->setName('Delta82')
             ->setUri('#')
             ->addChild($journal)
         ;
