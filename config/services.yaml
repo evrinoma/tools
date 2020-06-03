@@ -59,9 +59,9 @@ services:
     tags:
       - { name: evrinoma.menu }
 
-  App\Menu\LiveVideoMenu:
-    tags:
-      - { name: evrinoma.menu }
+#  App\Menu\LiveVideoMenu:
+#    tags:
+#      - { name: evrinoma.menu }
 
   App\Menu\VCardMenu:
     tags:

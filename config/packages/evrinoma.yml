@@ -40,7 +40,14 @@ dashboard:
 #      path_patterns:
 #          - ^/evrinoma/api/exim
 
-#live_video section
+#livevideo section
+#livevideo:
+#  menu: App\Menu\LiveVideoMenu
+#App\Menu\LiveVideoMenu:
+#  tags:
+#    - { name: evrinoma.menu }
+
+
 #nelmio_api_doc:
 #  documentation:
 #    info:
