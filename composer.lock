@@ -1603,15 +1603,16 @@
             "source": {
                 "type": "git",
                 "url": "git@github.com:evrinoma/Delta8Bundle.git",
-                "reference": "d85ec5202152b75caa6b797e12d54d8661a01faf"
+                "reference": "179955736171883107536594ab4322876f625aea"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/evrinoma/Delta8Bundle/zipball/d85ec5202152b75caa6b797e12d54d8661a01faf",
-                "reference": "d85ec5202152b75caa6b797e12d54d8661a01faf",
+                "url": "https://api.github.com/repos/evrinoma/Delta8Bundle/zipball/179955736171883107536594ab4322876f625aea",
+                "reference": "179955736171883107536594ab4322876f625aea",
                 "shasum": ""
             },
             "require": {
+                "evrinoma/menu-bundle": "dev-master",
                 "evrinoma/settings-bundle": "dev-master",
                 "evrinoma/utils-bundle": "dev-master",
                 "php": "^7.1.3"
@@ -1638,7 +1639,7 @@
             "keywords": [
                 "Delta8"
             ],
-            "time": "2020-05-29T13:28:27+00:00"
+            "time": "2020-06-03T14:02:07+00:00"
         },
         {
             "name": "evrinoma/dto-bundle",
@@ -1691,16 +1692,17 @@
             "source": {
                 "type": "git",
                 "url": "git@github.com:evrinoma/EximBundle.git",
-                "reference": "9a31c56d07eac85ecab1434ef416f59ecb4ffb1d"
+                "reference": "31d05e0b112626aa512b64f2d6895834813e2c63"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/evrinoma/EximBundle/zipball/9a31c56d07eac85ecab1434ef416f59ecb4ffb1d",
-                "reference": "9a31c56d07eac85ecab1434ef416f59ecb4ffb1d",
+                "url": "https://api.github.com/repos/evrinoma/EximBundle/zipball/31d05e0b112626aa512b64f2d6895834813e2c63",
+                "reference": "31d05e0b112626aa512b64f2d6895834813e2c63",
                 "shasum": ""
             },
             "require": {
                 "evrinoma/dto-bundle": "dev-master",
+                "evrinoma/menu-bundle": "dev-master",
                 "evrinoma/settings-bundle": "dev-master",
                 "evrinoma/utils-bundle": "dev-master",
                 "php": "^7.1.3"
@@ -1727,7 +1729,7 @@
             "keywords": [
                 "Exim"
             ],
-            "time": "2020-04-07T19:20:35+00:00"
+            "time": "2020-06-03T14:30:21+00:00"
         },
         {
             "name": "evrinoma/grid-bundle",
@@ -1778,16 +1780,17 @@
             "source": {
                 "type": "git",
                 "url": "git@github.com:evrinoma/LiveVideoBundle.git",
-                "reference": "5c1e21b6aae9e34dcbccced7adbf59524de0ca85"
+                "reference": "edef41470c2aa43b401defe928ee4f65ae42ae43"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/evrinoma/LiveVideoBundle/zipball/5c1e21b6aae9e34dcbccced7adbf59524de0ca85",
-                "reference": "5c1e21b6aae9e34dcbccced7adbf59524de0ca85",
+                "url": "https://api.github.com/repos/evrinoma/LiveVideoBundle/zipball/edef41470c2aa43b401defe928ee4f65ae42ae43",
+                "reference": "edef41470c2aa43b401defe928ee4f65ae42ae43",
                 "shasum": ""
             },
             "require": {
                 "evrinoma/dto-bundle": "dev-master",
+                "evrinoma/menu-bundle": "dev-master",
                 "evrinoma/utils-bundle": "dev-master",
                 "ltoscano/ponvif": "dev-master",
                 "php": "^7.1.3"
@@ -1816,7 +1819,7 @@
                 "Stream player",
                 "Wowza"
             ],
-            "time": "2020-05-29T18:05:50+00:00"
+            "time": "2020-06-03T13:09:36+00:00"
         },
         {
             "name": "evrinoma/menu-bundle",
@@ -3609,7 +3612,7 @@
             "version": "dev-master",
             "source": {
                 "type": "git",
-                "url": "git@github.com:nelmio/NelmioApiDocBundle.git",
+                "url": "https://github.com/nelmio/NelmioApiDocBundle.git",
                 "reference": "ab014fe032beb1a7875939ff4162e8d05ad778ab"
             },
             "dist": {
