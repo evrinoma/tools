@@ -91,6 +91,10 @@
       "type": "vcs",
       "url": "https://github.com/evrinoma/ShellBundle.git"
     },
+    "contragent": {
+      "type": "vcs",
+      "url": "https://github.com/evrinoma/ContrAgentBundle.git"
+    },
     "livevideo": {
       "type": "vcs",
       "url": "https://github.com/evrinoma/LiveVideoBundle.git"
@@ -98,6 +102,10 @@
     "menu": {
       "type": "vcs",
       "url": "https://github.com/evrinoma/MenuBundle.git"
+    },
+    "project": {
+      "type": "vcs",
+      "url": "https://github.com/evrinoma/ProjectBundle.git"
     },
     "settings": {
       "type": "vcs",
