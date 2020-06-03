@@ -55,9 +55,9 @@ services:
 #    tags:
 #      - { name: evrinoma.menu }
 
-  App\Menu\EximMenu:
-    tags:
-      - { name: evrinoma.menu }
+#  App\Menu\EximMenu:
+#    tags:
+#      - { name: evrinoma.menu }
 
 #  App\Menu\LiveVideoMenu:
 #    tags:

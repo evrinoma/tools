@@ -36,6 +36,11 @@ dashboard:
 #    - { name: evrinoma.menu }
 
 #exim section
+exim:
+  menu: App\Menu\EximMenu
+#App\Menu\EximMenu:
+#  tags:
+#    - { name: evrinoma.menu }
 #nelmio_api_doc:
 #  documentation:
 #    info:
