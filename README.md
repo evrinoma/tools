@@ -114,3 +114,4 @@ mysql -u root -p tools < sql/exim.sql
 ![Alt text](readme/mailLogs.png?raw=true "Log Search Page")
 
 #TODO
+test
