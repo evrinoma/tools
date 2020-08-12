@@ -58,7 +58,7 @@
     "lodash.merge": "^4.6.2",
     "minimist": "^1.2.5",
     "mixin-deep": "^2.0.1",
-    "serialize-javascript": "^3.0.0",
+    "serialize-javascript": "^3.1.0",
     "set-value": "^3.0.1",
     "sshpk": "^1.16.1",
     "stringstream": "^1.0.0",
