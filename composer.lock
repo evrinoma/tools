@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "757da490127dd10f6d7d2ae1f3961197",
+    "content-hash": "1d6a1edf507a3361c1215c903a8c28bf",
     "packages": [
         {
             "name": "bacon/bacon-qr-code",
@@ -1514,7 +1514,7 @@
             "version": "dev-master",
             "source": {
                 "type": "git",
-                "url": "git@github.com:evrinoma/ContrAgentBundle.git",
+                "url": "https://github.com/evrinoma/ContrAgentBundle.git",
                 "reference": "ea7d1cac0e75ea2ca118c69487cbe89cb00fe22f"
             },
             "dist": {
@@ -1556,13 +1556,13 @@
             "version": "dev-master",
             "source": {
                 "type": "git",
-                "url": "git@github.com:evrinoma/DashBoardBundle.git",
-                "reference": "a6c9cfe0eb79ebe676e9175d2931069ae080244b"
+                "url": "https://github.com/evrinoma/DashBoardBundle.git",
+                "reference": "c9835557809a2c4298e798eedfb83316dfa49f7d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/evrinoma/DashBoardBundle/zipball/a6c9cfe0eb79ebe676e9175d2931069ae080244b",
-                "reference": "a6c9cfe0eb79ebe676e9175d2931069ae080244b",
+                "url": "https://api.github.com/repos/evrinoma/DashBoardBundle/zipball/c9835557809a2c4298e798eedfb83316dfa49f7d",
+                "reference": "c9835557809a2c4298e798eedfb83316dfa49f7d",
                 "shasum": ""
             },
             "require": {
@@ -1595,14 +1595,18 @@
             "keywords": [
                 "DashBoard"
             ],
-            "time": "2020-04-09T10:38:11+00:00"
+            "support": {
+                "source": "https://github.com/evrinoma/DashBoardBundle/tree/master",
+                "issues": "https://github.com/evrinoma/DashBoardBundle/issues"
+            },
+            "time": "2020-08-24T09:23:42+00:00"
         },
         {
             "name": "evrinoma/delta8-bundle",
             "version": "dev-master",
             "source": {
                 "type": "git",
-                "url": "git@github.com:evrinoma/Delta8Bundle.git",
+                "url": "https://github.com/evrinoma/Delta8Bundle.git",
                 "reference": "179955736171883107536594ab4322876f625aea"
             },
             "dist": {
@@ -1646,7 +1650,7 @@
             "version": "dev-master",
             "source": {
                 "type": "git",
-                "url": "git@github.com:evrinoma/DtoBundle.git",
+                "url": "https://github.com/evrinoma/DtoBundle.git",
                 "reference": "810d2bd64fc4d045eb322e23434884e08610a788"
             },
             "dist": {
@@ -1691,7 +1695,7 @@
             "version": "dev-master",
             "source": {
                 "type": "git",
-                "url": "git@github.com:evrinoma/EximBundle.git",
+                "url": "https://github.com/evrinoma/EximBundle.git",
                 "reference": "31d05e0b112626aa512b64f2d6895834813e2c63"
             },
             "dist": {
@@ -1736,7 +1740,7 @@
             "version": "dev-master",
             "source": {
                 "type": "git",
-                "url": "git@github.com:evrinoma/GridBundle.git",
+                "url": "https://github.com/evrinoma/GridBundle.git",
                 "reference": "83458ebf7a4efe9f314f5ece420bf4f604072f7c"
             },
             "dist": {
@@ -1779,13 +1783,13 @@
             "version": "dev-master",
             "source": {
                 "type": "git",
-                "url": "git@github.com:evrinoma/LiveVideoBundle.git",
-                "reference": "edef41470c2aa43b401defe928ee4f65ae42ae43"
+                "url": "https://github.com/evrinoma/LiveVideoBundle.git",
+                "reference": "becfaa89777505da9379eac4b87df77f1edde960"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/evrinoma/LiveVideoBundle/zipball/edef41470c2aa43b401defe928ee4f65ae42ae43",
-                "reference": "edef41470c2aa43b401defe928ee4f65ae42ae43",
+                "url": "https://api.github.com/repos/evrinoma/LiveVideoBundle/zipball/becfaa89777505da9379eac4b87df77f1edde960",
+                "reference": "becfaa89777505da9379eac4b87df77f1edde960",
                 "shasum": ""
             },
             "require": {
@@ -1819,14 +1823,18 @@
                 "Stream player",
                 "Wowza"
             ],
-            "time": "2020-06-03T13:09:36+00:00"
+            "support": {
+                "source": "https://github.com/evrinoma/LiveVideoBundle/tree/master",
+                "issues": "https://github.com/evrinoma/LiveVideoBundle/issues"
+            },
+            "time": "2020-08-24T10:03:27+00:00"
         },
         {
             "name": "evrinoma/menu-bundle",
             "version": "dev-master",
             "source": {
                 "type": "git",
-                "url": "git@github.com:evrinoma/MenuBundle.git",
+                "url": "https://github.com/evrinoma/MenuBundle.git",
                 "reference": "896b571aa54334bfe487802a71c8e9b555622f3e"
             },
             "dist": {
@@ -1873,7 +1881,7 @@
             "version": "dev-master",
             "source": {
                 "type": "git",
-                "url": "git@github.com:evrinoma/ProjectBundle.git",
+                "url": "https://github.com/evrinoma/ProjectBundle.git",
                 "reference": "b884e3635731f61ecd988652dac3833ff903784e"
             },
             "dist": {
@@ -1915,7 +1923,7 @@
             "version": "dev-master",
             "source": {
                 "type": "git",
-                "url": "git@github.com:evrinoma/SettingsBundle.git",
+                "url": "https://github.com/evrinoma/SettingsBundle.git",
                 "reference": "879c89e52687711fb92cbf936e979730ded866a0"
             },
             "dist": {
@@ -1961,7 +1969,7 @@
             "version": "dev-master",
             "source": {
                 "type": "git",
-                "url": "git@github.com:evrinoma/ShellBundle.git",
+                "url": "https://github.com/evrinoma/ShellBundle.git",
                 "reference": "ec2f57a1f5a92b5c36e612d8532dec2690f51f78"
             },
             "dist": {
@@ -2002,7 +2010,7 @@
             "version": "dev-master",
             "source": {
                 "type": "git",
-                "url": "git@github.com:evrinoma/UtilsBundle.git",
+                "url": "https://github.com/evrinoma/UtilsBundle.git",
                 "reference": "6fae4552d4af2f9aa3f796a3cc25d74dae1ba015"
             },
             "dist": {
@@ -3612,7 +3620,7 @@
             "version": "dev-master",
             "source": {
                 "type": "git",
-                "url": "https://github.com/nelmio/NelmioApiDocBundle.git",
+                "url": "git@github.com:nelmio/NelmioApiDocBundle.git",
                 "reference": "ab014fe032beb1a7875939ff4162e8d05ad778ab"
             },
             "dist": {
@@ -8848,5 +8856,6 @@
         "php": "^7.2.3",
         "ext-iconv": "*"
     },
-    "platform-dev": []
+    "platform-dev": [],
+    "plugin-api-version": "1.1.0"
 }
