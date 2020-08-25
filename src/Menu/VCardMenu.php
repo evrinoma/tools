@@ -2,7 +2,7 @@
 
 namespace App\Menu;
 
-use App\Security\VCardRoleInterface;
+use App\Voiter\VCardRoleInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Evrinoma\MenuBundle\Entity\MenuItem;
 use Evrinoma\MenuBundle\Manager\MenuInterface;

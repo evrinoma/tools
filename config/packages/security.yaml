@@ -23,6 +23,7 @@ security:
       pattern: ^/(_(profiler|wdt)|css|images|js)/
       security: false
     main:
+      access_denied_url: core_home
       #anonymous: ~
       pattern: ^/
       form_login:
@@ -59,12 +60,22 @@ security:
     # - { path: ^/admin, roles: ROLE_ADMIN }
     # - { path: ^/profile, roles: ROLE_USER }
     # - { path: ^/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
-#    - { path: ^/register, role: ROLE_ADMIN }
-#    - { path: ^/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
-    - { path: ^/api/doc/internal, role: ROLE_SUPER_ADMIN }
+    #    - { path: ^/register, role: ROLE_ADMIN }
+    #    - { path: ^/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
+    - { path: ^/api/doc/*, roles: [ ROLE_SUPER_ADMIN, ROLE_DEV_USER ] }
     #- { path: ^/*, role: ROLE_USER }
     #- { path: ^/*, role: IS_AUTHENTICATED_REMEMBERED }
-#    - { path: ^/admin/, role: ROLE_SUPER_ADMIN }
+    #    - { path: ^/admin/, role: ROLE_SUPER_ADMIN }
+    - { path: ^/evrinoma/live_video/video/live_ipark45, roles: [ ROLE_IPARK_VIDEO, ROLE_SUPER_ADMIN, ROLE_DEV_USER, ROLE_VIDEO_ALL ] }
+    - { path: ^/evrinoma/live_video/video/live_kzkt45, roles: [ ROLE_KZKT_VIDEO, ROLE_SUPER_ADMIN, ROLE_DEV_USER, ROLE_VIDEO_ALL ] }
+    - { path: ^/evrinoma/live_video/video/live_kpsz, roles: [ ROLE_KPSZ_VIDEO, ROLE_SUPER_ADMIN, ROLE_DEV_USER, ROLE_VIDEO_ALL ] }
+    - { path: ^/evrinoma/live_video/video/live_ishim, roles: [ ROLE_ISHIM_VIDEO, ROLE_SUPER_ADMIN, ROLE_DEV_USER, ROLE_VIDEO_ALL ] }
+    - { path: ^/evrinoma/live_video/video/live_tobolsk, roles: [ ROLE_TOBOLSK_VIDEO, ROLE_SUPER_ADMIN, ROLE_DEV_USER, ROLE_VIDEO_ALL ] }
+    - { path: ^/evrinoma/live_video/video/live_vankor, roles: [ ROLE_VANKOR_VIDEO, ROLE_SUPER_ADMIN, ROLE_DEV_USER, ROLE_VIDEO_ALL ] }
+    - { path: ^/evrinoma/mail/*, roles: [ ROLE_SUPER_ADMIN, ROLE_VIDEO_ALL ] }
+    - { path: ^/evrinoma/grid/*, roles: [ ROLE_SUPER_ADMIN, ROLE_VIDEO_ALL ] }
+    - { path: ^/evrinoma/delta/*, roles: [ ROLE_USER_DELTA8, ROLE_SUPER_ADMIN, ROLE_VIDEO_ALL ] }
+    - { path: ^/evrinoma/dashboard/status, roles: [ ROLE_STATUS, ROLE_SUPER_ADMIN, ROLE_VIDEO_ALL ] }
     - { path: ^/evrinoma/api/delta8/*, roles: IS_AUTHENTICATED_ANONYMOUSLY, ips: [172.0.1.1/8] }
     - { path: ^/delta/journal/clear, roles: IS_AUTHENTICATED_ANONYMOUSLY, ips: [172.0.1.1/8] }
     - { path: ^/login$, roles: IS_AUTHENTICATED_ANONYMOUSLY }
