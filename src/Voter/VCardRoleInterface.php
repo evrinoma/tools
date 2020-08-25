@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Voiter;
+namespace App\Voter;
 
 /**
  * Interface RoleInterface
