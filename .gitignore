@@ -30,6 +30,7 @@ yarn-error.log
 /MenuBundle/
 /ProjectBundle/
 /ContrAgentBundle/
+/VoterBundle/
 DashBoardBundle
 ShellBundle
 composer
@@ -43,4 +44,4 @@ MenuBundle
 GridBundle
 ProjectBundle
 ContrAgentBundle
-
+VoterBundle
