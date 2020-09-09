@@ -32,6 +32,7 @@ yarn-error.log
 /ContrAgentBundle/
 /VoterBundle/
 DashBoardBundle
+PermissionsBundle
 ShellBundle
 composer
 LiveVideoBundle
