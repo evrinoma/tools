@@ -7,12 +7,13 @@ use JMS\Serializer\Annotation\Type;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Class Contragent
+ * Class ContrAgent
  *
  * @package App\Entity
- * @ORM\Table(indexes={@ORM\Index(name="IDX_4FBF094FB03A8386", columns={"created_id"}), @ORM\Index(name="IDX_4FBF094F896DBBDE", columns={"updated_id"})})
+ * @ORM\Table(name="contragent")
+ * @ORM\Entity
  */
-class Contragent extends BaseContrAgent
+class ContrAgent extends BaseContrAgent
 {
 //region SECTION: Fields
     /**

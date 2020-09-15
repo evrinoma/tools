@@ -4,28 +4,29 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Evrinoma\ProjectBundle\Entity\BaseProject;
+use Evrinoma\ProjectBundle\Model\AbstractBaseProject;
 use JMS\Serializer\Annotation\Type;
 
 /**
  * Class Project
  *
  * @package App\Entity
- * @ORM\Table(indexes={@ORM\Index(name="IDX_2FB3D0EE979B1AD6", columns={"contragent_id"}), @ORM\Index(name="IDX_2FB3D0EE896DBBDE", columns={"updated_id"}), @ORM\Index(name="IDX_2FB3D0EEB03A8386", columns={"created_id"})})
+ * @ORM\Table(name="project")
+ * @ORM\Entity
  */
-class Project extends BaseProject
+class Project extends AbstractBaseProject
 {
 //region SECTION: Fields
     /**
      * @var Contragent
-     * @Type("App\Entity\Contragent")
+     * @Type("App\Entity\ContrAgent")
      *
-     * @ORM\ManyToOne(targetEntity="Contragent")
+     * @ORM\ManyToOne(targetEntity="ContrAgent")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="contragent_id", referencedColumnName="id")
      * })
      */
-    private $contragent;
+    private $contrAgent;
 
     /**
      * @var User
@@ -54,9 +55,9 @@ class Project extends BaseProject
     /**
      * @return Contragent
      */
-    public function getContragent(): Contragent
+    public function getContrAgent(): Contragent
     {
-        return $this->contragent;
+        return $this->contrAgent;
     }
 
     /**
