@@ -40,8 +40,7 @@ Also configure composer.json:<br>
  * composer config repositories.livevideo vcs https://github.com/evrinoma/LiveVideoBundle.git<br>
  * composer config repositories.menu vcs https://github.com/evrinoma/MenuBundle.git<br>
  * composer config repositories.settings vcs https://github.com/evrinoma/SettingsBundle.git<br>
- * composer config repositories.utils vcs https://github.com/evrinoma/ShellBundle.git<br>
- * composer config repositories.livevideo vcs https://github.com/evrinoma/UtilsBundle.git<br>
+ * composer config repositories.utils vcs https://github.com/evrinoma/UtilsBundle.git<br>
  * composer config repositories.ponvif vcs '{"type": "package","package": {"name": "ltoscano/ponvif", "version": "dev-master","dist": { "url": "https://github.com/ltoscano/ponvif/archive/master.zip", "type": "zip"}, "autoload": {"classmap": ["lib/"] }}}'<br>
 
 Install dependency:<br>
