@@ -5,6 +5,8 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Evrinoma\ProjectBundle\Model\AbstractBaseProject;
+use App\Entity\Common\CreateByUser;
+use App\Entity\Common\UpdateByUser;
 use JMS\Serializer\Annotation\Type;
 
 /**
@@ -17,6 +19,8 @@ use JMS\Serializer\Annotation\Type;
 class Project extends AbstractBaseProject
 {
 //region SECTION: Fields
+    use CreateByUser, UpdateByUser;
+
     /**
      * @var Contragent
      * @Type("App\Entity\ContrAgent")
@@ -28,27 +32,6 @@ class Project extends AbstractBaseProject
      */
     private $contrAgent;
 
-    /**
-     * @var User
-     * @Type("App\Entity\User")
-     *
-     * @ORM\ManyToOne(targetEntity="User")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="created_id", referencedColumnName="id")
-     * })
-     */
-    private $created;
-
-    /**
-     * @var User
-     * @Type("App\Entity\User")
-     *
-     * @ORM\ManyToOne(targetEntity="User")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="updated_id", referencedColumnName="id")
-     * })
-     */
-    private $updated;
 //endregion Fields
 
 //region SECTION: Getters/Setters
@@ -58,22 +41,6 @@ class Project extends AbstractBaseProject
     public function getContrAgent(): Contragent
     {
         return $this->contrAgent;
-    }
-
-    /**
-     * @return User
-     */
-    public function getCreated(): User
-    {
-        return $this->created;
-    }
-
-    /**
-     * @return User
-     */
-    public function getUpdated(): User
-    {
-        return $this->updated;
     }
 //endregion Getters/Setters
 }
