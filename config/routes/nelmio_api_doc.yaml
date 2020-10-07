@@ -11,10 +11,6 @@ app.swagger_ui:
   methods: GET
   defaults: { _controller: nelmio_api_doc.controller.swagger_ui, area: default  }
 
-app.swagger_ui.internal:
-  path: /api/doc/internal
-  methods: GET
-
 app.swagger_ui.evrinoma:
   path: /api/doc/evrinoma
   methods: GET|POST|PUT

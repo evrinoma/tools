@@ -1,10 +1,10 @@
 nelmio_api_doc:
-    documentation:
-        info:
-            title: Tools
-            description: Tools api doc
-            version: 1.0.1
-    areas: # to filter documented areas
-        default:
-            path_patterns:
-              - ^/api(?!/doc/{area}$)
+  documentation:
+    info:
+      title: Tools
+      description: Tools api doc
+      version: 1.0.1
+  areas: # to filter documented areas
+    default:
+      path_patterns:
+        - ^/api(?!/doc/{area}$)

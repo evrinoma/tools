@@ -2,7 +2,7 @@
 nelmio_api_doc:
   documentation:
     info:
-      title: LiveVideoApi
+      title: Evrinoma Api
       description: LiveVideo api doc
       version: 1.0.2
   areas: # to filter documented areas
@@ -68,6 +68,7 @@ dashboard:
 #App\Menu\LiveVideoMenu:
 #  tags:
 #    - { name: evrinoma.menu }
+
 #nelmio_api_doc:
 #  documentation:
 #    info:
@@ -78,7 +79,6 @@ dashboard:
 #    live_video:
 #      path_patterns:
 #          - ^/evrinoma/api/live_video
-
 
 doctrine:
   dbal:
