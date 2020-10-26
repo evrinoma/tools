@@ -1659,12 +1659,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/evrinoma/DtoBundle.git",
-                "reference": "810d2bd64fc4d045eb322e23434884e08610a788"
+                "reference": "4d276184c66b2a80324bcb455d7014e2240494dc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/evrinoma/DtoBundle/zipball/810d2bd64fc4d045eb322e23434884e08610a788",
-                "reference": "810d2bd64fc4d045eb322e23434884e08610a788",
+                "url": "https://api.github.com/repos/evrinoma/DtoBundle/zipball/4d276184c66b2a80324bcb455d7014e2240494dc",
+                "reference": "4d276184c66b2a80324bcb455d7014e2240494dc",
                 "shasum": ""
             },
             "require": {
@@ -1696,7 +1696,7 @@
                 "source": "https://github.com/evrinoma/DtoBundle/tree/master",
                 "issues": "https://github.com/evrinoma/DtoBundle/issues"
             },
-            "time": "2020-04-03T10:14:02+00:00"
+            "time": "2020-10-26T11:32:51+00:00"
         },
         {
             "name": "evrinoma/exim-bundle",
@@ -1851,15 +1851,16 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/evrinoma/MenuBundle.git",
-                "reference": "9a561cc0889dff676ade3c569cf640e2752fc191"
+                "reference": "08b50a2a97a55337b989db0a0040fca7882eab91"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/evrinoma/MenuBundle/zipball/9a561cc0889dff676ade3c569cf640e2752fc191",
-                "reference": "9a561cc0889dff676ade3c569cf640e2752fc191",
+                "url": "https://api.github.com/repos/evrinoma/MenuBundle/zipball/08b50a2a97a55337b989db0a0040fca7882eab91",
+                "reference": "08b50a2a97a55337b989db0a0040fca7882eab91",
                 "shasum": ""
             },
             "require": {
+                "evrinoma/dto-bundle": "dev-master",
                 "evrinoma/utils-bundle": "dev-master",
                 "knplabs/knp-menu-bundle": "^3.0",
                 "php": "^7.1.3"
@@ -1890,7 +1891,7 @@
                 "source": "https://github.com/evrinoma/MenuBundle/tree/master",
                 "issues": "https://github.com/evrinoma/MenuBundle/issues"
             },
-            "time": "2020-10-13T07:58:03+00:00"
+            "time": "2020-10-26T11:26:15+00:00"
         },
         {
             "name": "evrinoma/project-bundle",
