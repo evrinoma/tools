@@ -1851,12 +1851,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/evrinoma/MenuBundle.git",
-                "reference": "ab730e0ab22bee800dad2075ef6bad0c1c95a802"
+                "reference": "9a561cc0889dff676ade3c569cf640e2752fc191"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/evrinoma/MenuBundle/zipball/ab730e0ab22bee800dad2075ef6bad0c1c95a802",
-                "reference": "ab730e0ab22bee800dad2075ef6bad0c1c95a802",
+                "url": "https://api.github.com/repos/evrinoma/MenuBundle/zipball/9a561cc0889dff676ade3c569cf640e2752fc191",
+                "reference": "9a561cc0889dff676ade3c569cf640e2752fc191",
                 "shasum": ""
             },
             "require": {
@@ -1890,7 +1890,7 @@
                 "source": "https://github.com/evrinoma/MenuBundle/tree/master",
                 "issues": "https://github.com/evrinoma/MenuBundle/issues"
             },
-            "time": "2020-10-13T07:44:22+00:00"
+            "time": "2020-10-13T07:58:03+00:00"
         },
         {
             "name": "evrinoma/project-bundle",
