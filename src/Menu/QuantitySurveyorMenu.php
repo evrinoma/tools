@@ -7,7 +7,7 @@ namespace App\Menu;
 use Doctrine\ORM\EntityManagerInterface;
 use Evrinoma\Delta8Bundle\Voter\Delta8RoleInterface;
 use Evrinoma\MenuBundle\Entity\MenuItem;
-use Evrinoma\MenuBundle\Manager\MenuInterface;
+use Evrinoma\MenuBundle\Menu\MenuInterface;
 use Evrinoma\UtilsBundle\Voter\RoleInterface;
 
 /**
@@ -18,13 +18,14 @@ use Evrinoma\UtilsBundle\Voter\RoleInterface;
 final class QuantitySurveyorMenu implements MenuInterface
 {
 
-    public function createMenu(EntityManagerInterface $em): void
+    public function create(EntityManagerInterface $em): void
     {
         $project = new MenuItem();
         $project
             ->setRole([RoleInterface::ROLE_DEV_USER])
             ->setName('Project')
-            ->setRoute('project');
+            ->setRoute('project')
+            ->setTag($this->tag());
 
         $em->persist($project);
 
@@ -32,7 +33,8 @@ final class QuantitySurveyorMenu implements MenuInterface
         $contrAgent
             ->setRole([RoleInterface::ROLE_DEV_USER])
             ->setName('ContrAgent')
-            ->setRoute('contr_agent');
+            ->setRoute('contr_agent')
+            ->setTag($this->tag());
 
         $em->persist($contrAgent);
 
@@ -44,7 +46,7 @@ final class QuantitySurveyorMenu implements MenuInterface
             ->setUri('#')
             ->addChild($project)
             ->addChild($contrAgent)
-        ;
+            ->setTag($this->tag());
 
         $em->persist($menuQuantitySurveyor);
     }
@@ -52,5 +54,10 @@ final class QuantitySurveyorMenu implements MenuInterface
     public function order(): int
     {
         return 30;
+    }
+
+    public function tag(): string
+    {
+        return MenuInterface::DEFAULT_TAG;
     }
 }

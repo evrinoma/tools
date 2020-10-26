@@ -21,7 +21,8 @@
             <div>
                 <div class="menu">
                     <nav>
-                        {{ knp_menu_render('main') }}
+                        {% set menuItem = knp_menu_get('main', [], {'tag': constant('Evrinoma\\MenuBundle\\Menu\\MenuInterface::DEFAULT_TAG') }) %}
+                        {{ knp_menu_render(menuItem) }}
                     </nav>
                 </div>
                 {% block spinner %}
