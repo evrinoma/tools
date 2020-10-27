@@ -1515,12 +1515,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/evrinoma/ContrAgentBundle.git",
-                "reference": "4c741959ea150a60b972935b7aacf6b9f1b99cb5"
+                "reference": "abc05a4cbbe3e2bf9d458dad2780c1648a0c8aa3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/evrinoma/ContrAgentBundle/zipball/4c741959ea150a60b972935b7aacf6b9f1b99cb5",
-                "reference": "4c741959ea150a60b972935b7aacf6b9f1b99cb5",
+                "url": "https://api.github.com/repos/evrinoma/ContrAgentBundle/zipball/abc05a4cbbe3e2bf9d458dad2780c1648a0c8aa3",
+                "reference": "abc05a4cbbe3e2bf9d458dad2780c1648a0c8aa3",
                 "shasum": ""
             },
             "require": {
@@ -1553,7 +1553,7 @@
                 "source": "https://github.com/evrinoma/ContrAgentBundle/tree/master",
                 "issues": "https://github.com/evrinoma/ContrAgentBundle/issues"
             },
-            "time": "2020-09-15T19:44:46+00:00"
+            "time": "2020-10-27T05:32:59+00:00"
         },
         {
             "name": "evrinoma/dashboard-bundle",
@@ -1561,12 +1561,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/evrinoma/DashBoardBundle.git",
-                "reference": "db4299b8e958b86433dca33ce37cf9ee44c5e968"
+                "reference": "13e5245294bb7c98f3f4d895d200c36b63b14ff8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/evrinoma/DashBoardBundle/zipball/db4299b8e958b86433dca33ce37cf9ee44c5e968",
-                "reference": "db4299b8e958b86433dca33ce37cf9ee44c5e968",
+                "url": "https://api.github.com/repos/evrinoma/DashBoardBundle/zipball/13e5245294bb7c98f3f4d895d200c36b63b14ff8",
+                "reference": "13e5245294bb7c98f3f4d895d200c36b63b14ff8",
                 "shasum": ""
             },
             "require": {
@@ -1603,7 +1603,7 @@
                 "source": "https://github.com/evrinoma/DashBoardBundle/tree/master",
                 "issues": "https://github.com/evrinoma/DashBoardBundle/issues"
             },
-            "time": "2020-08-25T14:24:08+00:00"
+            "time": "2020-10-27T05:32:59+00:00"
         },
         {
             "name": "evrinoma/delta8-bundle",
@@ -1611,12 +1611,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/evrinoma/Delta8Bundle.git",
-                "reference": "c21079ecb63167f62ff47aca7762e474683cbc9e"
+                "reference": "e22514bb7902160eefab049321c3b79ffe2f236c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/evrinoma/Delta8Bundle/zipball/c21079ecb63167f62ff47aca7762e474683cbc9e",
-                "reference": "c21079ecb63167f62ff47aca7762e474683cbc9e",
+                "url": "https://api.github.com/repos/evrinoma/Delta8Bundle/zipball/e22514bb7902160eefab049321c3b79ffe2f236c",
+                "reference": "e22514bb7902160eefab049321c3b79ffe2f236c",
                 "shasum": ""
             },
             "require": {
@@ -1651,7 +1651,7 @@
                 "source": "https://github.com/evrinoma/Delta8Bundle/tree/master",
                 "issues": "https://github.com/evrinoma/Delta8Bundle/issues"
             },
-            "time": "2020-08-25T14:24:50+00:00"
+            "time": "2020-10-27T05:32:59+00:00"
         },
         {
             "name": "evrinoma/dto-bundle",
@@ -1659,12 +1659,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/evrinoma/DtoBundle.git",
-                "reference": "4d276184c66b2a80324bcb455d7014e2240494dc"
+                "reference": "a2fd034eee4083a067e3c26a40b586980171826a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/evrinoma/DtoBundle/zipball/4d276184c66b2a80324bcb455d7014e2240494dc",
-                "reference": "4d276184c66b2a80324bcb455d7014e2240494dc",
+                "url": "https://api.github.com/repos/evrinoma/DtoBundle/zipball/a2fd034eee4083a067e3c26a40b586980171826a",
+                "reference": "a2fd034eee4083a067e3c26a40b586980171826a",
                 "shasum": ""
             },
             "require": {
@@ -1696,7 +1696,7 @@
                 "source": "https://github.com/evrinoma/DtoBundle/tree/master",
                 "issues": "https://github.com/evrinoma/DtoBundle/issues"
             },
-            "time": "2020-10-26T11:32:51+00:00"
+            "time": "2020-10-27T05:32:59+00:00"
         },
         {
             "name": "evrinoma/exim-bundle",
@@ -1704,12 +1704,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/evrinoma/EximBundle.git",
-                "reference": "5ee4e2c07bd42a108559c3f7b55134468082ab94"
+                "reference": "946c05138f7239105925559cadaa5389f4020521"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/evrinoma/EximBundle/zipball/5ee4e2c07bd42a108559c3f7b55134468082ab94",
-                "reference": "5ee4e2c07bd42a108559c3f7b55134468082ab94",
+                "url": "https://api.github.com/repos/evrinoma/EximBundle/zipball/946c05138f7239105925559cadaa5389f4020521",
+                "reference": "946c05138f7239105925559cadaa5389f4020521",
                 "shasum": ""
             },
             "require": {
@@ -1745,7 +1745,7 @@
                 "source": "https://github.com/evrinoma/EximBundle/tree/master",
                 "issues": "https://github.com/evrinoma/EximBundle/issues"
             },
-            "time": "2020-08-25T14:25:13+00:00"
+            "time": "2020-10-27T05:32:59+00:00"
         },
         {
             "name": "evrinoma/grid-bundle",
@@ -1753,12 +1753,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/evrinoma/GridBundle.git",
-                "reference": "04d346a90b6985831a142077763eae8ad35e1ff0"
+                "reference": "db793998341fbaba31cbb1379c895be9577784dd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/evrinoma/GridBundle/zipball/04d346a90b6985831a142077763eae8ad35e1ff0",
-                "reference": "04d346a90b6985831a142077763eae8ad35e1ff0",
+                "url": "https://api.github.com/repos/evrinoma/GridBundle/zipball/db793998341fbaba31cbb1379c895be9577784dd",
+                "reference": "db793998341fbaba31cbb1379c895be9577784dd",
                 "shasum": ""
             },
             "require": {
@@ -1792,7 +1792,7 @@
                 "source": "https://github.com/evrinoma/GridBundle/tree/master",
                 "issues": "https://github.com/evrinoma/GridBundle/issues"
             },
-            "time": "2020-08-25T14:25:35+00:00"
+            "time": "2020-10-27T05:32:59+00:00"
         },
         {
             "name": "evrinoma/livevideo-bundle",
@@ -1800,12 +1800,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/evrinoma/LiveVideoBundle.git",
-                "reference": "98d7c623f002b7a78ba3f775691488f5ed1c5c56"
+                "reference": "30e3a70a9646e6e6f7a6812d51067c6edd2813b1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/evrinoma/LiveVideoBundle/zipball/98d7c623f002b7a78ba3f775691488f5ed1c5c56",
-                "reference": "98d7c623f002b7a78ba3f775691488f5ed1c5c56",
+                "url": "https://api.github.com/repos/evrinoma/LiveVideoBundle/zipball/30e3a70a9646e6e6f7a6812d51067c6edd2813b1",
+                "reference": "30e3a70a9646e6e6f7a6812d51067c6edd2813b1",
                 "shasum": ""
             },
             "require": {
@@ -1843,7 +1843,7 @@
                 "source": "https://github.com/evrinoma/LiveVideoBundle/tree/master",
                 "issues": "https://github.com/evrinoma/LiveVideoBundle/issues"
             },
-            "time": "2020-08-25T14:25:47+00:00"
+            "time": "2020-10-27T05:32:59+00:00"
         },
         {
             "name": "evrinoma/menu-bundle",
@@ -1899,12 +1899,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/evrinoma/ProjectBundle.git",
-                "reference": "4ce48ee210e2afd6ad08524a57792fb466aea4ba"
+                "reference": "ba4f6fb7b344cc15e0632c32cfb3dbdb844837a2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/evrinoma/ProjectBundle/zipball/4ce48ee210e2afd6ad08524a57792fb466aea4ba",
-                "reference": "4ce48ee210e2afd6ad08524a57792fb466aea4ba",
+                "url": "https://api.github.com/repos/evrinoma/ProjectBundle/zipball/ba4f6fb7b344cc15e0632c32cfb3dbdb844837a2",
+                "reference": "ba4f6fb7b344cc15e0632c32cfb3dbdb844837a2",
                 "shasum": ""
             },
             "require": {
@@ -1937,7 +1937,7 @@
                 "source": "https://github.com/evrinoma/ProjectBundle/tree/master",
                 "issues": "https://github.com/evrinoma/ProjectBundle/issues"
             },
-            "time": "2020-09-15T19:44:28+00:00"
+            "time": "2020-10-27T05:32:59+00:00"
         },
         {
             "name": "evrinoma/settings-bundle",
@@ -1945,12 +1945,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/evrinoma/SettingsBundle.git",
-                "reference": "879c89e52687711fb92cbf936e979730ded866a0"
+                "reference": "2b2c25105a8189ba3fe76a510c6950d4341787e0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/evrinoma/SettingsBundle/zipball/879c89e52687711fb92cbf936e979730ded866a0",
-                "reference": "879c89e52687711fb92cbf936e979730ded866a0",
+                "url": "https://api.github.com/repos/evrinoma/SettingsBundle/zipball/2b2c25105a8189ba3fe76a510c6950d4341787e0",
+                "reference": "2b2c25105a8189ba3fe76a510c6950d4341787e0",
                 "shasum": ""
             },
             "require": {
@@ -1983,7 +1983,7 @@
                 "source": "https://github.com/evrinoma/SettingsBundle/tree/master",
                 "issues": "https://github.com/evrinoma/SettingsBundle/issues"
             },
-            "time": "2020-04-03T10:21:22+00:00"
+            "time": "2020-10-27T05:32:59+00:00"
         },
         {
             "name": "evrinoma/shell-bundle",
@@ -1991,12 +1991,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/evrinoma/ShellBundle.git",
-                "reference": "ec2f57a1f5a92b5c36e612d8532dec2690f51f78"
+                "reference": "9804fc9ea615fc555df95f314831c61cac9a482c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/evrinoma/ShellBundle/zipball/ec2f57a1f5a92b5c36e612d8532dec2690f51f78",
-                "reference": "ec2f57a1f5a92b5c36e612d8532dec2690f51f78",
+                "url": "https://api.github.com/repos/evrinoma/ShellBundle/zipball/9804fc9ea615fc555df95f314831c61cac9a482c",
+                "reference": "9804fc9ea615fc555df95f314831c61cac9a482c",
                 "shasum": ""
             },
             "require": {
@@ -2028,7 +2028,7 @@
                 "source": "https://github.com/evrinoma/ShellBundle/tree/master",
                 "issues": "https://github.com/evrinoma/ShellBundle/issues"
             },
-            "time": "2020-04-07T19:20:45+00:00"
+            "time": "2020-10-27T05:32:59+00:00"
         },
         {
             "name": "evrinoma/utils-bundle",
