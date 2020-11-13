@@ -50,7 +50,6 @@ Install dependency:<br>
  * composer require  evrinoma/livevideo-bundle<br>
  * composer require  evrinoma/menu-bundle<br>
  
-
 Next you should to make Composer install the project's dependencies into vendor by command
 <br><b>composer install</b>
 
