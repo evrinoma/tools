@@ -1801,12 +1801,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/evrinoma/LiveVideoBundle.git",
-                "reference": "fe402d250da5d507a228f5c5785094194cd65ca9"
+                "reference": "a4992e0d65cb392b5266c2d5b368efa7b86c5cc3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/evrinoma/LiveVideoBundle/zipball/fe402d250da5d507a228f5c5785094194cd65ca9",
-                "reference": "fe402d250da5d507a228f5c5785094194cd65ca9",
+                "url": "https://api.github.com/repos/evrinoma/LiveVideoBundle/zipball/a4992e0d65cb392b5266c2d5b368efa7b86c5cc3",
+                "reference": "a4992e0d65cb392b5266c2d5b368efa7b86c5cc3",
                 "shasum": ""
             },
             "require": {
@@ -1844,7 +1844,7 @@
                 "source": "https://github.com/evrinoma/LiveVideoBundle/tree/master",
                 "issues": "https://github.com/evrinoma/LiveVideoBundle/issues"
             },
-            "time": "2020-11-10T09:33:51+00:00"
+            "time": "2020-11-13T09:56:00+00:00"
         },
         {
             "name": "evrinoma/menu-bundle",
