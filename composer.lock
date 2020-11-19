@@ -1705,12 +1705,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/evrinoma/EximBundle.git",
-                "reference": "564539e26c26ca32b4cbff1a5e5b00585da41acf"
+                "reference": "a88b82c2786a165589c3f0c952838fa0cdd2937b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/evrinoma/EximBundle/zipball/564539e26c26ca32b4cbff1a5e5b00585da41acf",
-                "reference": "564539e26c26ca32b4cbff1a5e5b00585da41acf",
+                "url": "https://api.github.com/repos/evrinoma/EximBundle/zipball/a88b82c2786a165589c3f0c952838fa0cdd2937b",
+                "reference": "a88b82c2786a165589c3f0c952838fa0cdd2937b",
                 "shasum": ""
             },
             "require": {
@@ -1746,7 +1746,7 @@
                 "source": "https://github.com/evrinoma/EximBundle/tree/master",
                 "issues": "https://github.com/evrinoma/EximBundle/issues"
             },
-            "time": "2020-11-10T09:33:51+00:00"
+            "time": "2020-11-19T13:51:52+00:00"
         },
         {
             "name": "evrinoma/grid-bundle",
