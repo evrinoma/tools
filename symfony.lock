@@ -233,6 +233,9 @@
     "knplabs/knp-menu-bundle": {
         "version": "v2.2.1"
     },
+    "laminas/laminas-zendframework-bridge": {
+        "version": "1.1.1"
+    },
     "ltoscano/ponvif": {
         "version": "dev-master"
     },
@@ -344,6 +347,9 @@
     "symfony/dependency-injection": {
         "version": "v4.0.4"
     },
+    "symfony/deprecation-contracts": {
+        "version": "v2.2.0"
+    },
     "symfony/doctrine-bridge": {
         "version": "v4.0.4"
     },
@@ -385,6 +391,9 @@
             "version": "3.3",
             "ref": "96158c961360a5857c49b303fbb88af5a3ae4ff9"
         }
+    },
+    "symfony/http-client-contracts": {
+        "version": "v2.3.1"
     },
     "symfony/http-foundation": {
         "version": "v4.0.4"
@@ -574,6 +583,9 @@
     },
     "twig/twig": {
         "version": "v2.4.4"
+    },
+    "webimpress/safe-writer": {
+        "version": "2.1.0"
     },
     "webmozart/assert": {
         "version": "1.4.0"
