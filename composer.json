@@ -4,7 +4,10 @@
   "require": {
     "php": "^7.2.3",
     "ext-iconv": "*",
-    "doctrine/doctrine-bundle": "^1.10",
+    "doctrine/annotations": "^1.0",
+    "doctrine/doctrine-bundle": "^2.1",
+    "doctrine/doctrine-migrations-bundle": "^3.0",
+    "doctrine/orm": "^2.7",
     "endroid/qrcode": "^3.7",
     "evrinoma/dashboard-bundle": "dev-master",
     "evrinoma/delta8-bundle": "dev-master",
