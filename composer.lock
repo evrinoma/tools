@@ -2240,12 +2240,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/evrinoma/UtilsBundle.git",
-                "reference": "ae02f6970911b513648ebb0a497af2c9ea942f7a"
+                "reference": "cc0b56ab99883d1400653372b6b7ea683d263f10"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/evrinoma/UtilsBundle/zipball/ae02f6970911b513648ebb0a497af2c9ea942f7a",
-                "reference": "ae02f6970911b513648ebb0a497af2c9ea942f7a",
+                "url": "https://api.github.com/repos/evrinoma/UtilsBundle/zipball/cc0b56ab99883d1400653372b6b7ea683d263f10",
+                "reference": "cc0b56ab99883d1400653372b6b7ea683d263f10",
                 "shasum": ""
             },
             "require": {
@@ -2279,7 +2279,7 @@
                 "source": "https://github.com/evrinoma/UtilsBundle/tree/master",
                 "issues": "https://github.com/evrinoma/UtilsBundle/issues"
             },
-            "time": "2020-12-14T20:05:44+00:00"
+            "time": "2020-12-15T13:15:30+00:00"
         },
         {
             "name": "exsyst/swagger",
