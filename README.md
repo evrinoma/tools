@@ -91,7 +91,7 @@ Open a command console, enter your project directory and run the following comma
 <br><b>php bin/console doctrine:fixtures:load --group=SearchManagerFixtures --append</b>
 <br>additional fixtures
 <br><b>php bin/console doctrine:fixtures:load --group=DeltaFixtures --append</b>
-<br><b>php bin/console doctrine:fixtures:load --group=LiveCamFixtures --append</b>
+<br><b>php bin/console doctrine:fixtures:load --group=LiveCamAllFixtures --append --env=dev</b>
 
 Now make a menu for that please Login and goto rest Api by next link
 http://localToolsHost/api/doc/internal
