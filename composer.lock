@@ -1815,12 +1815,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/evrinoma/Delta8Bundle.git",
-                "reference": "6769b632e1388d151d2e3e9f60e586ca6fd82594"
+                "reference": "3a51999cdd533269d976d0dd4ce4d7e61ea55b9c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/evrinoma/Delta8Bundle/zipball/6769b632e1388d151d2e3e9f60e586ca6fd82594",
-                "reference": "6769b632e1388d151d2e3e9f60e586ca6fd82594",
+                "url": "https://api.github.com/repos/evrinoma/Delta8Bundle/zipball/3a51999cdd533269d976d0dd4ce4d7e61ea55b9c",
+                "reference": "3a51999cdd533269d976d0dd4ce4d7e61ea55b9c",
                 "shasum": ""
             },
             "require": {
@@ -1855,7 +1855,7 @@
                 "source": "https://github.com/evrinoma/Delta8Bundle/tree/master",
                 "issues": "https://github.com/evrinoma/Delta8Bundle/issues"
             },
-            "time": "2020-11-10T09:33:51+00:00"
+            "time": "2021-01-18T12:48:51+00:00"
         },
         {
             "name": "evrinoma/dto-bundle",
@@ -2004,12 +2004,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/evrinoma/LiveVideoBundle.git",
-                "reference": "b598efbb1db205f7c815ad0244987bd85cbb25f1"
+                "reference": "2ba44787195b140e64bcf97df161f1aa5b66a05c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/evrinoma/LiveVideoBundle/zipball/b598efbb1db205f7c815ad0244987bd85cbb25f1",
-                "reference": "b598efbb1db205f7c815ad0244987bd85cbb25f1",
+                "url": "https://api.github.com/repos/evrinoma/LiveVideoBundle/zipball/2ba44787195b140e64bcf97df161f1aa5b66a05c",
+                "reference": "2ba44787195b140e64bcf97df161f1aa5b66a05c",
                 "shasum": ""
             },
             "require": {
@@ -2047,7 +2047,7 @@
                 "source": "https://github.com/evrinoma/LiveVideoBundle/tree/master",
                 "issues": "https://github.com/evrinoma/LiveVideoBundle/issues"
             },
-            "time": "2021-01-13T07:41:06+00:00"
+            "time": "2021-01-18T08:30:46+00:00"
         },
         {
             "name": "evrinoma/menu-bundle",
@@ -4610,6 +4610,7 @@
                 }
             ],
             "description": "A security checker for your composer.lock",
+            "abandoned": "https://github.com/fabpot/local-php-security-checker",
             "time": "2018-12-19T17:14:59+00:00"
         },
         {
