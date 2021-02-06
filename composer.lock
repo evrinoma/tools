@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "3d70452c4d9c324883441876f7d102c6",
+    "content-hash": "acef16cdd470275614d8009ece471b84",
     "packages": [
         {
             "name": "bacon/bacon-qr-code",
@@ -2240,12 +2240,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/evrinoma/UtilsBundle.git",
-                "reference": "f1cbc35c17247df6cb9ba0ea441f07fbc2321d11"
+                "reference": "3ece185dc71b2b0f6cf20885f0892662f24ac7b7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/evrinoma/UtilsBundle/zipball/f1cbc35c17247df6cb9ba0ea441f07fbc2321d11",
-                "reference": "f1cbc35c17247df6cb9ba0ea441f07fbc2321d11",
+                "url": "https://api.github.com/repos/evrinoma/UtilsBundle/zipball/3ece185dc71b2b0f6cf20885f0892662f24ac7b7",
+                "reference": "3ece185dc71b2b0f6cf20885f0892662f24ac7b7",
                 "shasum": ""
             },
             "require": {
@@ -2279,7 +2279,7 @@
                 "source": "https://github.com/evrinoma/UtilsBundle/tree/master",
                 "issues": "https://github.com/evrinoma/UtilsBundle/issues"
             },
-            "time": "2020-12-15T13:42:59+00:00"
+            "time": "2021-02-06T17:24:17+00:00"
         },
         {
             "name": "exsyst/swagger",
@@ -9113,12 +9113,12 @@
             "version": "1.7.0",
             "source": {
                 "type": "git",
-                "url": "https://github.com/webmozart/assert.git",
+                "url": "https://github.com/webmozarts/assert.git",
                 "reference": "aed98a490f9a8f78468232db345ab9cf606cf598"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/webmozart/assert/zipball/aed98a490f9a8f78468232db345ab9cf606cf598",
+                "url": "https://api.github.com/repos/webmozarts/assert/zipball/aed98a490f9a8f78468232db345ab9cf606cf598",
                 "reference": "aed98a490f9a8f78468232db345ab9cf606cf598",
                 "shasum": ""
             },
@@ -10229,7 +10229,8 @@
     "prefer-lowest": false,
     "platform": {
         "php": "^7.2.3",
-        "ext-iconv": "*"
+        "ext-iconv": "*",
+        "ext-ldap": "*"
     },
     "platform-dev": [],
     "plugin-api-version": "1.1.0"
