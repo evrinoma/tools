@@ -37,8 +37,10 @@ security:
       anonymous:    true
       guard:
         provider: core_provider
+        entry_point: Evrinoma\UtilsBundle\Security\Guard\Ldap\AuthenticatorGuard
         authenticators:
-          - App\Security\AuthenticatorGuard
+          - Evrinoma\UtilsBundle\Security\Guard\Ldap\AuthenticatorGuard
+          - Evrinoma\UtilsBundle\Security\Guard\Login\AuthenticatorGuard
       remember_me:
         secret:   '%kernel.secret%'
         lifetime: 604800 # 1 week in seconds

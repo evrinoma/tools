@@ -8,7 +8,7 @@ nelmio_api_doc:
   areas: # to filter documented areas
     evrinoma:
       path_patterns:
-          - ^/evrinoma/api
+        - ^/evrinoma/api
 
 contr_agent:
   db_driver: orm
@@ -22,9 +22,9 @@ project:
 
 #dashboard section
 dashboard:
-#  infos:
-#    - 'Evrinoma\DashBoardBundle\Info\ProcInfo'
-#    - 'Evrinoma\DashBoardBundle\Info\SysInfo'
+  #  infos:
+  #    - 'Evrinoma\DashBoardBundle\Info\ProcInfo'
+  #    - 'Evrinoma\DashBoardBundle\Info\SysInfo'
   provider: App\DashBoard\Provider\DashBoardProvider
 #  menu: App\Menu\DashBoardMenu
 #nelmio_api_doc:
@@ -64,7 +64,7 @@ dashboard:
 
 #livevideo section
 #livevideo:
-#  menu: App\Menu\LiveVideoMenu
+#  menu: pp\Menu\LiveVideoMenu
 #App\Menu\LiveVideoMenu:
 #  tags:
 #    - { name: evrinoma.menu }
@@ -80,6 +80,17 @@ dashboard:
 #      path_patterns:
 #          - ^/evrinoma/api/live_video
 
+utils:
+  ldap_servers:
+    ite-ng.ru:
+      - { host: "ldap://iteng06.ite-ng.ru", port: "636", search: "OU=MSK,DC=ite-ng,DC=ru" }
+      - { host: "ldap://iteng20.ite-ng.ru", port: "636", search: "OU=MSK,DC=ite-ng,DC=ru"}
+    ur.ite-ng.ru:
+      - { host: "ldap://ur04.ur.ite-ng.ru", port: "636", search: "OU=ekaterinburg,DC=ur,DC=ite-ng,DC=ru" }
+      - { host: "ldap://ur05.ur.ite-ng.ru", port: "636", search: "OU=ekaterinburg,DC=ur,DC=ite-ng,DC=ru"}
+
+
+
 doctrine:
   dbal:
     connections:
@@ -88,7 +99,7 @@ doctrine:
         driver: 'pdo_sqlsrv'
         server_version: '5.7'
         charset: utf8mb4
-#        schema_filter: ~^.*(^PARAMS*|^GROUPS*|^DEVICES*|^SCALES*|^SCRIPT_ENGINES*)~
+        #        schema_filter: ~^.*(^PARAMS*|^GROUPS*|^DEVICES*|^SCALES*|^SCRIPT_ENGINES*)~
         # With Symfony 3.3, remove the `resolve:` prefix
         url: '%env(resolve:DATABASE_DELTA_URL)%'
   orm:
