@@ -89,8 +89,6 @@ utils:
       - { host: "ldap://ur04.ur.ite-ng.ru", port: "636", search: "OU=ekaterinburg,DC=ur,DC=ite-ng,DC=ru" }
       - { host: "ldap://ur05.ur.ite-ng.ru", port: "636", search: "OU=ekaterinburg,DC=ur,DC=ite-ng,DC=ru"}
 
-
-
 doctrine:
   dbal:
     connections:
