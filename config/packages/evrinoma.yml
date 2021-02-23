@@ -4,7 +4,7 @@ nelmio_api_doc:
     info:
       title: Evrinoma Api
       description: LiveVideo api doc
-      version: 1.0.2
+      version: 1.1.2
   areas: # to filter documented areas
     evrinoma:
       path_patterns:

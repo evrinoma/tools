@@ -140,11 +140,17 @@
     "evrinoma/shell-bundle": {
         "version": "dev-master"
     },
+    "evrinoma/user-bundle": {
+        "version": "2.2.x-dev"
+    },
     "evrinoma/utils-bundle": {
         "version": "dev-master"
     },
     "exsyst/swagger": {
         "version": "v0.4.1"
+    },
+    "friendsofphp/proxy-manager-lts": {
+        "version": "v1.0.3"
     },
     "friendsofsymfony/jsrouting-bundle": {
         "version": "2.3",
@@ -236,8 +242,32 @@
     "knplabs/knp-menu-bundle": {
         "version": "v2.2.1"
     },
+    "laminas/laminas-code": {
+        "version": "4.0.0"
+    },
+    "laminas/laminas-eventmanager": {
+        "version": "3.3.0"
+    },
     "laminas/laminas-zendframework-bridge": {
         "version": "1.1.1"
+    },
+    "lcobucci/clock": {
+        "version": "2.0.0"
+    },
+    "lcobucci/jwt": {
+        "version": "4.1.2"
+    },
+    "lexik/jwt-authentication-bundle": {
+        "version": "2.5",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "master",
+            "version": "2.5",
+            "ref": "5b2157bcd5778166a5696e42f552ad36529a07a6"
+        },
+        "files": [
+            "config/packages/lexik_jwt_authentication.yaml"
+        ]
     },
     "ltoscano/ponvif": {
         "version": "dev-master"
@@ -247,6 +277,9 @@
     },
     "myclabs/php-enum": {
         "version": "1.7.6"
+    },
+    "namshi/jose": {
+        "version": "7.2.3"
     },
     "nelmio/api-doc-bundle": {
         "version": "3.0",
@@ -277,6 +310,9 @@
     },
     "phpdocumentor/type-resolver": {
         "version": "0.4.0"
+    },
+    "phpstan/phpdoc-parser": {
+        "version": "0.4.11"
     },
     "psr/cache": {
         "version": "1.0.1"
