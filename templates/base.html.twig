@@ -16,7 +16,7 @@
 
 <body>
 {% block body %}
-    {% spaceless %}
+    {% apply spaceless %}
         {% block menubar %}
             <div>
                 <div class="menu">
@@ -43,7 +43,7 @@
                 {% endblock %}
             </div>
         </div>
-    {% endspaceless %}
+    {% endapply %}
 {% endblock %}
 {% block javascripts %}
     {% include 'base/js.html.twig' %}
