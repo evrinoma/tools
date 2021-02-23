@@ -5,7 +5,7 @@ namespace App\QrCode\Fixtures;
 use App\Entity\User;
 use App\QrCode\Dto\ApartDto\ContactDto;
 use Doctrine\Bundle\FixturesBundle\Fixture;
-use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\Persistence\ObjectManager;
 
 /**
  * Class VCardFixtures

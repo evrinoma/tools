@@ -3,7 +3,7 @@
 namespace App\DashBoard\Fixtures;
 
 use Doctrine\Bundle\FixturesBundle\Fixture;
-use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\Persistence\ObjectManager;
 use Evrinoma\SettingsBundle\Dto\ApartDto\DescriptionDto;
 use Evrinoma\SettingsBundle\Dto\ApartDto\ServerDto;
 use Evrinoma\SettingsBundle\Dto\ServiceDto;
