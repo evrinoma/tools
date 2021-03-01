@@ -41,6 +41,9 @@
             "ref": "44d3aa7752dd46f77ba11af2297a25e1dedfb4d0"
         }
     },
+    "doctrine/doctrine-cache-bundle": {
+        "version": "1.4.0"
+    },
     "doctrine/doctrine-fixtures-bundle": {
         "version": "3.0",
         "recipe": {
@@ -82,6 +85,9 @@
     },
     "doctrine/persistence": {
         "version": "v1.1.0"
+    },
+    "doctrine/reflection": {
+        "version": "v1.0.0"
     },
     "doctrine/sql-formatter": {
         "version": "1.1.1"
@@ -140,6 +146,9 @@
     "evrinoma/utils-bundle": {
         "version": "dev-master"
     },
+    "exsyst/swagger": {
+        "version": "v0.4.1"
+    },
     "friendsofphp/proxy-manager-lts": {
         "version": "v1.0.3"
     },
@@ -163,6 +172,51 @@
             "version": "2.2",
             "ref": "258300d52be6ad59b32a888d5ddafbf9638540ff"
         }
+    },
+    "friendsofsymfony/user-bundle": {
+        "version": "2.1.x-dev"
+    },
+    "hoa/compiler": {
+        "version": "3.17.08.08"
+    },
+    "hoa/consistency": {
+        "version": "1.17.05.02"
+    },
+    "hoa/event": {
+        "version": "1.17.01.13"
+    },
+    "hoa/exception": {
+        "version": "1.17.01.16"
+    },
+    "hoa/file": {
+        "version": "1.17.07.11"
+    },
+    "hoa/iterator": {
+        "version": "2.17.01.10"
+    },
+    "hoa/math": {
+        "version": "1.17.05.16"
+    },
+    "hoa/protocol": {
+        "version": "1.17.01.14"
+    },
+    "hoa/regex": {
+        "version": "1.17.01.13"
+    },
+    "hoa/stream": {
+        "version": "1.17.02.21"
+    },
+    "hoa/ustring": {
+        "version": "4.17.01.16"
+    },
+    "hoa/visitor": {
+        "version": "2.17.01.16"
+    },
+    "hoa/zformat": {
+        "version": "1.17.01.10"
+    },
+    "jdorn/sql-formatter": {
+        "version": "v1.2.17"
     },
     "jms/metadata": {
         "version": "2.0.0"
@@ -568,6 +622,9 @@
     },
     "twig/twig": {
         "version": "v2.4.4"
+    },
+    "webimpress/safe-writer": {
+        "version": "2.1.0"
     },
     "webmozart/assert": {
         "version": "1.4.0"
