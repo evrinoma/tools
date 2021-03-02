@@ -1921,12 +1921,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/evrinoma/LiveVideoBundle.git",
-                "reference": "69071e4cd9c1c67206c99b20238c39e9859f1e04"
+                "reference": "cb05fcefb86a4d98965a31be762de9094ed4fdca"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/evrinoma/LiveVideoBundle/zipball/69071e4cd9c1c67206c99b20238c39e9859f1e04",
-                "reference": "69071e4cd9c1c67206c99b20238c39e9859f1e04",
+                "url": "https://api.github.com/repos/evrinoma/LiveVideoBundle/zipball/cb05fcefb86a4d98965a31be762de9094ed4fdca",
+                "reference": "cb05fcefb86a4d98965a31be762de9094ed4fdca",
                 "shasum": ""
             },
             "require": {
@@ -1964,7 +1964,7 @@
                 "source": "https://github.com/evrinoma/LiveVideoBundle/tree/master",
                 "issues": "https://github.com/evrinoma/LiveVideoBundle/issues"
             },
-            "time": "2021-03-01T09:14:27+00:00"
+            "time": "2021-03-01T14:30:23+00:00"
         },
         {
             "name": "evrinoma/menu-bundle",
@@ -1972,12 +1972,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/evrinoma/MenuBundle.git",
-                "reference": "9f3d3be04c822a596eea69fbc583d196817e531a"
+                "reference": "a84e314776afaafb4e34dcb76f82c036098daffb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/evrinoma/MenuBundle/zipball/9f3d3be04c822a596eea69fbc583d196817e531a",
-                "reference": "9f3d3be04c822a596eea69fbc583d196817e531a",
+                "url": "https://api.github.com/repos/evrinoma/MenuBundle/zipball/a84e314776afaafb4e34dcb76f82c036098daffb",
+                "reference": "a84e314776afaafb4e34dcb76f82c036098daffb",
                 "shasum": ""
             },
             "require": {
@@ -2013,7 +2013,7 @@
                 "source": "https://github.com/evrinoma/MenuBundle/tree/master",
                 "issues": "https://github.com/evrinoma/MenuBundle/issues"
             },
-            "time": "2021-02-23T13:40:00+00:00"
+            "time": "2021-03-02T08:08:26+00:00"
         },
         {
             "name": "evrinoma/project-bundle",
@@ -2243,12 +2243,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/evrinoma/UtilsBundle.git",
-                "reference": "21f38b1d2d5f233655fead1f17d4639c0a5704be"
+                "reference": "1c04184e1694662a5c83901ec4c46862e8161fa4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/evrinoma/UtilsBundle/zipball/21f38b1d2d5f233655fead1f17d4639c0a5704be",
-                "reference": "21f38b1d2d5f233655fead1f17d4639c0a5704be",
+                "url": "https://api.github.com/repos/evrinoma/UtilsBundle/zipball/1c04184e1694662a5c83901ec4c46862e8161fa4",
+                "reference": "1c04184e1694662a5c83901ec4c46862e8161fa4",
                 "shasum": ""
             },
             "require": {
@@ -2283,7 +2283,7 @@
                 "source": "https://github.com/evrinoma/UtilsBundle/tree/master",
                 "issues": "https://github.com/evrinoma/UtilsBundle/issues"
             },
-            "time": "2021-02-25T14:15:32+00:00"
+            "time": "2021-03-02T08:08:05+00:00"
         },
         {
             "name": "friendsofphp/proxy-manager-lts",
