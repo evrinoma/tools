@@ -30,4 +30,5 @@ return [
     Evrinoma\ContrAgentBundle\EvrinomaContrAgentBundle::class => ['all' => true],
     Evrinoma\ProjectBundle\EvrinomaProjectBundle::class => ['all' => true],
     FOS\UserBundle\FOSUserBundle::class => ['all' => true],
+    Endroid\QrCodeBundle\EndroidQrCodeBundle::class => ['all' => true],
 ];

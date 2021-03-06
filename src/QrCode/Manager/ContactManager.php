@@ -77,7 +77,7 @@ class ContactManager extends AbstractEntityManager
                 ->setRoundBlockSizeMode(new RoundBlockSizeModeMargin())
                 ->setForegroundColor(new Color(0, 0, 0))
                 ->setBackgroundColor(new Color(255, 255, 255));
-            $logo = Logo::create('../assets/images/contact/logo.png')
+            $logo = Logo::create('../front/images/contact/logo.png')
                 ->setResizeToWidth(100);
             $result = $writer->write($qrCode, $logo);
 
