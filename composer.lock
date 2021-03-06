@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "76edab959f4f665ba0b889c00e213d78",
+    "content-hash": "00b9df6a84268e3df08f276aa8a4bdbc",
     "packages": [
         {
             "name": "bacon/bacon-qr-code",
@@ -1559,6 +1559,196 @@
             "time": "2020-12-29T14:50:06+00:00"
         },
         {
+            "name": "endroid/installer",
+            "version": "1.3.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/endroid/installer.git",
+                "reference": "e98dedd5bcf7532ba6f9fcc95cc480fa9baa51d4"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/endroid/installer/zipball/e98dedd5bcf7532ba6f9fcc95cc480fa9baa51d4",
+                "reference": "e98dedd5bcf7532ba6f9fcc95cc480fa9baa51d4",
+                "shasum": ""
+            },
+            "require": {
+                "composer-plugin-api": "^1.1 || ^2.0",
+                "php": "^7.3||^8.0"
+            },
+            "require-dev": {
+                "composer/composer": "^2.0",
+                "endroid/quality": "dev-master"
+            },
+            "type": "composer-plugin",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.x-dev"
+                },
+                "class": "Endroid\\Installer\\Installer"
+            },
+            "autoload": {
+                "psr-4": {
+                    "Endroid\\Installer\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Jeroen van den Enden",
+                    "email": "info@endroid.nl"
+                }
+            ],
+            "description": "Composer plugin for installing configuration files",
+            "funding": [
+                {
+                    "url": "https://github.com/endroid",
+                    "type": "github"
+                }
+            ],
+            "time": "2020-12-05T12:15:35+00:00"
+        },
+        {
+            "name": "endroid/qr-code",
+            "version": "4.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/endroid/qr-code.git",
+                "reference": "6fa27c4bcc87eddd4f8eb4f1ba796552a7d85f1e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/endroid/qr-code/zipball/6fa27c4bcc87eddd4f8eb4f1ba796552a7d85f1e",
+                "reference": "6fa27c4bcc87eddd4f8eb4f1ba796552a7d85f1e",
+                "shasum": ""
+            },
+            "require": {
+                "bacon/bacon-qr-code": "^2.0",
+                "php": "^7.3||^8.0"
+            },
+            "require-dev": {
+                "endroid/quality": "dev-master",
+                "ext-gd": "*",
+                "khanamiryan/qrcode-detector-decoder": "^1.0.4",
+                "setasign/fpdf": "^1.8.2"
+            },
+            "suggest": {
+                "ext-gd": "Enables you to write PNG images",
+                "khanamiryan/qrcode-detector-decoder": "Enables you to use the image validator",
+                "roave/security-advisories": "Makes sure package versions with known security issues are not installed",
+                "setasign/fpdf": "Enables you to use the PDF writer.",
+                "symfony/security-checker": "Checks your composer.lock for vulnerabilities"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "4.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Endroid\\QrCode\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Jeroen van den Enden",
+                    "email": "info@endroid.nl"
+                }
+            ],
+            "description": "Endroid QR Code",
+            "homepage": "https://github.com/endroid/qr-code",
+            "keywords": [
+                "code",
+                "endroid",
+                "php",
+                "qr",
+                "qrcode"
+            ],
+            "funding": [
+                {
+                    "url": "https://github.com/endroid",
+                    "type": "github"
+                }
+            ],
+            "time": "2021-02-28T00:21:41+00:00"
+        },
+        {
+            "name": "endroid/qr-code-bundle",
+            "version": "4.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/endroid/qr-code-bundle.git",
+                "reference": "5a6847835b6b8c321deddae27633290145eb41db"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/endroid/qr-code-bundle/zipball/5a6847835b6b8c321deddae27633290145eb41db",
+                "reference": "5a6847835b6b8c321deddae27633290145eb41db",
+                "shasum": ""
+            },
+            "require": {
+                "endroid/installer": "^1.2.2",
+                "endroid/qr-code": "^4.0",
+                "php": "^7.3||^8.0",
+                "symfony/framework-bundle": "^3.4||^4.4||^5.0",
+                "symfony/twig-bundle": "^3.4||^4.4||^5.0",
+                "symfony/yaml": "^3.4||^4.4||^5.0"
+            },
+            "require-dev": {
+                "endroid/quality": "dev-master"
+            },
+            "suggest": {
+                "roave/security-advisories": "Avoids installation of package versions with vulnerabilities",
+                "symfony/security-checker": "Checks your composer.lock for vulnerabilities"
+            },
+            "type": "symfony-bundle",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "4.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Endroid\\QrCodeBundle\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Jeroen van den Enden",
+                    "email": "info@endroid.nl"
+                }
+            ],
+            "description": "Endroid QR Code Bundle",
+            "homepage": "https://github.com/endroid/qr-code-bundle",
+            "keywords": [
+                "bundle",
+                "code",
+                "endroid",
+                "php",
+                "qr",
+                "symfony"
+            ],
+            "funding": [
+                {
+                    "url": "https://github.com/endroid",
+                    "type": "github"
+                }
+            ],
+            "time": "2021-02-28T10:03:53+00:00"
+        },
+        {
             "name": "endroid/qrcode",
             "version": "3.9.6",
             "source": {
@@ -1636,15 +1826,16 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/evrinoma/ContrAgentBundle.git",
-                "reference": "53267a69ce66921ffd9d4454a5abcec2878d3c4c"
+                "reference": "7c62087886beee9283dd6c8571e44ecbdac3976b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/evrinoma/ContrAgentBundle/zipball/53267a69ce66921ffd9d4454a5abcec2878d3c4c",
-                "reference": "53267a69ce66921ffd9d4454a5abcec2878d3c4c",
+                "url": "https://api.github.com/repos/evrinoma/ContrAgentBundle/zipball/7c62087886beee9283dd6c8571e44ecbdac3976b",
+                "reference": "7c62087886beee9283dd6c8571e44ecbdac3976b",
                 "shasum": ""
             },
             "require": {
+                "evrinoma/dto-bundle": "^1.0.1",
                 "evrinoma/utils-bundle": "dev-master",
                 "php": "^7.1.3"
             },
@@ -1682,15 +1873,16 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/evrinoma/DashBoardBundle.git",
-                "reference": "e9c1265072726062e52e22c3f70501f098993a5b"
+                "reference": "3600119be9734fc2a26e73b14ca34fee6785e81d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/evrinoma/DashBoardBundle/zipball/e9c1265072726062e52e22c3f70501f098993a5b",
-                "reference": "e9c1265072726062e52e22c3f70501f098993a5b",
+                "url": "https://api.github.com/repos/evrinoma/DashBoardBundle/zipball/3600119be9734fc2a26e73b14ca34fee6785e81d",
+                "reference": "3600119be9734fc2a26e73b14ca34fee6785e81d",
                 "shasum": ""
             },
             "require": {
+                "evrinoma/dto-bundle": "^1.0.1",
                 "evrinoma/shell-bundle": "dev-master",
                 "php": "^7.1.3"
             },
@@ -1776,16 +1968,16 @@
         },
         {
             "name": "evrinoma/dto-bundle",
-            "version": "dev-master",
+            "version": "1.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/evrinoma/DtoBundle.git",
-                "reference": "a2fd034eee4083a067e3c26a40b586980171826a"
+                "reference": "bcebd337476604758c1d2b949b1c24f45a541536"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/evrinoma/DtoBundle/zipball/a2fd034eee4083a067e3c26a40b586980171826a",
-                "reference": "a2fd034eee4083a067e3c26a40b586980171826a",
+                "url": "https://api.github.com/repos/evrinoma/DtoBundle/zipball/bcebd337476604758c1d2b949b1c24f45a541536",
+                "reference": "bcebd337476604758c1d2b949b1c24f45a541536",
                 "shasum": ""
             },
             "require": {
@@ -1814,10 +2006,10 @@
                 "Dto"
             ],
             "support": {
-                "source": "https://github.com/evrinoma/DtoBundle/tree/master",
+                "source": "https://github.com/evrinoma/DtoBundle/tree/1.0.1",
                 "issues": "https://github.com/evrinoma/DtoBundle/issues"
             },
-            "time": "2020-10-27T05:32:59+00:00"
+            "time": "2021-03-04T12:49:36+00:00"
         },
         {
             "name": "evrinoma/exim-bundle",
@@ -1825,16 +2017,16 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/evrinoma/EximBundle.git",
-                "reference": "c8cf0fb7b0618666c46f16841695c8789a34fdeb"
+                "reference": "7c6fc1b7ddc1feeaa17360e489e421df11f83646"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/evrinoma/EximBundle/zipball/c8cf0fb7b0618666c46f16841695c8789a34fdeb",
-                "reference": "c8cf0fb7b0618666c46f16841695c8789a34fdeb",
+                "url": "https://api.github.com/repos/evrinoma/EximBundle/zipball/7c6fc1b7ddc1feeaa17360e489e421df11f83646",
+                "reference": "7c6fc1b7ddc1feeaa17360e489e421df11f83646",
                 "shasum": ""
             },
             "require": {
-                "evrinoma/dto-bundle": "dev-master",
+                "evrinoma/dto-bundle": "^1.0.1",
                 "evrinoma/menu-bundle": "dev-master",
                 "evrinoma/settings-bundle": "dev-master",
                 "evrinoma/utils-bundle": "dev-master",
@@ -1866,7 +2058,7 @@
                 "source": "https://github.com/evrinoma/EximBundle/tree/master",
                 "issues": "https://github.com/evrinoma/EximBundle/issues"
             },
-            "time": "2021-02-23T20:07:40+00:00"
+            "time": "2021-03-04T13:07:03+00:00"
         },
         {
             "name": "evrinoma/grid-bundle",
@@ -1874,15 +2066,16 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/evrinoma/GridBundle.git",
-                "reference": "8d04533d05d5e5c9da44f9503271371e0e04f936"
+                "reference": "7c4d841222365628858dafd752f53a527304c880"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/evrinoma/GridBundle/zipball/8d04533d05d5e5c9da44f9503271371e0e04f936",
-                "reference": "8d04533d05d5e5c9da44f9503271371e0e04f936",
+                "url": "https://api.github.com/repos/evrinoma/GridBundle/zipball/7c4d841222365628858dafd752f53a527304c880",
+                "reference": "7c4d841222365628858dafd752f53a527304c880",
                 "shasum": ""
             },
             "require": {
+                "evrinoma/dto-bundle": "^1.0.1",
                 "evrinoma/menu-bundle": "dev-master",
                 "evrinoma/utils-bundle": "dev-master",
                 "php": "^7.1.3"
@@ -1921,16 +2114,16 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/evrinoma/LiveVideoBundle.git",
-                "reference": "cb05fcefb86a4d98965a31be762de9094ed4fdca"
+                "reference": "1734134218da48dbc8e399c708182ae842070846"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/evrinoma/LiveVideoBundle/zipball/cb05fcefb86a4d98965a31be762de9094ed4fdca",
-                "reference": "cb05fcefb86a4d98965a31be762de9094ed4fdca",
+                "url": "https://api.github.com/repos/evrinoma/LiveVideoBundle/zipball/1734134218da48dbc8e399c708182ae842070846",
+                "reference": "1734134218da48dbc8e399c708182ae842070846",
                 "shasum": ""
             },
             "require": {
-                "evrinoma/dto-bundle": "dev-master",
+                "evrinoma/dto-bundle": "^1.0.1",
                 "evrinoma/menu-bundle": "dev-master",
                 "evrinoma/utils-bundle": "dev-master",
                 "ltoscano/ponvif": "dev-master",
@@ -1972,16 +2165,16 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/evrinoma/MenuBundle.git",
-                "reference": "a84e314776afaafb4e34dcb76f82c036098daffb"
+                "reference": "305db77a31e59f074b42de284ccb04a66ca08158"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/evrinoma/MenuBundle/zipball/a84e314776afaafb4e34dcb76f82c036098daffb",
-                "reference": "a84e314776afaafb4e34dcb76f82c036098daffb",
+                "url": "https://api.github.com/repos/evrinoma/MenuBundle/zipball/305db77a31e59f074b42de284ccb04a66ca08158",
+                "reference": "305db77a31e59f074b42de284ccb04a66ca08158",
                 "shasum": ""
             },
             "require": {
-                "evrinoma/dto-bundle": "dev-master",
+                "evrinoma/dto-bundle": "^1.0.1",
                 "evrinoma/utils-bundle": "dev-master",
                 "knplabs/knp-menu-bundle": "^3.0",
                 "nelmio/api-doc-bundle": "^4",
@@ -2021,15 +2214,16 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/evrinoma/ProjectBundle.git",
-                "reference": "41a8aed34530b51ea87011c84026f2f1a8ec56f6"
+                "reference": "c5f4291146b5518abcaf2796246476f3c3028aae"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/evrinoma/ProjectBundle/zipball/41a8aed34530b51ea87011c84026f2f1a8ec56f6",
-                "reference": "41a8aed34530b51ea87011c84026f2f1a8ec56f6",
+                "url": "https://api.github.com/repos/evrinoma/ProjectBundle/zipball/c5f4291146b5518abcaf2796246476f3c3028aae",
+                "reference": "c5f4291146b5518abcaf2796246476f3c3028aae",
                 "shasum": ""
             },
             "require": {
+                "evrinoma/dto-bundle": "^1.0.1",
                 "evrinoma/utils-bundle": "dev-master",
                 "php": "^7.1.3"
             },
@@ -2067,16 +2261,16 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/evrinoma/SettingsBundle.git",
-                "reference": "2b2c25105a8189ba3fe76a510c6950d4341787e0"
+                "reference": "170ffbcd6937f10d2a1d56e064551719b0e0bb5a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/evrinoma/SettingsBundle/zipball/2b2c25105a8189ba3fe76a510c6950d4341787e0",
-                "reference": "2b2c25105a8189ba3fe76a510c6950d4341787e0",
+                "url": "https://api.github.com/repos/evrinoma/SettingsBundle/zipball/170ffbcd6937f10d2a1d56e064551719b0e0bb5a",
+                "reference": "170ffbcd6937f10d2a1d56e064551719b0e0bb5a",
                 "shasum": ""
             },
             "require": {
-                "evrinoma/dto-bundle": "dev-master",
+                "evrinoma/dto-bundle": "^1.0.1",
                 "php": "^7.1.3"
             },
             "type": "symfony-bundle",
@@ -2243,12 +2437,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/evrinoma/UtilsBundle.git",
-                "reference": "1c04184e1694662a5c83901ec4c46862e8161fa4"
+                "reference": "6f0a60642e10f31e349d34b5c476665f6fd5898d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/evrinoma/UtilsBundle/zipball/1c04184e1694662a5c83901ec4c46862e8161fa4",
-                "reference": "1c04184e1694662a5c83901ec4c46862e8161fa4",
+                "url": "https://api.github.com/repos/evrinoma/UtilsBundle/zipball/6f0a60642e10f31e349d34b5c476665f6fd5898d",
+                "reference": "6f0a60642e10f31e349d34b5c476665f6fd5898d",
                 "shasum": ""
             },
             "require": {
@@ -2283,7 +2477,7 @@
                 "source": "https://github.com/evrinoma/UtilsBundle/tree/master",
                 "issues": "https://github.com/evrinoma/UtilsBundle/issues"
             },
-            "time": "2021-03-02T08:08:05+00:00"
+            "time": "2021-03-03T16:45:49+00:00"
         },
         {
             "name": "friendsofphp/proxy-manager-lts",
@@ -9514,6 +9708,7 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
+        "evrinoma/contragent-bundle": 20,
         "evrinoma/dashboard-bundle": 20,
         "evrinoma/delta8-bundle": 20,
         "evrinoma/exim-bundle": 20,
@@ -9521,7 +9716,6 @@
         "evrinoma/livevideo-bundle": 20,
         "evrinoma/menu-bundle": 20,
         "evrinoma/project-bundle": 20,
-        "evrinoma/contragent-bundle": 20,
         "evrinoma/user-bundle": 20,
         "ltoscano/ponvif": 20,
         "nelmio/api-doc-bundle": 20,
