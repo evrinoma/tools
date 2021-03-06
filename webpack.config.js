@@ -12,19 +12,19 @@ const {VueLoaderPlugin} = require('vue-loader');
 module.exports = (env) => {
     const config = {
         entry: {
-            app: path.join(__dirname, 'assets/entrypoints/app.entry.js'),
-            delta: path.join(__dirname, 'assets/entrypoints/delta.entry.js'),
-            ag_simple: path.join(__dirname, 'assets/entrypoints/ag_simple.entry.js'),
-            ag_tree: path.join(__dirname, 'assets/entrypoints/ag_tree.entry.js'),
-            handson_tree: path.join(__dirname, 'assets/entrypoints/handson_tree.entry.js'),
-            live_video: path.join(__dirname, 'assets/entrypoints/live.video.entry.js'),
-            login: path.join(__dirname, 'assets/entrypoints/login.entry.js'),
-            status: path.join(__dirname, 'assets/entrypoints/status.entry.js'),
-            // mail_acl: path.join(__dirname, 'assets/entrypoints/mail.acl.entry.js'),
-            // mail_domain: path.join(__dirname, 'assets/entrypoints/mail.domain.entry.js'),
-            // mail_search: path.join(__dirname, 'assets/entrypoints/mail.search.entry.js'),
-            project: path.join(__dirname, 'assets/entrypoints/reestr.project.entry.js'),
-            contr_agent: path.join(__dirname, 'assets/entrypoints/reestr.contr_agent.entry.js'),
+            app: path.join(__dirname, 'front/entrypoints/app.entry.js'),
+            delta: path.join(__dirname, 'front/entrypoints/delta.entry.js'),
+            ag_simple: path.join(__dirname, 'front/entrypoints/ag_simple.entry.js'),
+            ag_tree: path.join(__dirname, 'front/entrypoints/ag_tree.entry.js'),
+            handson_tree: path.join(__dirname, 'front/entrypoints/handson_tree.entry.js'),
+            live_video: path.join(__dirname, 'front/entrypoints/live.video.entry.js'),
+            login: path.join(__dirname, 'front/entrypoints/login.entry.js'),
+            status: path.join(__dirname, 'front/entrypoints/status.entry.js'),
+            // mail_acl: path.join(__dirname, 'front/entrypoints/mail.acl.entry.js'),
+            // mail_domain: path.join(__dirname, 'front/entrypoints/mail.domain.entry.js'),
+            // mail_search: path.join(__dirname, 'front/entrypoints/mail.search.entry.js'),
+            project: path.join(__dirname, 'front/entrypoints/reestr.project.entry.js'),
+            contr_agent: path.join(__dirname, 'front/entrypoints/reestr.contr_agent.entry.js'),
         },
         node: {
             fs: 'empty'
