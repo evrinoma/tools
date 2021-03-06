@@ -3,7 +3,7 @@
 namespace App\QrCode\Manager;
 
 use App\Entity\User;
-use App\QrCode\Dto\ApartDto\ContactDto;
+use App\QrCode\Std\ContactStd;
 use Endroid\QrCode\ErrorCorrectionLevel;
 use Endroid\QrCode\QrCode;
 use Endroid\QrCode\Response\QrCodeResponse;
@@ -22,7 +22,7 @@ class ContactManager extends AbstractEntityManager
         $users = $this->entityManager->getRepository(User::class)->findAll();
         foreach ($users as $user) {
             if ($user->getContact()) {
-                $contact             = new ContactDto();
+                $contact             = new ContactStd();
                 $aUser               = (array)$user->getContact();
                 $incompleteClassName = $aUser['__PHP_Incomplete_Class_Name'];
                 $ar                  = [];

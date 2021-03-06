@@ -3,7 +3,7 @@
 namespace App\QrCode\Fixtures;
 
 use App\Entity\User;
-use App\QrCode\Dto\ApartDto\ContactDto;
+use App\QrCode\Std\ContactStd;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 
@@ -23,7 +23,7 @@ class VCardFixtures extends Fixture
      */
     public function load(ObjectManager $manager)
     {
-        $vCard = new ContactDto();
+        $vCard = new ContactStd();
         $vCard
             ->setFirstName('')
             ->setLastName('')

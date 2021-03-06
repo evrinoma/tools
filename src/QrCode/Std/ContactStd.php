@@ -1,15 +1,8 @@
 <?php
 
-namespace App\QrCode\Dto\ApartDto;
+namespace App\QrCode\Std;
 
-use Evrinoma\DtoBundle\Dto\AbstractApartDto;
-
-/**
- * Class ContactDto
- *
- * @package App\Dto\ApartDto
- */
-class ContactDto extends AbstractApartDto
+class ContactStd
 {
 //region SECTION: Fields
     private $firstName;
@@ -99,7 +92,7 @@ class ContactDto extends AbstractApartDto
     /**
      * @param mixed $firstName
      *
-     * @return ContactDto
+     * @return ContactStd
      */
     public function setFirstName($firstName): self
     {
@@ -111,7 +104,7 @@ class ContactDto extends AbstractApartDto
     /**
      * @param mixed $lastName
      *
-     * @return ContactDto
+     * @return ContactStd
      */
     public function setLastName($lastName): self
     {
@@ -123,7 +116,7 @@ class ContactDto extends AbstractApartDto
     /**
      * @param mixed $position
      *
-     * @return ContactDto
+     * @return ContactStd
      */
     public function setPosition($position): self
     {
@@ -135,7 +128,7 @@ class ContactDto extends AbstractApartDto
     /**
      * @param mixed $comapanyName
      *
-     * @return ContactDto
+     * @return ContactStd
      */
     public function setComapanyName($comapanyName): self
     {
@@ -147,7 +140,7 @@ class ContactDto extends AbstractApartDto
     /**
      * @param mixed $telWork
      *
-     * @return ContactDto
+     * @return ContactStd
      */
     public function setTelWork($telWork): self
     {
@@ -159,7 +152,7 @@ class ContactDto extends AbstractApartDto
     /**
      * @param mixed $telWorkDop
      *
-     * @return ContactDto
+     * @return ContactStd
      */
     public function setTelWorkDop($telWorkDop): self
     {
@@ -171,7 +164,7 @@ class ContactDto extends AbstractApartDto
     /**
      * @param mixed $telMobile
      *
-     * @return ContactDto
+     * @return ContactStd
      */
     public function setTelMobile($telMobile): self
     {
@@ -183,7 +176,7 @@ class ContactDto extends AbstractApartDto
     /**
      * @param mixed $email
      *
-     * @return ContactDto
+     * @return ContactStd
      */
     public function setEmail($email): self
     {
@@ -195,7 +188,7 @@ class ContactDto extends AbstractApartDto
     /**
      * @param mixed $url
      *
-     * @return ContactDto
+     * @return ContactStd
      */
     public function setUrl($url): self
     {
