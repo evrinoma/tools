@@ -17,15 +17,10 @@ return [
     Knp\Bundle\MenuBundle\KnpMenuBundle::class => ['all' => true],
     FOS\JsRoutingBundle\FOSJsRoutingBundle::class => ['all' => true],
     Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle::class => ['dev' => true, 'test' => true],
-
-
     Evrinoma\LiveVideoBundle\EvrinomaLiveVideoBundle::class => ['all' => true],
     Evrinoma\SettingsBundle\EvrinomaSettingsBundle::class => ['all' => true],
 //    Evrinoma\EximBundle\EvrinomaEximBundle::class => ['all' => true],
-
     Evrinoma\Delta8Bundle\EvrinomaDelta8Bundle::class => ['all' => true],
-
-
     Evrinoma\ShellBundle\EvrinomaShellBundle::class => ['all' => true],
     Evrinoma\DashBoardBundle\EvrinomaDashBoardBundle::class => ['all' => true],
     Evrinoma\DtoBundle\EvrinomaDtoBundle::class => ['all' => true],
