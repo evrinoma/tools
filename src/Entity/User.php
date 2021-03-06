@@ -2,7 +2,7 @@
 
 namespace App\Entity;
 
-use App\QrCode\Dto\ApartDto\ContactDto;
+use App\QrCode\Std\ContactStd;
 use Doctrine\ORM\Mapping as ORM;
 use FOS\UserBundle\Model\User as BaseUser;
 
@@ -32,7 +32,7 @@ class User extends BaseUser
     private $plain;
 
     /**
-     * @var ContactDto
+     * @var ContactStd
      *
      * @ORM\Column(name="contact", type="object")
      */
@@ -57,7 +57,7 @@ class User extends BaseUser
     }
 
     /**
-     * @return ContactDto
+     * @return ContactStd
      */
     public function getContact()
     {
@@ -97,11 +97,11 @@ class User extends BaseUser
     }
 
     /**
-     * @param ContactDto $contact
+     * @param ContactStd $contact
      *
      * @return User
      */
-    public function setContact(ContactDto $contact)
+    public function setContact(ContactStd $contact)
     {
         $this->contact = $contact;
 
