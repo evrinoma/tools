@@ -3,7 +3,7 @@ const path = require('path');
 const webpack = require('webpack');
 const autoprefixer = require('autoprefixer');
 const ManifestPlugin = require('webpack-manifest-plugin');
-const CleanWebpackPlugin = require('clean-webpack-plugin');
+const {CleanWebpackPlugin} = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const HtmlWebpackInlineSourcePlugin = require('html-webpack-inline-source-plugin');
 const {VueLoaderPlugin} = require('vue-loader');
@@ -20,9 +20,9 @@ module.exports = (env) => {
             live_video: path.join(__dirname, 'assets/entrypoints/live.video.entry.js'),
             login: path.join(__dirname, 'assets/entrypoints/login.entry.js'),
             status: path.join(__dirname, 'assets/entrypoints/status.entry.js'),
-            mail_acl: path.join(__dirname, 'assets/entrypoints/mail.acl.entry.js'),
-            mail_domain: path.join(__dirname, 'assets/entrypoints/mail.domain.entry.js'),
-            mail_search: path.join(__dirname, 'assets/entrypoints/mail.search.entry.js'),
+            // mail_acl: path.join(__dirname, 'assets/entrypoints/mail.acl.entry.js'),
+            // mail_domain: path.join(__dirname, 'assets/entrypoints/mail.domain.entry.js'),
+            // mail_search: path.join(__dirname, 'assets/entrypoints/mail.search.entry.js'),
             project: path.join(__dirname, 'assets/entrypoints/reestr.project.entry.js'),
             contr_agent: path.join(__dirname, 'assets/entrypoints/reestr.contr_agent.entry.js'),
         },
@@ -169,10 +169,13 @@ module.exports = (env) => {
                 publicPath: 'build/',
                 basePath: 'build/'
             }),
-            new CleanWebpackPlugin(['build'], {
-                root: path.resolve(__dirname, 'public'),
-                watch: true,
-                exclude: ['fonts']
+            new CleanWebpackPlugin( {
+                dry: false, // not simulate
+                verbose: true, // logs to Console
+                cleanOnceBeforeBuildPatterns: [
+                    '**/*',
+                    '!/fonts/*' // исключаем /fonts/
+                ]
             }),
             new webpack.DefinePlugin({
                 'process.env': {
