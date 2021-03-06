@@ -4,9 +4,17 @@ namespace App\QrCode\Manager;
 
 use App\Entity\User;
 use App\QrCode\Std\ContactStd;
+use Endroid\QrCode\Builder\Builder;
+use Endroid\QrCode\Color\Color;
+use Endroid\QrCode\Encoding\Encoding;
 use Endroid\QrCode\ErrorCorrectionLevel;
+use Endroid\QrCode\ErrorCorrectionLevel\ErrorCorrectionLevelLow;
+use Endroid\QrCode\Label\Label;
+use Endroid\QrCode\Logo\Logo;
 use Endroid\QrCode\QrCode;
-use Endroid\QrCode\Response\QrCodeResponse;
+use Endroid\QrCode\RoundBlockSizeMode\RoundBlockSizeModeMargin;
+use Endroid\QrCode\Writer\PngWriter;
+use  Endroid\QrCodeBundle\Response\QrCodeResponse;
 use Evrinoma\UtilsBundle\Manager\AbstractEntityManager;
 
 /**
@@ -54,22 +62,26 @@ class ContactManager extends AbstractEntityManager
      * @param User|null $user
      *
      * @return QrCodeResponse
-     * @throws \Endroid\QrCode\Exception\InvalidPathException
+     * @throws
      */
     public function getContact($user): ?QrCodeResponse
     {
         $vcard = $user->getVCard();
         if ($vcard) {
-            $qrCode = new QrCode();
-            $qrCode->setText($user->getVCard());
-            $qrCode->setForegroundColor(array('r' => 0, 'g' => 67, 'b' => 134, 'a' => 0));
-            $qrCode->setBackgroundColor(array('r' => 255, 'g' => 255, 'b' => 255, 'a' => 0));
-            $qrCode->setLogoPath("../assets/images/contact/logo.png");
-            $qrCode->setErrorCorrectionLevel(new ErrorCorrectionLevel('low'));
-            $qrCode->setLogoSize(98);
-            $qrCode->setSize(400);
+            $writer = new PngWriter();
+            $qrCode = QrCode::create($vcard)
+                ->setEncoding(new Encoding('UTF-8'))
+                ->setErrorCorrectionLevel(new ErrorCorrectionLevelLow())
+                ->setSize(400)
+                ->setMargin(5)
+                ->setRoundBlockSizeMode(new RoundBlockSizeModeMargin())
+                ->setForegroundColor(new Color(0, 0, 0))
+                ->setBackgroundColor(new Color(255, 255, 255));
+            $logo = Logo::create('../assets/images/contact/logo.png')
+                ->setResizeToWidth(100);
+            $result = $writer->write($qrCode, $logo);
 
-            return new QrCodeResponse($qrCode);
+            return new QrCodeResponse($result);
         }
 
         return null;
