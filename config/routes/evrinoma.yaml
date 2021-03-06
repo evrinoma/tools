@@ -4,8 +4,8 @@ dashboard:
 delta8:
   resource: "@EvrinomaDelta8Bundle/Resources/config/routes.yml"
 
-#exim:
-#  resource: "@EvrinomaEximBundle/Resources/config/routes.yml"
+exim:
+  resource: "@EvrinomaEximBundle/Resources/config/routes.yml"
 
 grid:
   resource: "@EvrinomaGridBundle/Resources/config/routes.yml"
