@@ -13,4 +13,4 @@ app.swagger_ui:
 
 app.swagger_ui.evrinoma:
   path: /api/doc/evrinoma
-  methods: GET|POST|PUT
+  methods: GET|POST|PUT|DELETE
