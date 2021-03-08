@@ -1754,16 +1754,16 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/evrinoma/ContrAgentBundle.git",
-                "reference": "7c62087886beee9283dd6c8571e44ecbdac3976b"
+                "reference": "0f0306b5967f0768251364af377d8bde4fe48fe8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/evrinoma/ContrAgentBundle/zipball/7c62087886beee9283dd6c8571e44ecbdac3976b",
-                "reference": "7c62087886beee9283dd6c8571e44ecbdac3976b",
+                "url": "https://api.github.com/repos/evrinoma/ContrAgentBundle/zipball/0f0306b5967f0768251364af377d8bde4fe48fe8",
+                "reference": "0f0306b5967f0768251364af377d8bde4fe48fe8",
                 "shasum": ""
             },
             "require": {
-                "evrinoma/dto-bundle": "^1.0.1",
+                "evrinoma/dto-bundle": "dev-master",
                 "evrinoma/utils-bundle": "dev-master",
                 "php": "^7.1.3"
             },
@@ -1793,7 +1793,7 @@
                 "source": "https://github.com/evrinoma/ContrAgentBundle/tree/master",
                 "issues": "https://github.com/evrinoma/ContrAgentBundle/issues"
             },
-            "time": "2021-02-23T20:06:19+00:00"
+            "time": "2021-03-08T23:12:07+00:00"
         },
         {
             "name": "evrinoma/dashboard-bundle",
@@ -1801,18 +1801,17 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/evrinoma/DashBoardBundle.git",
-                "reference": "3600119be9734fc2a26e73b14ca34fee6785e81d"
+                "reference": "fba2db0f21b748608346151d5f6a86503ade3f83"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/evrinoma/DashBoardBundle/zipball/3600119be9734fc2a26e73b14ca34fee6785e81d",
-                "reference": "3600119be9734fc2a26e73b14ca34fee6785e81d",
+                "url": "https://api.github.com/repos/evrinoma/DashBoardBundle/zipball/fba2db0f21b748608346151d5f6a86503ade3f83",
+                "reference": "fba2db0f21b748608346151d5f6a86503ade3f83",
                 "shasum": ""
             },
             "require": {
-                "evrinoma/dto-bundle": "^1.0.1",
                 "evrinoma/shell-bundle": "dev-master",
-                "php": "^7.1.3"
+                "php": "^7.4"
             },
             "require-dev": {
                 "symfony/phpunit-bridge": "^5.0"
@@ -1844,7 +1843,7 @@
                 "source": "https://github.com/evrinoma/DashBoardBundle/tree/master",
                 "issues": "https://github.com/evrinoma/DashBoardBundle/issues"
             },
-            "time": "2021-02-23T20:06:44+00:00"
+            "time": "2021-03-06T18:59:02+00:00"
         },
         {
             "name": "evrinoma/delta8-bundle",
@@ -1852,19 +1851,19 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/evrinoma/Delta8Bundle.git",
-                "reference": "53716228f8eca09bbd626e9f50932e4fabe26660"
+                "reference": "b2eaca530f6725e198204ce74889bf77be3d5099"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/evrinoma/Delta8Bundle/zipball/53716228f8eca09bbd626e9f50932e4fabe26660",
-                "reference": "53716228f8eca09bbd626e9f50932e4fabe26660",
+                "url": "https://api.github.com/repos/evrinoma/Delta8Bundle/zipball/b2eaca530f6725e198204ce74889bf77be3d5099",
+                "reference": "b2eaca530f6725e198204ce74889bf77be3d5099",
                 "shasum": ""
             },
             "require": {
                 "evrinoma/menu-bundle": "dev-master",
                 "evrinoma/settings-bundle": "dev-master",
                 "evrinoma/utils-bundle": "dev-master",
-                "php": "^7.1.3"
+                "php": "^7.4"
             },
             "type": "symfony-bundle",
             "autoload": {
@@ -1892,24 +1891,24 @@
                 "source": "https://github.com/evrinoma/Delta8Bundle/tree/master",
                 "issues": "https://github.com/evrinoma/Delta8Bundle/issues"
             },
-            "time": "2021-02-23T20:07:06+00:00"
+            "time": "2021-03-06T19:00:00+00:00"
         },
         {
             "name": "evrinoma/dto-bundle",
-            "version": "1.0.1",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/evrinoma/DtoBundle.git",
-                "reference": "bcebd337476604758c1d2b949b1c24f45a541536"
+                "reference": "9586d6b393fcad464e9c195bf24a88723638a6ad"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/evrinoma/DtoBundle/zipball/bcebd337476604758c1d2b949b1c24f45a541536",
-                "reference": "bcebd337476604758c1d2b949b1c24f45a541536",
+                "url": "https://api.github.com/repos/evrinoma/DtoBundle/zipball/9586d6b393fcad464e9c195bf24a88723638a6ad",
+                "reference": "9586d6b393fcad464e9c195bf24a88723638a6ad",
                 "shasum": ""
             },
             "require": {
-                "php": "^7.1.3"
+                "php": "^7.4.0"
             },
             "type": "symfony-bundle",
             "autoload": {
@@ -1934,10 +1933,10 @@
                 "Dto"
             ],
             "support": {
-                "source": "https://github.com/evrinoma/DtoBundle/tree/1.0.1",
+                "source": "https://github.com/evrinoma/DtoBundle/tree/master",
                 "issues": "https://github.com/evrinoma/DtoBundle/issues"
             },
-            "time": "2021-03-04T12:49:36+00:00"
+            "time": "2021-03-07T17:42:26+00:00"
         },
         {
             "name": "evrinoma/exim-bundle",
@@ -1945,20 +1944,20 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/evrinoma/EximBundle.git",
-                "reference": "7c6fc1b7ddc1feeaa17360e489e421df11f83646"
+                "reference": "18b81ac312416b0a4431cca56ee942cd1c62d47e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/evrinoma/EximBundle/zipball/7c6fc1b7ddc1feeaa17360e489e421df11f83646",
-                "reference": "7c6fc1b7ddc1feeaa17360e489e421df11f83646",
+                "url": "https://api.github.com/repos/evrinoma/EximBundle/zipball/18b81ac312416b0a4431cca56ee942cd1c62d47e",
+                "reference": "18b81ac312416b0a4431cca56ee942cd1c62d47e",
                 "shasum": ""
             },
             "require": {
-                "evrinoma/dto-bundle": "^1.0.1",
+                "evrinoma/dto-bundle": "dev-master",
                 "evrinoma/menu-bundle": "dev-master",
                 "evrinoma/settings-bundle": "dev-master",
                 "evrinoma/utils-bundle": "dev-master",
-                "php": "^7.1.3"
+                "php": "^7.4"
             },
             "type": "symfony-bundle",
             "autoload": {
@@ -1986,7 +1985,7 @@
                 "source": "https://github.com/evrinoma/EximBundle/tree/master",
                 "issues": "https://github.com/evrinoma/EximBundle/issues"
             },
-            "time": "2021-03-04T13:07:03+00:00"
+            "time": "2021-03-08T22:31:24+00:00"
         },
         {
             "name": "evrinoma/grid-bundle",
@@ -1994,16 +1993,16 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/evrinoma/GridBundle.git",
-                "reference": "7c4d841222365628858dafd752f53a527304c880"
+                "reference": "5ada6f71bf432bd6d4d27f9b8123d2307c1e6f8c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/evrinoma/GridBundle/zipball/7c4d841222365628858dafd752f53a527304c880",
-                "reference": "7c4d841222365628858dafd752f53a527304c880",
+                "url": "https://api.github.com/repos/evrinoma/GridBundle/zipball/5ada6f71bf432bd6d4d27f9b8123d2307c1e6f8c",
+                "reference": "5ada6f71bf432bd6d4d27f9b8123d2307c1e6f8c",
                 "shasum": ""
             },
             "require": {
-                "evrinoma/dto-bundle": "^1.0.1",
+                "evrinoma/dto-bundle": "dev-master",
                 "evrinoma/menu-bundle": "dev-master",
                 "evrinoma/utils-bundle": "dev-master",
                 "php": "^7.1.3"
@@ -2034,7 +2033,7 @@
                 "source": "https://github.com/evrinoma/GridBundle/tree/master",
                 "issues": "https://github.com/evrinoma/GridBundle/issues"
             },
-            "time": "2021-02-23T20:08:13+00:00"
+            "time": "2021-03-08T23:20:38+00:00"
         },
         {
             "name": "evrinoma/livevideo-bundle",
@@ -2042,16 +2041,16 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/evrinoma/LiveVideoBundle.git",
-                "reference": "1734134218da48dbc8e399c708182ae842070846"
+                "reference": "f62610182e81a725e09ae20f113e6e40d0290564"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/evrinoma/LiveVideoBundle/zipball/1734134218da48dbc8e399c708182ae842070846",
-                "reference": "1734134218da48dbc8e399c708182ae842070846",
+                "url": "https://api.github.com/repos/evrinoma/LiveVideoBundle/zipball/f62610182e81a725e09ae20f113e6e40d0290564",
+                "reference": "f62610182e81a725e09ae20f113e6e40d0290564",
                 "shasum": ""
             },
             "require": {
-                "evrinoma/dto-bundle": "^1.0.1",
+                "evrinoma/dto-bundle": "dev-master",
                 "evrinoma/menu-bundle": "dev-master",
                 "evrinoma/utils-bundle": "dev-master",
                 "ltoscano/ponvif": "dev-master",
@@ -2085,7 +2084,7 @@
                 "source": "https://github.com/evrinoma/LiveVideoBundle/tree/master",
                 "issues": "https://github.com/evrinoma/LiveVideoBundle/issues"
             },
-            "time": "2021-03-01T14:30:23+00:00"
+            "time": "2021-03-08T22:34:42+00:00"
         },
         {
             "name": "evrinoma/menu-bundle",
@@ -2093,16 +2092,16 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/evrinoma/MenuBundle.git",
-                "reference": "305db77a31e59f074b42de284ccb04a66ca08158"
+                "reference": "3e040f2ee0985c3d558ac82ed15f78b4d222df9a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/evrinoma/MenuBundle/zipball/305db77a31e59f074b42de284ccb04a66ca08158",
-                "reference": "305db77a31e59f074b42de284ccb04a66ca08158",
+                "url": "https://api.github.com/repos/evrinoma/MenuBundle/zipball/3e040f2ee0985c3d558ac82ed15f78b4d222df9a",
+                "reference": "3e040f2ee0985c3d558ac82ed15f78b4d222df9a",
                 "shasum": ""
             },
             "require": {
-                "evrinoma/dto-bundle": "^1.0.1",
+                "evrinoma/dto-bundle": "dev-master",
                 "evrinoma/utils-bundle": "dev-master",
                 "knplabs/knp-menu-bundle": "^3.0",
                 "nelmio/api-doc-bundle": "^4",
@@ -2134,7 +2133,7 @@
                 "source": "https://github.com/evrinoma/MenuBundle/tree/master",
                 "issues": "https://github.com/evrinoma/MenuBundle/issues"
             },
-            "time": "2021-03-02T08:08:26+00:00"
+            "time": "2021-03-08T22:34:45+00:00"
         },
         {
             "name": "evrinoma/project-bundle",
@@ -2142,18 +2141,17 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/evrinoma/ProjectBundle.git",
-                "reference": "c5f4291146b5518abcaf2796246476f3c3028aae"
+                "reference": "cac82c147779aed5d7e091a3a91f70e07a51309f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/evrinoma/ProjectBundle/zipball/c5f4291146b5518abcaf2796246476f3c3028aae",
-                "reference": "c5f4291146b5518abcaf2796246476f3c3028aae",
+                "url": "https://api.github.com/repos/evrinoma/ProjectBundle/zipball/cac82c147779aed5d7e091a3a91f70e07a51309f",
+                "reference": "cac82c147779aed5d7e091a3a91f70e07a51309f",
                 "shasum": ""
             },
             "require": {
-                "evrinoma/dto-bundle": "^1.0.1",
                 "evrinoma/utils-bundle": "dev-master",
-                "php": "^7.1.3"
+                "php": "^7.4"
             },
             "type": "symfony-bundle",
             "autoload": {
@@ -2181,7 +2179,7 @@
                 "source": "https://github.com/evrinoma/ProjectBundle/tree/master",
                 "issues": "https://github.com/evrinoma/ProjectBundle/issues"
             },
-            "time": "2021-02-23T20:08:50+00:00"
+            "time": "2021-03-08T23:20:47+00:00"
         },
         {
             "name": "evrinoma/settings-bundle",
@@ -2189,16 +2187,16 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/evrinoma/SettingsBundle.git",
-                "reference": "170ffbcd6937f10d2a1d56e064551719b0e0bb5a"
+                "reference": "d65099d1ea5187169271db0f029eb9b7e4c24446"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/evrinoma/SettingsBundle/zipball/170ffbcd6937f10d2a1d56e064551719b0e0bb5a",
-                "reference": "170ffbcd6937f10d2a1d56e064551719b0e0bb5a",
+                "url": "https://api.github.com/repos/evrinoma/SettingsBundle/zipball/d65099d1ea5187169271db0f029eb9b7e4c24446",
+                "reference": "d65099d1ea5187169271db0f029eb9b7e4c24446",
                 "shasum": ""
             },
             "require": {
-                "evrinoma/dto-bundle": "^1.0.1",
+                "evrinoma/dto-bundle": "dev-master",
                 "php": "^7.1.3"
             },
             "type": "symfony-bundle",
@@ -2227,7 +2225,7 @@
                 "source": "https://github.com/evrinoma/SettingsBundle/tree/master",
                 "issues": "https://github.com/evrinoma/SettingsBundle/issues"
             },
-            "time": "2020-10-27T05:32:59+00:00"
+            "time": "2021-03-08T22:34:52+00:00"
         },
         {
             "name": "evrinoma/shell-bundle",
@@ -2235,12 +2233,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/evrinoma/ShellBundle.git",
-                "reference": "9804fc9ea615fc555df95f314831c61cac9a482c"
+                "reference": "0f1e14ba29aa0165d90be142b8ef126a8f9bad7d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/evrinoma/ShellBundle/zipball/9804fc9ea615fc555df95f314831c61cac9a482c",
-                "reference": "9804fc9ea615fc555df95f314831c61cac9a482c",
+                "url": "https://api.github.com/repos/evrinoma/ShellBundle/zipball/0f1e14ba29aa0165d90be142b8ef126a8f9bad7d",
+                "reference": "0f1e14ba29aa0165d90be142b8ef126a8f9bad7d",
                 "shasum": ""
             },
             "require": {
@@ -2272,7 +2270,7 @@
                 "source": "https://github.com/evrinoma/ShellBundle/tree/master",
                 "issues": "https://github.com/evrinoma/ShellBundle/issues"
             },
-            "time": "2020-10-27T05:32:59+00:00"
+            "time": "2021-03-06T12:39:17+00:00"
         },
         {
             "name": "evrinoma/user-bundle",
@@ -2365,12 +2363,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/evrinoma/UtilsBundle.git",
-                "reference": "6f0a60642e10f31e349d34b5c476665f6fd5898d"
+                "reference": "bce903ea0a01d2ac70ef9da027cabaf770b23175"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/evrinoma/UtilsBundle/zipball/6f0a60642e10f31e349d34b5c476665f6fd5898d",
-                "reference": "6f0a60642e10f31e349d34b5c476665f6fd5898d",
+                "url": "https://api.github.com/repos/evrinoma/UtilsBundle/zipball/bce903ea0a01d2ac70ef9da027cabaf770b23175",
+                "reference": "bce903ea0a01d2ac70ef9da027cabaf770b23175",
                 "shasum": ""
             },
             "require": {
@@ -2405,7 +2403,7 @@
                 "source": "https://github.com/evrinoma/UtilsBundle/tree/master",
                 "issues": "https://github.com/evrinoma/UtilsBundle/issues"
             },
-            "time": "2021-03-03T16:45:49+00:00"
+            "time": "2021-03-08T13:25:39+00:00"
         },
         {
             "name": "friendsofphp/proxy-manager-lts",
