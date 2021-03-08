@@ -7,7 +7,6 @@ const {CleanWebpackPlugin} = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const HtmlWebpackInlineSourcePlugin = require('html-webpack-inline-source-plugin');
 const {VueLoaderPlugin} = require('vue-loader');
-//const EntrypointAssetsPlugin = require('entrypoint-assets-webpack-plugin');
 
 module.exports = (env) => {
     const config = {
@@ -20,9 +19,9 @@ module.exports = (env) => {
             live_video: path.join(__dirname, 'front/entrypoints/live.video.entry.js'),
             login: path.join(__dirname, 'front/entrypoints/login.entry.js'),
             status: path.join(__dirname, 'front/entrypoints/status.entry.js'),
-            // mail_acl: path.join(__dirname, 'front/entrypoints/mail.acl.entry.js'),
-            // mail_domain: path.join(__dirname, 'front/entrypoints/mail.domain.entry.js'),
-            // mail_search: path.join(__dirname, 'front/entrypoints/mail.search.entry.js'),
+            mail_acl: path.join(__dirname, 'front/entrypoints/mail.acl.entry.js'),
+            mail_domain: path.join(__dirname, 'front/entrypoints/mail.domain.entry.js'),
+            mail_search: path.join(__dirname, 'front/entrypoints/mail.search.entry.js'),
             project: path.join(__dirname, 'front/entrypoints/reestr.project.entry.js'),
             contr_agent: path.join(__dirname, 'front/entrypoints/reestr.contr_agent.entry.js'),
         },
