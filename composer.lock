@@ -1899,12 +1899,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/evrinoma/DtoBundle.git",
-                "reference": "9586d6b393fcad464e9c195bf24a88723638a6ad"
+                "reference": "59d63128ed91d6c95f4a2eef847afe0b418da32b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/evrinoma/DtoBundle/zipball/9586d6b393fcad464e9c195bf24a88723638a6ad",
-                "reference": "9586d6b393fcad464e9c195bf24a88723638a6ad",
+                "url": "https://api.github.com/repos/evrinoma/DtoBundle/zipball/59d63128ed91d6c95f4a2eef847afe0b418da32b",
+                "reference": "59d63128ed91d6c95f4a2eef847afe0b418da32b",
                 "shasum": ""
             },
             "require": {
@@ -1936,7 +1936,7 @@
                 "source": "https://github.com/evrinoma/DtoBundle/tree/master",
                 "issues": "https://github.com/evrinoma/DtoBundle/issues"
             },
-            "time": "2021-03-07T17:42:26+00:00"
+            "time": "2021-03-09T16:58:46+00:00"
         },
         {
             "name": "evrinoma/exim-bundle",
@@ -1944,12 +1944,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/evrinoma/EximBundle.git",
-                "reference": "18b81ac312416b0a4431cca56ee942cd1c62d47e"
+                "reference": "e3d1856d95cca5ec846b83cab714bf2eecfc0b58"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/evrinoma/EximBundle/zipball/18b81ac312416b0a4431cca56ee942cd1c62d47e",
-                "reference": "18b81ac312416b0a4431cca56ee942cd1c62d47e",
+                "url": "https://api.github.com/repos/evrinoma/EximBundle/zipball/e3d1856d95cca5ec846b83cab714bf2eecfc0b58",
+                "reference": "e3d1856d95cca5ec846b83cab714bf2eecfc0b58",
                 "shasum": ""
             },
             "require": {
@@ -1985,7 +1985,7 @@
                 "source": "https://github.com/evrinoma/EximBundle/tree/master",
                 "issues": "https://github.com/evrinoma/EximBundle/issues"
             },
-            "time": "2021-03-08T22:31:24+00:00"
+            "time": "2021-03-09T16:58:46+00:00"
         },
         {
             "name": "evrinoma/grid-bundle",
