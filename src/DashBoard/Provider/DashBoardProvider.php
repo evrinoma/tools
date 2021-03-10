@@ -7,9 +7,9 @@ use App\DashBoard\Adaptor\DefaultServiceAdaptor;
 use App\DashBoard\Adaptor\ScanServiceAdaptor;
 use Doctrine\Common\Collections\ArrayCollection;
 use Evrinoma\DashBoardBundle\Provider\ProviderInterface;
-use Evrinoma\SettingsBundle\Dto\ApartDto\ServerDto;
 use Evrinoma\SettingsBundle\Dto\ServiceDto;
 use Evrinoma\SettingsBundle\Manager\SettingsManager;
+use Evrinoma\SettingsBundle\Std\ServerStd;
 use Iterator;
 
 /**
@@ -49,7 +49,7 @@ class DashBoardProvider implements ProviderInterface
         $hash     = [];
 
         foreach ($this->settingsManager->toSettings(new ServiceDto()) as $service) {
-            /** @var ServerDto $settings */
+            /** @var ServerStd $settings */
             $settings = $service->getData();
             switch ($settings->getType()) {
                 case 'orm':
