@@ -6,7 +6,7 @@ The system allows for manage gray listing, domain control, search in system logs
 
 how it's work scheme
 
-![Alt text](img/howis.jpg?raw=true "How is work")
+![Alt text](docs/img/howis.jpg?raw=true "How is work")
 
 The mysql and exim deployment you can find here https://github.com/evrinoma/docker.git
 
@@ -80,7 +80,7 @@ Open a command console, enter your project directory and run the following comma
 Now make a menu for that please Login and goto rest Api by next link
 http://localToolsHost/api/doc/internal
 looking for method PUT in section menu and run execute ("/internal/menu/create_default")
-![Alt text](img/menu.png?raw=true "Api Menu Page")
+![Alt text](docs/img/menu.png?raw=true "Api Menu Page")
 
 if you're have a latest tools engine version, than run import data by Integration Api.
 <br>http://localToolsHost/internal/domain/import
@@ -91,9 +91,9 @@ and finally create exim data structure
 mysql -u root -p tools < sql/exim.sql 
 
 #what does it look like
-![Alt text](img/aclMail.png?raw=true "Acl Mail Page")
-![Alt text](img/mailDomain.png?raw=true "Domain Page")
-![Alt text](img/mailLogs.png?raw=true "Log Search Page")
+![Alt text](docs/img/aclMail.png?raw=true "Acl Mail Page")
+![Alt text](docs/img/mailDomain.png?raw=true "Domain Page")
+![Alt text](docs/img/mailLogs.png?raw=true "Log Search Page")
 
 #TODO
 
