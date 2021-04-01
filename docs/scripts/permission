@@ -4,34 +4,34 @@ USERMAIL=$2
 PASS=$3
 echo $USER $USERMAIL $PASS
 if [ ! -z "$USER" ] && [ ! -z "$USERMAIL" ] && [ ! -z "$PASS" ]; then
-#	php bin/console fos:user:create $USER $USERMAIL $PASS
-#	php bin/console fos:user:change-password $USER $PASS
+#	php ../../bin/console fos:user:create $USER $USERMAIL $PASS
+#	php ../../bin/console fos:user:change-password $USER $PASS
 
-#	php bin/console fos:user:promote $USER ROLE_SUPER_ADMIN
-#	php bin/console fos:user:promote $USER ROLE_USER
+#	php ../../bin/console fos:user:promote $USER ROLE_SUPER_ADMIN
+#	php ../../bin/console fos:user:promote $USER ROLE_USER
 
-#	php bin/console fos:user:promote $USER ROLE_API
-#	php bin/console fos:user:promote $USER ROLE_USER_DELTA8
+#	php ../../bin/console fos:user:promote $USER ROLE_API
+#	php ../../bin/console fos:user:promote $USER ROLE_USER_DELTA8
 
-#	php bin/console fos:user:promote $USER ROLE_VIDEO
-#	php bin/console fos:user:promote $USER ROLE_VIDEO_ALL
+#	php ../../bin/console fos:user:promote $USER ROLE_VIDEO
+#	php ../../bin/console fos:user:promote $USER ROLE_VIDEO_ALL
 
-#	php bin/console fos:user:promote $USER ROLE_ISHIM_VIDEO
-#	php bin/console fos:user:promote $USER ROLE_TOBOLSK_VIDEO
-#	php bin/console fos:user:promote $USER ROLE_IPARK_VIDEO
-#	php bin/console fos:user:promote $USER ROLE_KZKT_VIDEO
-#	php bin/console fos:user:promote $USER ROLE_KPSZ_VIDEO
-#	php bin/console fos:user:promote $USER ROLE_KZET_VIDEO
-#	php bin/console fos:user:promote $USER ROLE_VANKOR_VIDEO
+#	php ../../bin/console fos:user:promote $USER ROLE_ISHIM_VIDEO
+#	php ../../bin/console fos:user:promote $USER ROLE_TOBOLSK_VIDEO
+#	php ../../bin/console fos:user:promote $USER ROLE_IPARK_VIDEO
+#	php ../../bin/console fos:user:promote $USER ROLE_KZKT_VIDEO
+#	php ../../bin/console fos:user:promote $USER ROLE_KPSZ_VIDEO
+	php ../../bin/console fos:user:promote $USER ROLE_KZET_VIDEO
+#	php ../../bin/console fos:user:promote $USER ROLE_VANKOR_VIDEO
 
-#	php bin/console fos:user:promote $USER ROLE_VIDEO_CONTROL
-#	php bin/console fos:user:promote $USER ROLE_CONTROL_VIDEO_ALL
-#	php bin/console fos:user:promote $USER ROLE_ISHIM_CONTROL_VIDEO
-#	php bin/console fos:user:promote $USER ROLE_IPARK_CONTROL_VIDEO
-#	php bin/console fos:user:promote $USER ROLE_KZKT_CONTROL_VIDEO
-#	php bin/console fos:user:promote $USER ROLE_IPARK_CONTROL_VIDEO
-#	php bin/console fos:user:promote $USER ROLE_KPSZ_CONTROL_VIDEO
-#	php bin/console fos:user:promote $USER ROLE_KZET_CONTROL_VIDEO
+#	php ../../bin/console fos:user:promote $USER ROLE_VIDEO_CONTROL
+#	php ../../bin/console fos:user:promote $USER ROLE_CONTROL_VIDEO_ALL
+#	php ../../bin/console fos:user:promote $USER ROLE_ISHIM_CONTROL_VIDEO
+#	php ../../bin/console fos:user:promote $USER ROLE_IPARK_CONTROL_VIDEO
+#	php ../../bin/console fos:user:promote $USER ROLE_KZKT_CONTROL_VIDEO
+#	php ../../bin/console fos:user:promote $USER ROLE_IPARK_CONTROL_VIDEO
+#	php ../../bin/console fos:user:promote $USER ROLE_KPSZ_CONTROL_VIDEO
+	php ../../bin/console fos:user:promote $USER ROLE_KZET_CONTROL_VIDEO
 
-#	php bin/console fos:user:promote $USER ROLE_DEV_USER
+#	php ../../bin/console fos:user:promote $USER ROLE_DEV_USER
 fi
