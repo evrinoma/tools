@@ -1,4 +1,6 @@
 {
+  "description": "tools project",
+  "name": "tools",
   "type": "project",
   "license": "proprietary",
   "require": {
