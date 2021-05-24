@@ -1944,12 +1944,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/evrinoma/EximBundle.git",
-                "reference": "99c6d42e9ffaf6849e9ac646754bfb2813d19f42"
+                "reference": "ec72f5bcb431cd188053a0ea8c493f4814e79f0d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/evrinoma/EximBundle/zipball/99c6d42e9ffaf6849e9ac646754bfb2813d19f42",
-                "reference": "99c6d42e9ffaf6849e9ac646754bfb2813d19f42",
+                "url": "https://api.github.com/repos/evrinoma/EximBundle/zipball/ec72f5bcb431cd188053a0ea8c493f4814e79f0d",
+                "reference": "ec72f5bcb431cd188053a0ea8c493f4814e79f0d",
                 "shasum": ""
             },
             "require": {
@@ -1985,7 +1985,7 @@
                 "source": "https://github.com/evrinoma/EximBundle/tree/master",
                 "issues": "https://github.com/evrinoma/EximBundle/issues"
             },
-            "time": "2021-04-27T16:49:05+00:00"
+            "time": "2021-05-24T08:33:38+00:00"
         },
         {
             "name": "evrinoma/grid-bundle",
@@ -2092,12 +2092,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/evrinoma/MenuBundle.git",
-                "reference": "377e26e3ad84e3de7c3cc1f358e7270179df1c47"
+                "reference": "fd134af29bad650730c3f53ff03cbcac7c45aa8a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/evrinoma/MenuBundle/zipball/377e26e3ad84e3de7c3cc1f358e7270179df1c47",
-                "reference": "377e26e3ad84e3de7c3cc1f358e7270179df1c47",
+                "url": "https://api.github.com/repos/evrinoma/MenuBundle/zipball/fd134af29bad650730c3f53ff03cbcac7c45aa8a",
+                "reference": "fd134af29bad650730c3f53ff03cbcac7c45aa8a",
                 "shasum": ""
             },
             "require": {
@@ -2133,7 +2133,7 @@
                 "source": "https://github.com/evrinoma/MenuBundle/tree/master",
                 "issues": "https://github.com/evrinoma/MenuBundle/issues"
             },
-            "time": "2021-04-22T14:26:56+00:00"
+            "time": "2021-05-11T16:32:11+00:00"
         },
         {
             "name": "evrinoma/project-bundle",
