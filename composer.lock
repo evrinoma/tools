@@ -2363,12 +2363,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/evrinoma/UtilsBundle.git",
-                "reference": "0c6736b284de7bdea1d8d5d4935afbf11189482a"
+                "reference": "008be1c9d8cefd8fa37ffd6cd18640bfe1e3687c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/evrinoma/UtilsBundle/zipball/0c6736b284de7bdea1d8d5d4935afbf11189482a",
-                "reference": "0c6736b284de7bdea1d8d5d4935afbf11189482a",
+                "url": "https://api.github.com/repos/evrinoma/UtilsBundle/zipball/008be1c9d8cefd8fa37ffd6cd18640bfe1e3687c",
+                "reference": "008be1c9d8cefd8fa37ffd6cd18640bfe1e3687c",
                 "shasum": ""
             },
             "require": {
@@ -2404,7 +2404,7 @@
                 "source": "https://github.com/evrinoma/UtilsBundle/tree/master",
                 "issues": "https://github.com/evrinoma/UtilsBundle/issues"
             },
-            "time": "2021-06-10T10:48:00+00:00"
+            "time": "2021-06-10T11:58:02+00:00"
         },
         {
             "name": "friendsofphp/proxy-manager-lts",
